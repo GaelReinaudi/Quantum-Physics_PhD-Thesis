@@ -1,0 +1,652 @@
+<html>
+<head>
+<title>stationnaire_ground_laser.html</title>
+<!-- Created by Maple 9.00, Windows 2000 -->
+</head>
+<body bgcolor="FFFFFF">
+<a name="MapleAutoBookmark1" />
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>restart;with(LinearAlgebra):with(linalg):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>#alpha:=0;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>#sigma:=gamma[ech];</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Lm:=0;Lg:=0;theta:=0;	</font><font color="#ff0000" size="3" face="Monospaced">
+<br>#assume(alpha,positive);assume(n,positive);assume(N,positive);assume(chi,positive);assume(sigma,positive);assume(k,positive);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Monospaced">Warning, the previous binding of the name GramSchmidt has been removed and it now has an assigned value</font><font color="#0000ff" size="3" face="Monospaced">
+<br></font></p>
+<p align="left"><font color="#0000ff" size="3" face="Monospaced">Warning, the protected names norm and trace have been redefined and unprotected</font><font color="#0000ff" size="3" face="Monospaced">
+<br></font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_1.gif" width="46" height="13" alt="Lm := 0" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_2.gif" width="42" height="13" alt="Lg := 0" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_3.gif" width="34" height="15" alt="theta := 0" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>simp:=proc(asimplifier)</font><font color="#ff0000" size="3" face="Monospaced">
+<br>simplify(sort(simplify(simplify(expand(numer(asimplifier)),size),size))</font><font color="#ff0000" size="3" face="Monospaced">
+<br>/</font><font color="#ff0000" size="3" face="Monospaced">
+<br>sort(simplify(simplify(expand(denom(asimplifier)),size),size)),size) ;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>map(simplify,%,size);	end;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_4.gif" width="946" height="13" alt="simp := proc (asimplifier) simplify(sort(simplify(simplify(expand(numer(asimplifier)), size), size))/sort(simplify(simplify(expand(denom(asimplifier)), size), size)), size); map(simplify, %, size) end..." align="center"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_5.gif" width="946" height="13" alt="simp := proc (asimplifier) simplify(sort(simplify(simplify(expand(numer(asimplifier)), size), size))/sort(simplify(simplify(expand(denom(asimplifier)), size), size)), size); map(simplify, %, size) end..." align="center"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_6.gif" width="946" height="13" alt="simp := proc (asimplifier) simplify(sort(simplify(simplify(expand(numer(asimplifier)), size), size))/sort(simplify(simplify(expand(denom(asimplifier)), size), size)), size); map(simplify, %, size) end..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>T:=(Matrix([[-sigma*N, 0, 0, sigma*n, 0, 0, 0, 0, 0, 0], [0, -sigma*N, -Lm, 0, sigma*n, 0, 0, 0, 1/4*I*chi*n*conjugate(alpha), -1/4*I*chi*n*alpha], [0, Lm, -sigma*N, 0, 0, sigma*n, 0, 0, 0, 0], [sigma*N, 0, 0, -sigma*n, 0, 0, 0, 0, 0, 0], [0, sigma*N, 0, 0, -sigma*n, -Lg, 0, 0, 0, 0], [0, 0, sigma*N, 0, Lg, -sigma*n, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, -k*(1+I*theta), 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, -k*(1-I*theta), 0, 0], [0, 0, -1/2*chi*alpha, 0, 0, 0, 0, 0, -k*(1+I*theta), 0], [0, 0, -1/2*chi*conjugate(alpha), 0, 0, 0, 0, 0, 0, -k*(1-I*theta)]])) </font><font color="#ff0000" size="3" face="Monospaced">
+<br>assuming `if`(alpha=0,fff,alpha)::positive , n::positive , N::positive , chi::positive , sigma::positive , k::positive;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_7.gif" width="582" height="329" alt="T := Matrix([[-sigma*N, 0, 0, sigma*n, 0, 0, 0, 0, 0, 0], [0, -sigma*N, 0, 0, sigma*n, 0, 0, 0, 1/4*I*chi*n*alpha, -1/4*I*chi*n*alpha], [0, 0, -sigma*N, 0, 0, sigma*n, 0, 0, 0, 0], [sigma*N, 0, 0, -si..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>d:=(Matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1/2*sigma*N*n, 1/2*I*N*n*sigma, 0, -1/2*sigma*N*n, -1/2*I*N*n*sigma, 0, 0, 0, 0], [0, -1/2*I*N*n*sigma, 1/2*sigma*N*n, 0, 1/2*I*N*n*sigma, -1/2*sigma*N*n, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, -1/2*sigma*N*n, -1/2*I*N*n*sigma, 0, 1/2*sigma*N*n, 1/2*I*N*n*sigma, 0, 0, 0, 0], [0, 1/2*I*N*n*sigma, -1/2*sigma*N*n, 0, -1/2*I*N*n*sigma, 1/2*sigma*N*n, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 2*k, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 2*k], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]));</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_8.gif" width="569" height="341" alt="d := Matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1/2*sigma*N*n, 1/2*I*N*n*sigma, 0, -1/2*sigma*N*n, -1/2*I*N*n*sigma, 0, 0, 0, 0], [0, -1/2*I*N*n*sigma, 1/2*sigma*N*n, 0, 1/2*I*N*n*sigma, -1/2*sigma*N..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>gg:=(Matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1/2*sigma*N*n, 0, 0, -1/2*sigma*N*n, 0, 0, 0, 0, 0], [0, 0, 1/2*sigma*N*n, 0, 0, -1/2*sigma*N*n, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, -1/2*sigma*N*n, 0, 0, 1/2*sigma*N*n, 0, 0, 0, 0, 0], [0, 0, -1/2*sigma*N*n, 0, 0, 1/2*sigma*N*n, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, k, 0, 0], [0, 0, 0, 0, 0, 0, k, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, k], [0, 0, 0, 0, 0, 0, 0, 0, k, 0]]));</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_9.gif" width="538" height="341" alt="gg := Matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1/2*sigma*N*n, 0, 0, -1/2*sigma*N*n, 0, 0, 0, 0, 0], [0, 0, 1/2*sigma*N*n, 0, 0, -1/2*sigma*N*n, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, -1/2..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>Sego0:=Matrix(10,(i,j)-&gt;	zeta||i||j): B:=T:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>T:=evalm(Matrix(B));# 		,7..10),7..10	));</font><font color="#ff0000" size="3" face="Monospaced">
+<br>G:=evalm(Matrix(d));# 	,7..10),7..10	));</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Sego:=evalm(Matrix(Sego0));# 	,7..10),7..10	));</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_10.gif" width="582" height="329" alt="T := matrix([[-sigma*N, 0, 0, sigma*n, 0, 0, 0, 0, 0, 0], [0, -sigma*N, 0, 0, sigma*n, 0, 0, 0, 1/4*I*chi*n*alpha, -1/4*I*chi*n*alpha], [0, 0, -sigma*N, 0, 0, sigma*n, 0, 0, 0, 0], [sigma*N, 0, 0, -si..." align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_11.gif" width="571" height="341" alt="G := matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1/2*sigma*N*n, 1/2*I*N*n*sigma, 0, -1/2*sigma*N*n, -1/2*I*N*n*sigma, 0, 0, 0, 0], [0, -1/2*I*N*n*sigma, 1/2*sigma*N*n, 0, 1/2*I*N*n*sigma, -1/2*sigma*N..." align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_12.gif" width="539" height="278" alt="Sego := matrix([[zeta11, zeta12, zeta13, zeta14, zeta15, zeta16, zeta17, zeta18, zeta19, zeta110], [zeta21, zeta22, zeta23, zeta24, zeta25, zeta26, zeta27, zeta28, zeta29, zeta210], [zeta31, zeta32, z..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>ini:=Matrix(10):	ini[2,2]:=n/4 : ini[3,3]:=n/4 : ini[2,3]:=I*n/4 : ini[3,2]:=-I*n/4 : </font><font color="#ff0000" size="3" face="Monospaced">
+<br>		ini[5,5]:=N/4 : ini[6,6]:=N/4 : ini[5,6]:=I*N/4 : ini[6,5]:=-I*N/4 :</font><font color="#ff0000" size="3" face="Monospaced">
+<br>		ini[7,8]:=1 : ini[9,10]:=1 : </font><font color="#ff0000" size="3" face="Monospaced">
+<br>ini:=evalm(ini);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_13.gif" width="446" height="341" alt="ini := matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1/4*n, 1/4*I*n, 0, 0, 0, 0, 0, 0, 0], [0, -1/4*I*n, 1/4*n, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 1/4*N, 1/4*I*N, 0, 0, 0..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>for i to 10 do </font><font color="#ff0000" size="3" face="Monospaced">
+<br>	for j to 10 do </font><font color="#ff0000" size="3" face="Monospaced">
+<br>eqdiff||((i-1)*10+j):=</font><font color="#ff0000" size="3" face="Monospaced">
+<br>diff(Sego[i,j](t),t)	=	G[i,j] 	+ &nbsp;sum(	T[i,k]*Sego[k,j](t) + T[j,k]*Sego[i,k](t)	,k=1..10)	;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	od;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>od;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>eqdiff100;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_14.gif" width="320" height="33" alt="diff(zeta1010(t), t) = -1/2*chi*alpha*zeta310(t)-1/2*chi*alpha*zeta103(t)-2*k*zeta1010(t)" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>[seq(eqdiff||i,i=1..100)]:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>sys := convert(%,set) &nbsp;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>assuming alpha::positive assuming n::positive assuming N::positive assuming chi::positive assuming sigma::positive assuming k::positive:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>		nops(%);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_15.gif" width="21" height="13" alt="100" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>initial:={seq(seq(Sego[i,j](0)=ini[i,j],j=1..10),i=1..10)};	nops(%);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_16.gif" width="994" height="38" alt="initial := {zeta52(0) = 0, zeta53(0) = 0, zeta54(0) = 0, zeta55(0) = 1/4*N, zeta56(0) = 1/4*I*N, zeta57(0) = 0, zeta58(0) = 0, zeta59(0) = 0, zeta510(0) = 0, zeta61(0) = 0, zeta62(0) = 0, zeta63(0) = ..." align="center"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_17.gif" width="994" height="33" alt="initial := {zeta52(0) = 0, zeta53(0) = 0, zeta54(0) = 0, zeta55(0) = 1/4*N, zeta56(0) = 1/4*I*N, zeta57(0) = 0, zeta58(0) = 0, zeta59(0) = 0, zeta510(0) = 0, zeta61(0) = 0, zeta62(0) = 0, zeta63(0) = ..." align="center"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_18.gif" width="994" height="33" alt="initial := {zeta52(0) = 0, zeta53(0) = 0, zeta54(0) = 0, zeta55(0) = 1/4*N, zeta56(0) = 1/4*I*N, zeta57(0) = 0, zeta58(0) = 0, zeta59(0) = 0, zeta510(0) = 0, zeta61(0) = 0, zeta62(0) = 0, zeta63(0) = ..." align="center"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_19.gif" width="994" height="33" alt="initial := {zeta52(0) = 0, zeta53(0) = 0, zeta54(0) = 0, zeta55(0) = 1/4*N, zeta56(0) = 1/4*I*N, zeta57(0) = 0, zeta58(0) = 0, zeta59(0) = 0, zeta510(0) = 0, zeta61(0) = 0, zeta62(0) = 0, zeta63(0) = ..." align="center"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_20.gif" width="994" height="15" alt="initial := {zeta52(0) = 0, zeta53(0) = 0, zeta54(0) = 0, zeta55(0) = 1/4*N, zeta56(0) = 1/4*I*N, zeta57(0) = 0, zeta58(0) = 0, zeta59(0) = 0, zeta510(0) = 0, zeta61(0) = 0, zeta62(0) = 0, zeta63(0) = ..." align="center"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_21.gif" width="994" height="15" alt="initial := {zeta52(0) = 0, zeta53(0) = 0, zeta54(0) = 0, zeta55(0) = 1/4*N, zeta56(0) = 1/4*I*N, zeta57(0) = 0, zeta58(0) = 0, zeta59(0) = 0, zeta510(0) = 0, zeta61(0) = 0, zeta62(0) = 0, zeta63(0) = ..." align="center"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_22.gif" width="994" height="15" alt="initial := {zeta52(0) = 0, zeta53(0) = 0, zeta54(0) = 0, zeta55(0) = 1/4*N, zeta56(0) = 1/4*I*N, zeta57(0) = 0, zeta58(0) = 0, zeta59(0) = 0, zeta510(0) = 0, zeta61(0) = 0, zeta62(0) = 0, zeta63(0) = ..." align="center"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_23.gif" width="994" height="38" alt="initial := {zeta52(0) = 0, zeta53(0) = 0, zeta54(0) = 0, zeta55(0) = 1/4*N, zeta56(0) = 1/4*I*N, zeta57(0) = 0, zeta58(0) = 0, zeta59(0) = 0, zeta510(0) = 0, zeta61(0) = 0, zeta62(0) = 0, zeta63(0) = ..." align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_24.gif" width="21" height="13" alt="100" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>#sol:=(dsolve(sys union initial)) </font><font color="#ff0000" size="3" face="Monospaced">
+<br>assuming alpha::positive assuming n::positive assuming N::positive assuming chi::positive assuming sigma::positive assuming k::positive:</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#ff00ff" size="3" face="Monospaced">Error, reserved word `assuming` unexpected</font><font color="#ff00ff" size="3" face="Monospaced">
+<br></font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>sol:=simplify(sol):</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>map(x-&gt;op(0,lhs(x))=limit(rhs(x),t=infinity),sol) &nbsp;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>assuming alpha::positive assuming n::positive assuming N::positive assuming chi::positive assuming sigma::positive assuming k::positive:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>solinf:=	convert( map(x-&gt;map(value,x),%) ,list) &nbsp;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>assuming alpha::positive assuming n::positive assuming N::positive assuming chi::positive assuming sigma::positive assuming k::positive;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#ff00ff" size="3" face="Monospaced">Error, (in unknown) wrong number (or type) of parameters in function lhs</font><font color="#ff00ff" size="3" face="Monospaced">
+<br></font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_25.gif" width="75" height="13" alt="solinf := [sol]" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>auto_correlation_à_temps_égaux_non_symetrisé; alpha:='alpha':chi:='chi':k:='k':sigma:='sigma':N:='N':n:='n':</font><font color="#ff0000" size="3" face="Monospaced">
+<br>S:=subs(solinf,evalm(Sego)):		S:=map(simp,S);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_26.gif" width="275" height="13" alt="auto_correlation_à_temps_égaux_non_symetrisé" align="center">
+</font></p>
+<p align="left"><font color="#ff00ff" size="3" face="Monospaced">Error, wrong number (or type) of parameters in function subs</font><font color="#ff00ff" size="3" face="Monospaced">
+<br></font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_27.gif" width="35" height="13" alt="S := S" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>#ou encore : </font><font color="#ff0000" size="3" face="Monospaced">
+<br>MATRICE_des_correlations_a_temps_egaux;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>S:=map(x-&gt;map(simp,x),map(collect,matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, infinity, 1/4*I*n, 0, infinity, 0, 0, 0, -1/8*I*(sigma*n+k)*chi*alpha*n/((n+N)*sigma+k)/k, 1/8*I*(sigma*n+k)*chi*alpha*n/((n+N)*sigma+k)/k], [0, -1/4*I*n, 1/4*n, 0, 0, 0, 0, 0, -1/8*(sigma*n+k)*chi*alpha*n/((n+N)*sigma+k)/k, -1/8*(sigma*n+k)*chi*alpha*n/((n+N)*sigma+k)/k], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, infinity, 0, 0, infinity, 1/4*I*N, 0, 0, -1/8*I*N*alpha*sigma*chi*n/((n+N)*sigma+k)/k, 1/8*I*N*alpha*sigma*chi*n/((n+N)*sigma+k)/k], [0, 0, 0, 0, -1/4*I*N, 1/4*N, 0, 0, -1/8*N*alpha*sigma*chi*n/((n+N)*sigma+k)/k, -1/8*N*alpha*sigma*chi*n/((n+N)*sigma+k)/k], [0, 0, 0, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, -1/8*I*(sigma*n+k)*chi*alpha*n/((n+N)*sigma+k)/k, -1/8*(sigma*n+k)*chi*alpha*n/((n+N)*sigma+k)/k, 0, -1/8*I*N*alpha*sigma*chi*n/((n+N)*sigma+k)/k, -1/8*N*alpha*sigma*chi*n/((n+N)*sigma+k)/k, 0, 0, 1/16*(sigma*n+k)*chi^2*alpha^2*n/((n+N)*sigma+k)/k^2, 1/16*(chi^2*alpha^2*n^2*sigma+n*chi^2*alpha^2*k+16*(n+N)*sigma*k^2+16*k^3)/((n+N)*sigma+k)/k^2], [0, 1/8*I*(sigma*n+k)*chi*alpha*n/((n+N)*sigma+k)/k, -1/8*(sigma*n+k)*chi*alpha*n/((n+N)*sigma+k)/k, 0, 1/8*I*N*alpha*sigma*chi*n/((n+N)*sigma+k)/k, -1/8*N*alpha*sigma*chi*n/((n+N)*sigma+k)/k, 0, 0, 1/16*(sigma*n+k)*chi^2*alpha^2*n/((n+N)*sigma+k)/k^2, 1/16*(sigma*n+k)*chi^2*alpha^2*n/((n+N)*sigma+k)/k^2]]),chi));</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_28.gif" width="245" height="13" alt="MATRICE_des_correlations_a_temps_egaux" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_29.gif" width="980" height="70" alt="S := matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, infinity, 1/4*I*n, 0, infinity, 0, 0, 0, -1/8*I*(n*sigma+k)*chi*alpha*n/((k+(n+N)*sigma)*k), 1/8*I*(n*sigma+k)*chi*alpha*n/((k+(n+N)*sigma)*k)], [0, -1..." align="center"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_30.gif" width="980" height="61" alt="S := matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, infinity, 1/4*I*n, 0, infinity, 0, 0, 0, -1/8*I*(n*sigma+k)*chi*alpha*n/((k+(n+N)*sigma)*k), 1/8*I*(n*sigma+k)*chi*alpha*n/((k+(n+N)*sigma)*k)], [0, -1..." align="center"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_31.gif" width="980" height="45" alt="S := matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, infinity, 1/4*I*n, 0, infinity, 0, 0, 0, -1/8*I*(n*sigma+k)*chi*alpha*n/((k+(n+N)*sigma)*k), 1/8*I*(n*sigma+k)*chi*alpha*n/((k+(n+N)*sigma)*k)], [0, -1..." align="center"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_32.gif" width="980" height="65" alt="S := matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, infinity, 1/4*I*n, 0, infinity, 0, 0, 0, -1/8*I*(n*sigma+k)*chi*alpha*n/((k+(n+N)*sigma)*k), 1/8*I*(n*sigma+k)*chi*alpha*n/((k+(n+N)*sigma)*k)], [0, -1..." align="center"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_33.gif" width="980" height="70" alt="S := matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, infinity, 1/4*I*n, 0, infinity, 0, 0, 0, -1/8*I*(n*sigma+k)*chi*alpha*n/((k+(n+N)*sigma)*k), 1/8*I*(n*sigma+k)*chi*alpha*n/((k+(n+N)*sigma)*k)], [0, -1..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>#evalm(Matrix(S)[1..10,1..6]);		evalm(Matrix(S)[1..10,7..10]);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_34.gif" width="625" height="424" alt="matrix([[0, 0, 0, 0, 0, 0], [0, infinity, 1/4*I*n, 0, infinity, 0], [0, -1/4*I*n, 1/4*n, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, infinity, 0, 0, infinity, 1/4*I*N], [0, 0, 0, 0, -1/4*I*N, 1/4*N], [0, 0, 0, ..." align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_35.gif" width="383" height="454" alt="matrix([[0, 0, 0, 0], [0, 0, -1/8*I*(n*sigma+k)*chi*alpha*n/((k+(n+N)*sigma)*k), 1/8*I*(n*sigma+k)*chi*alpha*n/((k+(n+N)*sigma)*k)], [0, 0, -1/8*(n*sigma+k)*chi*alpha*n/((k+(n+N)*sigma)*k), -1/8*(n*si..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>cond:=proc(j,i,MatS) local aze;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>if MatS[j,j]=0 then aze:=0; else </font><font color="#ff0000" size="3" face="Monospaced">
+<br>	if MatS[i,i]=0 	then</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	aze:=limit(MatS[j,j]*(1- ( simplify(MatS[i,j])*conjugate(MatS[i,j]) / (MatS[j,j]*(MatS[i,i]+epsilon)) )	),epsilon=0) ;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>			else</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	aze:=	MatS[j,j]*(1- &nbsp;( simplify(MatS[i,j])*conjugate(MatS[i,j]) / (MatS[j,j]*MatS[i,i]) )	) assuming real; fi;fi;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>sort(simplify(simplify(aze)),size) assuming real;	end:</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>cond(1,2,S);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_36.gif" width="7" height="13" alt="0" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>S[3,3]*(1-(conjugate( &nbsp;conjugate(alpha)*S[3,9] &nbsp;+ &nbsp;S[3,10]*alpha &nbsp;) * ( conjugate(alpha)*S[3,9] &nbsp;+ &nbsp;S[3,10]*alpha &nbsp;)/</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	(S[3,3]*	((conjugate(alpha)^2*S[9,9]+(alpha)^2*S[10,10]) + conjugate(alpha)*alpha*(S[9,10]+S[10,9]))	) &nbsp;&nbsp;&nbsp;))</font><font color="#ff0000" size="3" face="Monospaced">
+<br>assuming alpha::positive assuming n::positive assuming N::positive assuming chi::positive assuming sigma::positive assuming k::positive;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>variance_conditionnelle_delta_n__Sy;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>n/4,fois_1_moins,simp(1-4/n*%%);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_37.gif" width="840" height="86" alt="1/4*n*(1-1/4*(sigma*n+k)^2*chi^2*alpha^4*n/(((n+N)*sigma+k)^2*k^2*(1/8*alpha^4*(sigma*n+k)*chi^2*n/(((n+N)*sigma+k)*k^2)+alpha^2*(1/16*(chi^2*alpha^2*n^2*sigma+n*chi^2*alpha^2*k+16*(n+N)*sigma*k^2+16*..." align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_38.gif" width="208" height="13" alt="variance_conditionnelle_delta_n__Sy" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_39.gif" width="499" height="46" alt="1/4*n, fois_1_moins, (n*sigma+k)^2*alpha^2*n*chi^2/((k+(n+N)*sigma)*(4*k^3+4*(n+N)*k^2*sigma+alpha^2*n*k*chi^2+alpha^2*n^2*sigma*chi^2))" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>S[6,6]*(1-(conjugate( &nbsp;conjugate(alpha)*S[6,9] &nbsp;+ &nbsp;S[6,10]*alpha &nbsp;) * ( conjugate(alpha)*S[6,9] &nbsp;+ &nbsp;S[6,10]*alpha &nbsp;)/</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	(S[6,6]*	((conjugate(alpha)^2*S[9,9]+(alpha)^2*S[10,10]) + conjugate(alpha)*alpha*(S[9,10]+S[10,9]))	) &nbsp;&nbsp;&nbsp;))</font><font color="#ff0000" size="3" face="Monospaced">
+<br>assuming alpha::positive assuming n::positive assuming N::positive assuming chi::positive assuming sigma::positive assuming k::positive;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>variance_conditionnelle_delta_N__Sy;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>N/4,fois_1_moins,	simp(1-4/N*%%);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_40.gif" width="841" height="86" alt="1/4*N*(1-1/4*N*alpha^4*sigma^2*chi^2*n^2/((k+(n+N)*sigma)^2*k^2*(1/8*alpha^4*(n*sigma+k)*chi^2*n/((k+(n+N)*sigma)*k^2)+alpha^2*(1/16*(alpha^2*n^2*sigma*chi^2+alpha^2*n*k*chi^2+16*(n+N)*k^2*sigma+16*k^..." align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_41.gif" width="209" height="13" alt="variance_conditionnelle_delta_N__Sy" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_42.gif" width="500" height="46" alt="1/4*N, fois_1_moins, n^2*sigma^2*N*chi^2*alpha^2/((k+(n+N)*sigma)*(4*k^3+4*(n+N)*k^2*sigma+alpha^2*n*k*chi^2+alpha^2*n^2*sigma*chi^2))" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>########################################################################################################################</font><font color="#ff0000" size="3" face="Monospaced">
+<br>#				recherche des correlation a deux temps</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>dim:=10;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_43.gif" width="56" height="13" alt="dim := 10" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>S_t0_0:=Matrix(10,(i,j)-&gt;	tau||0||i||j): </font><font color="#ff0000" size="3" face="Monospaced">
+<br>S_t0:=evalm(	DeleteRow(DeleteColumn( &nbsp;&nbsp;&nbsp;&nbsp;Matrix(S_t0_0) 	,dim+1..10),dim+1..10	));</font><font color="#ff0000" size="3" face="Monospaced">
+<br>S_0t_0:=Matrix(10,(i,j)-&gt;	tau||i||j):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>S_0t:=evalm(	DeleteRow(DeleteColumn( &nbsp;&nbsp;&nbsp;&nbsp;Matrix(S_0t_0) 	,dim+1..10),dim+1..10	));</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_44.gif" width="586" height="278" alt="S_t0 := matrix([[tau011, tau012, tau013, tau014, tau015, tau016, tau017, tau018, tau019, tau0110], [tau021, tau022, tau023, tau024, tau025, tau026, tau027, tau028, tau029, tau0210], [tau031, tau032, t..." align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_45.gif" width="526" height="278" alt="S_0t := matrix([[tau11, tau12, tau13, tau14, tau15, tau16, tau17, tau18, tau19, tau110], [tau21, tau22, tau23, tau24, tau25, tau26, tau27, tau28, tau29, tau210], [tau31, tau32, tau33, tau34, tau35, ta..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>for i to dim do for j to dim do </font><font color="#ff0000" size="3" face="Monospaced">
+<br>eqdiff_t0||((i-1)*dim+j):=	diff(S_t0[i,j](t),t)	=	 sum(	T[i,k]*S_t0[k,j](t)	,k=1..dim);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>eqdiff_0t||((i-1)*dim+j):=	diff(S_0t[i,j](t),t)	=	 sum(	T[j,k]*S_0t[i,k](t)	,k=1..dim);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>od;od;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>eqdiff_t035;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>eqdiff_0t35;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_46.gif" width="200" height="33" alt="diff(tau045(t), t) = sigma*N*tau015(t)-n*sigma*tau045(t)" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_47.gif" width="182" height="33" alt="diff(tau45(t), t) = sigma*N*tau42(t)-n*sigma*tau45(t)" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>sys_t0 := {seq(eqdiff_t0||i,i=1..dim^2)} :	nops(%);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>sys_0t := {seq(eqdiff_0t||i,i=1..dim^2)} :	nops(%);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_48.gif" width="21" height="13" alt="100" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_49.gif" width="21" height="13" alt="100" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>initial_t0:={seq(seq(S_t0[i,j](0)=S[i,j],j=1..dim),i=1..dim)}:	nops(%);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>initial_0t:={seq(seq(S_0t[i,j](0)=S[i,j],j=1..dim),i=1..dim)}:	nops(%);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_50.gif" width="21" height="13" alt="100" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_51.gif" width="21" height="13" alt="100" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>#for i to dim do for j to dim do unassign('tau||0||i||j(t)'); od;od;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>sol_t0:=dsolve(sys_t0 union initial_t0) </font><font color="#ff0000" size="3" face="Monospaced">
+<br>assuming `if`(alpha=0,fff,alpha)&gt;0 ,n&gt;0 ,N&gt;0 ,chi&gt;0 ,sigma&gt;0 ,k&gt;0:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>sol_t0:=simplify(sol_t0) assuming `if`(alpha=0,fff,alpha)&gt;0 ,n&gt;0 ,N&gt;0 ,chi&gt;0 ,sigma&gt;0 ,k&gt;0	,t&gt;0:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>assign(%):</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>###	Seul les expression pour t&gt;0 nous interessent !</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>sol_0t:=simplify(dsolve(sys_0t union initial_0t)) </font><font color="#ff0000" size="3" face="Monospaced">
+<br>assuming `if`(alpha=0,fff,alpha)&gt;0 ,n&gt;0 ,N&gt;0 ,chi&gt;0 ,sigma&gt;0 ,k&gt;0:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>sol_0t:=simplify(sol_0t) assuming `if`(alpha=0,fff,alpha)&gt;0 ,n&gt;0 ,N&gt;0 ,chi&gt;0 ,sigma&gt;0 ,k&gt;0	,t&gt;0:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>assign(%):</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>for i from 1 to dim do for j from 1 to dim do</font><font color="#ff0000" size="3" face="Monospaced">
+<br>R0_||i||j:=simplify(	int(	 1/2*(tau||0||i||j(t) + tau||j||i(t) )*exp(-I*omega*t)</font><font color="#ff0000" size="3" face="Monospaced">
+<br>			+1/2*(tau||i||j(t) + tau||0||j||i(t) )*exp(+I*omega*t)	,t=0..inf))</font><font color="#ff0000" size="3" face="Monospaced">
+<br>assuming `if`(alpha=0,fff,alpha)&gt;0 ,n&gt;0 ,N&gt;0 ,chi&gt;0 ,sigma&gt;0 ,k&gt;0	,inf&gt;0;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>od;od;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>for i from 1 to dim do for j from 1 to dim do</font><font color="#ff0000" size="3" face="Monospaced">
+<br>R1_||i||j:=simplify(subs(inf=t,R0_||i||j));</font><font color="#ff0000" size="3" face="Monospaced">
+<br></font><font color="#ff0000" size="3" face="Monospaced">
+<br>R2_||i||j:=simplify(subs(sin(omega*t)=omega*dirac*Pi,(R1_||i||j)));</font><font color="#ff0000" size="3" face="Monospaced">
+<br></font><font color="#ff0000" size="3" face="Monospaced">
+<br>R3_||i||j:=simplify(algsubs(k*t=ln(Ak),map(expand,R2_||i||j)));</font><font color="#ff0000" size="3" face="Monospaced">
+<br></font><font color="#ff0000" size="3" face="Monospaced">
+<br>R4_||i||j:=simplify(algsubs(sigma*t*n=ln(An),map(expand,R3_||i||j)));</font><font color="#ff0000" size="3" face="Monospaced">
+<br></font><font color="#ff0000" size="3" face="Monospaced">
+<br>R5_||i||j:=simplify(algsubs(sigma*t*N=ln(AN),map(expand,R4_||i||j)));</font><font color="#ff0000" size="3" face="Monospaced">
+<br></font><font color="#ff0000" size="3" face="Monospaced">
+<br>R6_||i||j:=map(simp,convert(	simp(limit(limit(limit(R5_||i||j,Ak=infinity),An=infinity),AN=infinity)),parfrac,sigma))</font><font color="#ff0000" size="3" face="Monospaced">
+<br>assuming `if`(alpha=0,fff,alpha)&gt;0 ,n&gt;0 ,N&gt;0 ,chi&gt;0 ,sigma&gt;0 ,k&gt;0	,t&gt;0;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>od;od;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>((R6_29));</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_52.gif" width="421" height="70" alt="-1/4*((n*sigma+I*omega)*(n+N)*k^2*exp(I*t*omega)-(k^2+omega^2)*n*((n+N)*sigma+I*omega))*alpha*n*chi/((n+N)*(k^2+omega^2)*((n+N)*sigma+I*omega)*k*exp(I*t*omega)*omega)" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>Spasego:=Matrix(dim,(i,j)-&gt;R6_||i||j):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Spasego:=algsubs((I*t*omega)=ln(Z),Spasego):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>auto_correlation_à_deux_temps_non_symétrisée;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>#map(convert,map(simp,evalm(Spasego)),parfrac,sigma):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>map(x-&gt;map(simp,sort(x)),	map(collect,	map(simp,		evalm(Spasego)),[dirac,Z])):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Spasego:=map(x-&gt;map(simp,map(collect,x,chi)),%):</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_53.gif" width="274" height="13" alt="auto_correlation_à_deux_temps_non_symétrisée" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>	Matrix(subs([dirac=delta(omega),sigma=gamma[ech]],evalm(Spasego)))[1..6,1..6];</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	Matrix(subs([dirac=delta(omega),sigma=gamma[ech]],map(collect,evalm(Spasego),kff)))[7..10,7..10];</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	Matrix(subs([dirac=delta(omega),sigma=gamma[ech]],map(collect,evalm(Spasego),k)))[7..10,1..3];</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	Matrix(subs([dirac=delta(omega),sigma=gamma[ech]],	evalm(Spasego)	))[7..10,4..6];</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	Matrix(subs([dirac=delta(omega),sigma=gamma[ech]],map(convert,evalm(Spasego),parfrac,omkega)))[1..6,7..10];</font><font color="#ff0000" size="3" face="Monospaced">
+<br></font><font color="#ff0000" size="3" face="Monospaced">
+<br>Z_est_,exp(I*infinity*omega),soit_typiquement_un_truc_entre_,-1,et,1;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_54.gif" width="659" height="227" alt="Matrix([[0, 0, 0, 0, 0, 0], [0, infinity*delta(omega), 0, 0, infinity*delta(omega), 0], [0, 0, Pi*n^2*delta(omega)/(2*n+2*N)+n*N*gamma[ech]/(2*(n+N)^2*gamma[ech]^2+2*omega^2), 0, 0, Pi*n*N*delta(omega..." align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_55.gif" width="959" height="227" alt="Matrix([[0, k/(k^2+omega^2), 0, 0], [k/(k^2+omega^2), 0, 0, 0], [0, 0, 1/8*alpha^2*chi^2*delta(omega)*n^2*Pi/(k^2*(n+N))+1/8*alpha^2*n*N*gamma[ech]*chi^2/((k^2+omega^2)*((n+N)^2*gamma[ech]^2+omega^2))..." align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_56.gif" width="675" height="166" alt="Matrix([[0, 0, 0], [0, 0, 0], [0, -1/4*alpha*n^2*chi*Z/(k*(n+N)*omega)+1/4*(-n*gamma[ech]+I*omega)*alpha*n*k*chi/((k^2+omega^2)*((-n-N)*gamma[ech]+I*omega)*omega), -1/4*chi*delta(omega)*n^2*Pi*alpha/(..." align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_57.gif" width="679" height="166" alt="Matrix([[0, 0, 0], [0, 0, 0], [0, -1/4*alpha*n*k*N*gamma[ech]*chi/(((-n-N)*gamma[ech]+I*omega)*(k^2+omega^2)*omega)-1/4*alpha*n*N*chi*Z/(k*(n+N)*omega), -1/4*chi*N*n*alpha*Pi*delta(omega)/(k*(n+N))+1/..." align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_58.gif" width="726" height="282" alt="Matrix([[0, 0, 0, 0], [0, 0, -1/4*(n*gamma[ech]+I*omega)*alpha*n*k*chi/((k^2+omega^2)*((n+N)*gamma[ech]+I*omega)*omega)+1/4*alpha*n^2*chi/((n+N)*Z*k*omega), 1/4*(n*gamma[ech]+I*omega)*alpha*n*k*chi/((..." align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_59.gif" width="333" height="28" alt="Z_est_, exp(infinity*I*omega), soit_typiquement_un_truc_entre_, -1, et, 1" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>Spasego[2,9];</font><font color="#ff0000" size="3" face="Monospaced">
+<br>simp(%);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>convert(%,parfrac,sigma);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>map(simp,%);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_60.gif" width="379" height="46" alt="-1/4*((n*sigma+I*omega)*(n+N)*k^2*Z-(k^2+omega^2)*n*((n+N)*sigma+I*omega))*alpha*n*chi/((n+N)*(k^2+omega^2)*((n+N)*sigma+I*omega)*k*Z*omega)" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_61.gif" width="455" height="46" alt="-1/4*(I*Z*k^2*N*omega+((Z-1)*k^2-omega^2)*n^2*sigma+((Z-1)*k^2-omega^2)*(N*sigma+I*omega)*n)*alpha*n*chi/((n+N)*((n+N)*sigma+I*omega)*(k^2+omega^2)*Z*k*omega)" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_62.gif" width="426" height="60" alt="-1/4*chi*alpha*(Z*k^2-k^2-omega^2)*n^2/(omega*Z*k*(n+N)*(k^2+omega^2))-1/4*I*alpha*n*chi*k*N/((n*sigma+N*sigma+I*omega)*(n+N)*(k-I*omega)*(k+I*omega))" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_63.gif" width="383" height="60" alt="-1/4*((Z-1)*k^2-omega^2)*alpha*n^2*chi/((n+N)*(k^2+omega^2)*Z*k*omega)-1/4*I*alpha*n*k*N*chi/(((n+N)*sigma+I*omega)*(n+N)*(k^2+omega^2))" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>#	Spasego[1..dim,1..6];	Spasego[1..dim,3..dim];	#	pour impression</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>Spasego[3,3]*(1-(conjugate( &nbsp;conjugate(alpha)*Spasego[3,9] &nbsp;+ &nbsp;Spasego[3,10]*alpha &nbsp;) * ( conjugate(alpha)*Spasego[3,9] &nbsp;+ &nbsp;Spasego[3,10]*alpha &nbsp;)/</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	(Spasego[3,3]*	((conjugate(alpha)^2*Spasego[9,9]+(alpha)^2*Spasego[10,10]) + conjugate(alpha)*alpha*(Spasego[9,10]+Spasego[10,9]))	) &nbsp;&nbsp;&nbsp;))</font><font color="#ff0000" size="3" face="Monospaced">
+<br> assuming k&gt;0,n&gt;0,chi&gt;0,alpha&gt;0:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>variance_conditionnelle_delta_n__Spasego_y;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>simp(%%) &nbsp;assuming k&gt;0,n&gt;0,chi&gt;0,alpha&gt;0:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>map(simp,convert(%,parfrac,sigma)) &nbsp;assuming k&gt;0,n&gt;0,chi&gt;0,alpha&gt;0;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_64.gif" width="253" height="13" alt="variance_conditionnelle_delta_n__Spasego_y" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Monospaced">Warning, &nbsp;computation interrupted</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_65.gif" width="253" height="13" alt="variance_conditionnelle_delta_n__Spasego_y" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>Sd0:=map(x-&gt;map(simp,x),map(simp,subs(dirac=0,Spasego))):</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>Sd0[3,3]*(1-(conjugate( &nbsp;conjugate(alpha)*Sd0[3,9] &nbsp;+ &nbsp;Sd0[3,10]*alpha &nbsp;) * ( conjugate(alpha)*Sd0[3,9] &nbsp;+ &nbsp;Sd0[3,10]*alpha &nbsp;)/</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	(Sd0[3,3]*	((conjugate(alpha)^2*Sd0[9,9]+(alpha)^2*Sd0[10,10]) + conjugate(alpha)*alpha*(Sd0[9,10]+Sd0[10,9]))	) &nbsp;&nbsp;&nbsp;))</font><font color="#ff0000" size="3" face="Monospaced">
+<br> assuming k&gt;0,n&gt;0,chi&gt;0,alpha&gt;0:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>variance_conditionnelle_delta_n__Sd0_y;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>simp(%%) &nbsp;assuming sigma&gt;0,N&gt;0,omega::real,k&gt;0,n&gt;0,chi&gt;0,alpha&gt;0:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>map(simp,convert(%,parfrac,k)) ;# assuming k&gt;0,n&gt;0,chi&gt;0,alpha&gt;0;</font><font color="#ff0000" size="3" face="Monospaced">
+<br></font><font color="#ff0000" size="3" face="Monospaced">
+<br>facteur_cond_Jz_met_Sy:=map(simp,convert(simp(%/op(1,%)),parfrac,k));</font><font color="#ff0000" size="3" face="Monospaced">
+<br>a_multipier_par,op(1,%%);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_66.gif" width="228" height="13" alt="variance_conditionnelle_delta_n__Sd0_y" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Monospaced">Warning, &nbsp;computation interrupted</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_67.gif" width="228" height="13" alt="variance_conditionnelle_delta_n__Sd0_y" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_68.gif" width="168" height="13" alt="facteur_cond_Jz_met_Sy := 1" align="center">
+</font></p>
+<p align="left"><font color="#0000ff" size="3" face="Lucida Bright"><img src="images_stationnaire_ground_laser/stationnaire_ground_laser_69.gif" width="325" height="13" alt="a_multipier_par, variance_conditionnelle_delta_n__Sd0_y" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>Sd0[6,6]*(1-(conjugate( &nbsp;conjugate(alpha)*Sd0[6,9] &nbsp;+ &nbsp;Sd0[6,10]*alpha &nbsp;) * ( conjugate(alpha)*Sd0[6,9] &nbsp;+ &nbsp;Sd0[6,10]*alpha &nbsp;)/</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	(Sd0[6,6]*	((conjugate(alpha)^2*Sd0[9,9]+(alpha)^2*Sd0[10,10]) + conjugate(alpha)*alpha*(Sd0[9,10]+Sd0[10,9]))	) &nbsp;&nbsp;&nbsp;))</font><font color="#ff0000" size="3" face="Monospaced">
+<br> assuming k&gt;0,n&gt;0,chi&gt;0,alpha&gt;0:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>variance_conditionnelle_delta_N__Sd0_y;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>simp(%%) &nbsp;assuming sigma&gt;0,N&gt;0,omega::real,k&gt;0,n&gt;0,chi&gt;0,alpha&gt;0:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>map(simp,convert(%,parfrac,k)) ;# assuming k&gt;0,n&gt;0,chi&gt;0,alpha&gt;0;</font><font color="#ff0000" size="3" face="Monospaced">
+<br></font><font color="#ff0000" size="3" face="Monospaced">
+<br>facteur_cond_Jz_ground_Sy:=map(simp,convert(simp(%/op(1,%)),parfrac,k));</font><font color="#ff0000" size="3" face="Monospaced">
+<br>a_multipier_par,op(1,%%);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>#		Sd0[1..10,1..4];	Sd0[1..10,3..7];	Sd0[1..10,6..9];	Sd0[1..10,9..10];</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>evalm((S))[1..10,1..5];</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>zero:='zero':</font><font color="#ff0000" size="3" face="Monospaced">
+<br>hey:=proc(xxx)</font><font color="#ff0000" size="3" face="Monospaced">
+<br>if nops(xxx)=3 then </font><font color="#ff0000" size="3" face="Monospaced">
+<br>if xxx=op(1,xxx)+op(2,xxx)+op(3,xxx) then</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	op(1,xxx)+ map(simp,convert(simp(op(2,xxx)+op(3,xxx)),parfrac,k));</font><font color="#ff0000" size="3" face="Monospaced">
+<br>else xxx;fi;else xxx;fi;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>end:</font><font color="#ff0000" size="3" face="Monospaced">
+<br></font><font color="#ff0000" size="3" face="Monospaced">
+<br>sss:=map(x-&gt;map(simp,x),map(hey,map(sort,map(x-&gt;map(simp,x),map(convert,map(simp,Matrix(evalm(Spasego))),parfrac,sigma))))):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>sss[9,10]:=hey(sss[9,10]+zero):	sss[10,9]:=hey(sss[10,9]+zero):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>zero:=0:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>#sss;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>#	sss[1..10,1..4];	sss[1..10,5..7];	sss[1..10,8..10];	#	pour impression</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>evalm(S)[6,9];</font><font color="#ff0000" size="3" face="Monospaced">
+<br>convert(%,parfrac,k);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>convert(simp(1/2/Pi*int(subs(dirac=Dirac(omega),sss[6,9]),omega=-infinity..infinity) assuming k&gt;0,sigma&gt;0,n&gt;0,N&gt;0),parfrac,k);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>%;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"></p>
+<p align="left"></p>
+<p></p>
+<p></p>
+</body>
+</html>

@@ -1,0 +1,216 @@
+This is e-TeX, Version 3.141592-2.1 (MiKTeX 2.4) (preloaded format=latex 2004.2.16)  1 FEB 2006 11:30
+entering extended mode
+**formule.tex
+(formule.tex
+LaTeX2e <2001/06/01>
+Babel <v3.7m> and hyphenation patterns for english, french, german, ngerman, du
+mylang, nohyphenation, loaded.
+(C:\program files\texmf\tex\latex\base\report.cls
+Document Class: report 2001/04/21 v1.4e Standard LaTeX document class
+(C:\program files\texmf\tex\latex\base\size10.clo
+File: size10.clo 2001/04/21 v1.4e Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(C:\program files\texmf\tex\generic\babel\babel.sty
+Package: babel 2003/11/16 v3.7m The Babel package
+
+(C:\program files\texmf\tex\generic\babel\frenchb.ldf
+Language: french 2003/11/09 v1.6e French support from the babel system
+
+(C:\program files\texmf\tex\generic\babel\babel.def
+File: babel.def 2003/11/16 v3.7m Babel common definitions
+\babel@savecnt=\count88
+\U@D=\dimen103
+)
+Package babel Info: Making : an active character on input line 200.
+Package babel Info: Making ; an active character on input line 201.
+Package babel Info: Making ! an active character on input line 202.
+Package babel Info: Making ? an active character on input line 203.
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 280.
+\parindentFFN=\dimen104
+\std@mcc=\count89
+\dec@mcc=\count90
+
+*************************************
+* Local config file frenchb.cfg used
+*
+(C:\program files\texmf\tex\generic\babel\frenchb.cfg)))
+(C:\program files\texmf\tex\latex\graphics\graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(C:\program files\texmf\tex\latex\graphics\keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(C:\program files\texmf\tex\latex\graphics\graphics.sty
+Package: graphics 2001/07/07 v1.0n Standard LaTeX Graphics (DPC,SPQR)
+
+(C:\program files\texmf\tex\latex\graphics\trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(C:\program files\texmf\tex\latex\00miktex\graphics.cfg
+File: graphics.cfg 2003/03/12 v1.1 MiKTeX 'graphics' configuration
+)
+Package graphics Info: Driver file: dvips.def on input line 80.
+
+(C:\program files\texmf\tex\latex\graphics\dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen105
+\Gin@req@width=\dimen106
+)
+(C:\program files\texmf\tex\latex\amsfonts\amssymb.sty
+Package: amssymb 2002/01/22 v2.2d
+
+(C:\program files\texmf\tex\latex\amsfonts\amsfonts.sty
+Package: amsfonts 2001/10/25 v2.2f
+\@emptytoks=\toks15
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 132.
+)) (formule.aux)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for T1/lmr/m/n on input line 35.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 35.
+
+(C:\program files\texmf\tex\latex\lm\t1lmr.fd
+File: t1lmr.fd 2003/07/22 v1.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Info: Redefining \dots on input line 35.
+LaTeX Font Info:    Try loading font information for U+msa on input line 37.
+
+(C:\program files\texmf\tex\latex\amsfonts\umsa.fd
+File: umsa.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 37.
+
+(C:\program files\texmf\tex\latex\amsfonts\umsb.fd
+File: umsb.fd 2002/01/19 v2.2g AMS font definitions
+)
+Overfull \hbox (0.15768pt too wide) in paragraph at lines 37--37
+ [][] 
+ []
+
+[1
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 55--58
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--63
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 64--65
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 66--67
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 96--105
+
+ []
+
+[1]
+Underfull \hbox (badness 10000) in paragraph at lines 110--111
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 112--113
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 114--115
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 116--119
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--124
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 125--126
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 127--128
+
+ []
+
+
+Overfull \hbox (98.53151pt too wide) in paragraph at lines 129--133
+[][]$\OML/cmm/m/it/14.4 V[]\OT1/cmr/m/n/14.4 (\OML/cmm/m/it/14.4 S[]\OMS/cmsy/m
+/n/14.4 j\OML/cmm/m/it/14.4 S[]\OT1/cmr/m/n/14.4 ) = [] []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 129--133
+
+ []
+
+
+Overfull \hbox (125.79276pt too wide) in paragraph at lines 134--139
+[][]$\OML/cmm/m/it/14.4 V[]\OT1/cmr/m/n/14.4 (\OML/cmm/m/it/14.4 S[]\OMS/cmsy/m
+/n/14.4 j\OML/cmm/m/it/14.4 S[]\OT1/cmr/m/n/14.4 ) = [] []$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 140--141
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 142--143
+
+ []
+
+[2] (formule.aux) ) 
+Here is how much of TeX's memory you used:
+ 1493 strings out of 95933
+ 16633 string characters out of 1195252
+ 66201 words of memory out of 1067193
+ 4454 multiletter control sequences out of 35000
+ 15235 words of font info for 59 fonts, out of 500000 for 1000
+ 14 hyphenation exceptions out of 607
+ 25i,10n,24p,204b,316s stack positions out of 1500i,500n,5000p,200000b,32768s
+
+Output written on formule.dvi (3 pages, 7184 bytes).

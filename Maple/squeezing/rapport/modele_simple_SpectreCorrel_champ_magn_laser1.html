@@ -1,0 +1,880 @@
+<html>
+<head>
+<title>modele_simple_SpectreCorrel_champ_magn_laser.html</title>
+<!-- Created by Maple 9.00, Windows 2000 -->
+</head>
+<body bgcolor="FFFFFF">
+<a name="MapleAutoBookmark1" />
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>restart;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>with(linalg):	with(LinearAlgebra):</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Monospaced">Warning, the protected names norm and trace have been redefined and unprotected</font><font color="#0000ff" size="3" face="Monospaced">
+<br></font></p>
+<p align="left"><font color="#0000ff" size="3" face="Monospaced">Warning, the assigned name GramSchmidt now has a global binding</font><font color="#0000ff" size="3" face="Monospaced">
+<br></font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>gn:=sigma*n:	gN:=sigma*N:	Ntot:=N+n;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>nnn:=1: NNN:=1: 	</font><font color="#ff0000" size="3" face="Monospaced">#nnn:=n; NNN:=N; # ligne activer pour etre dans les variable normalisées Jm = J_moy / n &nbsp;et Jg=J_moy_g / N</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_1.gif" width="63" height="12" alt="Ntot := N+n" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>rho_m:=Matrix([[m11,m12],[m21,m22]]):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>rho_g:=Matrix([[g11,g12],[g21,g22]]):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>rho:=DiagonalMatrix([evalm(rho_m),evalm(rho_g)]);</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_2.gif" width="210" height="96" alt="rho := Matrix([[m11, m12, 0, 0], [m21, m22, 0, 0], [0, 0, g11, g12], [0, 0, g21, g22]])" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>toto_B0_m:=gn*rho_g - gN*rho_m:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>toto_B0_g:=gN*rho_m - gn*rho_g:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>toto_B0:=DiagonalMatrix([evalm(toto_B0_m),evalm(toto_B0_g)]):	toto_B0[1,2]:=toto_B0[1,2]:	toto_B0[2,1]:=toto_B0[2,1]:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>						toto_B0[1,1]:=toto_B0[1,1]:	toto_B0[2,2]:=toto_B0[2,2]:	</font><font color="#ff0000" size="3" face="Monospaced">
+<br>dérivée_de_rho_à_champ_nul,_,_, toto_B0;</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_3.gif" width="634" height="96" alt="dérivée_de_rho_à_champ_nul, _, _, Matrix([[sigma*n*g11-sigma*N*m11, sigma*n*g12-sigma*N*m12, 0, 0], [sigma*n*g21-sigma*N*m21, sigma*n*g22-sigma*N*m22, 0, 0], [0, 0, sigma*N*m11-sigma*n*g11, sigma*N*m1..." align="center">
+</font></p>
+<p align="left"><font color="#000000" size="3" face="Lucida Bright">On va y r'ajouter un terme Hamiltonien venant du champ magnétique Bx:</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>Jx:=Matrix(4): 	Jx[1,2]:=Lm/(2): Jx[2,1]:=Lm/(2): </font><font color="#ff0000" size="3" face="Monospaced">
+<br>		Jx[3,4]:=Lg/(2): Jx[4,3]:=Lg/(2): </font><font color="#ff0000" size="3" face="Monospaced">
+<br>Jx:=evalm(Jx);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>toto_Bx:=evalm((Jx . rho - rho . Jx)/I);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>toto:=evalm(toto_B0+toto_Bx):		subs([Lmm=Lm/2,Lgg=Lg/2],simplify(subs([Lm=2*Lmm,Lg=2*Lgg],evalm(toto)),size)):</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_4.gif" width="230" height="166" alt="Jx := matrix([[0, 1/2*Lm, 0, 0], [1/2*Lm, 0, 0, 0], [0, 0, 0, 1/2*Lg], [0, 0, 1/2*Lg, 0]])" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_5.gif" width="694" height="187" alt="toto_Bx := matrix([[-I*(1/2*Lm*m21-1/2*Lm*m12), -I*(1/2*Lm*m22-1/2*Lm*m11), 0, 0], [-I*(1/2*Lm*m11-1/2*Lm*m22), -I*(1/2*Lm*m12-1/2*Lm*m21), 0, 0], [0, 0, -I*(1/2*Lg*g21-1/2*Lg*g12), -I*(1/2*Lg*g22-1/2..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>R:=Matrix(8,1,[[rho_m[1,1]],[rho_m[1,2]],[rho_m[2,1]],[rho_m[2,2]],[rho_g[1,1]],[rho_g[1,2]],[rho_g[2,1]],[rho_g[2,2]]]);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>M_toto:=Matrix([</font><font color="#ff0000" size="3" face="Monospaced">
+<br>[-gN,-Lm/(2*I),Lm/(2*I),0,gn,0,0,0],	[-Lm/(2*I),-gN,0,Lm/(2*I),0,gn,0,0],</font><font color="#ff0000" size="3" face="Monospaced">
+<br>[Lm/(2*I),0,-gN,-Lm/(2*I),0,0,gn,0],	[0,Lm/(2*I),-Lm/(2*I),-gN,0,0,0,gn],</font><font color="#ff0000" size="3" face="Monospaced">
+<br>[gN,0,0,0,-gn,-Lg/(2*I),Lg/(2*I),0],	[0,gN,0,0,-Lg/(2*I),-gn,0,Lg/(2*I)],</font><font color="#ff0000" size="3" face="Monospaced">
+<br>[0,0,gN,0,Lg/(2*I),0,-gn,-Lg/(2*I)],	[0,0,0,gN,0,Lg/(2*I),-Lg/(2*I),-gn]]);</font><font color="#ff0000" size="3" face="Monospaced">
+<br></b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_6.gif" width="64" height="198" alt="R := Matrix([[m11], [m12], [m21], [m22], [g11], [g12], [g21], [g22]])" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_7.gif" width="556" height="340" alt="M_toto := Matrix([[-sigma*N, 1/2*I*Lm, -1/2*I*Lm, 0, sigma*n, 0, 0, 0], [1/2*I*Lm, -sigma*N, 0, -1/2*I*Lm, 0, sigma*n, 0, 0], [-1/2*I*Lm, 0, -sigma*N, 1/2*I*Lm, 0, 0, sigma*n, 0], [0, -1/2*I*Lm, 1/2*I..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>pass:=1/2*Matrix([	[-1,1,1,-1,0,0,0,0],[0,-1/I,+1/I,0,0,0,0,0],[1,0,0,-1,0,0,0,0],</font><font color="#ff0000" size="3" face="Monospaced">
+<br>		[0,0,0,0,-1,1,1,-1],[0,0,0,0,0,-1/I,+1/I,0],[0,0,0,0,1,0,0,-1],</font><font color="#ff0000" size="3" face="Monospaced">
+<br>		[1,0,0,1,0,0,0,0],[0,0,0,0,1,0,0,1]]):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>normale:=DiagonalMatrix([1/nnn,1/nnn,1/nnn,1/nnn,1/NNN,1/NNN,1/NNN,1/NNN]):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>pass:=evalm(pass . normale): &nbsp;# pour etre dans la base des J_moyen normalisés !</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>base_2:=blockmatrix(2,1,[evalm((Matrix(pass) . R)[1..6,1..1]),Matrix(4,1,[[Ax],[Axc],[Ay],[Ayc]])]); </font><font color="#ff0000" size="3" face="Monospaced">
+<br>T:=simplify(evalm(Matrix(8,evalm(pass . M_toto . inverse(pass)))[1..6,1..6])):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>T:=DiagonalMatrix([		T	,	DiagonalMatrix([-k*(1+I*theta),-k*(1-I*theta),-k*(1+I*theta),-k*(1-I*theta)])	]): </font><font color="#ff0000" size="3" face="Monospaced">
+<br>T[9,3]:=-chi/2*alpha	:		T[10,3]:=-chi/2*conjugate(alpha):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>T[2,9]:=I*chi*n/4*conjugate(alpha):	T[2,10]:=-I*chi*n/4*(alpha):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>evalm(T);</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_8.gif" width="233" height="358" alt="base_2 := matrix([[-1/2*m11+1/2*m12+1/2*m21-1/2*m22], [1/2*I*m12-1/2*I*m21], [1/2*m11-1/2*m22], [-1/2*g11+1/2*g12+1/2*g21-1/2*g22], [1/2*I*g12-1/2*I*g21], [1/2*g11-1/2*g22], [Ax], [Axc], [Ay], [Ayc]])" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_9.gif" width="586" height="320" alt="matrix([[-gamma[ech]*N, 0, 0, gamma[ech]*n, 0, 0, 0, 0, 0, 0], [0, -gamma[ech]*N, 0, 0, gamma[ech]*n, 0, 0, 0, 1/4*I*chi*n*conjugate(E), -1/4*I*chi*n*E], [0, 0, -gamma[ech]*N, 0, 0, gamma[ech]*n, 0, 0..." align="center">
+</font></p>
+<p align="left"><font color="#000000" size="3" face="Lucida Bright">ICI? J'AI RAJOUTE LES TERMES CALCULES A LA MAINS. </font><font color="#000000" size="3" face="Lucida Bright"></font><font color="#000000" size="5" face="Lucida Bright"><b> BASE &nbsp;Champ &nbsp;: &nbsp;Ax &nbsp;, &nbsp;Ax+ &nbsp;, &nbsp;Ay &nbsp;, &nbsp;Ay+</b></font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>R1 := linalg['rank'](T);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Monospaced">Warning, unable to find a provably non-zero pivot</font><font color="#0000ff" size="3" face="Monospaced">
+<br></font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_10.gif" width="35" height="12" alt="R1 := 9" align="center">
+</font></p>
+<p><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>ksi:=proc(i) 	local p;	p:=Matrix(4):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>if i=1 then 	p[1,2]:=1/2/nnn: 	p[2,1]:=1/2/nnn: &nbsp;&nbsp;&nbsp;	p[1,1]:=-1/2/nnn: 	p[2,2]:=-1/2/nnn: 	fi;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>if i=2 then 	p[1,2]:=1/2/I/nnn: 	p[2,1]:=-1/2/I/nnn: 					fi;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>if i=3 then 	p[1,1]:=1/2/nnn: 	p[2,2]:=-1/2/nnn: 					fi;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>if i=4 then 	p[3,4]:=1/2/NNN: 	p[4,3]:=1/2/NNN: 	p[3,3]:=-1/2/NNN: 	p[4,4]:=-1/2/NNN: 	fi;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>if i=5 then 	p[3,4]:=1/2/I/NNN: 	p[4,3]:=-1/2/I/NNN: 					fi;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>if i=6 then 	p[3,3]:=1/2/NNN: 	p[4,4]:=-1/2/NNN: 					fi;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>evalm(p);		end:</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>seq(ksi(i),i=1..6);		### ON A PRIS GARDE A RETIRER LA VALEUR MOYENNE DE Jx pour le metastable et le ground ! ! ! ! !</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_11.gif" width="900" height="130" alt="matrix([[(-1)/2, 1/2, 0, 0], [1/2, (-1)/2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]), matrix([[0, -1/2*I, 0, 0], [1/2*I, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]), matrix([[1/2, 0, 0, 0], [0, (-1)/2, 0, 0], [0..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>#Voilà les variances des J x y z...</font><font color="#ff0000" size="3" face="Monospaced">
+<br>[seq(factor(simplify(	trace( (ksi(i) . ksi(i) . rho) ) &nbsp;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>,{m11+m22=n,g11+g22=N,m12=n/2,m21=n/2,g12=N/2,g21=N/2})),i=1..6)];</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_12.gif" width="126" height="35" alt="[0, 1/4*n, 1/4*n, 0, 1/4*N, 1/4*N]" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>A:=proc(i) 	local q;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>q:= T[i,1]*ksi(1) + T[i,2]*ksi(2) + T[i,3]*ksi(3) + T[i,4]*ksi(4) + T[i,5]*ksi(5) + T[i,6]*ksi(6);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>evalm(q);		end:</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>#seq(evalm( 2* A(i)),i=1..3);	seq(evalm( 2* A(i)),i=4..6);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>G_wang:=Matrix(6,(i,j)-&gt; collect(simplify(</font><font color="#ff0000" size="3" face="Monospaced">
+<br>trace( ksi(i) . ksi(j) . toto &nbsp;- &nbsp;A(i) . ksi(j) . rho - ksi(i) . A(j) . rho &nbsp;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>) ,{m11+m22=n,g11+g22=N}),['Lm','Lg',sigma])):</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>st:=seq(seq(rho[i,j]= 1/2 *`if`(i&lt;=2,n,N),i=1..4),j=1..4):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>subsrho:=[st[1],st[2],st[5],st[6],st[11],st[12],st[15],st[16]]:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>subsrho;</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_13.gif" width="450" height="35" alt="[m11 = 1/2*n, m21 = 1/2*n, m12 = 1/2*n, m22 = 1/2*n, g11 = 1/2*N, g21 = 1/2*N, g12 = 1/2*N, g22 = 1/2*N]" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>d:=Matrix(map(collect,map(simplify,(</font><font color="#ff0000" size="3" face="Monospaced">
+<br>subs(subsrho,	evalm(( &nbsp;G_wang )))))	,[N,'sigma'])):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>d:=DiagonalMatrix([d,Matrix(4,[[0,2*k,0,0],[0,0,0,0],[0,0,0,2*k],[0,0,0,0]])]);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>gg:=Matrix( evalm(1/2*(d + transpose(d)) )):	evalm(gg);</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_14.gif" width="598" height="320" alt="d := Matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1/2*gamma[ech]*N*n, 1/2*I*N*n*gamma[ech], 0, -1/2*gamma[ech]*N*n, -1/2*I*N*n*gamma[ech], 0, 0, 0, 0], [0, -1/2*I*N*n*gamma[ech], 1/2*gamma[ech]*N*n, 0,..." align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_15.gif" width="542" height="320" alt="matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1/2*gamma[ech]*N*n, 0, 0, -1/2*gamma[ech]*N*n, 0, 0, 0, 0, 0], [0, 0, 1/2*gamma[ech]*N*n, 0, 0, -1/2*gamma[ech]*N*n, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0..." align="center">
+</font></p>
+<p align="left"><font color="#000000" size="3" face="Lucida Bright"></font><font color="#000000" size="5" face="Lucida Bright"><b>BASE &nbsp;Champ &nbsp;: &nbsp;Ax &nbsp;, &nbsp;Ax+ &nbsp;, &nbsp;Ay &nbsp;, &nbsp;Ay+</b></font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>#	Une procedure qui fait une simplification bien pratique !!!! &nbsp;elle assume ALPHA Réel !!!</font><font color="#ff0000" size="3" face="Monospaced">
+<br>simp:=proc(asimplifier)</font><font color="#ff0000" size="3" face="Monospaced">
+<br>simplify(sort(simplify(simplify(expand(numer(asimplifier)),size),size))</font><font color="#ff0000" size="3" face="Monospaced">
+<br>/</font><font color="#ff0000" size="3" face="Monospaced">
+<br>sort(simplify(simplify(expand(denom(asimplifier)),size),size)),size) assuming real;	end;</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_16.gif" width="952" height="12" alt="simp := proc (asimplifier) `assuming`([simplify(sort(simplify(simplify(expand(numer(asimplifier)), size), size))/sort(simplify(simplify(expand(denom(asimplifier)), size), size)), size)], [real]) end p..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>#	Dans un premier temps, la cavité compense le truc bidule imaginaire &nbsp;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>theta:=0;</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_17.gif" width="28" height="12" alt="theta := 0" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>mg_0:=Matrix(	(	inverse(evalm(</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	-T +I*omega*evalm(IdentityMatrix(Dimensions(T)[1])))	))	)	:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>md_0:=Matrix(	(	inverse(evalm(</font><font color="#ff0000" size="3" face="Monospaced">
+<br>transpose(	-T)-I*omega*evalm(IdentityMatrix(Dimensions(T)[1])))	))	)	:</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>cond:=proc(j,i,MatS) local aze;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>if MatS[j,j]=0 then aze:=0; else </font><font color="#ff0000" size="3" face="Monospaced">
+<br>	if MatS[i,i]=0 	then</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	aze:=limit(MatS[j,j]*(1- ( simp(MatS[i,j])*conjugate(MatS[i,j]) / (MatS[j,j]*(MatS[i,i]+epsilon)) )	),epsilon=0) assuming real;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>			else</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	aze:=	MatS[j,j]*(1- &nbsp;( simp(MatS[i,j])*conjugate(MatS[i,j]) / (MatS[j,j]*MatS[i,i]) )	) assuming real; fi;fi;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>sort(simp(simplify(aze))) assuming real;	end:</b></font></td>
+</tr>
+</table></p>
+<dl><a name="MapleAutoBookmark2" />
+<p align="left"><font size="5" face="Serif"><b>ICI, pas de champs Laser : 	alpha=0, ki=0	</font><font size="5" face="Serif">
+<br>Mais un champ Magnétique : 	Larmor_m = Larmor_g = Omega</b></font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>Lm:=Omega;		Lg:=Omega;		alpha:=0;		chi:=0; 	k:=0;	sigma:='sigma':</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_18.gif" width="41" height="12" alt="Lm := Omega" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_19.gif" width="38" height="12" alt="Lg := Omega" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_20.gif" width="28" height="12" alt="alpha := 0" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_21.gif" width="27" height="12" alt="chi := 0" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_22.gif" width="28" height="12" alt="k := 0" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>mg:=Matrix(Dimensions(mg_0)[1],'erreur'):		md:=Matrix(Dimensions(mg_0)[1],'erreur'):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>for i to Dimensions(mg_0)[1] do </font><font color="#ff0000" size="3" face="Monospaced">
+<br>	for j to Dimensions(mg_0)[1] do </font><font color="#ff0000" size="3" face="Monospaced">
+<br>		mg[i,j]:=map(simplify,convert(mg_0[i,j],parfrac,sigma),size):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>		md[i,j]:=map(simplify,convert(md_0[i,j],parfrac,sigma),size): (i-1)*10+j;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>od:od:					#Une simplification incroyable !</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>S0:=(evalm((mg . gg . md ))):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>S_larmor_pas_laser:=Matrix(Dimensions(T)[1], (i,j)-&gt;	simp(S0[i,j])	):</b></font></td>
+</tr>
+</table></p>
+<dl><a name="MapleAutoBookmark3" />
+<p align="left"><font size="5" face="Serif"><b>...............voyons juste le cas : Sans Champ Laser ET SANS Larmor</b></font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>S_si_il_n_y_a_pas_de_champ_magnétique,_ni_de_champ_laser;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Il_faut_noter_qu_il_manque_évidement_les_Diracs_de_,omega;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>S_pas_larmor_pas_laser:=subs(Omega=0,S_larmor_pas_laser):	S_pas_larmor_pas_laser;</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_23.gif" width="312" height="12" alt="S_si_il_n_y_a_pas_de_champ_magnétique, _ni_de_champ_laser" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_24.gif" width="285" height="12" alt="Il_faut_noter_qu_il_manque_évidement_les_Diracs_de_, omega" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_25.gif" width="761" height="338" alt="Matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1/2*n*N*sigma/(omega^2+(N+n)^2*sigma^2), 0, 0, -1/2*n*N*sigma/(omega^2+(N+n)^2*sigma^2), 0, 0, 0, 0, 0], [0, 0, 1/2*n*N*sigma/(omega^2+(N+n)^2*sigma^2), 0, ..." align="center">
+</font></p>
+</dl>
+<p align="left"><font color="#000000" size="3" face="Lucida Bright"></font><font color="#000000" size="3" face="Lucida Bright"><b>
+<br>Ici, On donne une forme "simple" à la matrice </font><font color="#000000" size="3" face="Lucida Bright">S_larmor_pas_laser en faisant apparaitre deux Lorentziennes</b></font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>a1:=op(1,sort(map(simplify,convert(S_larmor_pas_laser[2,2],parfrac,omega),size))):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>a2:=op(2,sort(map(simplify,convert(S_larmor_pas_laser[2,2],parfrac,omega),size))):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>term:=proc(i,j,Mat_0) local out,coe,Mat;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Mat:=(map(x-&gt;map(simplify,x,size),map(convert,Mat_0,parfrac,omega))):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>coe:=map(simplify,convert(Mat[i,j],parfrac,omega),size):</font><font color="#ff0000" size="3" face="Monospaced">
+<br></font><font color="#ff0000" size="3" face="Monospaced">
+<br>if nops(map(simplify,convert(Mat[i,j],parfrac,omega),size))=2 and coe=op(1,coe)+op(2,coe) </font><font color="#ff0000" size="3" face="Monospaced">
+<br>then	out:=	simplify(algsubs(	sigma*n*N=L1*denom(a1),</font><font color="#ff0000" size="3" face="Monospaced">
+<br>					op(1,sort(map(simplify,convert(Mat[i,j],parfrac,omega),size)))),size)</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	+	simplify(algsubs(	sigma*n*N=L2*denom(a2),</font><font color="#ff0000" size="3" face="Monospaced">
+<br>					op(2,sort(map(simplify,convert(Mat[i,j],parfrac,omega),size)))),size);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>else 	out:=simp(Mat[i,j]); fi;		map(simp,out);	end:</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>SL1:=Matrix(Dimensions(T)[1],(i,j)-&gt;term(i,j,S_larmor_pas_laser)):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>SL1[1..10,1..10];</font><font color="#ff0000" size="3" face="Monospaced">
+<br>L1(omega) = L2(-omega);Deux_Lorentziennes_centrées_en + Omega,_et_en - Omega;	L1:=sigma*n*N/simplify(denom(a1),size);L2:=sigma*n*N/simplify(denom(a2),size);	L1:='L1':L2:='L2':</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_26.gif" width="554" height="249" alt="Matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, L1+L2, I*L1-I*L2, 0, -L1-L2, -I*L1+I*L2, 0, 0, 0, 0], [0, -I*L1+I*L2, L1+L2, 0, I*L1-I*L2, -L1-L2, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, -L1-L2, ..." align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_27.gif" width="75" height="12" alt="L1(omega) = L2(-omega)" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_28.gif" width="238" height="12" alt="Deux_Lorentziennes_centrées_en+Omega, _et_en-Omega" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_29.gif" width="163" height="34" alt="L1 := n*N*sigma/(4*(n+N)^2*sigma^2+4*(-omega+Omega)^2)" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_30.gif" width="159" height="34" alt="L2 := n*N*sigma/(4*(n+N)^2*sigma^2+4*(omega+Omega)^2)" align="center">
+</font></p>
+<p align="left"><font color="#000000" size="3" face="Lucida Bright">La Matrice Des variances Conditionnelles</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>Mcond:=Matrix(10,(i,j)-&gt;sort(map(simplify,convert(	simp(cond(i,j,S_larmor_pas_laser))	,parfrac,omega),size))):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Mcond0:=map(x-&gt;map(simp,x),	Matrix(10,(i,j)-&gt;	term(i,j,Mcond)	)):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>if evalm(Mcond0)[2,1]&lt;&gt;'L1'+'L2' then</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Mcond:=map(x-&gt;map(simp,x),</font><font color="#ff0000" size="3" face="Monospaced">
+<br>subs([L1=LL2*simplify(denom(a2),size)/simplify(denom(a1),size),L2=LL1*simplify(denom(a1),size)/simplify(denom(a2),size)],</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Matrix(10,(i,j)-&gt;	term(i,j,Mcond)	)));	else Mcond:=Mcond0:		fi:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>:	LL1:='L1':LL2:='L2':			Mcond[1..6,1..6];</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_31.gif" width="813" height="237" alt="Matrix([[0, 0, 0, 0, 0, 0], [L1+L2, 0, sigma*N*n/(2*omega^2+2*(n+N)^2*sigma^2+2*Omega^2), L1+L2, 0, sigma*N*n/(2*omega^2+2*(n+N)^2*sigma^2+2*Omega^2)], [L1+L2, sigma*N*n/(2*omega^2+2*(n+N)^2*sigma^2+2..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>alpha:='alpha':Lm:='Lm':Lg:='Lg':chi:='chi':k:='k':	evalm(Mcond)[2,2];</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_32.gif" width="6" height="12" alt="0" align="center">
+</font></p>
+</dl>
+<dl><a name="MapleAutoBookmark4" />
+<p align="left"><font size="5" face="Serif"><b></font><font size="5" face="Serif">ICI, avec le champs Laser 	Mais SANS Champ Magnétique : Larmor = 0</b></font></p>
+<p align="left"><font color="#000000" size="3" face="Lucida Bright">Il faut un peut revenir en arriere pour réexprimer mg, et S, car on avait posé : </font><font color="#000000" size="3" face="Lucida Bright">
+<br>Lm:=Omega;	Lg:=Omega;		alpha:=0;		chi:=0;</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>Lm:=0;	Lg:=0;	alpha:='alpha';	chi:='chi'; 	k:='k';</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_33.gif" width="38" height="12" alt="Lm := 0" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_34.gif" width="35" height="12" alt="Lg := 0" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_35.gif" width="28" height="12" alt="alpha := alpha" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_36.gif" width="26" height="12" alt="chi := chi" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_37.gif" width="28" height="12" alt="k := k" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>mg:=Matrix(Dimensions(mg_0)[1],'erreur'):		md:=Matrix(Dimensions(mg_0)[1],'erreur'):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>for i to Dimensions(mg)[1] do </font><font color="#ff0000" size="3" face="Monospaced">
+<br>	for j to Dimensions(mg)[1] do </font><font color="#ff0000" size="3" face="Monospaced">
+<br>		mg[i,j]:=map(simplify,convert(mg_0[i,j],parfrac,`if`(i&gt;6 or j&gt;6,'k',omega)),size):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>		md[i,j]:=map(simplify,convert(md_0[i,j],parfrac,`if`(i&gt;6 or j&gt;6,'k',omega)),size): </font><font color="#ff0000" size="3" face="Monospaced">
+<br>od:od:					#rebelotte, ca marche mieux...</font><font color="#ff0000" size="3" face="Monospaced">
+<br>for i to Dimensions(mg)[1] do </font><font color="#ff0000" size="3" face="Monospaced">
+<br>	for j to Dimensions(mg)[1] do </font><font color="#ff0000" size="3" face="Monospaced">
+<br>if (i=2 or i=3 or i=5 or i=6) and j&lt;=6</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	then	mg[i,j]:=mg[i,j]:	md[i,j]:=md[i,j]:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	else	mg[i,j]:=map(simplify,convert(mg[i,j],parfrac,sigma),size):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>		md[i,j]:=map(simplify,convert(md[i,j],parfrac,sigma),size): (i-1)*10+j;	fi;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>od:od:					#Une simplification incroyable !</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>S0:=(evalm((mg . gg . md ))):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>S_laser:=Matrix(Dimensions(T)[1], (i,j)-&gt;	simp(S0[i,j])	):</b></font></td>
+</tr>
+</table></p>
+<dl><a name="MapleAutoBookmark5" />
+<p align="left"><font size="5" face="Serif"><b>si_il_n_y_a_pas_d_échange_de_métastabilité___ie___,sigma=0</b></font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>S_si_il_n_y_a_pas_d_échange_de_métastabilité___ie___,sigma=0;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Il_faut_noter_qu_il_manque_évidement_les_Diracs_de_,omega;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>SL2:=subs(sigma=0,S_laser):	SL2;</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_38.gif" width="305" height="12" alt="S_si_il_n_y_a_pas_d_échange_de_métastabilité___ie___, sigma = 0" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_39.gif" width="285" height="12" alt="Il_faut_noter_qu_il_manque_évidement_les_Diracs_de_, omega" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_40.gif" width="628" height="363" alt="Matrix([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1/8*n^2*chi^2*alpha^2*k/(omega^2*(omega^2+k^2)), 0, 0, 0, 0, 0, 0, -1/4*alpha*n*k*chi/(omega*(omega^2+k^2)), 1/4*alpha*n*k*chi/(omega*(omega^2+k^2))], [0, 0..." align="center">
+</font></p>
+</dl>
+<dl><a name="MapleAutoBookmark6" />
+<p align="left"><font size="5" face="Serif"><b>SINON, voila les dévellopement limiés en chi, ou en sigma.</b></font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>S_au_premier_ordre_en_,chi;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Il_faut_noter_qu_il_manque_évidement_les_Diracs_de_,omega;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>SL3:=Matrix(10,(i,j)-&gt;map(simplify,map(simp,map(factor,convert(taylor(simp(S_laser[i,j]),chi=0,2),polynom))),size)):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>SL3[1..10,1..5];</font><font color="#ff0000" size="3" face="Monospaced">
+<br>SL3[1..10,6..10];</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_41.gif" width="135" height="12" alt="S_au_premier_ordre_en_, chi" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_42.gif" width="285" height="12" alt="Il_faut_noter_qu_il_manque_évidement_les_Diracs_de_, omega" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_43.gif" width="633" height="380" alt="Matrix([[0, 0, 0, 0, 0], [0, 1/2*n*N*sigma/(omega^2+(n+N)^2*sigma^2), 0, 0, -1/2*n*N*sigma/(omega^2+(n+N)^2*sigma^2)], [0, 0, 1/2*n*N*sigma/(omega^2+(n+N)^2*sigma^2), 0, 0], [0, 0, 0, 0, 0], [0, -1/2*..." align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_44.gif" width="683" height="424" alt="Matrix([[0, 0, 0, 0, 0], [0, 0, 0, -1/4*(sigma*n+I*omega)*alpha*n*k*chi/(((n+N)*sigma+I*omega)*(omega^2+k^2)*omega), 1/4*(sigma*n+I*omega)*alpha*n*k*chi/(((n+N)*sigma+I*omega)*(omega^2+k^2)*omega)], [..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>S_au_premier_ordre_en_,sigma;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Il_faut_noter_qu_il_manque_évidement_les_Diracs_de_,omega;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>SL4:=Matrix(10,(i,j)-&gt;map(simplify,map(simp,map(factor,convert(taylor(simp(S_laser[i,j]),sigma=0,2),polynom))),size)):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>SL4[1..10,1..6];</font><font color="#ff0000" size="3" face="Monospaced">
+<br>SL4[1..10,7..10];</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_45.gif" width="136" height="12" alt="S_au_premier_ordre_en_, sigma" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_46.gif" width="285" height="12" alt="Il_faut_noter_qu_il_manque_évidement_les_Diracs_de_, omega" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_47.gif" width="731" height="452" alt="Matrix([[0, 0, 0, 0, 0, 0], [0, 1/8*n^2*chi^2*alpha^2*k/(omega^2*(omega^2+k^2))+1/2*sigma*n*N/omega^2, 0, 0, 1/8*I*(4*I*omega^3+4*I*k^2*omega+n*chi^2*k*alpha^2)*n*N*sigma/(omega^3*(omega^2+k^2)), 0], ..." align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_48.gif" width="500" height="470" alt="Matrix([[0, 0, 0, 0], [0, 0, -1/4*alpha*n*k*chi/(omega*(omega^2+k^2))-1/4*I*sigma*alpha*chi*n*k*N/((omega^2+k^2)*omega^2), 1/4*alpha*n*k*chi/(omega*(omega^2+k^2))+1/4*I*n*chi*k*N*alpha*sigma/((omega^2..." align="center">
+</font></p>
+</dl>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>alpha:='alpha':Lm:='Lm':Lg:='Lg':chi:='chi':k:='k':</b></font></td>
+</tr>
+</table></p>
+</dl>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>for i to 10 do for j to 10 do </font><font color="#ff0000" size="3" face="Monospaced">
+<br>		c||i||j:=simp(cond(i,j,S_laser));</font><font color="#ff0000" size="3" face="Monospaced">
+<br>		c||i||j;subs(chi=1/unsurchi,%):			</font><font color="#ff0000" size="3" face="Monospaced">
+<br>		convert(%,parfrac,unsurchi):map(simplify,%,size):subs(unsurchi=1/chi,%):map(simplify,%,size);	</font><font color="#ff0000" size="3" face="Monospaced">
+<br>		c||i||j:=%;	od: od:</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>sigma:=gamma[ech];</font><font color="#ff0000" size="3" face="Monospaced">
+<br>map(x-&gt;map(simp,x),map(convert,S_laser,parfrac,kdw)):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>%[1..10,1..3],</font><font color="#ff0000" size="3" face="Monospaced">
+<br>%[1..10,4..6],</font><font color="#ff0000" size="3" face="Monospaced">
+<br>%[1..10,7..10];</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_49.gif" width="40" height="16" alt="sigma := gamma[ech]" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_50.gif" width="652" height="460" alt="Matrix([[0, 0, 0], [0, 1/8*n*(chi^2*E^2*gamma[ech]^2*n^3*k+(4*N*omega^4+4*N*omega^2*k^2)*gamma[ech]+chi^2*omega^2*E^2*n*k)/((k^2+omega^2)*omega^2*(omega^2+(n+N)^2*gamma[ech]^2)), 0], [0, 0, n*gamma[ec..." align="center"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_51.gif" width="652" height="460" alt="Matrix([[0, 0, 0], [0, 1/8*n*(chi^2*E^2*gamma[ech]^2*n^3*k+(4*N*omega^4+4*N*omega^2*k^2)*gamma[ech]+chi^2*omega^2*E^2*n*k)/((k^2+omega^2)*omega^2*(omega^2+(n+N)^2*gamma[ech]^2)), 0], [0, 0, n*gamma[ec..." align="center"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_52.gif" width="652" height="502" alt="Matrix([[0, 0, 0], [0, 1/8*n*(chi^2*E^2*gamma[ech]^2*n^3*k+(4*N*omega^4+4*N*omega^2*k^2)*gamma[ech]+chi^2*omega^2*E^2*n*k)/((k^2+omega^2)*omega^2*(omega^2+(n+N)^2*gamma[ech]^2)), 0], [0, 0, n*gamma[ec..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>	S:=S_laser:	#####################	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>S[6,6]*(1-(conjugate( &nbsp;conjugate(alpha)*S[6,9] &nbsp;+ &nbsp;S[6,10]*alpha &nbsp;) * ( conjugate(alpha)*S[6,9] &nbsp;+ &nbsp;S[6,10]*alpha &nbsp;)/</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	(S[6,6]*	((conjugate(alpha)^2*S[9,9]+(alpha)^2*S[10,10]) + conjugate(alpha)*alpha*(S[9,10]+S[10,9]))	) &nbsp;&nbsp;&nbsp;)) assuming real:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>simp(%):		convert(%,parfrac,k):	sort(map(simplify,%,size),lexorder):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>if %=op(1,%)+op(2,%) then</font><font color="#ff0000" size="3" face="Monospaced">
+<br>facteur_condi_Jz_Sy:=1-sort(collect(1-map(simplify,op(1,%)/op(1,%)+simp(op(2,%)/op(1,%)),size),k)); fi;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>a_multiplier_par,op(1,%%);</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_53.gif" width="320" height="38" alt="facteur_condi_Jz_Sy := 1-n*N*alpha^2*sigma*chi^2/(n*N*alpha^2*sigma*chi^2+(4*(n+N)^2*sigma^2+4*omega^2)*k)" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_54.gif" width="189" height="34" alt="a_multiplier_par, n*sigma*N/(2*(n+N)^2*sigma^2+2*omega^2)" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b># plot3d(subs([n=10^6,N=10^12,sigma=10^(-6),k=10^(8),alpha=10^6],facteur_condi_Jz_Sy),chi=0..30000,omega=-3*10^12..3*10^12,axes=boxed</font><font color="#ff0000" size="3" face="Monospaced">
+<br># ,orientation=[15,59]);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>S[5,5]*(1-(conjugate( &nbsp;conjugate(alpha)*S[5,9] &nbsp;+ &nbsp;S[5,10]*alpha &nbsp;) * ( conjugate(alpha)*S[5,9] &nbsp;+ &nbsp;S[5,10]*alpha &nbsp;)/</font><font color="#ff0000" size="3" face="Monospaced">
+<br>	(S[5,5]*	((conjugate(alpha)^2*S[9,9]+(alpha)^2*S[10,10]) + conjugate(alpha)*alpha*(S[9,10]+S[10,9]))	) &nbsp;&nbsp;&nbsp;)) assuming real:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>simp(%):		convert(%,parfrac,k):	sort(map(simplify,%,size),lexorder):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>if %=op(1,%)+op(2,%) then</font><font color="#ff0000" size="3" face="Monospaced">
+<br>facteur_condi_Jy_Sy:=1-sort(collect(1-map(simplify,op(1,%)/op(1,%)+simp(op(2,%)/op(1,%)),size),k)); fi;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>a_multiplier_par,op(1,%%);</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_55.gif" width="210" height="38" alt="facteur_condi_Jy_Sy := 1+1/4*n*k*N*alpha^2*sigma*chi^2/((k^2+omega^2)*omega^2)" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_56.gif" width="189" height="34" alt="a_multiplier_par, n*sigma*N/(2*(n+N)^2*sigma^2+2*omega^2)" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>#	Une procedure qui fait une simplification bien pratique !!!! &nbsp;elle assume ALPHA Réel !!!</font><font color="#ff0000" size="3" face="Monospaced">
+<br>simpi:=proc(asimplifier)</font><font color="#ff0000" size="3" face="Monospaced">
+<br>simplify(sort(simplify(simplify(expand(numer(asimplifier)),size),size))</font><font color="#ff0000" size="3" face="Monospaced">
+<br>/</font><font color="#ff0000" size="3" face="Monospaced">
+<br>sort(simplify(simplify(expand(denom(asimplifier)),size),size)),size) ;	end;</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_57.gif" width="860" height="12" alt="simpi := proc (asimplifier) simplify(sort(simplify(simplify(expand(numer(asimplifier)), size), size))/sort(simplify(simplify(expand(denom(asimplifier)), size), size)), size) end proc" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>assume(theta,real);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>alpha:=E/(1+I*theta);</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#ff00ff" size="3" face="Monospaced">Error, (in assume) cannot assume on a constant object</font><font color="#ff00ff" size="3" face="Monospaced">
+<br></font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_58.gif" width="29" height="12" alt="alpha := E" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>#sigma:=0;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Lm:=0;Lg:=0;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>M:=evalm(-T) 	assuming IIIIalpha::real:	G:= evalm(d) assuming IIIIalpha::real:	Sego:=Matrix(10,(i,j)-&gt;	zeta||i||j):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>M:=evalm(		DeleteRow(DeleteColumn(	Matrix(M) 	,4..6),4..6	));</font><font color="#ff0000" size="3" face="Monospaced">
+<br>G:=evalm(		DeleteRow(DeleteColumn(	Matrix(G) 	,4..6),4..6	));</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Sego:=evalm(	DeleteRow(DeleteColumn( &nbsp;&nbsp;&nbsp;&nbsp;Matrix(Sego) 	,4..6),4..6	));</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_59.gif" width="38" height="12" alt="Lm := 0" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_60.gif" width="35" height="12" alt="Lg := 0" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_61.gif" width="380" height="227" alt="M := matrix([[sigma*N, 0, 0, 0, 0, 0, 0], [0, sigma*N, 0, 0, 0, -1/4*I*chi*n*conjugate(E), 1/4*I*chi*n*E], [0, 0, sigma*N, 0, 0, 0, 0], [0, 0, 0, k, 0, 0, 0], [0, 0, 0, 0, k, 0, 0], [0, 0, 1/2*chi*E, ..." align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_62.gif" width="361" height="208" alt="G := matrix([[0, 0, 0, 0, 0, 0, 0], [0, 1/2*sigma*N*n, 1/2*I*N*n*sigma, 0, 0, 0, 0], [0, -1/2*I*N*n*sigma, 1/2*sigma*N*n, 0, 0, 0, 0], [0, 0, 0, 0, 2*k, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0..." align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_63.gif" width="406" height="176" alt="Sego := matrix([[zeta11, zeta12, zeta13, zeta17, zeta18, zeta19, zeta110], [zeta21, zeta22, zeta23, zeta27, zeta28, zeta29, zeta210], [zeta31, zeta32, zeta33, zeta37, zeta38, zeta39, zeta310], [zeta71..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>estG:=Matrix(evalm( M . Sego + Sego . Transpose(Matrix(M)) )):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>#estG[1..7,1..3];	#estG[1..7,5..7];	#estG[1..7,3..5];</font><font color="#ff0000" size="3" face="Monospaced">
+<br></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>temp:=Matrix(evalm(estG-G)):		#temp[1,1]:=zeta92-zeta29;temp[1,3]:=zeta102-zeta210;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>sys:=map(rhs,op(2,temp)):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>nops(%);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>inc:=map(rhs,op(2,Matrix(Sego)));</font><font color="#ff0000" size="3" face="Monospaced">
+<br>nops(%);</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_64.gif" width="12" height="12" alt="45" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_65.gif" width="982" height="12" alt="inc := {zeta93, zeta89, zeta91, zeta92, zeta810, zeta21, zeta23, zeta22, zeta1010, zeta31, zeta32, zeta33, zeta37, zeta38, zeta39, zeta310, zeta98, zeta99, zeta910, zeta97, zeta79, zeta71, zeta72, zet..." align="center"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_66.gif" width="982" height="12" alt="inc := {zeta93, zeta89, zeta91, zeta92, zeta810, zeta21, zeta23, zeta22, zeta1010, zeta31, zeta32, zeta33, zeta37, zeta38, zeta39, zeta310, zeta98, zeta99, zeta910, zeta97, zeta79, zeta71, zeta72, zet..." align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_67.gif" width="12" height="12" alt="49" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>tempsol:=solve(sys,inc);</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_68.gif" width="53" height="12" alt="tempsol := " align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>tempSego:=subs(convert(tempsol,list),evalm(Sego)):tempSego:=map(simpi,map(factor,evalm(tempSego))):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Matrix(tempSego)[1..7,1..3];</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#ff00ff" size="3" face="Monospaced">Error, wrong number (or type) of parameters in function convert</font><font color="#ff00ff" size="3" face="Monospaced">
+<br></font></p>
+<p align="left"><font color="#ff00ff" size="3" face="Monospaced">Error, (in Matrix) dimension parameters are required for this form of initializer</font><font color="#ff00ff" size="3" face="Monospaced">
+<br></font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>simpi(tempSego[6,2]-0*tempSego[7,2]-tempSego[2,6]+0*tempSego[2,7]);</font><font color="#ff0000" size="3" face="Monospaced">
+<br>factor(simpi(solve(%,zeta29)));</font><font color="#ff0000" size="3" face="Monospaced">
+<br></font><font color="#ff0000" size="3" face="Monospaced">
+<br>tempS:=map(simplify,map(factor,map(simpi,subs(zeta29=%,evalm(tempSego)))),size);</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_69.gif" width="134" height="16" alt="tempSego[6, 2]-tempSego[2, 6]" align="center">
+</font></p>
+<p align="left"><font color="#ff00ff" size="3" face="Monospaced">Error, (in simpi) simpi uses a 1st argument, asimplifier, which is missing</font><font color="#ff00ff" size="3" face="Monospaced">
+<br></font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_70.gif" width="91" height="12" alt="tempS := tempSego" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>tempS[3,3]:=n/4+0*zeta33;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>map(simplify,Matrix(evalm( M . tempS + tempS . Transpose(Matrix(M)) )),size);</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_71.gif" width="76" height="30" alt="tempS[3, 3] := 1/4*n" align="center">
+</font></p>
+<p align="left"><font color="#ff00ff" size="3" face="Monospaced">Error, (in Matrix) dimension parameters are required for this form of initializer</font><font color="#ff00ff" size="3" face="Monospaced">
+<br></font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>Erreur:=Matrix(7):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>for i to 7 do for j to 7 do</font><font color="#ff0000" size="3" face="Monospaced">
+<br>temp:=Matrix(evalm(estG-G)): temp[i,j]:=0:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>sys:=map(rhs,op(2,temp)):		nops(%);		__,i,j,__;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>if (solve({op(sys),k&lt;&gt;0,chi&lt;&gt;0,alpha&lt;&gt;0,n&lt;&gt;0}),1)&lt;&gt;1 then Erreur[i,j]:=AAA;fi;	od;od:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Erreur;</b></font></td>
+</tr>
+</table></p>
+<p align="left"><font color="#0000ff" size="3" face="Monospaced">Warning, &nbsp;computation interrupted</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_72.gif" width="347" height="176" alt="Matrix([[AAA, AAA, AAA, AAA, AAA, AAA, AAA], [AAA, AAA, AAA, AAA, AAA, AAA, AAA], [AAA, AAA, AAA, AAA, AAA, AAA, AAA], [AAA, AAA, AAA, AAA, AAA, AAA, AAA], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>estG[2,7];</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_73.gif" width="257" height="30" alt="-1/4*I*chi*n*conjugate(E)*zeta910+1/4*I*chi*n*E*zeta1010+1/2*zeta23*chi*conjugate(E)+zeta210*k" align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>essai:=Matrix(7):essai[6,7]:=1:essai[4,5]:=1:			essai;</font><font color="#ff0000" size="3" face="Monospaced">
+<br>Matrix(evalm( M . essai + essai . Transpose(Matrix(M)) ));</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_74.gif" width="242" height="176" alt="Matrix([[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0, 0]])" align="center">
+</font></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_75.gif" width="323" height="208" alt="Matrix([[0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, -1/4*I*chi*n*conjugate(E)], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 2*k, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 1/4*I*chi*n*E, 0, 0, 0, 0, 2*k], [0, 0, 0, 0, 0..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>estcesol:=Matrix(Sego):</font><font color="#ff0000" size="3" face="Monospaced">
+<br>ce:=chi*alpha/k:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>estcesol[1,4]:=0: estcesol[1,5]:=0: estcesol[1,6]:=-chi*alpha/k*zeta31: estcesol[1,7]:=%:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>estcesol[2,4]:=0: estcesol[2,5]:=0: estcesol[2,6]:=-ce*zeta23: estcesol[2,7]:=-ce*zeta32:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>estcesol[3,4]:=0: estcesol[3,5]:=0: estcesol[3,6]:=-ce*zeta33: estcesol[3,7]:=%:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>estcesol[4,1]:=0: estcesol[4,2]:=0: estcesol[4,3]:=0:estcesol[4,4]:=0: estcesol[4,5]:=1: estcesol[4,6]:=0: estcesol[4,7]:=0:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>estcesol[5,1]:=0: estcesol[5,2]:=0: estcesol[5,3]:=0:estcesol[5,4]:=0: estcesol[5,5]:=0: estcesol[5,6]:=0: estcesol[5,7]:=0:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>estcesol[6,1]:=-ce*zeta31: estcesol[6,2]:=-ce*zeta23: estcesol[6,3]:=-ce*zeta33:estcesol[6,4]:=0: estcesol[6,5]:=0: estcesol[6,6]:=ce^2*zeta33: estcesol[6,7]:=%+1:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>estcesol[7,1]:=-ce*zeta31: estcesol[7,2]:=-ce*zeta32: estcesol[7,3]:=-ce*zeta33:estcesol[7,4]:=0: estcesol[7,5]:=0: estcesol[7,6]:=ce^2*zeta33: estcesol[7,7]:=ce^2*zeta33:</font><font color="#ff0000" size="3" face="Monospaced">
+<br>estcesol:=Matrix(estcesol);</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_76.gif" width="509" height="278" alt="estcesol := Matrix([[zeta11, zeta12, zeta13, 0, 0, -chi*E*zeta31/k, -chi*E*zeta31/k], [zeta21, zeta22, zeta23, 0, 0, -chi*E*zeta23/k, -chi*E*zeta32/k], [zeta31, zeta32, zeta33, 0, 0, -chi*E*zeta33/k, ..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>simplify(evalm( M . estcesol + estcesol . Transpose(Matrix(M)) -G &nbsp;));</b></font></td>
+</tr>
+</table></p>
+<p align="center"><font color="#0000ff" size="3" face="Times New Roman"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_77.gif" width="924" height="65" alt="matrix([[0, -1/4*I*chi^2*zeta31*n*(-abs(E)^2+E^2)/k, 0, 0, 0, 1/2*zeta13*chi*E-chi*E*zeta31, -1/2*chi*(-zeta13*conjugate(E)+2*E*zeta31)], [-1/4*I*chi^2*zeta31*n*(-abs(E)^2+E^2)/k, -1/2*I*chi^2*n*(-zet..." align="center"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_78.gif" width="924" height="57" alt="matrix([[0, -1/4*I*chi^2*zeta31*n*(-abs(E)^2+E^2)/k, 0, 0, 0, 1/2*zeta13*chi*E-chi*E*zeta31, -1/2*chi*(-zeta13*conjugate(E)+2*E*zeta31)], [-1/4*I*chi^2*zeta31*n*(-abs(E)^2+E^2)/k, -1/2*I*chi^2*n*(-zet..." align="center"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_79.gif" width="924" height="55" alt="matrix([[0, -1/4*I*chi^2*zeta31*n*(-abs(E)^2+E^2)/k, 0, 0, 0, 1/2*zeta13*chi*E-chi*E*zeta31, -1/2*chi*(-zeta13*conjugate(E)+2*E*zeta31)], [-1/4*I*chi^2*zeta31*n*(-abs(E)^2+E^2)/k, -1/2*I*chi^2*n*(-zet..." align="center"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_80.gif" width="924" height="46" alt="matrix([[0, -1/4*I*chi^2*zeta31*n*(-abs(E)^2+E^2)/k, 0, 0, 0, 1/2*zeta13*chi*E-chi*E*zeta31, -1/2*chi*(-zeta13*conjugate(E)+2*E*zeta31)], [-1/4*I*chi^2*zeta31*n*(-abs(E)^2+E^2)/k, -1/2*I*chi^2*n*(-zet..." align="center"><img src="modele_simple_SpectreCorrel_champ_magn_laser/modele_simple_SpectreCorrel_champ_magn_laser_81.gif" width="924" height="65" alt="matrix([[0, -1/4*I*chi^2*zeta31*n*(-abs(E)^2+E^2)/k, 0, 0, 0, 1/2*zeta13*chi*E-chi*E*zeta31, -1/2*chi*(-zeta13*conjugate(E)+2*E*zeta31)], [-1/4*I*chi^2*zeta31*n*(-abs(E)^2+E^2)/k, -1/2*I*chi^2*n*(-zet..." align="center">
+</font></p>
+<p align="left"><table width="100%">
+<tr>
+<td valign="top"><font color="#ff0000" size="3" face="Monospaced"><b>&gt; </b></font></td>
+<td width="100%" valign="top"><font color="#ff0000" size="3" face="Monospaced"><b></b></font></td>
+</tr>
+</table></p>
+<p></p>
+<p></p>
+<p></p>
+</body>
+</html>

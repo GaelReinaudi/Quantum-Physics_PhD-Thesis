@@ -1,0 +1,1504 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet><Version major="6" minor="0"/><View-Properties><Zoom percentage="100"/></View-Properties><Styles><Layout alignment="left" bullet="none" linespacing="0.0" name="Heading 2" spaceabove="8.0" spacebelow="2.0"/><Layout alignment="left" bullet="none" linespacing="0.0" name="Heading 1" spaceabove="8.0" spacebelow="4.0"/><Layout alignment="left" firstindent="0.0" leftmargin="0.0" linespacing="0.0" name="Normal" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Layout alignment="left" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" name="_pstyle1" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Font background="[0,0,0]" bold="true" family="Serif" name="Heading 2" opaque="false" size="16"/><Font background="[0,0,0]" bold="true" family="Serif" name="Heading 1" opaque="false" size="18"/><Font background="[0,0,0]" bold="true" executable="true" family="Monospaced" foreground="[255,0,0]" italic="false" name="_cstyle1" readonly="false" size="12" underline="false"/><Font background="[0,0,0]" bold="true" executable="true" family="Monospaced" foreground="[255,0,0]" name="Maple Input" readonly="false"/><Font background="[0,0,0]" executable="false" family="Lucida Bright" name="Page Number" readonly="false" underline="false"/></Styles><Page-Numbers enabled="true" first-number="1" first-numbered-page="1" horizontal-location="right" style="Page Number" vertical-location="top"/><Group><Input><Text-field layout="_pstyle1" prompt="&gt; " style="_cstyle1">restart; 
+with(ListTools):with(StringTools):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">
+					sigma := gamma[ech];
+</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp:=proc(asimplifier)
+simplify(sort(simplify(simplify(factor(expand(numer(asimplifier))),size),size))
+/
+	sort(simplify(simplify(factor(expand(denom(asimplifier))),size),size)),size) ;
+map(simplify,%,size);	end;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">
+######			un programme pour faire commuter des produit d'op\351rateurs champs et atomiques</Font>
+######			a choisir parmi ai,aci,ai,aci, et rij, i et j entre 0 et 9<Font encoding="ISO8859-1">
+######			ex : com(  r12r30a1ac2 , a2r17r56ac1  ) tous atach\351s !</Font>
+######			avec maximum 2 champs par commutateur, pour l'instant.
+
+com:=proc(Oa,Ob) 
+local la,lb,dir,indir,dir_,dir__,iszero,i,dir0,indir_,indir__,indir0,out_dir,out_indir,sign_a,sign_b;
+global kkk;<Font encoding="ISO8859-1">
+if op(1,Oa)=-1 then sign_a:=-1 else sign_a:=1;	fi;			######### gestion d'un \351ventuel
+if op(1,Ob)=-1 then sign_b:=-1 else sign_b:=1;	fi;			######### signe n\351gatif !</Font>
+
+la:=[Group( IsDigit, sign_a*Oa )];lb:=[Group( IsDigit, sign_b*Ob )];<Font encoding="ISO8859-1">
+if type(nops(la),odd)=true or type(nops(lb),odd)=true then "erreur_imparit\351_operateur_indice";</Font>
+else
+	la:=[seq([(la[2*i-1],la[2*i])],i=1..nops(la)/2)];
+	lb:=[seq([(lb[2*i-1],lb[2*i])],i=1..nops(lb)/2)];
+	dir:=[op(la),op(lb)];				dir0:=dir;
+	indir:=[op(lb),op(la)];				indir0:=indir;
+
+iszero:=1;		dir__:=dir;	dir_:=dir;			#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(dir)-2 do						#
+	if (op([nops(dir__)-i,1],dir__)="a" 					#
+	    or op([nops(dir__)-i,1],dir__)="ac")				# Met les A en premier
+	and (op([nops(dir__)-i-1,1],dir__)="r"					#    dans l'ordre
+	    or op([nops(dir__)-i-1,2],dir__)&gt;op([nops(dir__)-i,2],dir__)) then	#	dans dir
+		dir_:= subsop(nops(dir__)-i=op(nops(dir__)-i-1,dir__),dir__);	#
+		dir__:= subsop(nops(dir__)-i-1=op(nops(dir__)-i,dir__),dir_);	#
+fi; 	od;	iszero:=`if`(dir=dir__,0,1); dir:=dir__;			#
+od;									#########
+iszero:=1;		indir__:=indir;	indir_:=indir;			#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(indir)-2 do					#
+	if (op([nops(indir__)-i,1],indir__)="a" 				#
+	or op([nops(indir__)-i,1],indir__)="ac")				# Met les A en premier
+	and (op([nops(indir__)-i-1,1],indir__)="r"				#    dans l'ordre
+	or op([nops(indir__)-i-1,2],indir__)&gt;op([nops(indir__)-i,2],indir__)) then#	dans indir
+	indir_:= subsop(nops(indir__)-i=op(nops(indir__)-i-1,indir__),indir__);	#
+	indir__:= subsop(nops(indir__)-i-1=op(nops(indir__)-i,indir__),indir_);	#
+fi; 	od;	iszero:=`if`(indir=indir__,0,1); 	indir:=indir__;		#
+od;									#########
+
+
+iszero:=1;		dir:=dir__;					#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(dir)-2 do						#
+	if (op([nops(dir)-i,1],dir)="r" 					#
+	and op([nops(dir)-i-1,1],dir)="r") then					#
+if 
+Explode(op([nops(dir)-i-1,2],dir))[2]=Explode(op([nops(dir)-i,2],dir))[1] 
+then 	
+dir_:=subsop(nops(dir)-i-1 = ["r",cat(Explode(op([nops(dir)-i-1,2],dir))[1],Explode(op([nops(dir)-i,2],dir))[2])],dir);
+dir__:=subsop(nops(dir_)-i=NULL,dir_);
+else 	dir_:=subsop(nops(dir)-i-1 = ["zero","0"],dir);
+	dir__:=subsop(nops(dir_)-i=NULL,dir_); fi;				# simplification des
+										# Rij_Rkl dans dir
+										#
+fi; 	od;	iszero:=`if`(dir=dir__,0,1); dir:=dir__;			#
+od;									#########
+iszero:=1;		indir:=indir__;					#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(indir)-2 do					#
+	if (op([nops(indir)-i,1],indir)="r" 					#
+	and op([nops(indir)-i-1,1],indir)="r") then				#
+if 
+Explode(op([nops(indir)-i-1,2],indir))[2]=Explode(op([nops(indir)-i,2],indir))[1] 
+then 	
+indir_:=subsop(nops(indir)-i-1 = ["r",cat(Explode(op([nops(indir)-i-1,2],indir))[1],Explode(op([nops(indir)-i,2],indir))[2])],indir);
+indir__:=subsop(nops(indir_)-i=NULL,indir_);
+else 	indir_:=subsop(nops(indir)-i-1 = ["zero","0"],indir);
+	indir__:=subsop(nops(indir_)-i=NULL,indir_); fi;			# simplification des
+										# Rij_Rkl dans indir
+										#
+fi; 	od;	iszero:=`if`(indir=indir__,0,1); indir:=indir__;		#
+od;									#########
+
+
+iszero:=1;		dir:=dir__;					#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(dir)-2 do						#
+	if (Explode(op([nops(dir)-i-1,1],dir))[1]="a" 				###
+	and Explode(op([nops(dir)-i,1],dir))[1]="a" 				#
+	and op([nops(dir)-i-1,2],dir)&lt;&gt;op([nops(dir)-i,2],dir))			#
+	then 		dir_:=subsop(nops(dir)-i-1 = ["zero","0"],dir);		#
+			dir__:=subsop(nops(dir_)-i=NULL,dir_); 			#
+	fi;
+	if (op([nops(dir)-i-1,1],dir)="a" 					###
+	and op([nops(dir)-i,1],dir)="ac") then					#
+		if 
+op([nops(dir)-i-1,2],dir)=op([nops(dir)-i,2],dir)				#
+		then 	
+dir_:=subsop(nops(dir)-i-1 = ["acaplusun",op([nops(dir)-i-1,2],dir)],dir);	#
+dir__:=subsop(nops(dir_)-i=NULL,dir_);
+		else 	dir_:=subsop(nops(dir)-i-1 = ["zero","0"],dir);		#
+			dir__:=subsop(nops(dir_)-i=NULL,dir_); 			# simplification des
+		fi;								# Ai_Acj dans dir
+	fi;									#
+	od;	iszero:=`if`(dir=dir__,0,1); dir:=dir__;			#
+od;									#########
+iszero:=1;		indir:=indir__;					#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(indir)-2 do					#
+	if (Explode(op([nops(indir)-i-1,1],indir))[1]="a" 			###
+	and Explode(op([nops(indir)-i,1],indir))[1]="a" 			#
+	and op([nops(indir)-i-1,2],indir)&lt;&gt;op([nops(indir)-i,2],indir))		#
+	then 		indir_:=subsop(nops(indir)-i-1 = ["zero","0"],indir);	#
+			indir__:=subsop(nops(indir_)-i=NULL,indir_); 		#
+	fi;
+	if (op([nops(indir)-i-1,1],indir)="a" 					###
+	and op([nops(indir)-i,1],indir)="ac") then				#
+		if 
+op([nops(indir)-i-1,2],indir)=op([nops(indir)-i,2],indir)			#
+		then 	
+indir_:=subsop(nops(indir)-i-1 = ["acaplusun",op([nops(indir)-i-1,2],indir)],indir);
+indir__:=subsop(nops(indir_)-i=NULL,indir_);
+		else 	indir_:=subsop(nops(indir)-i-1 = ["zero","0"],indir);	#
+			indir__:=subsop(nops(indir_)-i=NULL,indir_); 		# simplification des
+		fi;								# Ai_Acj dans indir
+	fi;									#
+	od;	iszero:=`if`(indir=indir__,0,1); indir:=indir__;		#
+od;									#########
+dir:=Flatten(dir);							#########
+if Occurrences("zero", dir)&gt;0 then out_dir:=0;					#
+else 	if dir[1]="acaplusun" then 						#
+		dir_:=subsop(2= NULL,dir); 					# AcA+1 pour dir
+		dir_:=subsop(1=	("ac" , op(2,dir) , "a" , op(2,dir)) , dir_);	#
+		dir__:=subsop(2= NULL ,dir);					#
+		dir__:=subsop(1= `if`(nops(dir)=2,1,NULL) ,dir__);		#
+		out_dir:= convert(cat(op(dir_)),symbol) + convert(cat(op(dir__)),symbol);
+	else	if [op(dir),rtyy,rtyy][3]="acaplusun" then 				#
+		dir_:=subsop(4= NULL,dir); 					#
+		dir_:=subsop(3=	("ac" , op(4,dir) , "a" , op(4,dir)) , dir_);	#
+		dir__:=subsop(4= NULL ,dir);					#
+		dir__:=subsop(3= `if`(nops(dir)=2,1,NULL) ,dir__);		#
+		out_dir:= convert(cat(op(dir_)),symbol) + convert(cat(op(dir__)),symbol);
+	else	out_dir:= convert(cat(op(dir)),symbol);				#
+	fi;fi;									#
+fi;									#########
+indir:=Flatten(indir);							#########
+if Occurrences("zero", indir)&gt;0 then out_indir:=0;				#
+else 	if indir[1]="acaplusun" then 						#
+		indir_:=subsop(2= NULL,indir); 					# AcA+1 pour indir
+		indir_:=subsop(1=("ac" , op(2,indir) , "a" , op(2,indir)) , indir_);
+		indir__:=subsop(2= NULL ,indir);				#
+		indir__:=subsop(1= `if`(nops(indir)=2,1,NULL) ,indir__);	#
+		out_indir:= convert(cat(op(indir_)),symbol) + convert(cat(op(indir__)),symbol);
+	else	if [op(indir),rtyy,rtyy][3]="acaplusun" then 				#
+		indir_:=subsop(4= NULL,indir); 					#
+		indir_:=subsop(3=("ac" , op(4,indir) , "a" , op(4,indir)) , indir_);
+		indir__:=subsop(4= NULL ,indir);				#
+		indir__:=subsop(3= `if`(nops(indir)=2,1,NULL) ,indir__);	#
+		out_indir:= convert(cat(op(indir_)),symbol) + convert(cat(op(indir__)),symbol);
+	else	out_indir:= convert(cat(op(indir)),symbol);			#
+	fi;fi;									#
+fi;									#########
+fi;
+sign_a*sign_b*(out_dir-out_indir);	end:	#	PS: 2 CHAMPS PAR COMMUTATEUR MAXIMUM	!
+					com(ac1,a1r28);	#exemple</Text-field></Input><Input><Text-field alignment="left" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">com(a3,ac3);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">						com(-r28,-r82);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">####	une procedure pour multiplier les op\351rateurs</Font>
+
+foi:=proc(Oa,Ob) local la,lb,pro,pro_,pro__,iszero,i,pro0,out_pro,sign_a,sign_b;
+global kkk;
+if op(1,Oa)=-1 or op(1,Oa)=0 then sign_a:=op(1,Oa);			#########<Font encoding="ISO8859-1">
+else sign_a:=1; fi;								# gestion d'un \351ventuel
+if op(1,Ob)=-1 or op(1,Ob)=0 then sign_b:=op(1,Ob);				# signe n\351gatif !</Font>
+else sign_b:=1; fi;							#########
+
+if (sign_a=0 or sign_b=0) then 						#########
+la:=[Group( IsDigit, zero0 )];lb:=[Group( IsDigit, zero0 )];			# ou bien d'un zero !
+else la:=[Group( IsDigit, sign_a*Oa )];lb:=[Group( IsDigit, sign_b*Ob )]; fi;	#
+									#########<Font encoding="ISO8859-1">
+if type(nops(la),odd)=true or type(nops(lb),odd)=true then "erreur_imparit\351_operateur_indice";</Font>
+else	la:=[seq([(la[2*i-1],la[2*i])],i=1..nops(la)/2)];
+	lb:=[seq([(lb[2*i-1],lb[2*i])],i=1..nops(lb)/2)];
+	pro:=[op(la),op(lb)];				pro0:=pro;
+iszero:=1;		pro__:=pro;					#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(pro)-1 do						#
+	if (op([nops(pro__)-i,1],pro__)="a" 					#
+	or op([nops(pro__)-i,1],pro__)="ac") 					# Met les A en premier
+	and op([nops(pro__)-i-1,1],pro__)="r" then 				#	dans pro
+		pro_:= subsop(nops(pro__)-i=op(nops(pro__)-i-1,pro__),pro__);	#
+		pro__:= subsop(nops(pro__)-i-1=op(nops(pro__)-i,pro__),pro_);	#
+fi; 	od;	iszero:=`if`(pro=pro__,0,1); pro:=pro__;			#
+od;									#########
+iszero:=1;		pro:=pro__;					#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(pro)-1 do						#
+	if (op([nops(pro)-i,1],pro)="r" 					#
+	and op([nops(pro)-i-1,1],pro)="r") then					#
+if 
+Explode(op([nops(pro)-i-1,2],pro))[2]=Explode(op([nops(pro)-i,2],pro))[1] 
+then 	
+pro_:=subsop(nops(pro)-i-1 = ["r",cat(Explode(op([nops(pro)-i-1,2],pro))[1],Explode(op([nops(pro)-i,2],pro))[2])],pro);
+pro__:=subsop(nops(pro_)-i=NULL,pro_);
+else 	pro_:=subsop(nops(pro)-i-1 = ["zero","0"],pro);
+pro__:=subsop(nops(pro_)-i=NULL,pro_); fi;					# simplification des
+										# Rij_Rkl dans pro
+										#
+fi; 	od;	iszero:=`if`(pro=pro__,0,1); pro:=pro__;			#
+od;									#########
+iszero:=1;		pro:=pro__;					#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(pro)-1 do						#
+	if (Explode(op([nops(pro)-i-1,1],pro))[1]="a" 				###
+	and Explode(op([nops(pro)-i,1],pro))[1]="a" 				#
+	and op([nops(pro)-i-1,2],pro)&lt;&gt;op([nops(pro)-i,2],pro))			#
+	then 		pro_:=subsop(nops(pro)-i-1 = ["zero","0"],pro);		#
+			pro__:=subsop(nops(pro_)-i=NULL,pro_); 			#
+	fi;
+	if (op([nops(pro)-i-1,1],pro)="a" 					###
+	and op([nops(pro)-i,1],pro)="ac") then					#
+		if 
+op([nops(pro)-i-1,2],pro)=op([nops(pro)-i,2],pro)				#
+		then 	
+pro_:=subsop(nops(pro)-i-1 = ["acaplusun",op([nops(pro)-i-1,2],pro)],pro);	#
+pro__:=subsop(nops(pro_)-i=NULL,pro_);
+		else 	pro_:=subsop(nops(pro)-i-1 = ["zero","0"],pro);		#
+			pro__:=subsop(nops(pro_)-i=NULL,pro_); 			# simplification des
+		fi;								# Ai_Acj dans pro
+	fi;									#
+	od;	iszero:=`if`(pro=pro__,0,1); pro:=pro__;			#
+od;									#########
+pro:=Flatten(pro);							#########
+if Occurrences("zero", pro)&gt;0 then out_pro:=0;					#
+else 	if pro[1]="acaplusun" then 						#
+		pro_:=subsop(2= NULL,pro); 					# AcA+1 pour pro
+		pro_:=subsop(1=	("ac" , op(2,pro) , "a" , op(2,pro)) , pro_);	#
+		pro__:=subsop(2= NULL ,pro);					#
+		pro__:=subsop(1= `if`(nops(pro)=2,1,NULL) ,pro__);		#
+		out_pro:= convert(cat(op(pro_)),symbol) + convert(cat(op(pro__,1)),symbol);
+	else	out_pro:= convert(cat(op(pro)),symbol);				#
+	fi;									#
+fi;									#########
+fi;
+#cat(op(Flatten(pro0))),__,((Flatten(pro)))
+out_pro*sign_a*sign_b;
+end:
+#
+#				MARCHE AVEC 2 CHAMPS MAXIMUM !!!!!
+#################################################################################
+fois:=proc(AA,BB)								#
+if nops(AA)=2 and nops(-AA)=2 then						#
+	if nops(BB)=2 and nops(-BB)=2 then					#
+		if AA=op(1,AA)+op(2,AA) and BB=op(1,BB)+op(2,BB) then 		#
+		foi(op(1,AA),op(1,BB))+foi(op(1,AA),op(2,BB))+foi(op(2,AA),op(1,BB))+foi(op(2,AA),op(2,BB));
+		else foi(AA,BB);						#
+		fi;								#
+	else 	if BB=-convert(1,symbol) then subs(convert(1,symbol)=1,-AA); else
+		if BB=convert(1,symbol) then subs(convert(1,symbol)=1,AA); else
+		if AA=op(1,AA)+op(2,AA) then 					#<Font encoding="ISO8859-1">
+		foi(op(1,AA),BB)+foi(op(2,AA),BB); 				# G\350re un signe moins</Font>
+		else foi(AA,BB);						#
+		fi;fi;fi;							# ou une somme de
+	fi;									# DEUX Termes
+else		if AA=-convert(1,symbol) then subs(convert(1,symbol)=1,-BB); else
+		if AA=convert(1,symbol) then subs(convert(1,symbol)=1,BB); else
+	if nops(BB)=2 and nops(-BB)=2 then					# ou un "1" ou un "-1"
+		if BB=op(1,BB)+op(2,BB) then 					#
+		foi(AA,op(1,BB))+foi(AA,op(2,BB));				#
+		else foi(AA,BB);						#
+		fi;								#
+	else 	if BB=-convert(1,symbol) then subs(convert(1,symbol)=1,-AA); else
+		if BB=convert(1,symbol) then subs(convert(1,symbol)=1,AA); else
+		foi(AA,BB);fi;fi;							#
+	fi;fi;fi;									#
+fi; 			end:						#########
+					fois(r57,r73r38ac2);	#	exemple !</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">F_E_lin := evalm(matrix([[-sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, -sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, -sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, -sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, -sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, -sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, -sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1/3*sigma*Gxx_stat, 0, 0, 0, 0, 0, 0, 1/9*sigma*Gxx_stat-sigma*N, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 2/9*sigma*3^(1/2)*Gxx_stat, 0, 0, 1/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, 0, 2/9*sigma*Gxx_stat-sigma*N, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1/3*sigma*Gxx_stat, 0, 0, 1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 1/3*sigma*Gxx_stat-sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [-1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*Gxx_stat-sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, -1/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, -1/9*sigma*3^(1/2)*Gxx_stat, 0, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 1/9*sigma*Gxx_stat-sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 2/9*sigma*3^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 2/9*sigma*Gxx_stat-sigma*N, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 1/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 4/9*sigma*Gxx_stat, 0, 0, 2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 4/9*sigma*Gxx_stat-sigma*N, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, 0, 1/3*sigma*r44_stat], [0, 0, 0, 0, 0, 0, 0, 0, 2/9*sigma*3^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, 0, 2/3*sigma*Gxx_stat-sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*3^(1/2)*Gxx_stat, 0, 0, 0, -1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 1/3*sigma*3^(1/2)*r44_stat, 0], [0, 0, 0, 0, 0, 0, -2/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 4/9*sigma*Gxx_stat-sigma*N, 0, 0, 0, 0, 0, 0, 0, -2/9*sigma*3^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, -2/9*sigma*Gxx_stat, 0, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*Gxx_stat-sigma*N, 0, 0, 0, 0, 0, 0, 0, -2/9*sigma*Gxx_stat, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 1/3*sigma*2^(1/2)*r44_stat], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1/3*sigma*Gxx_stat, 0, 0, 0, 0, 0, 0, 1/3*sigma*Gxx_stat-sigma*N, 0, 0, -1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2/9*sigma*3^(1/2)*Gxx_stat, 0, 0, 1/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, 0, 2/3*sigma*Gxx_stat-sigma*N, 0, 0, -1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 2/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*3^(1/2)*Gxx_stat, 0, 0, 1/3*sigma*3^(1/2)*r44_stat, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1/3*sigma*Gxx_stat, 0, 0, 1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, sigma*Gxx_stat-sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/3*sigma*Gxx_stat, sigma*r44_stat, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, -1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/3*sigma*Gxx_stat-sigma*N, 0, 0, 0, 0, 0, 0, 0, -2/3*sigma*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, -1/9*sigma*3^(1/2)*Gxx_stat, 0, 0, 0, -1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 1/3*sigma*Gxx_stat-sigma*N, 0, 0, 0, 0, 0, 0, 0, -2/9*sigma*3^(1/2)*Gxx_stat, 0, 0, -1/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, 1/3*sigma*3^(1/2)*2^(1/2)*r44_stat, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [-1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2/9*sigma*Gxx_stat-sigma*N, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, -2/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, -2/9*sigma*3^(1/2)*Gxx_stat, 0, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4/9*sigma*Gxx_stat-sigma*N, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, -1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, -2/3*sigma*Gxx_stat, 0, 0, 0, -1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2/3*sigma*Gxx_stat-sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [2/3*sigma*Gxx_stat, 0, 0, 0, 0, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 4/9*sigma*Gxx_stat-sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 2/9*sigma*3^(1/2)*Gxx_stat, 0, 0, 1/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*Gxx_stat-sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -sigma*N, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, -1/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, -1/9*sigma*3^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 1/9*sigma*Gxx_stat-sigma*N, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, -2/9*sigma*Gxx_stat, 0, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, -2/9*sigma*Gxx_stat, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 2/9*sigma*Gxx_stat-sigma*N, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 1/3*sigma*2^(1/2)*r44_stat], [0, 0, 0, 0, 0, 0, 0, 0, -1/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, -2/9*sigma*3^(1/2)*Gxx_stat, 0, 0, 0, -1/3*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1/9*sigma*3^(1/2)*Gxx_stat, 0, 0, -1/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, 0, 1/3*sigma*Gxx_stat-sigma*N, 0, 0, 0, 0, 1/3*sigma*3^(1/2)*2^(1/2)*r44_stat, 0], [0, 0, 0, 0, 0, 0, 2/9*sigma*3^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, -2/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 1/9*sigma*3^(1/2)*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 2/9*sigma*Gxx_stat-sigma*N, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, 1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 2/9*sigma*Gxx_stat, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 0, 0, 0, 0, 0, 1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 1/9*sigma*Gxx_stat, 0, 0, 0, -1/9*sigma*2^(1/2)*Gxx_stat, 0, 0, 1/9*sigma*Gxx_stat-sigma*N, 0, 0, 0, 2/3*sigma*r44_stat], [0, 0, 0, 0, 0, 0, 0, 1/3*sigma*N, 0, 0, -1/9*sigma*N*6^(1/2)*3^(1/2), 0, 0, 0, 2/3*sigma*N, 0, 0, -1/9*sigma*N*6^(1/2)*3^(1/2), 0, 0, 0, sigma*N, 0, 0, 0, -1/9*sigma*N*6^(1/2)*3^(1/2), 0, 0, 2/3*sigma*N, 0, 0, 0, -1/9*sigma*N*6^(1/2)*3^(1/2), 0, 0, 1/3*sigma*N, -sigma*n, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1/3*sigma*N*3^(1/2), 0, 0, 0, 0, 0, 0, 2/3*sigma*N, 0, 0, 1/9*sigma*N*6^(1/2)*3^(1/2), 0, 0, 0, 1/3*sigma*N*3^(1/2), 0, 0, 1/3*sigma*N*6^(1/2), -1/3*sigma*N*6^(1/2), 0, 0, 0, 0, 0, 0, -1/9*sigma*N*6^(1/2)*3^(1/2), 0, 0, -1/3*sigma*N, 0, 0, -sigma*n, 0, 0], [0, 1/3*sigma*N*3^(1/2), 0, 0, -1/3*sigma*N*6^(1/2), 0, 0, 0, 2/3*sigma*N, 0, 0, -1/9*sigma*N*6^(1/2)*3^(1/2), 0, 0, 0, 1/3*sigma*N*3^(1/2), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1/9*sigma*N*6^(1/2)*3^(1/2), 0, 0, -1/3*sigma*N, 0, 0, 0, 1/3*sigma*N*6^(1/2), 0, 0, 0, 0, -sigma*n, 0], [sigma*N, 0, 0, 0, 0, 0, 0, 2/3*sigma*N, 0, 0, 1/9*sigma*N*6^(1/2)*3^(1/2), 0, 0, 0, 1/3*sigma*N, 0, 0, 1/9*sigma*N*6^(1/2)*3^(1/2), 0, 0, 0, 0, 0, 0, 0, 1/9*sigma*N*6^(1/2)*3^(1/2), 0, 0, 1/3*sigma*N, 0, 0, 0, 1/9*sigma*N*6^(1/2)*3^(1/2), 0, 0, 2/3*sigma*N, 0, 0, 0, -sigma*n]])):\
+
+sys :=[Diff(r11(t),t) = sigma*(1/3*r22(t)*G_I_(t)+r11(t)*G_I_(t)+2/3*r55(t)*G_I_(t)-1/9*6^(1/2)*3^(1/2)*r25(t)*G_I_(t)-1/9*6^(1/2)*3^(1/2)*r52(t)*G_I_(t)-N*r11(t)), Diff(r21(t),t) = sigma*(2/9*3^(1/2)*r65(t)*G_I_(t)-1/9*6^(1/2)*r62(t)*G_I_(t)-1/9*6^(1/2)*r52(t)*GxI_(t)+1/9*3^(1/2)*r22(t)*GxI_(t)+2/9*3^(1/2)*r55(t)*GxI_(t)+2/3*r21(t)*G_I_(t)+1/9*6^(1/2)*3^(1/2)*r51(t)*G_I_(t)-1/9*6^(1/2)*r25(t)*GxI_(t)-2/9*6^(1/2)*r35(t)*G_I_(t)+2/9*3^(1/2)*r32(t)*G_I_(t)+1/3*3^(1/2)*r11(t)*GxI_(t)-N*r21(t)), Diff(r31(t),t) = sigma*(2/3*r21(t)*GxI_(t)-1/9*6^(1/2)*r62(t)*GxI_(t)+2/9*3^(1/2)*r65(t)*GxI_(t)+1/9*6^(1/2)*3^(1/2)*r61(t)*G_I_(t)-2/9*6^(1/2)*r35(t)*GxI_(t)+1/9*6^(1/2)*3^(1/2)*r51(t)*GxI_(t)-1/9*3^(1/2)*6^(1/2)*r45(t)*G_I_(t)+1/3*r31(t)*G_I_(t)+1/3*r42(t)*G_I_(t)+2/9*3^(1/2)*r32(t)*GxI_(t)-N*r31(t)), Diff(r41(t),t) = sigma*(-1/3*6^(1/2)*r45(t)*GxI_(t)+1/3*3^(1/2)*r42(t)*GxI_(t)+1/3*3^(1/2)*r31(t)*GxI_(t)+1/3*6^(1/2)*r61(t)*GxI_(t)-N*r41(t)), Diff(r51(t),t) = sigma*(1/9*6^(1/2)*r65(t)*G_I_(t)-1/9*3^(1/2)*r62(t)*G_I_(t)+2/9*3^(1/2)*r52(t)*GxI_(t)-1/9*6^(1/2)*r22(t)*GxI_(t)-2/9*6^(1/2)*r55(t)*GxI_(t)+1/9*3^(1/2)*6^(1/2)*r21(t)*G_I_(t)+1/3*r51(t)*G_I_(t)+2/9*3^(1/2)*r25(t)*GxI_(t)-2/9*3^(1/2)*r35(t)*G_I_(t)+1/9*6^(1/2)*r32(t)*G_I_(t)-1/3*6^(1/2)*r11(t)*GxI_(t)-N*r51(t)), Diff(r61(t),t) = sigma*(-1/9*3^(1/2)*6^(1/2)*r21(t)*GxI_(t)+1/9*3^(1/2)*r62(t)*GxI_(t)-1/9*6^(1/2)*r65(t)*GxI_(t)+2/3*r61(t)*G_I_(t)+2/9*3^(1/2)*r35(t)*GxI_(t)-1/3*r51(t)*GxI_(t)-2/3*r45(t)*G_I_(t)+1/9*3^(1/2)*6^(1/2)*r31(t)*G_I_(t)+1/9*3^(1/2)*6^(1/2)*r42(t)*G_I_(t)-1/9*6^(1/2)*r32(t)*GxI_(t)-N*r61(t)), Diff(r12(t),t) = sigma*(2/9*3^(1/2)*r55(t)*G_Ix(t)-1/9*6^(1/2)*r25(t)*G_Ix(t)+2/9*3^(1/2)*r56(t)*G_I_(t)+1/9*6^(1/2)*3^(1/2)*r15(t)*G_I_(t)-1/9*6^(1/2)*r26(t)*G_I_(t)-1/9*6^(1/2)*r52(t)*G_Ix(t)-2/9*6^(1/2)*r53(t)*G_I_(t)+2/3*r12(t)*G_I_(t)+1/9*3^(1/2)*r22(t)*G_Ix(t)+2/9*3^(1/2)*r23(t)*G_I_(t)+1/3*3^(1/2)*r11(t)*G_Ix(t)-N*r12(t)), 
+Diff(r22(t),t) = sigma*(2/27*6^(1/2)*3^(1/2)*r52(t)*G_I_(t)+2/27*6^(1/2)*3^(1/2)*r25(t)*G_I_(t)-2/27*6^(1/2)*3^(1/2)*r35(t)*G_Ix(t)-2/27*6^(1/2)*3^(1/2)*r63(t)*G_I_(t)-1/27*6^(1/2)*3^(1/2)*r62(t)*G_Ix(t)-1/27*3^(1/2)*6^(1/2)*r26(t)*GxI_(t)-2/27*6^(1/2)*3^(1/2)*r36(t)*G_I_(t)-2/27*3^(1/2)*6^(1/2)*r53(t)*GxI_(t)-1/27*3^(1/2)*6^(1/2)*r52(t)*GxIx(t)-1/27*3^(1/2)*6^(1/2)*r25(t)*GxIx(t)-N*r22(t)+4/9*r22(t)*G_I_(t)+1/9*r22(t)*GxIx(t)+1/3*r11(t)*GxIx(t)+2/9*r55(t)*GxIx(t)+2/9*r23(t)*GxI_(t)+2/9*r56(t)*GxI_(t)+2/9*r66(t)*G_I_(t)+4/9*r33(t)*G_I_(t)+2/9*r65(t)*G_Ix(t)+2/9*r32(t)*G_Ix(t)+2/9*r55(t)*G_I_(t)+2/9*3^(1/2)*r21(t)*G_Ix(t)+1/9*6^(1/2)*r51(t)*G_Ix(t)+1/9*6^(1/2)*r15(t)*GxI_(t)+2/9*3^(1/2)*r12(t)*GxI_(t)), Diff(r32(t),t) = sigma*(-1/27*3^(1/2)*6^(1/2)*r62(t)*GxIx(t)+2/9*r32(t)*G_I_(t)+2/27*3^(1/2)*6^(1/2)*r52(t)*GxI_(t)+2/27*3^(1/2)*6^(1/2)*r62(t)*G_I_(t)-2/27*6^(1/2)*3^(1/2)*r35(t)*GxIx(t)+1/27*6^(1/2)*3^(1/2)*r35(t)*G_I_(t)-2/27*3^(1/2)*6^(1/2)*r63(t)*GxI_(t)-2/27*6^(1/2)*3^(1/2)*r36(t)*GxI_(t)+2/27*6^(1/2)*3^(1/2)*r25(t)*GxI_(t)+4/9*r22(t)*GxI_(t)+2/9*r32(t)*GxIx(t)+4/9*r33(t)*GxI_(t)+2/9*r55(t)*GxI_(t)+2/9*r65(t)*GxIx(t)+2/9*r66(t)*GxI_(t)-N*r32(t)+2/9*r65(t)*G_I_(t)+1/9*6^(1/2)*r61(t)*G_Ix(t)-1/9*6^(1/2)*r46(t)*G_I_(t)+1/9*3^(1/2)*r42(t)*G_Ix(t)+2/9*3^(1/2)*r43(t)*G_I_(t)+1/9*6^(1/2)*r51(t)*GxIx(t)+2/9*3^(1/2)*r21(t)*GxIx(t)+1/9*3^(1/2)*r31(t)*G_Ix(t)-1/9*6^(1/2)*r45(t)*G_Ix(t)), Diff(r42(t),t) = sigma*(2/9*3^(1/2)*r65(t)*GxI_(t)+2/9*6^(1/2)*r62(t)*GxI_(t)+1/9*6^(1/2)*3^(1/2)*r61(t)*GxIx(t)+1/3*r42(t)*GxIx(t)-1/9*6^(1/2)*3^(1/2)*r46(t)*GxI_(t)+2/3*r43(t)*GxI_(t)+1/3*r31(t)*GxIx(t)+2/9*3^(1/2)*r32(t)*GxI_(t)+1/9*6^(1/2)*r35(t)*GxI_(t)-1/9*6^(1/2)*3^(1/2)*r45(t)*GxIx(t)-N*r42(t)), Diff(r52(t),t) = sigma*(-2/27*6^(1/2)*3^(1/2)*r55(t)*GxIx(t)-1/9*6^(1/2)*3^(1/2)*r11(t)*GxIx(t)-1/27*6^(1/2)*3^(1/2)*r22(t)*GxIx(t)-2/27*6^(1/2)*3^(1/2)*r56(t)*GxI_(t)-2/27*6^(1/2)*3^(1/2)*r23(t)*GxI_(t)+2/9*r52(t)*G_I_(t)-1/9*r62(t)*G_Ix(t)-2/9*r35(t)*G_Ix(t)+2/9*r25(t)*GxIx(t)+2/9*r52(t)*GxIx(t)+4/9*r53(t)*GxI_(t)+2/9*r26(t)*GxI_(t)-2/9*r36(t)*G_I_(t)+2/9*r25(t)*G_I_(t)-2/9*r63(t)*G_I_(t)+2/27*3^(1/2)*6^(1/2)*r33(t)*G_I_(t)+1/27*3^(1/2)*6^(1/2)*r32(t)*G_Ix(t)+1/27*3^(1/2)*6^(1/2)*r65(t)*G_Ix(t)+1/27*6^(1/2)*3^(1/2)*r55(t)*G_I_(t)+2/27*6^(1/2)*3^(1/2)*r22(t)*G_I_(t)+1/27*3^(1/2)*6^(1/2)*r66(t)*G_I_(t)-2/9*6^(1/2)*r12(t)*GxI_(t)-2/9*3^(1/2)*r15(t)*GxI_(t)+1/9*3^(1/2)*r51(t)*G_Ix(t)+1/9*6^(1/2)*r21(t)*G_Ix(t)-N*r52(t)), Diff(r62(t),t) = sigma*(2/9*r36(t)*GxI_(t)-1/27*3^(1/2)*6^(1/2)*r66(t)*GxI_(t)-2/27*6^(1/2)*3^(1/2)*r22(t)*GxI_(t)-1/27*3^(1/2)*6^(1/2)*r55(t)*GxI_(t)+2/27*3^(1/2)*6^(1/2)*r65(t)*G_I_(t)-2/27*6^(1/2)*3^(1/2)*r33(t)*GxI_(t)-1/27*3^(1/2)*6^(1/2)*r65(t)*GxIx(t)-1/27*6^(1/2)*3^(1/2)*r32(t)*GxIx(t)+1/9*6^(1/2)*r42(t)*G_Ix(t)-1/9*3^(1/2)*r51(t)*GxIx(t)-1/9*6^(1/2)*r21(t)*GxIx(t)-2/9*3^(1/2)*r46(t)*G_I_(t)+2/9*6^(1/2)*r43(t)*G_I_(t)+1/9*6^(1/2)*r31(t)*G_Ix(t)+2/9*3^(1/2)*r61(t)*G_Ix(t)-2/9*3^(1/2)*r45(t)*G_Ix(t)+2/27*6^(1/2)*3^(1/2)*r32(t)*G_I_(t)+1/9*r62(t)*GxIx(t)-2/9*r52(t)*GxI_(t)+2/9*r63(t)*GxI_(t)+2/9*r35(t)*GxIx(t)+2/9*r35(t)*G_I_(t)-2/9*r25(t)*GxI_(t)-N*r62(t)+4/9*r62(t)*G_I_(t)), Diff(r13(t),t) = sigma*(2/9*3^(1/2)*r56(t)*G_Ix(t)-1/9*6^(1/2)*r26(t)*G_Ix(t)-2/9*6^(1/2)*r53(t)*G_Ix(t)+1/3*r24(t)*G_I_(t)+1/3*r13(t)*G_I_(t)+2/9*3^(1/2)*r23(t)*G_Ix(t)+1/9*6^(1/2)*3^(1/2)*r16(t)*G_I_(t)-1/9*6^(1/2)*3^(1/2)*r54(t)*G_I_(t)+2/3*r12(t)*G_Ix(t)+1/9*6^(1/2)*3^(1/2)*r15(t)*G_Ix(t)-N*r13(t)), Diff(r23(t),t) = sigma*(1/9*6^(1/2)*r15(t)*GxIx(t)+2/9*3^(1/2)*r12(t)*GxIx(t)+1/9*3^(1/2)*r24(t)*GxI_(t)-1/9*6^(1/2)*r54(t)*GxI_(t)+1/9*6^(1/2)*r16(t)*GxI_(t)+1/9*3^(1/2)*r13(t)*GxI_(t)-1/9*6^(1/2)*r64(t)*G_I_(t)+2/9*3^(1/2)*r34(t)*G_I_(t)-2/27*6^(1/2)*3^(1/2)*r63(t)*G_Ix(t)+1/27*3^(1/2)*6^(1/2)*r53(t)*G_I_(t)+2/27*6^(1/2)*3^(1/2)*r52(t)*G_Ix(t)+2/27*6^(1/2)*3^(1/2)*r25(t)*G_Ix(t)-1/27*3^(1/2)*6^(1/2)*r26(t)*GxIx(t)-2/27*6^(1/2)*3^(1/2)*r36(t)*G_Ix(t)+2/9*r66(t)*G_Ix(t)+2/9*r55(t)*G_Ix(t)+4/9*r33(t)*G_Ix(t)+4/9*r22(t)*G_Ix(t)+2/9*r56(t)*G_I_(t)+2/9*r23(t)*G_I_(t)+2/9*r56(t)*GxIx(t)+2/9*r23(t)*GxIx(t)-N*r23(t)-2/27*3^(1/2)*6^(1/2)*r53(t)*GxIx(t)+2/27*3^(1/2)*6^(1/2)*r26(t)*G_I_(t)), Diff(r33(t),t) = sigma*(2/9*3^(1/2)*r43(t)*G_Ix(t)-1/9*6^(1/2)*r46(t)*G_Ix(t)+2/9*3^(1/2)*r34(t)*GxI_(t)-1/9*6^(1/2)*r64(t)*GxI_(t)+1/27*6^(1/2)*3^(1/2)*r35(t)*G_Ix(t)+1/27*6^(1/2)*3^(1/2)*r63(t)*G_I_(t)+2/27*6^(1/2)*3^(1/2)*r62(t)*G_Ix(t)+2/27*3^(1/2)*6^(1/2)*r26(t)*GxI_(t)+1/27*6^(1/2)*3^(1/2)*r36(t)*G_I_(t)+1/27*3^(1/2)*6^(1/2)*r53(t)*GxI_(t)+2/27*3^(1/2)*6^(1/2)*r52(t)*GxIx(t)+2/27*3^(1/2)*6^(1/2)*r25(t)*GxIx(t)-2/27*6^(1/2)*3^(1/2)*r63(t)*GxIx(t)-2/27*6^(1/2)*3^(1/2)*r36(t)*GxIx(t)+4/9*r22(t)*GxIx(t)+2/9*r55(t)*GxIx(t)+2/9*r23(t)*GxI_(t)+2/9*r56(t)*GxI_(t)+2/9*r66(t)*G_I_(t)+1/9*r33(t)*G_I_(t)+2/9*r65(t)*G_Ix(t)+2/9*r32(t)*G_Ix(t)+1/3*r44(t)*G_I_(t)-N*r33(t)+4/9*r33(t)*GxIx(t)+2/9*r66(t)*GxIx(t)), Diff(r43(t),t) = sigma*(1/9*6^(1/2)*r36(t)*GxI_(t)+2/9*3^(1/2)*r66(t)*GxI_(t)+2/9*6^(1/2)*r62(t)*GxIx(t)+2/9*3^(1/2)*r65(t)*GxIx(t)-1/9*6^(1/2)*3^(1/2)*r46(t)*GxIx(t)+1/3*3^(1/2)*r44(t)*GxI_(t)+1/9*3^(1/2)*r33(t)*GxI_(t)+2/3*r43(t)*GxIx(t)+2/9*3^(1/2)*r32(t)*GxIx(t)+1/9*6^(1/2)*r63(t)*GxI_(t)+1/9*6^(1/2)*r35(t)*GxIx(t)-N*r43(t)), Diff(r53(t),t) = sigma*(-2/27*6^(1/2)*3^(1/2)*r23(t)*GxIx(t)+1/27*3^(1/2)*6^(1/2)*r66(t)*G_Ix(t)-2/27*6^(1/2)*3^(1/2)*r56(t)*GxIx(t)+2/27*3^(1/2)*6^(1/2)*r33(t)*G_Ix(t)+2/27*3^(1/2)*6^(1/2)*r22(t)*G_Ix(t)+1/27*6^(1/2)*3^(1/2)*r56(t)*G_I_(t)+1/27*6^(1/2)*3^(1/2)*r23(t)*G_I_(t)+1/27*3^(1/2)*6^(1/2)*r55(t)*G_Ix(t)+2/9*3^(1/2)*r54(t)*GxI_(t)+1/9*6^(1/2)*r34(t)*G_I_(t)+4/9*r53(t)*GxIx(t)+2/9*r26(t)*GxIx(t)-2/9*r36(t)*G_Ix(t)+2/9*r25(t)*G_Ix(t)-2/9*r63(t)*G_Ix(t)+2/9*r52(t)*G_Ix(t)+1/9*r53(t)*G_I_(t)+2/9*r26(t)*G_I_(t)-N*r53(t)-2/9*6^(1/2)*r12(t)*GxIx(t)-2/9*3^(1/2)*r16(t)*GxI_(t)-1/9*3^(1/2)*r64(t)*G_I_(t)-1/9*6^(1/2)*r13(t)*GxI_(t)-2/9*3^(1/2)*r15(t)*GxIx(t)-1/9*6^(1/2)*r24(t)*GxI_(t)), Diff(r63(t),t) = sigma*(1/9*6^(1/2)*3^(1/2)*r44(t)*G_I_(t)-1/27*3^(1/2)*6^(1/2)*r66(t)*GxIx(t)-2/27*3^(1/2)*6^(1/2)*r33(t)*GxIx(t)-1/27*6^(1/2)*3^(1/2)*r55(t)*GxIx(t)-2/27*6^(1/2)*3^(1/2)*r22(t)*GxIx(t)-1/27*6^(1/2)*3^(1/2)*r56(t)*GxI_(t)-1/27*6^(1/2)*3^(1/2)*r23(t)*GxI_(t)+4/9*r62(t)*G_Ix(t)+2/9*r35(t)*G_Ix(t)-2/9*r25(t)*GxIx(t)-2/9*r52(t)*GxIx(t)-1/9*r53(t)*GxI_(t)-2/9*r26(t)*GxI_(t)+2/9*r36(t)*G_I_(t)+2/9*r63(t)*G_I_(t)+1/27*3^(1/2)*6^(1/2)*r33(t)*G_I_(t)+2/27*3^(1/2)*6^(1/2)*r32(t)*G_Ix(t)+2/27*3^(1/2)*6^(1/2)*r65(t)*G_Ix(t)+2/27*3^(1/2)*6^(1/2)*r66(t)*G_I_(t)+2/9*r36(t)*GxIx(t)+2/9*r63(t)*GxIx(t)-N*r63(t)-1/9*6^(1/2)*r34(t)*GxI_(t)+1/9*3^(1/2)*r64(t)*GxI_(t)+2/9*6^(1/2)*r43(t)*G_Ix(t)-2/9*3^(1/2)*r46(t)*G_Ix(t)), Diff(r14(t),t) = sigma*(-1/3*6^(1/2)*r54(t)*G_Ix(t)+1/3*3^(1/2)*r24(t)*G_Ix(t)+1/3*6^(1/2)*r16(t)*G_Ix(t)+1/3*3^(1/2)*r13(t)*G_Ix(t)-N*r14(t)), Diff(r24(t),t) = sigma*(1/3*r24(t)*GxIx(t)-1/9*6^(1/2)*3^(1/2)*r64(t)*G_Ix(t)+2/9*3^(1/2)*r23(t)*G_Ix(t)+1/9*6^(1/2)*r53(t)*G_Ix(t)+2/9*3^(1/2)*r56(t)*G_Ix(t)+1/9*3^(1/2)*6^(1/2)*r16(t)*GxIx(t)+2/9*6^(1/2)*r26(t)*G_Ix(t)-1/9*3^(1/2)*6^(1/2)*r54(t)*GxIx(t)+1/3*r13(t)*GxIx(t)+2/3*r34(t)*G_Ix(t)-N*r24(t)), Diff(r34(t),t) = sigma*(2/9*3^(1/2)*r56(t)*GxIx(t)+1/9*6^(1/2)*r36(t)*G_Ix(t)+1/3*3^(1/2)*r44(t)*G_Ix(t)+2/3*r34(t)*GxIx(t)+2/9*6^(1/2)*r26(t)*GxIx(t)+1/9*6^(1/2)*r53(t)*GxIx(t)+2/9*3^(1/2)*r66(t)*G_Ix(t)+1/9*3^(1/2)*r33(t)*G_Ix(t)+1/9*6^(1/2)*r63(t)*G_Ix(t)-1/9*6^(1/2)*3^(1/2)*r64(t)*GxIx(t)+2/9*3^(1/2)*r23(t)*GxIx(t)-N*r34(t)), Diff(r44(t),t) = sigma*(1/9*6^(1/2)*3^(1/2)*r36(t)*GxIx(t)+1/9*6^(1/2)*3^(1/2)*r63(t)*GxIx(t)+2/3*r66(t)*GxIx(t)+1/3*r33(t)*GxIx(t)+r44(t)*GxIx(t)-N*r44(t)), Diff(r54(t),t) = sigma*(-1/9*3^(1/2)*6^(1/2)*r24(t)*GxIx(t)-1/3*r64(t)*G_Ix(t)+1/9*6^(1/2)*r23(t)*G_Ix(t)+1/9*3^(1/2)*r53(t)*G_Ix(t)+1/9*6^(1/2)*r56(t)*G_Ix(t)-2/3*r16(t)*GxIx(t)+2/9*3^(1/2)*r26(t)*G_Ix(t)+2/3*r54(t)*GxIx(t)-1/9*3^(1/2)*6^(1/2)*r13(t)*GxIx(t)+1/9*3^(1/2)*6^(1/2)*r34(t)*G_Ix(t)-N*r54(t)), Diff(r64(t),t) = sigma*(-1/9*6^(1/2)*r56(t)*GxIx(t)+2/9*3^(1/2)*r36(t)*G_Ix(t)+1/3*6^(1/2)*r44(t)*G_Ix(t)-1/9*3^(1/2)*6^(1/2)*r34(t)*GxIx(t)-2/9*3^(1/2)*r26(t)*GxIx(t)-1/9*3^(1/2)*r53(t)*GxIx(t)+2/9*6^(1/2)*r66(t)*G_Ix(t)+1/9*6^(1/2)*r33(t)*G_Ix(t)+2/9*3^(1/2)*r63(t)*G_Ix(t)+1/3*r64(t)*GxIx(t)-1/9*6^(1/2)*r23(t)*GxIx(t)-N*r64(t)), Diff(r15(t),t) = sigma*(-2/9*6^(1/2)*r55(t)*G_Ix(t)+2/9*3^(1/2)*r25(t)*G_Ix(t)+1/9*6^(1/2)*r56(t)*G_I_(t)+1/3*r15(t)*G_I_(t)-1/9*3^(1/2)*r26(t)*G_I_(t)+2/9*3^(1/2)*r52(t)*G_Ix(t)-2/9*3^(1/2)*r53(t)*G_I_(t)+1/9*3^(1/2)*6^(1/2)*r12(t)*G_I_(t)-1/9*6^(1/2)*r22(t)*G_Ix(t)+1/9*6^(1/2)*r23(t)*G_I_(t)-1/3*6^(1/2)*r11(t)*G_Ix(t)-N*r15(t)), Diff(r25(t),t) = sigma*(-N*r25(t)-2/27*6^(1/2)*3^(1/2)*r55(t)*GxIx(t)-1/9*6^(1/2)*3^(1/2)*r11(t)*GxIx(t)-1/27*6^(1/2)*3^(1/2)*r22(t)*GxIx(t)+1/27*6^(1/2)*3^(1/2)*r56(t)*GxI_(t)+1/27*6^(1/2)*3^(1/2)*r23(t)*GxI_(t)+2/9*r52(t)*G_I_(t)+2/9*r62(t)*G_Ix(t)+4/9*r35(t)*G_Ix(t)+2/9*r25(t)*GxIx(t)+2/9*r52(t)*GxIx(t)-2/9*r53(t)*GxI_(t)-1/9*r26(t)*GxI_(t)-2/9*r36(t)*G_I_(t)+2/9*r25(t)*G_I_(t)-2/9*r63(t)*G_I_(t)+2/27*3^(1/2)*6^(1/2)*r33(t)*G_I_(t)-2/27*3^(1/2)*6^(1/2)*r32(t)*G_Ix(t)-2/27*3^(1/2)*6^(1/2)*r65(t)*G_Ix(t)+1/27*6^(1/2)*3^(1/2)*r55(t)*G_I_(t)+2/27*6^(1/2)*3^(1/2)*r22(t)*G_I_(t)+1/27*3^(1/2)*6^(1/2)*r66(t)*G_I_(t)+1/9*6^(1/2)*r12(t)*GxI_(t)+1/9*3^(1/2)*r15(t)*GxI_(t)-2/9*3^(1/2)*r51(t)*G_Ix(t)-2/9*6^(1/2)*r21(t)*G_Ix(t)), Diff(r35(t),t) = sigma*(-2/9*r36(t)*GxI_(t)+1/27*3^(1/2)*6^(1/2)*r66(t)*GxI_(t)+2/27*6^(1/2)*3^(1/2)*r22(t)*GxI_(t)+1/27*3^(1/2)*6^(1/2)*r55(t)*GxI_(t)-N*r35(t)+1/27*3^(1/2)*6^(1/2)*r65(t)*G_I_(t)+2/27*6^(1/2)*3^(1/2)*r33(t)*GxI_(t)-2/27*3^(1/2)*6^(1/2)*r65(t)*GxIx(t)-2/27*6^(1/2)*3^(1/2)*r32(t)*GxIx(t)-1/9*6^(1/2)*r42(t)*G_Ix(t)-2/9*3^(1/2)*r51(t)*GxIx(t)-2/9*6^(1/2)*r21(t)*GxIx(t)-1/9*3^(1/2)*r46(t)*G_I_(t)+1/9*6^(1/2)*r43(t)*G_I_(t)-1/9*6^(1/2)*r31(t)*G_Ix(t)-2/9*3^(1/2)*r61(t)*G_Ix(t)+2/9*3^(1/2)*r45(t)*G_Ix(t)+1/27*6^(1/2)*3^(1/2)*r32(t)*G_I_(t)+2/9*r62(t)*GxIx(t)+2/9*r52(t)*GxI_(t)-2/9*r63(t)*GxI_(t)+4/9*r35(t)*GxIx(t)+1/9*r35(t)*G_I_(t)+2/9*r25(t)*GxI_(t)+2/9*r62(t)*G_I_(t)), Diff(r45(t),t) = sigma*(1/9*6^(1/2)*r65(t)*GxI_(t)+2/9*3^(1/2)*r62(t)*GxI_(t)-2/3*r61(t)*GxIx(t)-1/9*6^(1/2)*3^(1/2)*r42(t)*GxIx(t)-1/3*r46(t)*GxI_(t)+1/9*3^(1/2)*6^(1/2)*r43(t)*GxI_(t)-1/9*6^(1/2)*3^(1/2)*r31(t)*GxIx(t)+1/9*6^(1/2)*r32(t)*GxI_(t)+1/9*3^(1/2)*r35(t)*GxI_(t)+2/3*r45(t)*GxIx(t)-N*r45(t)), Diff(r55(t),t) = sigma*(1/27*6^(1/2)*3^(1/2)*r52(t)*G_I_(t)+1/27*6^(1/2)*3^(1/2)*r25(t)*G_I_(t)+2/27*6^(1/2)*3^(1/2)*r35(t)*G_Ix(t)-1/27*6^(1/2)*3^(1/2)*r63(t)*G_I_(t)+1/27*6^(1/2)*3^(1/2)*r62(t)*G_Ix(t)+1/27*3^(1/2)*6^(1/2)*r26(t)*GxI_(t)-1/27*6^(1/2)*3^(1/2)*r36(t)*G_I_(t)+2/27*3^(1/2)*6^(1/2)*r53(t)*GxI_(t)-2/27*3^(1/2)*6^(1/2)*r52(t)*GxIx(t)-2/27*3^(1/2)*6^(1/2)*r25(t)*GxIx(t)+2/9*r22(t)*G_I_(t)+2/9*r22(t)*GxIx(t)+2/3*r11(t)*GxIx(t)+4/9*r55(t)*GxIx(t)-2/9*r23(t)*GxI_(t)-2/9*r56(t)*GxI_(t)+1/9*r66(t)*G_I_(t)+2/9*r33(t)*G_I_(t)-2/9*r65(t)*G_Ix(t)-2/9*r32(t)*G_Ix(t)+1/9*r55(t)*G_I_(t)-N*r55(t)-2/9*3^(1/2)*r21(t)*G_Ix(t)-1/9*6^(1/2)*r51(t)*G_Ix(t)-1/9*6^(1/2)*r15(t)*GxI_(t)-2/9*3^(1/2)*r12(t)*GxI_(t)), Diff(r65(t),t) = sigma*(-1/27*3^(1/2)*6^(1/2)*r62(t)*GxIx(t)+2/9*r32(t)*G_I_(t)-1/27*3^(1/2)*6^(1/2)*r52(t)*GxI_(t)+2/27*3^(1/2)*6^(1/2)*r62(t)*G_I_(t)-2/27*6^(1/2)*3^(1/2)*r35(t)*GxIx(t)+1/27*6^(1/2)*3^(1/2)*r35(t)*G_I_(t)+1/27*3^(1/2)*6^(1/2)*r63(t)*GxI_(t)+1/27*6^(1/2)*3^(1/2)*r36(t)*GxI_(t)-1/27*6^(1/2)*3^(1/2)*r25(t)*GxI_(t)-2/9*r22(t)*GxI_(t)+2/9*r32(t)*GxIx(t)-2/9*r33(t)*GxI_(t)-1/9*r55(t)*GxI_(t)+2/9*r65(t)*GxIx(t)-1/9*r66(t)*GxI_(t)+2/9*r65(t)*G_I_(t)-2/9*6^(1/2)*r61(t)*G_Ix(t)-1/9*6^(1/2)*r46(t)*G_I_(t)-2/9*3^(1/2)*r42(t)*G_Ix(t)+2/9*3^(1/2)*r43(t)*G_I_(t)+1/9*6^(1/2)*r51(t)*GxIx(t)+2/9*3^(1/2)*r21(t)*GxIx(t)-2/9*3^(1/2)*r31(t)*G_Ix(t)+2/9*6^(1/2)*r45(t)*G_Ix(t)-N*r65(t)), Diff(r16(t),t) = sigma*(-1/9*6^(1/2)*r56(t)*G_Ix(t)+1/9*3^(1/2)*r26(t)*G_Ix(t)+2/9*3^(1/2)*r53(t)*G_Ix(t)+1/9*6^(1/2)*3^(1/2)*r24(t)*G_I_(t)+1/9*6^(1/2)*3^(1/2)*r13(t)*G_I_(t)-1/9*6^(1/2)*r23(t)*G_Ix(t)+2/3*r16(t)*G_I_(t)-2/3*r54(t)*G_I_(t)-1/9*3^(1/2)*6^(1/2)*r12(t)*G_Ix(t)-1/3*r15(t)*G_Ix(t)-N*r16(t)), Diff(r26(t),t) = sigma*(-1/27*6^(1/2)*3^(1/2)*r23(t)*GxIx(t)-1/27*3^(1/2)*6^(1/2)*r66(t)*G_Ix(t)-1/27*6^(1/2)*3^(1/2)*r56(t)*GxIx(t)-2/27*3^(1/2)*6^(1/2)*r33(t)*G_Ix(t)-2/27*3^(1/2)*6^(1/2)*r22(t)*G_Ix(t)+2/27*6^(1/2)*3^(1/2)*r56(t)*G_I_(t)+2/27*6^(1/2)*3^(1/2)*r23(t)*G_I_(t)-1/27*3^(1/2)*6^(1/2)*r55(t)*G_Ix(t)-2/9*3^(1/2)*r54(t)*GxI_(t)+2/9*6^(1/2)*r34(t)*G_I_(t)+2/9*r53(t)*GxIx(t)+1/9*r26(t)*GxIx(t)+2/9*r36(t)*G_Ix(t)-2/9*r25(t)*G_Ix(t)+2/9*r63(t)*G_Ix(t)-2/9*r52(t)*G_Ix(t)+2/9*r53(t)*G_I_(t)+4/9*r26(t)*G_I_(t)-1/9*6^(1/2)*r12(t)*GxIx(t)+2/9*3^(1/2)*r16(t)*GxI_(t)-2/9*3^(1/2)*r64(t)*G_I_(t)+1/9*6^(1/2)*r13(t)*GxI_(t)-1/9*3^(1/2)*r15(t)*GxIx(t)+1/9*6^(1/2)*r24(t)*GxI_(t)-N*r26(t)), Diff(r36(t),t) = sigma*(1/9*6^(1/2)*3^(1/2)*r44(t)*G_I_(t)-1/27*3^(1/2)*6^(1/2)*r66(t)*GxIx(t)-2/27*3^(1/2)*6^(1/2)*r33(t)*GxIx(t)-1/27*6^(1/2)*3^(1/2)*r55(t)*GxIx(t)-2/27*6^(1/2)*3^(1/2)*r22(t)*GxIx(t)+2/27*6^(1/2)*3^(1/2)*r56(t)*GxI_(t)+2/27*6^(1/2)*3^(1/2)*r23(t)*GxI_(t)-2/9*r62(t)*G_Ix(t)-1/9*r35(t)*G_Ix(t)-2/9*r25(t)*GxIx(t)-2/9*r52(t)*GxIx(t)+2/9*r53(t)*GxI_(t)+4/9*r26(t)*GxI_(t)+2/9*r36(t)*G_I_(t)+2/9*r63(t)*G_I_(t)+1/27*3^(1/2)*6^(1/2)*r33(t)*G_I_(t)-1/27*3^(1/2)*6^(1/2)*r32(t)*G_Ix(t)-1/27*3^(1/2)*6^(1/2)*r65(t)*G_Ix(t)+2/27*3^(1/2)*6^(1/2)*r66(t)*G_I_(t)+2/9*r36(t)*GxIx(t)+2/9*r63(t)*GxIx(t)+2/9*6^(1/2)*r34(t)*GxI_(t)-2/9*3^(1/2)*r64(t)*GxI_(t)-1/9*6^(1/2)*r43(t)*G_Ix(t)+1/9*3^(1/2)*r46(t)*G_Ix(t)-N*r36(t)), Diff(r46(t),t) = sigma*(2/9*3^(1/2)*r36(t)*GxI_(t)+2/9*6^(1/2)*r66(t)*GxI_(t)-2/9*3^(1/2)*r62(t)*GxIx(t)-1/9*6^(1/2)*r65(t)*GxIx(t)+1/3*r46(t)*GxIx(t)+1/3*6^(1/2)*r44(t)*GxI_(t)+1/9*6^(1/2)*r33(t)*GxI_(t)-1/9*6^(1/2)*3^(1/2)*r43(t)*GxIx(t)-1/9*6^(1/2)*r32(t)*GxIx(t)+2/9*3^(1/2)*r63(t)*GxI_(t)-1/9*3^(1/2)*r35(t)*GxIx(t)-N*r46(t)), Diff(r56(t),t) = sigma*(1/9*6^(1/2)*r15(t)*GxIx(t)+2/9*3^(1/2)*r12(t)*GxIx(t)-2/9*3^(1/2)*r24(t)*GxI_(t)+2/9*6^(1/2)*r54(t)*GxI_(t)-2/9*6^(1/2)*r16(t)*GxI_(t)-2/9*3^(1/2)*r13(t)*GxI_(t)-1/9*6^(1/2)*r64(t)*G_I_(t)+2/9*3^(1/2)*r34(t)*G_I_(t)-N*r56(t)+1/27*6^(1/2)*3^(1/2)*r63(t)*G_Ix(t)+1/27*3^(1/2)*6^(1/2)*r53(t)*G_I_(t)-1/27*6^(1/2)*3^(1/2)*r52(t)*G_Ix(t)-1/27*6^(1/2)*3^(1/2)*r25(t)*G_Ix(t)-1/27*3^(1/2)*6^(1/2)*r26(t)*GxIx(t)+1/27*6^(1/2)*3^(1/2)*r36(t)*G_Ix(t)-1/9*r66(t)*G_Ix(t)-1/9*r55(t)*G_Ix(t)-2/9*r33(t)*G_Ix(t)-2/9*r22(t)*G_Ix(t)+2/9*r56(t)*G_I_(t)+2/9*r23(t)*G_I_(t)+2/9*r56(t)*GxIx(t)+2/9*r23(t)*GxIx(t)-2/27*3^(1/2)*6^(1/2)*r53(t)*GxIx(t)+2/27*3^(1/2)*6^(1/2)*r26(t)*G_I_(t)), Diff(r66(t),t) = sigma*(-2/9*3^(1/2)*r43(t)*G_Ix(t)+1/9*6^(1/2)*r46(t)*G_Ix(t)-2/9*3^(1/2)*r34(t)*GxI_(t)+1/9*6^(1/2)*r64(t)*GxI_(t)-1/27*6^(1/2)*3^(1/2)*r35(t)*G_Ix(t)+2/27*6^(1/2)*3^(1/2)*r63(t)*G_I_(t)-2/27*6^(1/2)*3^(1/2)*r62(t)*G_Ix(t)-2/27*3^(1/2)*6^(1/2)*r26(t)*GxI_(t)+2/27*6^(1/2)*3^(1/2)*r36(t)*G_I_(t)-1/27*3^(1/2)*6^(1/2)*r53(t)*GxI_(t)+1/27*3^(1/2)*6^(1/2)*r52(t)*GxIx(t)+1/27*3^(1/2)*6^(1/2)*r25(t)*GxIx(t)-N*r66(t)-1/27*6^(1/2)*3^(1/2)*r63(t)*GxIx(t)-1/27*6^(1/2)*3^(1/2)*r36(t)*GxIx(t)+2/9*r22(t)*GxIx(t)+1/9*r55(t)*GxIx(t)-2/9*r23(t)*GxI_(t)-2/9*r56(t)*GxI_(t)+4/9*r66(t)*G_I_(t)+2/9*r33(t)*G_I_(t)-2/9*r65(t)*G_Ix(t)-2/9*r32(t)*G_Ix(t)+2/3*r44(t)*G_I_(t)+2/9*r33(t)*GxIx(t)+1/9*r66(t)*GxIx(t)), Diff(GxIx(t),t) = sigma*(N*(r44(t)+2/3*r33(t)-1/9*6^(1/2)*3^(1/2)*r63(t)-1/9*6^(1/2)*3^(1/2)*r36(t)+1/3*r66(t)+1/3*r22(t)+2/3*r55(t)-1/9*6^(1/2)*3^(1/2)*r52(t)-1/9*6^(1/2)*3^(1/2)*r25(t))-n*GxIx(t)), Diff(G_Ix(t),t) = sigma*(N*(-1/3*r56(t)+1/3*3^(1/2)*r34(t)+1/3*6^(1/2)*r64(t)+1/9*6^(1/2)*3^(1/2)*r53(t)+2/3*r23(t)-1/9*6^(1/2)*3^(1/2)*r26(t)+1/3*3^(1/2)*r12(t)-1/3*6^(1/2)*r15(t))-n*G_Ix(t)), Diff(GxI_(t),t) = sigma*(N*(-1/3*r65(t)+1/3*3^(1/2)*r43(t)+1/3*6^(1/2)*r46(t)+2/3*r32(t)-1/3*6^(1/2)*r51(t)-1/9*3^(1/2)*6^(1/2)*r62(t)+1/9*3^(1/2)*6^(1/2)*r35(t)+1/3*3^(1/2)*r21(t))-n*GxI_(t)), Diff(G_I_(t),t) = sigma*(N*(1/3*r33(t)+1/9*6^(1/2)*3^(1/2)*r63(t)+1/9*6^(1/2)*3^(1/2)*r36(t)+2/3*r66(t)+2/3*r22(t)+1/9*6^(1/2)*3^(1/2)*r25(t)+r11(t)+1/3*r55(t)+1/9*6^(1/2)*3^(1/2)*r52(t))-n*G_I_(t))]:
+
+#####	<Font encoding="ISO8859-1">F_E_lin : la matrice des \351quations d'\351change (dans la base correspondant \340 l'ordre des \351l\351ment de "sys") ,
+#####		lin\351aris\351e autour de l'\351tat totalement polaris\351</Font>
+
+#####<Font encoding="ISO8859-1">
+#####	sys :	le vrai syst\350me, non lin\351aris\351 !</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">####	pour inclure le fait que l'echange se fait seulement avec les 23S : 
+####			n --&gt; somme des popu 1,2,3,4,5,6. dans equations du FOND.
+
+	sys:=subsop(	-1=subs(n=n-add(r||k||k(t),k=7..8),sys[-1])	,sys):
+	sys:=subsop(	-2=subs(n=n-add(r||k||k(t),k=7..8),sys[-2])	,sys):
+	sys:=subsop(	-3=subs(n=n-add(r||k||k(t),k=7..8),sys[-3])	,sys):
+	sys:=subsop(	-4=subs(n=n-add(r||k||k(t),k=7..8),sys[-4])	,sys):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#############  Ici, on ne se sert plus de F_E_lin met directement de SYS ! ! ! ! ! !   ATTENTION
+	EVOLUTION____DUE____A____L_ECHANGE____DE____METASTABILITE;
+for i to nops(sys) do 
+d_ech_||(op([i,1,1,0],sys)):=simplify(
+	subs([r44_stat=n,Gxx_stat=N],
+	
+	(op([i,2],sys))	#######  ! ! ! ! !
+
+	###	add(	`if`(F_E_lin[i,jj]=0,0,	F_E_lin[i,jj]	*
+	###				 op([jj,1,1],sys)),jj=1..nops(sys))
+	));
+od: 		# LINEARISES  sans les r5..6,1..4  AVEC  stat = N , n</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">d_ech_r22;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">d_ech_GxIx;
+sys[-2];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">####                           NON     LINEARISATION !
+nonlin:=proc(expr) local expr_,expr__,i,j;
+expr_:=expr;
+expr_:=subs([a1=A1,a2=A2,ac1=Ac1,ac2=Ac2,			a3=A3,ac3=Ac3],expr_);
+expr_:=subs([A1=a1(t),A2=a2(t),Ac1=ac1(t),Ac2=ac2(t),	A3=a3(t),Ac3=ac3(t)],expr_);
+#	expr_:=subs([a1r44=r44(t)*a1(t),a2r44=r44(t)*a2(t),ac1r44=r44(t)*ac1(t),ac2r44=r44(t)*ac2(t),	a3r44=r44(t)*a3(t),ac3r44=r44(t)*ac3(t)],expr_);
+for i from 0 to 9 do for j from 0 to 9 do 
+expr_:=subs(        [a1r||i||j=a1(t)*r||i||j(t) ,ac1r||i||j=ac1(t)*r||i||j(t) 
+                ,a2r||i||j=a2(t)*r||i||j(t) ,ac2r||i||j=ac2(t)*r||i||j(t)  , r||i||j=r||i||j(t) ,	a3r||i||j=a3(t)*r||i||j(t) ,ac3r||i||j=ac3(t)*r||i||j(t) ],expr_); 
+od;od;
+expr__:=expr;
+expr__:=subs([seq(seq(r||i||j=R||i||j,j=0..9),i=0..9)],expr__);
+for i from 0 to 9 do for j from 0 to 9 do 
+expr__:=subs(        [a1r||i||j=alpha||1*r||i||j(t),ac1r||i||j=conjugate(alpha||1)*r||i||j(t)
+                ,a2r||i||j=0,ac2r||i||j=0  , R||i||j=r||i||j(t),a1=0,a2=0,ac1=0,ac2=0 ,a3=0,ac3=0	,a3r||i||j=0,ac3r||i||j=0],expr__);
+od;od;
+simplify(expr_	+	0 * expr__);
+end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">
+
+der:=proc(oper) 			#### L'EVOLUTION HAMILTONIENNE
+-I*(
+gc*com(oper,ac1r28) + gc*com(oper,a1r82) + gc*com(oper,ac1r37) + gc*com(oper,a1r73) + 
+gb*com(oper,ac2r38) + gb*com(oper,a2r83) + 	gb*com(oper,ac3r27) + gb*com(oper,a3r72) + 
+ga*com(oper,ac2r47) + ga*com(oper,a2r74) + 	ga*com(oper,ac3r18) + ga*com(oper,a3r81) + 
+omega||0*com(oper,r88) + omega||0*com(oper,r77) + 
+wc1*com(oper,ac1a1) + wc2*com(oper,ac2a2) + 	wc2*com(oper,ac3a3) + 
+whf*com(oper,r55) + whf*com(oper,r66) + 
+(-wF)*com(oper,r00) + (-wF)*com(oper,r99)
+);
+end;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">EVOLUTION___________________HAMILTONIENNE;
+for i from 0 to 9 do for j from 0 to 9 do 
+	d_r||i||j:=	nonlin(der(r||i||j));	
+#	print(d__r||i||j=%);
+od;od;
+for i to 3 do
+d_a||i:=	nonlin(der(a||i));
+d_ac||i:=	nonlin(der(ac||i));od;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">plus_de_GxI_:=[GxIx(t)=r00(t),G_Ix(t)=r90(t),GxI_(t)=r09(t),G_I_(t)=r99(t)];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">_;L_EVOLUTION____TOTALE____DUE____A____L_ECHANGE__+__L_EVOLUTION____HAMILTONIENNE_+_EM_spont_et_pertes_cavit\351;_;</Font>
+for i from 0 to 9 do 	for j from 0 to 9 do 
+de0||r||i||j:=subs( plus_de_GxI_ , 
+		simplify( d_r||i||j + (`if`(type(d_ech_r||i||j,symbol)=true,0,d_ech_r||i||j)),size)
+		- gamma/2*(0+`if`(i in [7,8],1,0)+`if`(j in [7,8],1,0))*( r||i||j(t))
++ r88(t)*(0+`if`(i=j and i=1,gamma1,0)+`if`(i=j and i=2,gamma3,0)+`if`(i=j and i=3,gamma2,0)+`if`(i=j and i=5,gamma4,0)+`if`(i=j and i=6,gamma5,0))
++ r77(t)*(0+`if`(i=j and i=4,gamma1,0)+`if`(i=j and i=3,gamma3,0)+`if`(i=j and i=2,gamma2,0)+`if`(i=j and i=6,gamma4,0)+`if`(i=j and i=5,gamma5,0))
+		);
+#	if ((i=0 or i=9) and (j=0 or j=9)) then else print(de0r,i,j,_____, de0r||i||j );fi;
+
+od;od;
+de0r00:=simplify(subs(plus_de_GxI_,	d_ech_GxIx		),size);
+de0r90:=simplify(subs(plus_de_GxI_,	d_ech_G_Ix		),size);
+de0r09:=simplify(subs(plus_de_GxI_,	d_ech_GxI_		),size);
+de0r99:=simplify(subs(plus_de_GxI_,	d_ech_G_I_		),size);
+de0a1:=d_a1 -kappa*a1(t)+sqrt(2*kappa/tau)*a1in;
+de0a2:=d_a2 -kappa*a2(t)+sqrt(2*kappa/tau)*a2in;<Font encoding="ISO8859-1">
+de0a3:=d_a3 -kappa*a3(t)+sqrt(2*kappa/tau)*a3in;		### manque l'emission spontann\351e !</Font>
+de0ac1:=d_ac1 -kappa*ac1(t)+sqrt(2*kappa/tau)*ac1in; 
+de0ac2:=d_ac2-kappa*ac2(t)+sqrt(2*kappa/tau)*ac2in;
+de0ac3:=d_ac3 -kappa*ac3(t)+sqrt(2*kappa/tau)*ac3in;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">CHANGEMENT________DE________VARIBLE;_;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">e1:=exp(t*I*(w2-w1)):
+champ_tournant0:=[]:
+for i from 0 to 9 do for j from 0 to 9 do 
+expo_:='erreur_';
+if j&lt;=4 and j&gt;=1 then expo_:=e1^(j-1);fi;
+if j=5 or j=6 then expo_:=e1^(j-4)*exp(t*I*(-whf));fi;
+if j=7 then expo_:=e1^2*exp(t*I*(-w1));fi;
+if j=8 then expo_:=e1*exp(t*I*(-w1));fi;
+if j=0 then expo_:=e1^2*exp(t*I*(wF));fi;
+if j=9 then expo_:=e1*exp(t*I*(wF));fi;
+expo__:='erreur__';
+if i&lt;=4 and i&gt;=1 then expo__:=e1^(i-1);fi;
+if i=5 or i=6 then expo__:=e1^(i-4)*exp(t*I*(-whf));fi;
+if i=7 then expo__:=e1^2*exp(t*I*(-w1));fi;
+if i=8 then expo__:=e1*exp(t*I*(-w1));fi;
+if i=0 then expo__:=e1^2*exp(t*I*(wF));fi;
+if i=9 then expo__:=e1*exp(t*I*(wF));fi;
+expo:=simplify(expo_/expo__,assume=(t::real,w1::real,w2::real,wF::real,whf::real));
+champ_tournant0:=[op(champ_tournant0),r||i||j(t)=s||i||j(t)*expo]:
+od;od;
+champ_tournant0:=[op(champ_tournant0),
+	alpha||1=salpha1*exp(t*I*(-w1)),
+	a||1(t)=sa1(t)*exp(t*I*(-w1)),		a2(t)=sa2(t)*exp(t*I*(-w2)),		a3(t)=sa3(t)*exp(t*I*(w2-2*w1)),
+	ac1(t)=sac1(t)*exp(t*I*(w1)),		ac2(t)=sac2(t)*exp(t*I*(w2)),		ac3(t)=sac3(t)*exp(t*I*(-w2+2*w1)),
+
+	a1in=sa1in*exp(t*I*(-w1)),ac1in=sac1in*exp(t*I*(w1)),
+	a2in=sa2in*exp(t*I*(-w2)),ac2in=sac2in*exp(t*I*(w2)),
+	a3in=sa3in*exp(t*I*(w2-2*w1)),ac3in=sac3in*exp(t*I*(-w2+2*w1))	]:
+nops(champ_tournant0);
+#	champ_tournant0;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">PASSAGE___DES___EQUATIONS___DANS___LA___BASE___DES___VARIABLES___TOURNANTES;
+</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">VARI___:=solve({Delta||1=omega0-w1,Delta||2=omega0-w2,theta||1=wc1-w1,theta||2=wc2-w2} , {omega0,w1,w2,wc1,wc2}):
+for i to nops(VARI___) do VARI___[i];od;
+VARI_ERREUR:=[w1=VARI__ERREUR,w2=VARI__ERREUR,wc1=VARI__ERREUR,wc2=VARI__ERREUR]:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">DANS_____LA_____BASE_____DES_____VARIBLES_____TOURNANTES;ON_______A;
+for i from 0 to 9 do	for j from 0 to 9 do 
+tourn_de0r||i||j:=de0r||i||j - diff(r||i||j(t),t);
+for k to nops(champ_tournant0) do 
+	tourn_de0r||i||j:=(subs( champ_tournant0[k] , tourn_de0r||i||j) );od;
+tourn_de0r||i||j:=isolate(tourn_de0r||i||j,diff(s||i||j(t),t));
+tourn_de0r||i||j:= simplify( tourn_de0r||i||j,assume=(t::real,w1::real,w2::real,wF::real,whf::real)) ;
+tourn_de0r||i||j:= map( x-&gt;map(simplify,x,size) ,  collect( rhs(tourn_de0r||i||j) ,[s||i||j(t)])) ;
+tourn_de0r||i||j:=simplify(
+subs([seq(seq(s||i||j(t)=r||i||j(t),j=0..9),i=0..9)	,op(VARI_ERREUR)
+		,sa1(t)=a1(t),sa2(t)=a2(t),sac1(t)=ac1(t),sac2(t)=ac2(t),
+sa1in=a1in,sac1in=ac1in,sa2in=a2in,sac2in=ac2in,sa3in=a3in,sac3in=ac3in,
+sa3(t)=a3(t),sac3(t)=ac3(t)],
+subs([seq(seq(r||i||j(t)=ERREUR,j=0..9),i=0..9)		,op(VARI___)
+		,a1(t)=ERREUR,a2(t)=ERREUR,ac1(t)=ERREUR,ac2(t)=ERREUR,alpha||1(t)=ERREUR, 											a1in=ERREUR,ac1in=ERREUR,a2in=ERREUR,ac2in=ERREUR,a3in=ERREUR,ac3in=ERREUR,
+a3(t)=ERREUR,ac3(t)=ERREUR],
+		tourn_de0r||i||j)),size);
+#	print( d[t]*r||i||j||_= tourn_de0r||i||j );
+###############################################
+od;od;
+for i to 3 do 		############	POUR LES CHAMPS !!!!
+tourn_de0a||i:=de0a||i - diff(a||i(t),t);	tourn_de0ac||i:=de0ac||i - diff(ac||i(t),t);
+for k to nops(champ_tournant0) do 
+	tourn_de0a||i:=(subs(champ_tournant0[k],tourn_de0a||i) );
+	tourn_de0ac||i:=(subs(champ_tournant0[k],tourn_de0ac||i) );od:
+tourn_de0a||i:=isolate(tourn_de0a||i,diff(sa||i(t),t)):
+tourn_de0ac||i:=isolate(tourn_de0ac||i,diff(sac||i(t),t)):
+tourn_de0a||i:= simplify(tourn_de0a||i,assume=(t::real,w1::real,w2::real,wF::real,whf::real)):
+tourn_de0ac||i:= simplify(tourn_de0ac||i,assume=(t::real,w1::real,w2::real,wF::real,whf::real)):
+tourn_de0a||i:= map(x-&gt;map(simplify,x,size),collect(rhs(tourn_de0a||i),[sa||i(t)])):
+tourn_de0ac||i:= map(x-&gt;map(simplify,x,size),collect(rhs(tourn_de0ac||i),[sac||i(t)])):
+tourn_de0a||i:=simplify(
+subs([seq(seq(s||i||j(t)=r||i||j(t),j=0..9),i=0..9)	,op(VARI_ERREUR)
+		,sa1(t)=a1(t),sa2(t)=a2(t),sac1(t)=ac1(t),sac2(t)=ac2(t),
+sa1in=a1in,sac1in=ac1in,sa2in=a2in,sac2in=ac2in,sa3in=a3in,sac3in=ac3in,
+sa3(t)=a3(t),sac3(t)=ac3(t)],
+subs([seq(seq(r||i||j(t)=ERREUR,j=0..9),i=0..9)		,op(VARI___)
+		,a1(t)=ERREUR,a2(t)=ERREUR,ac1(t)=ERREUR,ac2(t)=ERREUR,alpha||1(t)=ERREUR, 			a1in=ERREUR,ac1in=ERREUR,a2in=ERREUR,ac2in=ERREUR,a3in=ERREUR,ac3in=ERREUR,
+ac3(t)=ERREUR],
+		tourn_de0a||i)),size);
+tourn_de0ac||i:=simplify(
+subs([seq(seq(s||i||j(t)=r||i||j(t),j=0..9),i=0..9)	,op(VARI_ERREUR)
+		,sa1(t)=a1(t),sa2(t)=a2(t),sac1(t)=ac1(t),sac2(t)=ac2(t),
+sa1in=a1in,sac1in=ac1in,sa2in=a2in,sac2in=ac2in,sa3in=a3in,sac3in=ac3in,
+sa3(t)=a3(t),sac3(t)=ac3(t)],
+subs([seq(seq(r||i||j(t)=ERREUR,j=0..9),i=0..9)		,op(VARI___)
+		,a1(t)=ERREUR,a2(t)=ERREUR,ac1(t)=ERREUR,ac2(t)=ERREUR,alpha||1(t)=ERREUR, 			a1in=ERREUR,ac1in=ERREUR,a2in=ERREUR,ac2in=ERREUR,a3in=ERREUR,ac3in=ERREUR,
+ac3(t)=ERREUR],
+		tourn_de0ac||i)),size);
+print( d[t]*a||i||_= tourn_de0a||i );	print( d[t]*ac||i||_= tourn_de0ac||i );
+od:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">########################################################################################################<Font encoding="ISO8859-1">
+#			ET SANS les crois\351s impliquant 5ou6  et  0ou9:				       #
+####	en effet, c'est dernier \351voluent tr\350s vite et ne contribuent pas \340 l'\351voltion du syst\350me :  ####</Font>
+########################################################################################################
+nulles:=[]:
+nulles:=Flatten([		seq([	seq([(r||i||j(t)=0,r||j||i(t)=0)],j=0..4),
+				seq([(r||i||j(t)=0,r||j||i(t)=0)],j=7..9)]	,i=5..6)	,
+			seq([	seq([(r||i||j(t)=0,r||j||i(t)=0)],j=0..0),
+				seq([(r||i||j(t)=0,r||j||i(t)=0)],j=9..9)]	,i=1..8)	]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">lin_fond:=proc(express)
+express;
+#subs([	r00(t)=(M+1)/2*N,	r99(t)=(M-1)/2*N,	r09(t)=C*N,	r90(t)=conjugate(C)*N],express);
+end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">POUR_DETERMINER_L_ETAT_STATIONNAIRE_VERS_LEQUEL_ON_VA_TENDRE;
+sachant_que_le_metastable_suit_adiabatiquement_le_fondamental;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#		#	...ca donne, en introduisant la polarisation du fondamental, qui est stationnaire ou presque :
+for i from 0 to 9 do	for j from 0 to 9 do 
+der||i||j:=simplify(subs(nulles,	lin_fond(tourn_de0r||i||j)),size) ;
+if subs(nulles,r||i||j(t))&lt;&gt;0 then print(d[t]*r||i||j||_=der||i||j );fi;
+od;od;
+dea1:=simplify(subs(nulles,	lin_fond(tourn_de0a1)),size):		d[t]*a1=%;
+dea2:=simplify(subs(nulles,	lin_fond(tourn_de0a2)),size):		d[t]*a2=%;
+deac1:=simplify(subs(nulles,	lin_fond(tourn_de0ac1)),size):	d[t]*ac1=%;	
+deac2:=simplify(subs(nulles,	lin_fond(tourn_de0ac2)),size):	d[t]*ac2=%;
+
+	dea3:=simplify(subs(nulles,	lin_fond(tourn_de0a3)),size):	d[t]*a3=%;
+	deac3:=simplify(subs(nulles,	lin_fond(tourn_de0ac3)),size):	d[t]*ac3=%;	</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#######################################################################################################
+##########	on prend  d'abord Delta1=Delta2=0 et wc1=w1,wc2=w2 :	 		     ##########
+		Delta1:=0; Delta2:=0; theta1:=0; theta2:=0;
+######################################################################################################</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">champ_adiab:=solve({dea1,dea2,dea3,deac1,deac2,deac3},{a1(t),a2(t),a3(t),ac1(t),ac2(t),ac3(t)});</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">gamma_em:=gamma=10^7;	un:=0.2801+0.0934+0.1867+0.1465+0.2931;
+valeur:=[ N=24*10^15 , n=10^10 , sigma=155*10^(-12) , kappa=10^7 , 
+gamma1=subs(gamma_em,gamma)*0.2801/un , gamma2=subs(gamma_em,gamma)*0.0934/un , gamma3=subs(gamma_em,gamma)*0.1867/un , 
+gamma4=subs(gamma_em,gamma)*0.1465/un , gamma5=subs(gamma_em,gamma)*0.2931/un , gamma=subs(gamma_em,gamma),
+ga=9/10*0.2801/un ,	gb=9/10*0.0934/un , 	gc=9/10*0.1867 , 
+tau=10^(-10) , 
+ac1in=13*10^3 /sqrt(2000)	, a1in=13*10^3 /sqrt(2000), 
+ac2in= 0	, a2in= 0, 
+ac3in=0 	, a3in=0 , 
+					M=1 , Coh=0
+];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">sqrt(2000.);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">###	essai de tout faire numeriquement ! ! !</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">moitie:=[];
+#moitie:=[seq(seq(	`if`(k&lt;l,r||k||l(t)=conjugate(r||l||k(t)),NULL)	,k=0..9),l=0..9)]:
+#moitie:=[op(moitie),ac1=conjugate(a1),ac2=conjugate(a2),ac3=conjugate(a3)];
+#nops(%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">syst:=[];	
+for i from 0 to 9 do	for j from 0 to 9 do 
+if subs(nulles,r||i||j(t))&lt;&gt;0 
+then 
+syst:=[op(syst),diff(r||i||j(t),t)=(subs([op(valeur),op(moitie)],der||i||j))]:
+fi;od;od;
+syst:=[op(syst),diff(a1(t) ,t)=subs([op(valeur),op(moitie)],(dea1 ))]:
+syst:=[op(syst),diff(a2(t) ,t)=subs([op(valeur),op(moitie)],(dea2 ))]:
+syst:=[op(syst),diff(a3(t) ,t)=subs([op(valeur),op(moitie)],(dea3 ))]:
+syst:=[op(syst),diff(ac1(t),t)=subs([op(valeur),op(moitie)],(deac1))]:
+syst:=[op(syst),diff(ac2(t),t)=subs([op(valeur),op(moitie)],(deac2))]:
+syst:=[op(syst),diff(ac3(t),t)=subs([op(valeur),op(moitie)],(deac3))]:
+
+syst:=simplify(map(eval	,syst)):
+syst[4];
+nops(syst);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">init0:=[		
+seq(seq(	`if`(subs(nulles,r||k||l(t))&lt;&gt;0 
+, r||k||l(0)=`if`(k=l and k=4,subs(valeur,n),0),NULL)		,k=1..8),l=1..8),
+		a1(0)=0,a2(0)=0,a3(0)=0	,ac1(0)=0,ac2(0)=0,ac3(0)=0,
+		r00(0)=1.*subs(valeur,N*(1+M)/2),r99(0)=1.*subs(valeur,N*(1-M)/2)
+		,r90(0)=0	,r09(0)=0			]:
+for i to nops(init0) do if op([i,2],sort([op(init0)]))=0 then else print(sort([op(init0)])[i]);fi;od;
+	nops(%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">tt:=time():
+dsol:=dsolve({op(syst)} union {op(init0)},numeric,range=0..0.00001,maxfun=2000);
+time()-tt;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">tt:=time():
+sol:=simplify(dsol(0.00001)):
+time()-tt;
+evalf(%%,3);#for i to nops(sol) do if op([i,2],sort([op(sol)]))=0 then else print(evalf(sort([op(sol)])[i],3));fi;od;
+somme_excite:=evalf(subs(sol,add(	r||k||k(t) 	,k=1..8) ),3);
+somme_fondamental:=evalf(subs(sol, r99(t)+r00(t) ),3);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">f11:=x-&gt;log10(subs(dsol(x),r11(t))):	f22:=x-&gt;log10(subs(dsol(x),r22(t))):	f33:=x-&gt;log10(subs(dsol(x),r33(t))):
+f44:=x-&gt;log10(subs(dsol(x),r44(t))):	f55:=x-&gt;log10(subs(dsol(x),r55(t))):	f66:=x-&gt;log10(subs(dsol(x),r66(t))):
+f77:=x-&gt;log10(subs(dsol(x),r77(t))):	f88:=x-&gt;log10(subs(dsol(x),r88(t))):	f00:=x-&gt;log10(subs(dsol(x),r00(t))):
+f99:=x-&gt;log10(subs(dsol(x),r99(t))):	f73:=x-&gt;log10(subs(dsol(x),abs(r73(t)))):	f82:=x-&gt;log10(subs(dsol(x),abs(r82(t)))):
+fa1:=x-&gt;log10(subs(dsol(x),(a1(t)))):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">plot([f11,f22,f33,f44,f55,f66,f77,f88,f99,f00,f73,f82,fa1],0..0.00001);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">en_t:=0.00001;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">###	on peut considerer qu'en 0.0001 seconde, les champs + metastables se mettent a l'\351quilibre !</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">init:=init0;</Text-field></Input></Group><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">L'id\351e : On fixe r00990990 et on Dsolve pour met + champs pour trouver \351tat stationnaire</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">eq_adiab_t:=[]:
+eq_adiab:=[]:
+for i to nops(syst) do
+	if op([i,1,1,0],syst) in [seq(seq(r||k||l,k=1..8),l=1..8),seq(op([a||jj,ac||jj]),jj=1..3)] then 
+		eq_adiab_t:=[op(eq_adiab_t),syst[i]];fi;
+od:
+eq_adiab:=subs(  [seq(op([i,1,1],eq_adiab_t)=op([i,1,1,0],eq_adiab_t),i=1..nops(eq_adiab_t))]  ,eq_adiab_t):
+eq_adiab[1];
+nops(eq_adiab);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">######   et ce pour chaque pas de temps du fondamental !</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">### EN FAIT : des nouvelles variables pour avoir des parametres proches de 1 !!</Text-field></Input></Group><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1">LES  NOUVELLES  VARIABLES  ET  LES  EQUATIONS  QUI  VONT  AVEC...  etc</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">nouv:=[seq(seq(  r||k||l = s||r||k||l * subs(valeur,n)  ,k=1..8),l=1..8)]:
+nouv:=[op(nouv), r09=sr09 * subs(valeur,N), r90=sr90 * subs(valeur,N), r00=sr00 * subs(valeur,N), r99=sr99 * subs(valeur,N) ]:
+nouv:=[op(nouv), seq( op([a||k=sa||k*subs(valeur,a1in*sqrt(2/kappa/tau))
+			,ac||k=sac||k*subs(valeur,a1in*sqrt(2/kappa/tau))]) ,  k=1..3)]:
+nouv[1];
+nops(nouv);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">rien:=proc(frf)  frf; %; end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">nouvsyst:=map(expand,map(isolate,map(x-&gt;map(rien,x),subs(nouv,syst)),diff)):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">evalf(nouvsyst,2)[1];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">nouvinit0:=[]:
+for i to nops(init0) do 
+nouvinit0:=[op(nouvinit0),op(solve(map(simp,subs(nouv,init0[i])),{s||(op([1,0],init0[i]))(0)}))];od:
+nouvinit0[1];
+nops(nouvinit0);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">nouveq_adiab:=map(expand,map(x-&gt;map(rien,x*10^(-16)),subs(nouv,eq_adiab))):
+nouveq_adiab_t:=map(expand,map(isolate,map(x-&gt;map(rien,x),subs(nouv,eq_adiab_t)),diff)):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">evalf(nouveq_adiab,2)[1];
+evalf(nouveq_adiab_t,2)[1];
+nops(nouveq_adiab_t);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group></Section><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">L'\351volution sur un pas de temps du fondamental</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">###	l'\351volution maintenant :</Font>
+TEMPS:=0;
+nouvinit:=nouvinit0;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">tt:=time():
+nouvdsol_adiab:=dsolve( subs(nouvinit[-4..-1],
+	{op(subs([  sr00(t)=sr00(0),sr99(t)=sr99(0),sr09(t)=sr09(0),sr90(t)=sr90(0) ] ,nouveq_adiab_t))})
+	 union {op(nouvinit[1..-5])}	
+,numeric,maxfun=0,range=0..0.00001);
+nouvinit_apres_dt:=map(x-&gt;map(simp,x),	nouvdsol_adiab(0.00001)[2..-1]	);
+time()-tt;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">sf11:=x-&gt;(subs(nouvdsol_adiab (x),sr11(t))):	sf22:=x-&gt;(subs(nouvdsol_adiab (x),sr22(t))):	
+sf33:=x-&gt;(subs(nouvdsol_adiab (x),sr33(t))):	sf44:=x-&gt;(subs(nouvdsol_adiab (x),sr44(t))):	
+sf55:=x-&gt;(subs(nouvdsol_adiab (x),sr55(t))):	sf66:=x-&gt;(subs(nouvdsol_adiab (x),sr66(t))):
+sf77:=x-&gt;(subs(nouvdsol_adiab (x),sr77(t))):	sf88:=x-&gt;(subs(nouvdsol_adiab (x),sr88(t))):	
+sfa1:=x-&gt;(subs(nouvdsol_adiab (x),(sa1(t)))):	sfa2:=x-&gt;(subs(nouvdsol_adiab (x),(sa2(t)))):
+plot([sf11,sf22,sf33,sf44,sf55,sf66,sf77,sf88,sfa1
+],0..0.00001);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">######	une \351tape pour normaliser le r\351sultat car sinon, ca d\351rive lentement mais surement vers 0 !
+######	mais en fait non ! car on am\351lior\351 la notation tout en haut du fichier en d\351finissant "sys" mieux!</Font>
+norm_excit:=subs(nouvinit_apres_dt,sr11(t)+sr22(t)+sr33(t)+sr44(t)+sr55(t)+sr66(t)+sr77(t)+sr88(t));
+norm_meta:=subs(nouvinit_apres_dt,sr11(t)+sr22(t)+sr33(t)+sr44(t)+sr55(t)+sr66(t));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">######	Maintenant, on doit calculer l'\351volution du Fond sur le petit Delta't'=pas choisi</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">pas:=0.001;			#####	UN PAS DE TEMPS DU FONDAMENTAL</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">syst_fond:=[]:
+for i to nops(syst) do
+	if op([i,1,1,0],syst) in [r09,r90,r00,r99] then 
+		syst_fond:=[op(syst_fond),syst[i]];fi;
+od:
+##	et 
+nouvsyst_fond:=map(expand,map(isolate,map(x-&gt;map(rien,x),subs(nouv,syst_fond)),diff)):
+nouvsyst_fond;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">### et on fait \351voluer :</Font>
+for i to 4 do 
+	dt_||(op([i,1,1,0],nouvsyst_fond)):=subs(nouvinit,	subs(t=0,	rhs(nouvsyst_fond[i])));
+od;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">###	 il faut qu'on redefinisse "nouvinit" pour tout recommencer et avancer de "dt" \340 nouveau !</Font>
+nouvinit_apres_pas:=	[	op(	subs(t=0,nouvinit_apres_dt)	)
+			,sr00(0)= subs(nouvinit,sr00(0)) + dt_sr00 * pas
+			,sr99(0)= subs(nouvinit,sr99(0)) + dt_sr99 * pas
+			,sr90(0)= subs(nouvinit,sr90(0)) + dt_sr90 * pas
+			,sr09(0)= subs(nouvinit,sr09(0)) + dt_sr09 * pas	]:
+nouvinit:=nouvinit_apres_pas;
+nops(%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">TEMPS:=TEMPS+pas;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">###############		TOUTE cette \351volution dans une SEULE proc\351dure pour la faire tourner :</Font>
+
+					dt_adiab_meta:=0.00001;
+					pas:=0.001;</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"><Font executable="false">	TOUS  CA  EN  BOUCLE  ! ! !</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">###############		TOUTE cette \351volution dans une SEULE proc\351dure pour la faire tourner :</Font>
+					TEMPS:=0;
+					nouvinit:=nouvinit0:
+					list_t:=[]:
+					list_t:=[op(list_t),[TEMPS,nouvinit]]:
+
+EVO:=proc(nbr_pas)
+
+global nouvdsol_adiab,nouvinit_apres_dt,syst_fond,nouvsyst_fond,nouvinit_apres_pas,TEMPS,nouvinit,norm_meta,list_t,pas,dt_adiab_meta;
+local i,nbr,tt;
+					for nbr from 0 to nbr_pas do
+		if nbr=2 then tt:=time();fi;
+###############	
+nouvdsol_adiab:=dsolve( subs(nouvinit[-4..-1],
+	{op(subs([  sr00(t)=sr00(0),sr99(t)=sr99(0),sr09(t)=sr09(0),sr90(t)=sr90(0) ] ,nouveq_adiab_t))})
+	 union {op(nouvinit[1..-5])}	
+,numeric,maxfun=0);
+
+nouvinit_apres_dt:=map(x-&gt;map(simp,x),	nouvdsol_adiab(dt_adiab_meta)[2..-1]	);
+###############
+
+		TEMPS:=TEMPS + `if`(nbr=0,dt_adiab_meta,pas);	list_t:=[op(list_t),[TEMPS,nouvinit]];
+
+###############	
+for i to 4 do 
+	dt_||(op([i,1,1,0],nouvsyst_fond)):=subs(nouvinit,	subs(t=0,	rhs(nouvsyst_fond[i])));
+od;
+###############	
+nouvinit_apres_pas:=	[	op(	subs(t=0,nouvinit_apres_dt)	)
+			,sr00(0)= subs(nouvinit,sr00(0)) + dt_sr00 * pas
+			,sr99(0)= subs(nouvinit,sr99(0)) + dt_sr99 * pas
+			,sr90(0)= subs(nouvinit,sr90(0)) + dt_sr90 * pas
+			,sr09(0)= subs(nouvinit,sr09(0)) + dt_sr09 * pas	]:
+nouvinit:=simplify(nouvinit_apres_pas);
+nops(%);
+###############	
+
+###############	
+		if nbr=2 then print("Estimation du temps de calcul",___,
+				round((time()-tt)*nbr_pas/60)," MINUTES   ");fi;
+						od;
+print(________________________________________________________________________________________________________________________);
+print("TEMPS final"=TEMPS,"SECONDES");
+print("SOIT ",nbr_pas, " PAS DE ", pas, " SECONDE");
+print(list_t[-1]);<Font encoding="ISO8859-1">
+print("il existe une liste des diff\351rents \351tats au diff\351rents temps : list_t ,  elle comporte ",_,nops(list_t),"\351l\351ments");</Font>
+end:</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">PROCEDURE POUR actualiser un \351ventuel changement de "valeur" et "init0".</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">####	 il faut pouvoir changer "valeur" et "init0" facilement :
+
+if 1 = 2 then
+
+#actualise_valeur_init0:=proc()
+#global syst,eq_adiab_t,eq_adiab,nouv,nouvsyst,nouvinit0,nouveq_adiab,nouveq_adiab_t,TEMPS,nouvinit,init,init0,pas,en_t
+#	,moitie,rien,tt,syst_fond,nouvsyst_fond,nouvinit_apres_pas,dt_adiab_meta,list_t,EVO;
+#local i,j;
+
+#############################################################################
+
+moitie:=[];
+
+syst:=[];		#add(	r||k||k(t) 	,k=1..6) =n , r99(t)+r00(t)=N];
+for i from 0 to 9 do	for j from 0 to 9 do 
+if subs(nulles,r||i||j(t))&lt;&gt;0 #and i&gt;=j 
+then 
+syst:=[op(syst),diff(r||i||j(t),t)=(subs([op(valeur),op(moitie)],der||i||j))]:
+fi;od;od;
+syst:=[op(syst),diff(a1(t) ,t)=subs([op(valeur),op(moitie)],(dea1 ))]:
+syst:=[op(syst),diff(a2(t) ,t)=subs([op(valeur),op(moitie)],(dea2 ))]:
+syst:=[op(syst),diff(a3(t) ,t)=subs([op(valeur),op(moitie)],(dea3 ))]:
+syst:=[op(syst),diff(ac1(t),t)=subs([op(valeur),op(moitie)],(deac1))]:
+syst:=[op(syst),diff(ac2(t),t)=subs([op(valeur),op(moitie)],(deac2))]:
+syst:=[op(syst),diff(ac3(t),t)=subs([op(valeur),op(moitie)],(deac3))]:
+syst:=simplify(map(eval	,syst)):
+
+en_t:=0.00001;
+
+init:=init0;
+
+eq_adiab_t:=[]:
+eq_adiab:=[]:
+for i to nops(syst) do
+	if op([i,1,1,0],syst) in [seq(seq(r||k||l,k=1..8),l=1..8),seq(op([a||jj,ac||jj]),jj=1..3)] then 
+		eq_adiab_t:=[op(eq_adiab_t),syst[i]];fi;
+od:	
+eq_adiab:=subs(  [seq(op([i,1,1],eq_adiab_t)=op([i,1,1,0],eq_adiab_t),i=1..nops(eq_adiab_t))]  ,eq_adiab_t):
+nouv:=[seq(seq(  r||k||l = s||r||k||l * subs(valeur,n)  ,k=1..8),l=1..8)]:
+nouv:=[op(nouv), r09=sr09 * subs(valeur,N), r90=sr90 * subs(valeur,N), r00=sr00 * subs(valeur,N), r99=sr99 * subs(valeur,N) ]:
+nouv:=[op(nouv), seq( op([a||k=sa||k*subs(valeur,a1in*sqrt(2/kappa/tau))
+			,ac||k=sac||k*subs(valeur,a1in*sqrt(2/kappa/tau))]) ,  k=1..3)]:
+rien:=proc(frf)  frf; %; end:
+nouvsyst:=map(expand,map(isolate,map(x-&gt;map(rien,x),subs(nouv,syst)),diff)):
+nouvinit0:=[]:
+for i to nops(init0) do 
+nouvinit0:=[op(nouvinit0),op(solve(map(simp,subs(nouv,init0[i])),{s||(op([1,0],init0[i]))(0)}))];od:
+nouveq_adiab:=map(expand,map(x-&gt;map(rien,x*10^(-16)),subs(nouv,eq_adiab))):
+nouveq_adiab_t:=map(expand,map(isolate,map(x-&gt;map(rien,x),subs(nouv,eq_adiab_t)),diff)):
+TEMPS:=0;
+
+nouvinit:=nouvinit0;
+
+pas:=0.001;			#####	UN PAS DE TEMPS DU FONDAMENTAL
+syst_fond:=[]:
+for i to nops(syst) do
+	if op([i,1,1,0],syst) in [r09,r90,r00,r99] then 
+		syst_fond:=[op(syst_fond),syst[i]];fi;
+od:
+nouvsyst_fond:=map(expand,map(isolate,map(x-&gt;map(simp,x),subs(nouv,syst_fond)),diff)):
+
+for i to 4 do 
+	dt_||(op([i,1,1,0],nouvsyst_fond)):=subs(nouvinit,	subs(t=0,	rhs(nouvsyst_fond[i])));
+od;<Font encoding="ISO8859-1">
+###	 il faut qu'on redefinisse "nouvinit" pour tout recommencer et avancer de "dt" \340 nouveau !</Font>
+nouvinit_apres_pas:=	[	op(	subs(t=0,nouvinit_apres_dt)	)
+			,sr00(0)= subs(nouvinit,sr00(0)) + dt_sr00 * pas
+			,sr99(0)= subs(nouvinit,sr99(0)) + dt_sr99 * pas
+			,sr90(0)= subs(nouvinit,sr90(0)) + dt_sr90 * pas
+			,sr09(0)= subs(nouvinit,sr09(0)) + dt_sr09 * pas	]:
+nouvinit:=nouvinit_apres_pas;
+
+TEMPS:=TEMPS+pas;<Font encoding="ISO8859-1">
+###############		TOUTE cette \351volution dans une SEULE proc\351dure pour la faire tourner :</Font>
+					dt_adiab_meta:=0.00001;
+					pas:=0.001;
+
+					TEMPS:=0;
+					nouvinit:=nouvinit0:
+					list_t:=[]:
+					list_t:=[op(list_t),[TEMPS,nouvinit]]:
+
+EVO:=proc(nbr_pas)
+
+global nouvdsol_adiab,nouvinit_apres_dt,syst_fond,nouvsyst_fond,nouvinit_apres_pas,TEMPS,nouvinit,norm_meta,list_t;
+local i,nbr,tt;
+					for nbr to nbr_pas do
+		if nbr=2 then tt:=time();fi;
+###############	
+nouvdsol_adiab:=dsolve( subs(nouvinit[-4..-1],
+	{op(subs([  sr00(t)=sr00(0),sr99(t)=sr99(0),sr09(t)=sr09(0),sr90(t)=sr90(0) ] ,nouveq_adiab_t))})
+	 union {op(nouvinit[1..-5])}	
+,numeric,maxfun=0);
+
+nouvinit_apres_dt:=map(x-&gt;map(simp,x),	nouvdsol_adiab(dt_adiab_meta)[2..-1]	);
+###############
+#norm_meta:=subs(nouvinit_apres_dt,sr11(t)+sr22(t)+sr33(t)+sr44(t)+sr55(t)+sr66(t));
+#for i to nops(nouvinit_apres_dt) do
+#	if op([i,1,0],nouvinit_apres_dt) in [seq(seq(sr||k||l,k=1..8),l=1..8)] then 
+#		nouvinit_apres_dt:=subsop([i,2]=op([i,2],nouvinit_apres_dt)/norm_meta
+#								,nouvinit_apres_dt);fi;
+# od:
+nouvinit_apres_dt:		
+norm_meta;
+###############	
+#syst_fond:=[]:<Font encoding="ISO8859-1">
+#for i to nops(syst) do						## d\351j\340 d\351finit</Font>
+#	if op([i,1,1,0],syst) in [r09,r90,r00,r99] then 
+#		syst_fond:=[op(syst_fond),syst[i]];fi;
+#od:
+#nouvsyst_fond:=map(expand,map(isolate,map(x-&gt;map(simp,x),subs(nouv,syst_fond)),diff)):
+#nouvsyst_fond;
+###############	
+for i to 4 do 
+	dt_||(op([i,1,1,0],nouvsyst_fond)):=subs(nouvinit,	subs(t=0,	rhs(nouvsyst_fond[i])));
+od;
+###############	
+nouvinit_apres_pas:=	[	op(	subs(t=0,nouvinit_apres_dt)	)
+			,sr00(0)= subs(nouvinit,sr00(0)) + dt_sr00 * pas
+			,sr99(0)= subs(nouvinit,sr99(0)) + dt_sr99 * pas
+			,sr90(0)= subs(nouvinit,sr90(0)) + dt_sr90 * pas
+			,sr09(0)= subs(nouvinit,sr09(0)) + dt_sr09 * pas	]:
+nouvinit:=nouvinit_apres_pas;
+nops(%);
+###############	
+		TEMPS:=TEMPS+pas;	list_t:=[op(list_t),[TEMPS,nouvinit]];
+###############	
+		if nbr=2 then print("Estimation du temps de calcul",___,
+				round((time()-tt)*nbr_pas/60)," MINUTES   ");fi;
+						od;
+print(________________________________________________________________________________________________________________________);
+print("TEMPS final"=TEMPS,"SECONDES");
+print("SOIT ",nbr_pas, " PAS DE ", pas, " SECONDE");
+print(list_t[-1]);<Font encoding="ISO8859-1">
+print("il existe une liste des diff\351rents \351tats au diff\351rents temps : list_t");</Font>
+end:
+
+	fi:</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">					dt_adiab_meta:=0.000005;
+					pas:=0.02;
+					TEMPS:=0;
+					nouvinit:=nouvinit0:
+					list_t:=[]:
+					list_t:=[op(list_t),[TEMPS,nouvinit]]:
+tt:=time():	
+			  EVO( 15 );	########
+time()-tt;	########################
+"secondes pour le calcul";</Text-field></Input></Group><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1">	EXPLO<Font encoding="ISO8859-1">ITATION des r\351sultats</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i to 10 do 
+ii:=round(nops(list_t)/10*i):
+temps=op([ii,1],list_t),___,evalf(op([ii,2,-3],list_t),2),___,evalf(op([ii,2,-4],list_t),2)
+			,___,evalf(op([ii,2,-2],list_t),2),___,evalf(op([ii,2,-1],list_t),2) ;
+print(%);
+od:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#list_t;
+nops(list_t);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i from 1 to 10 do 
+ii:=round(nops(list_t)/10*i):
+temps=op([ii,1],list_t)	,___,simp(subs(op([ii,2],list_t) ,
+				 sr11(0)+sr22(0)+sr33(0)+sr44(0)+sr55(0)+sr66(0)+sr77(0)+sr88(0)))
+			,___,simp(subs(op([ii,2],list_t) ,
+				 sr99(0)+sr00(0)));
+print(%);
+od:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">nl:=nops(list_t):
+np:=25:	#nbr points
+plot00:=[seq( [	op([round(nl/np*i),1],list_t), subs(op([round(nl/np*i),2],list_t),abs(sr00(0)))	] ,i=1..np)]:
+plot99:=[seq( [	op([round(nl/np*i),1],list_t), subs(op([round(nl/np*i),2],list_t),abs(sr99(0)))	] ,i=1..np)]:
+plot90:=[seq( [	op([round(nl/np*i),1],list_t), subs(op([round(nl/np*i),2],list_t),abs(sr90(0)))	] ,i=1..np)]:</Text-field></Input><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">plot([plot00,plot99,plot90]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">nl:=nops(list_t):
+np:=25:	#nbr points
+plot43:=[seq( [	op([round(nl/np*i),1],list_t), subs(op([round(nl/np*i),2],list_t),abs(sr43(0)))]		,i=1..np)]:
+plot44:=[seq( [	op([round(nl/np*i),1],list_t), subs(op([round(nl/np*i),2],list_t),sr44(0))	]	,i=1..np)]:
+plot33:=[seq( [	op([round(nl/np*i),1],list_t), subs(op([round(nl/np*i),2],list_t),sr33(0))	]	,i=1..np)]:
+plot([plot43,plot44,plot33]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">nouvsyst[1];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">nouvsyst[1];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">#####	pour revenir dans les varibles anciennes : les sommes des op\351rateurs</Font>
+nouv[-8];
+nops(nouv);
+
+ancien:=x-&gt;s||(lhs(x))=solve( x ,s||(lhs(x))):
+anci:=map(ancien,nouv):
+anci[-8];
+nops(anci);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">convert(0.25,fraction);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">ind:=1;	#	l'indice de la list_t qui correspond au temps 
+list_t[ind][1],SECONDES;
+
+list_t[ind][2]:							
+map(x-&gt;op(0,lhs(x))=rhs(x),%);
+anci_init:=map(x-&gt;substring(op([1],x),2..-1)(0) = convert(solve( subs(anci,x) ,substring(op([1],x),2..-1)),fraction),%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">ancisyst:=map(expand,map(isolate,map(x-&gt;map(rien,x),subs(anci,nouvsyst)),diff)):	
+			###	et hop, on reviens dans les anciennes variables
+evalf(ancisyst[1],3);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#####	en fait :
+ancisyst:=syst:
+ancisyst[1];
+evalf(ancisyst[1],3);</Text-field></Input></Group><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">Cr\351ation d'un syst\350me lin\351aire autour de la position d'\351quilibre (pseudo-\351quilibre)</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">ecart:=[]:
+for i to nops(syst) do
+op([i,1,1,0],syst)(t)=(op([i,1,1,0],syst))(0)+d||(op([i,1,1,0],syst))(t);
+ecart:=[op(ecart),%];
+od:
+ecart[1];
+nops(ecart);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Occurrences(une_fonction, subs(whattype(dr43(t))=une_fonction,map(whattype,[op(125*sqrt(5)*dr44(t)*dr43(t))])));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">syslin:=[]:
+lin__:=proc(term) 
+if Occurrences(unefonc, subs(whattype(dr43(t))=unefonc,map(whattype,[op(term)])))&gt;=2 
+then 0; else term;fi;end:
+
+#i:=1;
+for i to nops(syst) do
+<Font encoding="ISO8859-1">
+simplify(subs(ecart,ancisyst[i]));			### on met les "ecarts" a l'\351quilibre
+	simplify(subs(anci_init,rhs(%)));			### on lin\351arise les "rij(0)" ainsi aparus</Font>
+	if op(0,evalf(%))=op(0,aaa+derg) then simplify(map(lin__,%)); 	### on enleve les termes quadratiques
+	else ERREUR_de_plus; fi;
+			syslin:=[op(syslin),op(1,%%%)=%];
+od:
+#i:='i';
+syslin[1];
+nops(syslin);<Font encoding="ISO8859-1">
+print("   	o\371 drij d\351signe l'\351cart \340 la valeur moyenne   ");</Font></Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">On d\351duit T et D</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">### on cr\351e ainsi T</Font>
+T:=Matrix(nops(syslin)):
+for i to nops(syslin) do for j to nops(syslin) do
+T[i,j]:=coeff(rhs(syslin[i]) , op([j,1,1],syslin) );
+od;od;
+T;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">### puis D : =&lt;dAB&gt; - &lt;dA.B&gt; - &lt;A.dB&gt;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">
+lineair:=proc(expr)
+subs(	map(x-&gt;op([1,0],x)=rhs(x),anci_init)	,expr);
+end;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">##########  RQ il faut que l'ordre des op\351rateurs dans syslin soit le meme que dans syst ! ! ! !</Font>
+
+Difu:=proc(A,B) local bidon1,bidon2,bidon3,i; global test1,test2,test10,test20;
+
+Digits:=40;
+
+#bidon1:=erreur1;
+#if fois(A,B)&lt;&gt;0 then
+#bidon1:= subs(plus_de_t,
+#subs([kappa=0,ga=0,gb=0,gc=0,r00(t)=r00,r90(t)=r90,r09(t)=r09,r99(t)=r99]
+#	,  de||(fois(A,B))	
+#	 - lineair((A)) * de||B						# le - deA*&lt;B&gt;
+#	 - lineair((B)) * de||A						# le - deB*&lt;A&gt;
+#));
+#else bidon1:=0;fi;
+
+bidon2:=0;
+for i to nops(syst) do 
+if (op([i,1,1,0],syst))=A then test10:=i;
+bidon2:=add(	`if`(T[i,jj]=0,0,	
+T[i,jj]	* (
+	    fois( op([jj,1,1,0],syst) , B)	
+	    - B* op([jj,1,1,0],syst)
+))	,jj=1..nops(syst));fi;od;
+
+bidon3:=0;
+for i to nops(syst) do 
+if (op([i,1,1,0],syst))=B then test20:=i;
+bidon3:=add(	`if`(T[i,jj]=0,0,	
+T[i,jj]	* (
+	    fois( A , op([jj,1,1,0],syst))
+	    - A* op([jj,1,1,0],syst)
+))	,jj=1..nops(syst));fi;
+od; 
+test1:=(bidon2);
+test2:=(bidon3);
+lineair(0*bidon1-bidon2-bidon3);
+subs([seq(seq(seq(op([a||j||r||k||l=0,ac||j||r||k||l=0]),j=1..3),k=0..9),l=0..9)],%);
+simplify(%);
+end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Difu(r00,r00);_________________________________;
+test10;evalf(syst[test10]);
+test1;_________________________________;
+test20;evalf(syst[test20]);
+test2;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simplify(-test1-test2);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">op([23,1,1,0],syst);
+fois( % , r34);
+T[2,23];
+syslin[2];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Digits;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">d0:=Matrix(nops(syst)):
+for i to nops(syst) do for j to nops(syst) do
+d0[i,j]:= Difu( op([i,1,1,0],syst) ,  op([j,1,1,0],syst));
+od;
+if round(i/10)=i/10 then print(i,sur,nops(syst));fi;	od;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">d:=subs(convert(1,symbol)=1,d0):
+d:=subs([seq(op([	a||i||ac||i=cosh(r||i)^2 ,
+			a||i||a||i=1/2*sinh(2*r||i)*exp(-I*phi) ,
+			ac||i||ac||i=1/2*sinh(2*r||i)*exp(I*phi) ,
+			ac||i||a||i=sinh(r||i)^2])	,i=1..3)	]		,d):
+r1:=0;r2:=1/3;r3:=0;
+theta:=0;phi:=2*theta - Pi;
+d:=simplify(d);
+
+######
+######		POUR les &lt;aiaci&gt;,...etc, page 63 (2-159) (2-160) ! these verte 
+######			( puis page 17 ou bien programme le_retour_du_champ_magn_complex_tourn.mws.mw, en bas)
+######</Text-field></Input><Input><Text-field prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#syst;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i to nops(syst) do for j to nops(syst) do
+if  d[i,j]&lt;&gt;0 
+then print(op([i,1,1,0],syst),op([j,1,1,0],syst),evalf(d[i,j]));fi; od;od;</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">#####		il va faloir cr\351\351e un systeme 2500 x 2500 et l'inverser comme dans </Font>
+#						stationnaire_ground_laser.mw</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">with(LinearAlgebra):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Sego0:=Matrix(50,(i,j)-&gt;	S||(op([i,1,1,0],syst))||(op([j,1,1,0],syst))): B:=T:
+T:=evalm(Matrix(B)):
+G:=evalm(Matrix(d)):
+Sego:=evalm(Matrix(Sego0)):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">ini0:=Matrix(50,(i,j)-&gt;	fois(op([i,1,1,0],syst),op([j,1,1,0],syst))	);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">
+if 1=2 then
+
+k:='k':
+syst_corr:=[]:
+for i to 50 do 
+	for j to 50 do 
+eqdiff||((i-1)*50+j):=
+diff(Sego[i,j](t),t)	=	G[i,j] 	+  sum(	T[i,k]*Sego[k,j](t) + T[j,k]*Sego[i,k](t)	,k=1..50)	;
+var||((i-1)*50+j):=Sego[i,j](t);
+
+	od;
+od;
+syst_corr:=[seq(eqdiff||i,i=1..2500)]:
+nops(syst_corr);</Text-field></Input><Input><Text-field prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">eqdiff17;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#dsolve({op(syst_corr)},{Sr00r33(t)});</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">op([1],syst_corr);
+op([1,1,1],syst_corr);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">coeff(  op([1,2],syst_corr)  ,  op([1,1,1],syst_corr)  );</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">
+if 1=2 then
+
+tt:=time():
+Msyst_corr:=Matrix(nops(syst_corr),   (i,j)-&gt;  coeff(  rhs(eqdiff||i)  ,  var||j  )	);
+time()-tt;</Text-field></Input><Input><Text-field prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">
+if 1=2 then
+
+A:=Msyst_corr[1..100,1..100];</Text-field></Input><Input><Text-field prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Section><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">M\351thode t\350hses verte p.54</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">with(linalg):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">B:=convert(evalm(	-T	),array):
+BT:=(-Transpose(Matrix(T))):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">id:=IdentityMatrix(50);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">uuu:=50;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">tt:=time():
+B1:=Matrix(50*uuu):
+for i to uuu do 
+for j to uuu do 
+B1[1+50*(i-1)..50*(i),1+50*(j-1)..50*(j)]:=id*B[i,j];
+od:od:
+B1;
+time()-tt;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">tt:=time():
+B2:=Matrix(50*uuu):
+for i to uuu do 
+B2[1+50*(i-1)..50*(i),1+50*(i-1)..50*(i)]:=BT;
+od:
+B2;
+time()-tt;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">BB:=B1+B2;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">UseHardwareFloats:=true;
+Digits:=10;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">vvv:=2500;
+tt:=time():
+invBB:=MatrixInverse(evalf(BB[1..vvv,1..vvv]));
+time()-tt;
+invBB[1..3,1..3];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simplify(invBB[1..3,1..3]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Dtilde:=Matrix(2500,1):
+for i to uuu do 
+for j to uuu do 
+Dtilde[j+uuu*(i-1),1]:=d[i,j];
+od:od:
+Dtilde;
+</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Xtilde:=invBB . Dtilde;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">G0:=Matrix(50,50):
+for i to uuu do 
+for j to uuu do 
+G0[i,j]:=Xtilde[j+uuu*(i-1),1];
+od:od:
+G0;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Section><Title><Text-field layout="Heading 2" style="Heading 2">G0</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">G0 :=evalf( Matrix([[-.2396469332e27, 0., -.6911978471e39, 0.\
+, 0., 0., 0., 0., 0., -.6911984687e39, 0., 0., 0., 0., 0., 0., -.6911990903e39, \
+0., 0., 0., 0., 0., 0., -.6911997118e39, 0., 0., -.6911984687e39, 0., 0., -.6911\
+990904e39, 0., 0., 0., 0., -.6911990242e39, 0., 0., 0., 0., 0., 0., -.6911985349\
+e39, 0., .6213779618e33, 0., 0., 0., 0., 0., 0.], [0., 0., 0., .1000000000e18, 0\
+., 0., 0., 0., 0., 0., .1000000000e18, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., .1000000000e18, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., .1000000000e18, 0., 0., 0., 0., 0., 0., 0.], [-.2612364398e11, 0.\
+, -.1597965292e16, 0., 0., 0., 0., 0., 0., -.3578428469e16, 0., 0., 0., 0., 0., \
+0., -.6899769531e16, 0., 0., 0., 0., 0., 0., -.6174251485e17, 0., 0., -.25333784\
+08e16, 0., 0., -.9115356567e16, 0., 0., 0., 0., -.1356125506e17, 0., 0., 0., 0.,\
+ 0., 0., -.7280408206e16, 0., -4670335210., 0., 0., 0., 0., 0., 0.], [0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],\
+ [-.6587282684e16, 0., -.1884144309e17, 0., 0., 0., 0., 0., 0., -.3042688146e17,\
+ 0., 0., 0., 0., 0., 0., -.3000733186e17, 0., 0., 0., 0., 0., 0., -.8221520162e1\
+7, 0., 0., -.3057266264e17, 0., 0., -.6017349119e17, 0., 0., 0., 0., -.352737888\
+4e17, 0., 0., 0., 0., 0., 0., -.3413708092e17, 0., -.3948769083e11, 0., 0., 0., \
+0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., -.50\
+00000000e-5, 0., 0., 0., 0., 0., 0., -.1000000000e-5, 0., 0., 0., 0., 0., 0., -.\
+2000000000e-5, 0., 0., 0., 0., 0., 0., 0., 0., 0., -.5300000000e-7, 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., -.1000000000e-4, 0., 0., 0., 0., 0.,\
+ 0., 0.], [-.7474995834e16, 0., -.5672335233e26, 0., 0., 0., 0., 0., 0., -.37815\
+56827e26, 0., 0., 0., 0., 0., 0., -.1890778418e26, 0., 0., 0., 0., 0., 0., -.174\
+4879157e18, 0., 0., -.3781556833e26, 0., 0., -.1890778429e26, 0., 0., 0., 0., -.\
+2091997507e26, 0., 0., 0., 0., 0., 0., -.3580337764e26, 0., -.1890778410e26, 0.,\
+ 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0.,\
+ 0., 0., .1000000000e11, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 2000000000., 0., 0., \
+0., 0., 0., 0., 9999999999., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0.], [0., 0., 0., .1000000000e12, 0., 0., 0., 0., 0., 0., .1000\
+000000e12, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., .5000\
+000000e11, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., .1000000000e1\
+1, 0., 0., 0., 0., 0., 0., 0.], [.2879998799e33, 0., -.2879967061e33, 0., 0., 0.\
+, 0., 0., 0., -.2879979443e33, 0., 0., 0., 0., 0., 0., -.2879990023e33, 0., 0., \
+0., 0., 0., 0., -.2879998803e33, 0., 0., -.2879975841e33, 0., 0., -.2879991824e3\
+3, 0., 0., 0., 0., -.2879986613e33, 0., 0., 0., 0., 0., 0., -.2879978374e33, 0.,\
+ .2880001576e33, 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., .4295701346e-1+.1762084162e-10*I, 0., 0.,\
+ 0., 0., -15197.54093-.6234134048e-5*I, 0., 0., 0., 0., 0., 0., 0., 0., 99999103\
+49., 0., 0., 0., 0., -14132.46284, 0., 0., 0., 0., 0., 0., -.1571852502e-2+38319\
+14.474*I, 0., 0., .1680913583e13*I, 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., .1000000000e11, 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0.], [-.1608601768e17, 0., -.5923934196e17, 0., 0., 0., 0., 0., 0., -.\
+8281813822e17, 0., 0., 0., 0., 0., 0., -.1083154918e18, 0., 0., 0., 0., 0., 0., \
+-.1820527848e18, 0., 0., -.6357546405e17, 0., 0., -.1410788343e18, 0., 0., 0., 0\
+., -.1351088666e18, 0., 0., 0., 0., 0., 0., -.8871986365e17, 0., -.1386474888e12\
+, 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0.\
+, -.1000000000e-5, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., -.3000000\
+000e-6, 0., 0., 0., 0., 0., 0., 0., 0., 0., .1000000000e-6, 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., -.2000000000e-5, 0., 0., 0., 0., 0., 0., 0.]\
+, [-.3833147041e16, 0., -.5672335235e26, 0., 0., 0., 0., 0., 0., -.3781556828e26\
+, 0., 0., 0., 0., 0., 0., -.1890778420e26, 0., 0., 0., 0., 0., 0., -.1202148388e\
+18, 0., 0., -.3781556829e26, 0., 0., -.1890778420e26, 0., 0., 0., 0., -.20919974\
+83e26, 0., 0., 0., 0., 0., 0., -.3580337761e26, 0., -.1890778410e26, 0., 0., 0.,\
+ 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., .1381122699e-1, 0., 0.,\
+ 0., 0., -4886.202987, 0., 0., 0., 0., 0., 0., 0., 0., -15197.54093+.6234134048e\
+-5*I, 0., 0., 0., 0., .4295701346e-1-.1762084162e-10*I, 0., 0., 0., 0., 0., 0., \
+1232009.312*I, 0., 0., -.1571852502e-2-3831914.474*I, 0.], [0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0.], [.2888449297e18, 0., -.1361360457e33, 0., 0\
+., 0., 0., 0., 0., -.9075736378e32, 0., 0., 0., 0., 0., 0., -.4537868192e32, 0.,\
+ 0., 0., 0., 0., 0., -.5330595327e23, 0., 0., -.9075736378e32, 0., 0., -.4537868\
+193e32, 0., 0., 0., 0., -.5020793952e32, 0., 0., 0., 0., 0., 0., -.8592810618e32\
+, 0., -.4537868188e32, 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., .1120200000e-7*I, 0., 0., 0., 0., .1120200000e-7*I, 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 1., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., -.1747124170e-13+.4259331585e-4*I, 0., 0., 0.\
+, 0., .2472500632e-7-60.27449724*I, 0., 0., 0., 0., 0., 0., 0., 0., -187.4705001\
+*I, 0., 0., 0., 0., .4888177408e-3*I, 0., 0., 0., 0., 0., 0., -7599.129040-.3117\
+067023e-5*I, 0., 0., 44826.87486, 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., .5605121024e-8*I, 0., 0., 0., 0., .1680936187e-7*I, 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 1.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., -.1369429358\
+e-4*I, 0., 0., 0., 0., 19.37901862*I, 0., 0., 0., 0., 0., 0., 0., 0., .247250063\
+2e-7+60.27449724*I, 0., 0., 0., 0., -.1747124170e-13-.4259331585e-4*I, 0., 0., 0\
+., 0., 0., 0., 2443.216781, 0., 0., -7599.129040+.3117067023e-5*I, 0.], [0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0.]]) ,3);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">evalm(G0);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">G0 := ( ([[-.240e27, 0., -.691e39, 0., 0., 0., 0.,\
+ 0., 0., -.691e39, 0., 0., 0., 0., 0., 0., -.691e39, 0., 0., 0., 0., 0., 0., -.6\
+91e39, 0., 0., -.691e39, 0., 0., -.691e39, 0., 0., 0., 0., -.691e39, 0., 0., 0.,\
+ 0., 0., 0., -.691e39, 0., .621e33, 0., 0., 0., 0., 0., 0.], [0., 0., 0., .100e1\
+8, 0., 0., 0., 0., 0., 0., .100e18, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., .100e18, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., .100e18, 0., 0., 0., 0., 0., 0., 0.], [-.261e11, 0., -.160e16, 0., 0., 0., \
+0., 0., 0., -.358e16, 0., 0., 0., 0., 0., 0., -.690e16, 0., 0., 0., 0., 0., 0., \
+-.617e17, 0., 0., -.253e16, 0., 0., -.912e16, 0., 0., 0., 0., -.136e17, 0., 0., \
+0., 0., 0., 0., -.728e16, 0., -.467e10, 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [-.\
+659e16, 0., -.188e17, 0., 0., 0., 0., 0., 0., -.304e17, 0., 0., 0., 0., 0., 0., \
+-.300e17, 0., 0., 0., 0., 0., 0., -.822e17, 0., 0., -.306e17, 0., 0., -.602e17, \
+0., 0., 0., 0., -.353e17, 0., 0., 0., 0., 0., 0., -.341e17, 0., -.395e11, 0., 0.\
+, 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0.\
+, -.500e-5, 0., 0., 0., 0., 0., 0., -.100e-5, 0., 0., 0., 0., 0., 0., -.200e-5, \
+0., 0., 0., 0., 0., 0., 0., 0., 0., -.530e-7, 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., -.100e-4, 0., 0., 0., 0., 0., 0., 0.], [-.747e16, 0., -.56\
+7e26, 0., 0., 0., 0., 0., 0., -.378e26, 0., 0., 0., 0., 0., 0., -.189e26, 0., 0.\
+, 0., 0., 0., 0., -.174e18, 0., 0., -.378e26, 0., 0., -.189e26, 0., 0., 0., 0., \
+-.209e26, 0., 0., 0., 0., 0., 0., -.358e26, 0., -.189e26, 0., 0., 0., 0., 0., 0.\
+], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., .100e11, 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0.], [0., 0., 0., 0., .200e10, 0., 0., 0., 0., 0., 0., .100e11, 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0.,\
+ .100e12, 0., 0., 0., 0., 0., 0., .100e12, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., .500e11, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., .100e11, 0., 0., 0., 0., 0., 0., 0.], [.288e33, 0., -.288e33, 0., 0.\
+, 0., 0., 0., 0., -.288e33, 0., 0., 0., 0., 0., 0., -.288e33, 0., 0., 0., 0., 0.\
+, 0., -.288e33, 0., 0., -.288e33, 0., 0., -.288e33, 0., 0., 0., 0., -.288e33, 0.\
+, 0., 0., 0., 0., 0., -.288e33, 0., .288e33, 0., 0., 0., 0., 0., 0.], [0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., .430e-1+.176e\
+-10*I, 0., 0., 0., 0., -.152e5-.623e-5*I, 0., 0., 0., 0., 0., 0., 0., 0., .100e1\
+1, 0., 0., 0., 0., -.141e5, 0., 0., 0., 0., 0., 0., -.157e-2+.383e7*I, 0., 0., .\
+168e13*I, 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., .100e11, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [-.161e17, 0., -.5\
+92e17, 0., 0., 0., 0., 0., 0., -.828e17, 0., 0., 0., 0., 0., 0., -.108e18, 0., 0\
+., 0., 0., 0., 0., -.182e18, 0., 0., -.636e17, 0., 0., -.141e18, 0., 0., 0., 0.,\
+ -.135e18, 0., 0., 0., 0., 0., 0., -.887e17, 0., -.139e12, 0., 0., 0., 0., 0., 0\
+.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., -.100e-5, 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., -.300e-6, 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., .100e-6, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., -.200e-5\
+, 0., 0., 0., 0., 0., 0., 0.], [-.383e16, 0., -.567e26, 0., 0., 0., 0., 0., 0., \
+-.378e26, 0., 0., 0., 0., 0., 0., -.189e26, 0., 0., 0., 0., 0., 0., -.120e18, 0.\
+, 0., -.378e26, 0., 0., -.189e26, 0., 0., 0., 0., -.209e26, 0., 0., 0., 0., 0., \
+0., -.358e26, 0., -.189e26, 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., .138e-1, 0., 0., 0., 0., -.489e4, 0., 0., 0., 0., 0., 0., 0., 0.\
+, -.152e5+.623e-5*I, 0., 0., 0., 0., .430e-1-.176e-10*I, 0., 0., 0., 0., 0., 0.,\
+ .123e7*I, 0., 0., -.157e-2-.383e7*I, 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.\
+, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., \
+0., 0., 0., 0., 0.], [.289e18, 0., -.136e33, 0., 0., 0., 0., 0., 0., -.908e32, 0\
+., 0., 0., 0., 0., 0., -.454e32, 0., 0., 0., 0., 0., 0., -.533e23, 0., 0., -.908\
+e32, 0., 0., -.454e32, 0., 0., 0., 0., -.502e32, 0., 0., 0., 0., 0., 0., -.859e3\
+2, 0., -.454e32, 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., .112e-7*I, 0., 0., 0., 0., .112e-7*I, 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 1., 0., 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 0., -.175e-13+.426e-4*I, 0., 0., 0., 0., .247e-7-60.3*I, 0., 0., 0., \
+0., 0., 0., 0., 0., -187.*I, 0., 0., 0., 0., .489e-3*I, 0., 0., 0., 0., 0., 0., \
+-.760e4-.312e-5*I, 0., 0., .448e5, 0.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., .561e-8*I, 0., 0., 0., 0., .168e-7*I, 0., 0., 0., 0., 0., 0., 0., 0., 0., 0\
+., 0., 0., 1.], [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], [0., 0., 0., 0., 0., 0\
+., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., -.137e-4*I, 0., 0., 0., 0\
+., 19.4*I, 0., 0., 0., 0., 0., 0., 0., 0., .247e-7+60.3*I, 0., 0., 0., 0., -.175\
+e-13-.426e-4*I, 0., 0., 0., 0., 0., 0., .244e4, 0., 0., -.760e4+.312e-5*I, 0.], \
+[0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,\
+ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.]]) );</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">G0[1..50,1..5];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for j to nops(syst) do
+if <Font opaque="false">G0[j,j]&lt;&gt;k0 then </Font>op([j,1,1],syslin),___,G0[j,j];print(%);fi;od;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font opaque="false">[op([2,1,1],syslin),op([43,1,1],syslin),G0[2,43]];
+[op([43,1,1],syslin),op([2,1,1],syslin),G0[43,2]];</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">evalf(subs(valeur,N));</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">1e17/%;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">valeur;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">valeur := [N = 24000000000000000, n = 10000000000, gamma[ech] = 31/200000000000, kappa = 10000000, gamma1 = 2801560.312, gamma2 = 934186.8374, gamma3 = 1867373.475, gamma4 = 1465293.059, gamma5 = 2931586.317, gamma = 10000000, ga = .2521404281*2400000^(1/2), gb = .8407681536e-1*2400000^(1/2), gc = .1680300000*2400000^(1/2), tau = 1/10000000000, ac1in = 130*5^(1/2), a1in = 130*5^(1/2), ac2in = 0, a2in = 0, ac3in = 0, a3in = 0, M = 1, Coh = 0];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Delta_gx_2 := 1/4*N*(2*N*C*DXin2/((2*C+1)*(Gamma+N))+((2*C+1)*Gamma+N)/((2*C+1)*(Gamma+N)));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">C_ := n*ga^2/(gamma*kappa);
+Gamma_ := 6*gc^2*alpha1^2/(gamma*gamma[ech]*(1+2*C));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Fondamentaux := 2*N*C*DXin2/((2*C+1)*(Gamma+N)*tau)+(2*Gamma*C+Gamma+N)/((2*C+1)*(Gamma+N))*N/4;
+Metastables := 2*Gamma*C*DXin2/((Gamma+N)*(2*C+1))+N/(Gamma+N)+Gamma/((2*C+1)*(Gamma+N))*n/4;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">subs([op(valeur),C=100,Gamma=subs([op(valeur),alpha1=subs(valeur,a1in*sqrt(200)),C=100],Gamma_)],Delta_gx_2):
+evalf(%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Digits;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#A:=RandomMatrix(50);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">UseHardwareFloats:=true;
+Digits:=10;
+#A:=RandomMatrix(50);
+tt:=time():
+vp,P:=op(([Eigenvectors(evalf(A))]));
+time()-tt;
+#MatrixInverse(P) . A .  ((P));
+#map(abs,%);
+Digits:=10:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">lu</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i while 1=1 do		od;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#######################################################################################################
+##########	on prend  d'abord Delta1=Delta2=0 et wc1=w1,wc2=w2 :	 		     ##########
+		Delta1:=0; Delta2:=0; theta1:=0; theta2:=0;
+#######################################################################################################</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#####		Changer de base -&gt; xy !
+base_xy:=[  
+r74(t)=2*I*r74y(t)+r47(t),	r83(t)=2*I*r83y(t)+r38(t),	r72(t)=2*I*r72y(t)+r27(t),
+r81(t)=2*I*r81y(t)+r18(t),	r43(t)=2*r43x(t)-r34(t),	r32(t)=2*r32x(t)-r23(t),
+r65(t)=2*r65x(t)-r56(t),	r87(t)=2*r87x(t)-r78(t),	r21(t)=2*r21x(t)-r12(t),
+r09(t)=2*r90x(t) -r90(t),	ac2(t)=AX(t)-a2(t)]:
+derx:=proc(i,j)
+(der||i||j+der||j||i)/2 - 		0 * gamma/2*(0+`if`(i&gt;=7,1,0)+`if`(j&gt;=7,1,0))*( r||i||j(t)+r||j||i(t))/2;
+simplify(subs(  base_xy   ,%)) -f||i||j||x assuming alpha||1::real;
+end:
+dery:=proc(i,j)
+(der||i||j-der||j||i)/2/I - 		0 * gamma/2*(0+`if`(i&gt;=7,1,0)+`if`(j&gt;=7,1,0))*( r||i||j(t)-r||j||i(t))/2/I;
+simplify(subs(  base_xy   ,%)) -f||i||j||y assuming alpha||1::real;
+end:
+Fond:= simplify(subs(  base_xy   ,(der09+der90)/2)) -f90x assuming alpha||1::real:
+X:=simplify(subs(  base_xy   ,
+(deac2+dea2) - 		0 * kappa*(ac2(t)+a2(t)) + sqrt(2*kappa)*AXin
+)) assuming alpha||1::real:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Lis:=[dery(7,4),dery(8,3),dery(7,2),dery(8,1),derx(4,3),derx(3,2),derx(6,5),derx(8,7),derx(2,1),X]:
+syste:={op(Lis)}:
+for i to nops(Lis)-1 do print(d[t] * cat('r', op(Explode(op([-1,-1],Lis[i]))[2..4]))= simplify(Lis[i],size));od;
+print(d[t] * AX	=Lis[nops(Lis)]);
+
+_____________________________________________pour__trouver_______________________________________________;
+d[t]*r90x(t)=simplify(Fond,size);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">solve(syste,{r74y(t),r83y(t),r72y(t),r81y(t),r43x(t),r32x(t),r65x(t),r87x(t),r21x(t),AX(t)}):
+simplify(%):
+sol:=map(x-&gt;map(simp,x),%):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Fond;
+gx:=simp(simplify(subs(sol,Fond))):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">gx:=sort(map(simp,collect(gx,[r90x(t),f65x,f90x,f32x,f43x,f74y,f83y,f87x,f21x,f81y,f72y,AXin]))):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">gx2:=expand(gx^2):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#collect(gx2,[r90x(t),f65x,f90x,f32x,f43x,f74y,f83y,f87x,f21x,f81y,f72y,AXin],distributed):
+#gx2:=sort(map(simplify,%,size));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">############################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
+
+
+####		Calcul des coeff de D  
+####						PAR LA METHODE DANTAN !<Font encoding="ISO8859-1">
+####		d'abord : l'emission spontann\351e :</Font></Text-field></Input><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">####			LA diffusion due \340 l'emission spontann\351e</Font>
+D_em:=proc(operA,operB) 
+gamma||1*(fois(	com(r81,operA),com(operB,r18))+ fois(com(r74,operA),com(operB,r47))	)+
+gamma||2*(fois(	com(r72,operA),com(operB,r27))+ fois(com(r83,operA),com(operB,r38))	)+
+gamma||3*(fois(	com(r82,operA),com(operB,r28))+ fois(com(r73,operA),com(operB,r37))	)+
+gamma||4*(fois(	com(r85,operA),com(operB,r58))+ fois(com(r76,operA),com(operB,r67))	)+
+gamma||5*(fois(	com(r75,operA),com(operB,r57))+ fois(com(r86,operA),com(operB,r68))	)
+
++2*kappa*(fois(	com(ac2,operA),com(operB,a2))	);
+
+end:</Text-field></Input><Input><Text-field alignment="left" prompt="&gt; " style="Maple Input">D_em(a2,ac2);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">Dyy:=proc(i,j,k,l)	##	en base xy mais toujours donn\351e en base rij</Font>
+(D_em(r||i||j,r||k||l)-D_em(r||i||j,r||l||k)-D_em(r||j||i,r||k||l)+D_em(r||j||i,r||l||k))/(-4);end:
+Dxx:=proc(i,j,k,l)
+(D_em(r||i||j,r||k||l)+D_em(r||i||j,r||l||k)+D_em(r||j||i,r||k||l)+D_em(r||j||i,r||l||k))/(4);end:
+Dxy:=proc(i,j,k,l)
+(D_em(r||i||j,r||k||l)-D_em(r||i||j,r||l||k)+D_em(r||j||i,r||k||l)-D_em(r||j||i,r||l||k))/(4*I);end:
+Dyx:=proc(i,j,k,l)
+(D_em(r||i||j,r||k||l)+D_em(r||i||j,r||l||k)-D_em(r||j||i,r||k||l)-D_em(r||j||i,r||l||k))/(4*I);end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp(Dxy(4,7,4,7));
+simp(Dyy(7,4,7,4));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#####
+##### 					et puis pour l'echange !
+#####
+#	## plus de (t) ! 
+plus_de_t:=[seq(seq(r||i||j(t)=r||i||j,i=0..9),j=0..9),a1(t)=a1,a2(t)=a2,ac1(t)=ac1,ac2(t)=ac2]:
+nulles0:=Flatten([	seq([	seq([(r||i||j=0,r||j||i=0)],j=0..4),
+				seq([(r||i||j=0,r||j||i=0)],j=7..9)]	,i=5..6)	
+		,	seq([	seq([(r||i||j=0,r||j||i=0)],j=0..0),
+				seq([(r||i||j=0,r||j||i=0)],j=9..9)]	,i=1..8)	]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">F_E_lin0:=subs([r44_stat=n,Gxx_stat=N,op(nulles0)],evalm(F_E_lin)):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">lineair:=proc(expr)
+subs([seq(seq(r||i||j=0,i=0..9),j=0..9)],
+subs([r44=n,r00=N],expr));end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">base_r:=[GxIx=r00,G_Ix=r90,GxI_=r09,G_I_=r99,op(nulles0)]:
+
+D_ech:=proc(A,B) local bidon1,bidon2,bidon3,i; global test1;
+
+#bidon1:=erreur1;
+#if fois(A,B)&lt;&gt;0 then
+#bidon1:= subs(plus_de_t,
+#subs([kappa=0,ga=0,gb=0,gc=0,r00(t)=r00,r90(t)=r90,r09(t)=r09,r99(t)=r99]
+#	,  de||(fois(A,B))	
+#	 - lineair((A)) * de||B						# le - deA*&lt;B&gt;
+#	 - lineair((B)) * de||A						# le - deB*&lt;A&gt;
+#));
+#else bidon1:=0;fi;
+
+bidon2:=0;
+for i to nops(sys) do 
+if subs(base_r,op([i,1,1,0],sys))=A then
+bidon2:=add(	`if`(F_E_lin0[i,jj]=0,0,	F_E_lin0[i,jj]	* (
+ fois( subs(base_r,op([jj,1,1,0],sys)) , B)				# le (deA)jj . B
+   -   subs(base_r,op([jj,1,1,0],sys)) * lineair((B))			# le -(deA)jj*&lt;B&gt;
+ #-B* lineair((subs(base_r,op([jj,1,1,0],sys)) ))				# le -&lt;Ajj&gt;*B		# NON !!
+ #+ lineair(( B* subs(base_r,op([jj,1,1,0],sys)) ))				# le +&lt;Ajj&gt;*&lt;B&gt;		# NON !!
+)
+),jj=1..nops(sys));test1:=F_E_lin0[i,39];fi;od;
+
+bidon3:=0;
+for i to nops(sys) do 
+if subs(base_r,op([i,1,1,0],sys))=B then
+bidon3:=add(	`if`(F_E_lin0[i,jj]=0,0,	F_E_lin0[i,jj]	* (
+ fois( A , subs(base_r,op([jj,1,1,0],sys)))
+   -       subs(base_r,op([jj,1,1,0],sys)) * lineair((A))
+# -A* lineair((subs(base_r,op([jj,1,1,0],sys)) ))							# NON !!
+# + lineair(( A* subs(base_r,op([jj,1,1,0],sys)) ))							# NON !!
+)
+),jj=1..nops(sys));fi;
+od; 
+simplify(0*bidon1-bidon2-bidon3,size);
+end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Dxx(0,0,0,0);
+Dechxx(0,0,0,0);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">D_ech(r43,r43);
+test1;
+op([39,1,1,0],sys);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">D_ech(r43,r43);		D_ech(r34,r43);		D_ech(r43,r34);		D_ech(r34,r34);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Dechyy:=proc(i,j,k,l)
+(D_ech(r||i||j,r||k||l)-D_ech(r||i||j,r||l||k)-D_ech(r||j||i,r||k||l)+D_ech(r||j||i,r||l||k))/(-4);end:
+Dechxx:=proc(i,j,k,l)
+(D_ech(r||i||j,r||k||l)+D_ech(r||i||j,r||l||k)+D_ech(r||j||i,r||k||l)+D_ech(r||j||i,r||l||k))/(4);end:
+Dechxy:=proc(i,j,k,l)
+(D_ech(r||i||j,r||k||l)-D_ech(r||i||j,r||l||k)+D_ech(r||j||i,r||k||l)-D_ech(r||j||i,r||l||k))/(4*I);end:
+Dechyx:=proc(i,j,k,l)
+(D_ech(r||i||j,r||k||l)+D_ech(r||i||j,r||l||k)-D_ech(r||j||i,r||k||l)-D_ech(r||j||i,r||l||k))/(4*I);end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#Dechxy(4,3,9,0):
+#Dechxx(4,3,9,0):
+Dechxx(4,3,4,3):
+simplify(%,size);lineair(%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#Dechxy(4,3,9,0):
+#Dechxx(4,3,9,0):
+Dechxx(4,3,4,3):
+simplify(%,size);lineair(%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#####						et voila !
+#####################################################################################################</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#####			stockons les coeff de la formule dantan-sinatra-reinaudi : "If"</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">gx:=subs([f90x=f90x],gx):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Cx:=simp(coeff(gx,AXin));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">A:=-simp(coeff(gx,r90x(t)));;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i from 0 to 9 do for j from 0 to 9 do
+C_||i||j||x:=simp(coeff(gx,f||i||j||x));
+C_||i||j||y:=simp(coeff(gx,f||i||j||y));
+if (C_||i||j||x)&lt;&gt;0 then print(C_,i,j,x_,___,C_||i||j||x);fi;
+if (C_||i||j||y)&lt;&gt;0 then print(C_,i,j,y_,___,C_||i||j||y);fi;
+od;od;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i from 0 to 9 do for j from 0 to 9 do for k from 0 to 9 do for l from 0 to 9 do
+
+if (C_||i||j||x)&lt;&gt;0 and (C_||k||l||x)&lt;&gt;0 then 
+diffus||i||j||k||l||x_x:=simp(simplify(
+subs(gamma||1=gamma-gamma||2-gamma||3-gamma||4-gamma||5,Dxx(i,j,k,l)+Dechxx(i,j,k,l))));
+	print(diffusion,i,j,k,l,x_x,___,diffus||i||j||k||l||x_x);
+fi;
+if (C_||i||j||x)&lt;&gt;0 and (C_||k||l||y)&lt;&gt;0 then 
+diffus||i||j||k||l||x_y:=simp(simplify(
+subs(gamma||1=gamma-gamma||2-gamma||3-gamma||4-gamma||5,Dxy(i,j,k,l)+Dechxy(i,j,k,l))));
+	print(diffusion,i,j,k,l,x_y,___,diffus||i||j||k||l||x_y);
+fi;
+if (C_||i||j||y)&lt;&gt;0 and (C_||k||l||x)&lt;&gt;0 then 
+diffus||i||j||k||l||y_x:=simp(simplify(
+subs(gamma||1=gamma-gamma||2-gamma||3-gamma||4-gamma||5,Dyx(i,j,k,l)+Dechyx(i,j,k,l))));
+	print(diffusion,i,j,k,l,y_x,___,diffus||i||j||k||l||y_x);
+fi;
+if (C_||i||j||y)&lt;&gt;0 and (C_||k||l||y)&lt;&gt;0 then 
+diffus||i||j||k||l||y_y:=simp(simplify(
+subs(gamma||1=gamma-gamma||2-gamma||3-gamma||4-gamma||5,Dyy(i,j,k,l)+Dechyy(i,j,k,l))));
+	print(diffusion,i,j,k,l,y_y,___,diffus||i||j||k||l||y_y);
+fi;
+od;od;od;od;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">
+#### puis la meme chose lin\351aris\351e</Font>
+lineair:=proc(expr)
+subs([seq(seq(r||i||j=0,i=0..9),j=0..9)],
+subs([r44=n,r00=N],expr));end:
+
+for i from 0 to 9 do for j from 0 to 9 do for k from 0 to 9 do for l from 0 to 9 do
+
+if (C_||i||j||x)&lt;&gt;0 and (C_||k||l||x)&lt;&gt;0 then 
+diff_lin||i||j||k||l||x_x:=factor(simplify(lineair(diffus||i||j||k||l||x_x)));
+	if %&lt;&gt;0 then print(diff_lin,i,j,k,l,x_x,___,diff_lin||i||j||k||l||x_x);fi;fi;
+
+if (C_||i||j||x)&lt;&gt;0 and (C_||k||l||y)&lt;&gt;0 then 
+diff_lin||i||j||k||l||x_y:=factor(simplify(lineair(diffus||i||j||k||l||x_y)));
+	if %&lt;&gt;0 then print(diff_lin,i,j,k,l,x_y,___,diff_lin||i||j||k||l||x_y);fi;fi;
+
+if (C_||i||j||y)&lt;&gt;0 and (C_||k||l||x)&lt;&gt;0 then 
+diff_lin||i||j||k||l||y_x:=factor(simplify(lineair(diffus||i||j||k||l||y_x)));
+	if %&lt;&gt;0 then print(diff_lin,i,j,k,l,y_x,___,diff_lin||i||j||k||l||y_x);fi;fi;
+
+if (C_||i||j||y)&lt;&gt;0 and (C_||k||l||y)&lt;&gt;0 then 
+diff_lin||i||j||k||l||y_y:=factor(simplify(lineair(diffus||i||j||k||l||y_y)));
+	if %&lt;&gt;0 then print(diff_lin,i,j,k,l,y_y,___,diff_lin||i||j||k||l||y_y);fi;fi;		od;od;od;od;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">subs(gamma||1=gamma-gamma||2-gamma||3-gamma||4-gamma||5,
+add(add(add(add(	diff_lin||i||j||k||l||x_x*C_||i||j||x*C_||k||l||x	+
+			diff_lin||i||j||k||l||x_y*C_||i||j||x*C_||k||l||y	+
+			diff_lin||i||j||k||l||y_x*C_||i||j||y*C_||k||l||x	+
+			diff_lin||i||j||k||l||y_y*C_||i||j||y*C_||k||l||y
+,i=0..9),j=0..9),k=0..9),l=0..9)):
+CiCjDij:=simplify(%,size);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">sansunit:=[	ga=sqrt(kappa*C*gamma/n),gc=sqrt(gamma/2*Gamma/3*(1+2*C)*sigma) / alpha||1	
+		,gb=sqrt(kappa*Cb*gamma/n)]:
+C=solve(op(1,sansunit),C);
+Gamma=solve(op(2,sansunit),Gamma);
+Cb=solve(op(3,sansunit),Cb);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">A;
+'A'=simp(subs(sansunit,A));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp(expand( subs(sansunit, 
+2/N/A*(Cx^2*DXin2+ CiCjDij)	))):
+Delta_gx_2:=N/4*collect(%,DXin2);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">ici,Normalis\351_\340_,N/4;</Font>
+facteur_DXin2:=map(simp,simp(subs(sansunit,Cx^2*2/N/A)));
+bruit:=collect(simp(4/N*Delta_gx_2-DXin2*facteur_DXin2),Gamma);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp(	subs(sansunit,CiCjDij/Cx^2	)):
+additionner_a_DXin2:=map(simp,convert(simp(%),parfrac,C));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">bruit:=map(simp,convert(bruit,parfrac,C));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">##########################################################################################################
+########################		 calcul pour Imx = R43x :		##########################
+##########################################################################################################</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">[dery(7,4),dery(8,3),dery(7,2),dery(8,1),derx(8,7),X]:
+syste2:={op(%)}:
+for i to nops(%) do print(%%[i]);od;
+
+_____________________________________________pour__trouver_______________________________________________;
+Diff_r43x(t)=derx(4,3);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">solve(syste2,{r74y(t),r83y(t),r72y(t),r81y(t),r87x(t),AX(t)}):
+simplify(%):
+sol2:=map(x-&gt;map(simp,x),%):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">syste3:=(subs(sol2 union {r90x(t)=r90x(t)},[
+I*omega*r90x(t)+Fond,
+I*omega*r32x(t)+derx(3,2),
+I*omega*r65x(t)+derx(6,5),I*omega*r21x(t)+derx(2,1),
+I*omega*r43x(t)+derx(4,3)
+])):
+syste3:=map(collect,syste3,[r43x(t),r32x(t),r65x(t),r90x(t),r21x(t)]):
+for i to nops(syste3) do ____;syste3[i]; od;		
+syste3:=convert(syste3[1..4],set):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">sol3:=solve(syste3,{r65x(t),r90x(t),r32x(t),r21x(t)}):
+sol3:=simplify(sol3):
+eq_chiante:=subs(sol3,subs(sol2 union {r90x(t)=r90x(t)},I*omega*r43x(t)+derx(4,3))):
+</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">tempo_ch:=map(simplify,collect((eq_chiante),r43x(t))):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">tempo_chi:=map(simp,tempo_ch):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">tempo_chia:=solve(tempo_chi,r43x(t)):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">tempo_chian:=collect(tempo_chia,[f65x,f90x,f32x,f43x,f74y,f83y,f87x,f21x,f81y,f72y,AXin]):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i from 0 to 9 do for j from 0 to 9 do C||i||j||x:=0;C||i||j||y:=0;od;od:
+CAXin:=simp(subs(sansunit,simp(coeff(tempo_chian,AXin))));
+C87x:=simp(subs(sansunit,simp(coeff(tempo_chian,f87x)))):
+C81y:=simp(subs(sansunit,simp(coeff(tempo_chian,f81y)))):
+C72y:=simp(subs(sansunit,simp(coeff(tempo_chian,f72y)))):
+C83y:=simp(subs(sansunit,simp(coeff(tempo_chian,f83y)))):
+C90x:=simp(subs(sansunit,simp(coeff(tempo_chian,f90x ))));
+C21x:=simp(subs(sansunit,simp(coeff(tempo_chian,f21x)))):
+C32x:=simp(subs(sansunit,simp(coeff(tempo_chian,f32x)))):
+C43x:=simp(subs(sansunit,simp(coeff(tempo_chian,f43x)))):
+C65x:=simp(subs(sansunit,simp(coeff(tempo_chian,f65x)))):
+C74y:=simp(subs(sansunit,simp(coeff(tempo_chian,f74y)))):
+#verif=0;simplify(subs(sansunit,tempo_chian)-CAXin*AXin-C78x*f87x-C81y*f81y-C72y*f72y-C83y*f83y-C90x*f90x-C21x*f21x-C32x*f32x-C43x*f43x-C65x*f65x-C74y*f74y);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">moi_om:=proc(expr) 	#	pour avoir l'expression en "-"omega
+subs(ooomega=-omega,subs(omega=ooomega,expr));end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i from 0 to 9 do for j from 0 to 9 do for k from 0 to 9 do for l from 0 to 9 do 
+if C||i||j||x&lt;&gt;0 and C||k||l||x&lt;&gt;0 then
+	int||i||j||k||l||x_x:=simp(C||i||j||x * moi_om(C||k||l||x) * diff_lin||i||j||k||l||x_x);
+	if %&lt;&gt;0 then print(iint||i||j||k||l||x_x=%);fi;fi;
+if C||i||j||x&lt;&gt;0 and C||k||l||y&lt;&gt;0 then
+	int||i||j||k||l||x_y:=simp(C||i||j||x * moi_om(C||k||l||y) * diff_lin||i||j||k||l||x_y);
+	if %&lt;&gt;0 then print(iint||i||j||k||l||x_y=%);fi;fi;
+if C||i||j||y&lt;&gt;0 and C||k||l||x&lt;&gt;0 then
+	int||i||j||k||l||y_x:=simp(C||i||j||y * moi_om(C||k||l||x) * diff_lin||i||j||k||l||y_x);
+	if %&lt;&gt;0 then print(iint||i||j||k||l||y_x=%);fi;fi;
+if C||i||j||y&lt;&gt;0 and C||k||l||y&lt;&gt;0 then
+	int||i||j||k||l||y_y:=simp(C||i||j||y * moi_om(C||k||l||y) * diff_lin||i||j||k||l||y_y);
+	if %&lt;&gt;0 then print(iint||i||j||k||l||y_y=%);fi;fi;
+od:od:od:od:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">intAXAX:=simp(CAXin * moi_om(CAXin));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp(3*(n^2*sigma^2+omega^2)*n*sigma*C*Gamma		/
+((2*C+1)*(n^2*sigma^4*Gamma^2+(2*N*Gamma+Gamma^2+9*(    0*  n  +1/3*N   )^2)*sigma^2*omega^2+9*omega^4)));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">testt:=simplify(1/2/Pi * int(%,omega=-infinity..infinity)) assuming positive:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp(subs(petit=0,simplify(algsubs(n^2*Gamma^2=petit*N^2*Gamma^2,testt),size))):
+simplify(%) assuming positive:
+t1:=simp(subs(nC=n*C,subs(n=0,algsubs(n*C=nC,simp(%)))));
+qui_donne_______________________________un_bruit_en_DXin^2;
+n/4,fois,4/n*%%;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#	somme des autres terme de bruits:
+simp(int4343x_x+int4390x_x+int9043x_x+int7474y_y+int9090x_x);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp(3*(1/2*(2*N*C+N+Gamma)*omega^2+1/2*n^2*sigma^2*Gamma)*n*sigma	/
+((2*C+1)*(n^2*sigma^4*Gamma^2+(2*N*Gamma+Gamma^2+(3*     0 * n   + N    )^2)*sigma^2*omega^2+9*omega^4)));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">testt2:=simplify(1/2/Pi * int(%,omega=-infinity..infinity)) assuming positive:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp(subs(petit=0,simplify(algsubs(n^2*Gamma^2=petit*N^2*Gamma^2,testt2),size))):
+simplify(%) assuming positive:
+simp(%):
+convert(%,parfrac,C):
+t2:=n/4*convert(subs(zer=0,algsubs(n^2=zer,4/n*%%)),parfrac,C);
+qui_donne_______________________________un_bruit_additionnel;
+%%;<Font encoding="ISO8859-1">
+ou___________\340_aditionner_\340_DXin2;</Font>
+convert(simp(t2/t1),parfrac,C);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">C:='C':Gamma:='Gamma':
+Fondamentaux:=4/N*Delta_gx_2;
+Metastables:=4/n*t1*DXin2 + 4/n*t2;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">plot(subs([C=100,DXin2=0.5,N=10^6,n=1,Gamma=10^(log_Gamma)]
+		,[Fondamentaux,Metastables])
+	,log_Gamma=3..9, axes=boxed,color=[red,blue]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">##########################################################################################################
+########################		 ANNEXE                   		##########################
+##########################################################################################################</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">#	UNE liste de TOUS les coefficients non-nuls de la matrice  de DIFFUSION (dans l'\351tat stationnaire r44=n, r00=N)
+#	Calcul effectu\351 en calculant tout les coef, pas comme plus haut o\371 on a calcul\351 que ceux qui nous int\351ressent.</Font>
+
+#List_diffusion:=subs([w=gamma*n,v=N*gamma,u=n*N*gamma[ech]],[[0, 0, x, 0, 0, x, 2*u], [0, 0, x, 4, 4, x, u*(N-2)], [0, 7, x, 0, 7, x, 1/4*v], [0, 7, x, 0, 7, y, 1/4*I*v], [0, 7, y, 0, 7, x, -1/4*I*v], [0, 7, y, 0, 7, y, 1/4*v], [0, 7, x, 7, 0, x, 1/4*v], [0, 7, x, 7, 0, y, -1/4*I*v], [0, 7, y, 7, 0, x, -1/4*I*v], [0, 7, y, 7, 0, y, -1/4*v], [0, 8, x, 0, 8, x, 1/4*v], [0, 8, x, 0, 8, y, 1/4*I*v], [0, 8, y, 0, 8, x, -1/4*I*v], [0, 8, y, 0, 8, y, 1/4*v], [0, 8, x, 8, 0, x, 1/4*v], [0, 8, x, 8, 0, y, -1/4*I*v], [0, 8, y, 8, 0, x, -1/4*I*v], [0, 8, y, 8, 0, y, -1/4*v], [0, 9, x, 0, 9, x, 1/2*u], [0, 9, x, 0, 9, y, 1/2*I*u], [0, 9, y, 0, 9, x, -1/2*I*u], [0, 9, y, 0, 9, y, 1/2*u], [0, 9, x, 3, 4, x, -1/6*3^(1/2)*u], [0, 9, x, 3, 4, y, 1/6*I*3^(1/2)*u], [0, 9, y, 3, 4, x, 1/6*I*3^(1/2)*u], [0, 9, y, 3, 4, y, 1/6*3^(1/2)*u], [0, 9, x, 4, 3, x, -1/6*3^(1/2)*u], [0, 9, x, 4, 3, y, -1/6*I*3^(1/2)*u], [0, 9, y, 4, 3, x, 1/6*I*3^(1/2)*u], [0, 9, y, 4, 3, y, -1/6*3^(1/2)*u], [0, 9, x, 9, 0, x, 1/2*u], [0, 9, x, 9, 0, y, -1/2*I*u], [0, 9, y, 9, 0, x, -1/2*I*u], [0, 9, y, 9, 0, y, -1/2*u], [1, 4, x, 1, 4, x, 1/2*u], [1, 4, x, 1, 4, y, -1/2*I*u], [1, 4, y, 1, 4, x, 1/2*I*u], [1, 4, y, 1, 4, y, 1/2*u], [1, 4, x, 4, 1, x, 1/2*u], [1, 4, x, 4, 1, y, 1/2*I*u], [1, 4, y, 4, 1, x, 1/2*I*u], [1, 4, y, 4, 1, y, -1/2*u], [2, 4, x, 2, 4, x, 1/3*u], [2, 4, x, 2, 4, y, -1/3*I*u], [2, 4, y, 2, 4, x, 1/3*I*u], [2, 4, y, 2, 4, y, 1/3*u], [2, 4, x, 4, 2, x, 1/3*u], [2, 4, x, 4, 2, y, 1/3*I*u], [2, 4, y, 4, 2, x, 1/3*I*u], [2, 4, y, 4, 2, y, -1/3*u], [3, 4, x, 0, 9, x, -1/6*3^(1/2)*u], [3, 4, x, 0, 9, y, -1/6*I*3^(1/2)*u], [3, 4, y, 0, 9, x, -1/6*I*3^(1/2)*u], [3, 4, y, 0, 9, y, 1/6*3^(1/2)*u], [3, 4, x, 3, 4, x, 1/6*u], [3, 4, x, 3, 4, y, -1/6*I*u], [3, 4, y, 3, 4, x, 1/6*I*u], [3, 4, y, 3, 4, y, 1/6*u], [3, 4, x, 4, 3, x, 1/6*u], [3, 4, x, 4, 3, y, 1/6*I*u], [3, 4, y, 4, 3, x, 1/6*I*u], [3, 4, y, 4, 3, y, -1/6*u], [3, 4, x, 9, 0, x, -1/6*3^(1/2)*u], [3, 4, x, 9, 0, y, 1/6*I*3^(1/2)*u], [3, 4, y, 9, 0, x, -1/6*I*3^(1/2)*u], [3, 4, y, 9, 0, y, -1/6*3^(1/2)*u], [4, 1, x, 1, 4, x, 1/2*u], [4, 1, x, 1, 4, y, -1/2*I*u], [4, 1, y, 1, 4, x, -1/2*I*u], [4, 1, y, 1, 4, y, -1/2*u], [4, 1, x, 4, 1, x, 1/2*u], [4, 1, x, 4, 1, y, 1/2*I*u], [4, 1, y, 4, 1, x, -1/2*I*u], [4, 1, y, 4, 1, y, 1/2*u], [4, 2, x, 2, 4, x, 1/3*u], [4, 2, x, 2, 4, y, -1/3*I*u], [4, 2, y, 2, 4, x, -1/3*I*u], [4, 2, y, 2, 4, y, -1/3*u], [4, 2, x, 4, 2, x, 1/3*u], [4, 2, x, 4, 2, y, 1/3*I*u], [4, 2, y, 4, 2, x, -1/3*I*u], [4, 2, y, 4, 2, y, 1/3*u], [4, 3, x, 0, 9, x, -1/6*3^(1/2)*u], [4, 3, x, 0, 9, y, -1/6*I*3^(1/2)*u], [4, 3, y, 0, 9, x, 1/6*I*3^(1/2)*u], [4, 3, y, 0, 9, y, -1/6*3^(1/2)*u], [4, 3, x, 3, 4, x, 1/6*u], [4, 3, x, 3, 4, y, -1/6*I*u], [4, 3, y, 3, 4, x, -1/6*I*u], [4, 3, y, 3, 4, y, -1/6*u], [4, 3, x, 4, 3, x, 1/6*u], [4, 3, x, 4, 3, y, 1/6*I*u], [4, 3, y, 4, 3, x, -1/6*I*u], [4, 3, y, 4, 3, y, 1/6*u], [4, 3, x, 9, 0, x, -1/6*3^(1/2)*u], [4, 3, x, 9, 0, y, 1/6*I*3^(1/2)*u], [4, 3, y, 9, 0, x, 1/6*I*3^(1/2)*u], [4, 3, y, 9, 0, y, 1/6*3^(1/2)*u], [4, 4, x, 0, 0, x, u*(N-2)], [4, 4, x, 4, 4, x, 2*u*n], [4, 7, x, 4, 7, x, 1/4*w], [4, 7, x, 4, 7, y, 1/4*I*w], [4, 7, y, 4, 7, x, -1/4*I*w], [4, 7, y, 4, 7, y, 1/4*w], [4, 7, x, 7, 4, x, 1/4*w], [4, 7, x, 7, 4, y, -1/4*I*w], [4, 7, y, 7, 4, x, -1/4*I*w], [4, 7, y, 7, 4, y, -1/4*w], [4, 8, x, 4, 8, x, 1/4*w], [4, 8, x, 4, 8, y, 1/4*I*w], [4, 8, y, 4, 8, x, -1/4*I*w], [4, 8, y, 4, 8, y, 1/4*w], [4, 8, x, 8, 4, x, 1/4*w], [4, 8, x, 8, 4, y, -1/4*I*w], [4, 8, y, 8, 4, x, -1/4*I*w], [4, 8, y, 8, 4, y, -1/4*w], [7, 0, x, 0, 7, x, 1/4*v], [7, 0, x, 0, 7, y, 1/4*I*v], [7, 0, y, 0, 7, x, 1/4*I*v], [7, 0, y, 0, 7, y, -1/4*v], [7, 0, x, 7, 0, x, 1/4*v], [7, 0, x, 7, 0, y, -1/4*I*v], [7, 0, y, 7, 0, x, 1/4*I*v], [7, 0, y, 7, 0, y, 1/4*v], [7, 4, x, 4, 7, x, 1/4*w], [7, 4, x, 4, 7, y, 1/4*I*w], [7, 4, y, 4, 7, x, 1/4*I*w], [7, 4, y, 4, 7, y, -1/4*w], [7, 4, x, 7, 4, x, 1/4*w], [7, 4, x, 7, 4, y, -1/4*I*w], [7, 4, y, 7, 4, x, 1/4*I*w], [7, 4, y, 7, 4, y, 1/4*w], [8, 0, x, 0, 8, x, 1/4*v], [8, 0, x, 0, 8, y, 1/4*I*v], [8, 0, y, 0, 8, x, 1/4*I*v], [8, 0, y, 0, 8, y, -1/4*v], [8, 0, x, 8, 0, x, 1/4*v], [8, 0, x, 8, 0, y, -1/4*I*v], [8, 0, y, 8, 0, x, 1/4*I*v], [8, 0, y, 8, 0, y, 1/4*v], [8, 4, x, 4, 8, x, 1/4*w], [8, 4, x, 4, 8, y, 1/4*I*w], [8, 4, y, 4, 8, x, 1/4*I*w], [8, 4, y, 4, 8, y, -1/4*w], [8, 4, x, 8, 4, x, 1/4*w], [8, 4, x, 8, 4, y, -1/4*I*w], [8, 4, y, 8, 4, x, 1/4*I*w], [8, 4, y, 8, 4, y, 1/4*w], [9, 0, x, 0, 9, x, 1/2*u], [9, 0, x, 0, 9, y, 1/2*I*u], [9, 0, y, 0, 9, x, 1/2*I*u], [9, 0, y, 0, 9, y, -1/2*u], [9, 0, x, 3, 4, x, -1/6*3^(1/2)*u], [9, 0, x, 3, 4, y, 1/6*I*3^(1/2)*u], [9, 0, y, 3, 4, x, -1/6*I*3^(1/2)*u], [9, 0, y, 3, 4, y, -1/6*3^(1/2)*u], [9, 0, x, 4, 3, x, -1/6*3^(1/2)*u], [9, 0, x, 4, 3, y, -1/6*I*3^(1/2)*u], [9, 0, y, 4, 3, x, -1/6*I*3^(1/2)*u], [9, 0, y, 4, 3, y, 1/6*3^(1/2)*u], [9, 0, x, 9, 0, x, 1/2*u], [9, 0, x, 9, 0, y, -1/2*I*u], [9, 0, y, 9, 0, x, 1/2*I*u], [9, 0, y, 9, 0, y, 1/2*u]]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i to nops(syst) do evalf(syst[i],2); od;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Text-field alignment="left"/><Text-field alignment="left"/><Text-field alignment="left"/><Text-field alignment="left"/><Text-field alignment="left"/><Text-field alignment="left"/><Text-field alignment="left"/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/></Worksheet>

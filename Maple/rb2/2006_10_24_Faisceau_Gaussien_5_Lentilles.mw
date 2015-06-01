@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet><Version major="6" minor="1"/><View-Properties><Zoom percentage="100"/></View-Properties><Styles><Layout alignment="left" bullet="none" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" name="Heading 1" rightmargin="0.0" spaceabove="8.0" spacebelow="4.0"/><Layout alignment="left" bullet="none" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" name="Normal" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Font background="[0,0,0]" bold="true" executable="true" family="Monospaced" foreground="[255,0,0]" italic="false" name="Maple Input" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false"/><Font background="[0,0,0]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" name="Text" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false"/><Font background="[255,255,255]" bold="true" executable="false" family="Serif" foreground="[0,0,0]" italic="false" name="Heading 1" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false"/></Styles><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">restart;
+with(LinearAlgebra):
+with (student):
+with(plots):
+with(plottools):
+simp:=proc(asimplifier)
+simplify(sort(simplify(simplify(factor(expand(numer(asimplifier))),size),size))
+/        sort(simplify(simplify(factor(expand(denom(asimplifier))),size),size)),size) ;
+map(simplify,%,size);        end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">NVerre := 1; e :=0;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Valeurs := [lambda0=1070e-9, k0=2*Pi/1070e-9];
+k:=n*k0;
+lambda:=lambda0/n;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">Le Mode transverse TEM 00 : Se propageant suivant Z</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">TEM_00 := A(x,y,z) = sqrt(2/Pi)*1/w*exp(-(x^2+y^2)/w^2)*exp(I*k*(x^2+y^2)/2/Rc)*exp(-I*Psi);
+Waist := w = w0 * sqrt(1+(z/zR)^2);
+RayonCourbure := Rc = z+zR^2/z;
+Rayleigh := zR = Pi*w0^2/lambda;
+Gouy := Psi = arctan(z/zR);
+TEM00 := subs(Rayleigh, subs([Waist,RayonCourbure,Rayleigh,Gouy],TEM_00));
+ou_encore_ := subs(Rayl=eigh, subs([Waist,RayonCourbure,Rayleigh,Gouy],TEM_00));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Le profile d'intensit\351 dans le plan XZ : coupe le long du faisceau !</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">ww0 := 0.1e-3 ;	[y=0, w0 = ww0, op(Valeurs), n=1]:
+untem00XZ:=abs(subs(%, rhs(TEM00)))^2 :
+#plot3d(untem00XZ, x=-3*ww0..3*ww0,z=-0.1..0.1, numpoints = 2500);
+densityplot(untem00XZ,z=-0.1..0.1,x=-3*ww0..3*ww0,grid=[50 , 200], style = PATCHNOGRID, axes = boxed);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">L'intensit\351 lumineuse dans l'espace.</Font></Text-field><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Puis integr\351 dans un plan XY : doit etre constant pour conserver l'energie en regime stationnaire.</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Intensity := P(x,y,z) = abs(rhs(TEM00)^2) assuming real;
+simplify(map(Doubleint,(Intensity), x=-infinity..infinity, y=-infinity..infinity)):
+value(%) assuming positive;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Retrouvons l'\351quation de la surface (de r\351volution) qui correpond \340 Intensit\351(x,z) = Intensit\351Max(z) / e2 :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">Intensit\351PlanXZ := subs(y=0 , rhs(Intensity));</Font>
+[solve(<Font encoding="ISO8859-1">Intensit\351PlanXZ</Font> = exp(-2) * subs(x=0,<Font encoding="ISO8859-1">Intensit\351PlanXZ), x)]:
+Intensit\351UnSurE2 := </Font>map(simp,%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Une proc\351dure pour tracer la surface (distance \340 l'axe optique en fait) d'intensit\351 1/e2 en fonction de la position du waist, et de la valeur du waist</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">couleur:=0:<Font encoding="ISO8859-1">
+Intensit\351SurE2GaussWaist := proc(PosWaist, Waist, IndiceMilieu)</Font>
+subs([w0=subs(n=IndiceMilieu,Waist), z=Z-PosWaist, n=IndiceMilieu<Font encoding="ISO8859-1">], Intensit\351UnSurE2):</Font>
+end:
+
+PlotGaussWaist := proc(PosWaist, Waist, IndiceMilieu, From, To) global couleur;
+couleur:=(couleur+1);if couleur=7 then couleur:=1;fi;
+subs(Valeurs,<Font encoding="ISO8859-1">Intensit\351SurE2GaussWaist(PosWaist, Waist, </Font>IndiceMilieu)):
+plot(%,Z=From..To, color = op(couleur,[red,black,blue,green,magenta,pink]));
+end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">La m\352me proc\351dure, mais en fonction du rayon de courbure complexe donn\351 dans le plan de position Zplan</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">Intensit\351SurE2GaussQ := proc(Q, Zplan1, </Font>IndiceMilieu)
+subs(n=IndiceMilieu,Q);
+evalc(%);	Re(%) assuming real;	Im(%%) assuming real;<Font encoding="ISO8859-1">
+Intensit\351SurE2GaussWaist(-%%+Zplan1, sqrt(- % * subs(aa=aa,lambda) / Pi), </Font>IndiceMilieu);
+end:
+
+PlotGaussQ := proc(Q, Zplan1, Zplan2, IndiceMilieu)
+subs(n=IndiceMilieu,Q);
+evalc(%);	Re(%) assuming real;	Im(%%) assuming real;
+PlotGaussWaist(-%%+Zplan1, sqrt(- % * subs(Valeurs,lambda) / Pi), IndiceMilieu, Zplan1, Zplan2, numpoints = 20);
+end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">un petit essai pour verifier que les deux proc sont bien la meme chose</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">couleur:=0:
+PlotGaussWaist(-20e-2, 0.5e-3, 1, -0.4, 0.4):
+PlotGaussQ( 0.0 - I*Pi*(0.5e-3)^2/subs(Valeurs,lambda) , -0.2, 0.3, 1):
+display([%%,%]);</Text-field></Input></Group><Section><Title><Text-field layout="Heading 1" style="Heading 1"><Font background="[0,0,0]">Propagation Matricielle du Rayon de courbure complexe   <Font bold="false">q = z - i.z<Font size="10">R</Font></Font></Font></Text-field></Title><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Consid\351rons la propagation d'un faisceau Gaussien depuis la sortie de la fibre o\371 il est \340 son waist   w = w0fibre :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">q = z - I*zR;
+v = Vector[column](&lt; r ,
+                     theta &gt;);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">O\371 r est la distance \340 l'axe du faisceau, et theta est l'angle fait avec l'axe optique.</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Diff\351rents propagateurs : </Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Propagation := L -&gt; &lt;&lt;1 | L&gt;,&lt;0 | 1&gt;&gt;:                   'Propagation(L)' = Propagation(L);
+Lentille := f -&gt; &lt;&lt;1 | 0&gt;,&lt;-1/f | 1&gt;&gt;:                   'Lentille(f)' = Lentille(f);
+Dioptre := (R,n1,n2) -&gt; &lt;&lt;1 | 0&gt;,&lt;(n2-n1)/n2/R | n1/n2&gt;&gt;:'Dioptre(R,n1,n2)' = Dioptre(R,n1,n2);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Une Proc pour avoir q en fonction de q0 \340 partir du vecteur (r,theta)</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">VectToQ := proc(vect)
+simplify( op([2,1,2],vect) ): # ca c'est r
+simplify( op([2,2,2],vect) ): # ca c'est theta
+simplify(subs([r0 = q0*theta0], simplify(%%/%) ));
+end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">r0 et Theta0, ou autrement dit q0, ca sera notre vecteur de d\351part : la sortie du colimateur du laser.</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">V0 := Vector[column](&lt; r0 , theta0 &gt;);
+Q0 := VectToQ(V0);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Apr\350s une propagation sur une distance Zlens1-ZWaistFibre   (+ deux lentilles rajout\351es b et c)</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">V1 := Multiply(Propagation(Zlens1-ZWaistFibre) , V0);
+Q1 := VectToQ(V1);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Apr\350s travers\351e de la lens1 :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">V2 := Multiply(Lentille(f1) , V1);
+Q2 := VectToQ(V2);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Apr\350s une propagation sur une distance Zlens2-Zlens1</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">V3 := Multiply(Propagation(Zlens2-Zlens1) , V2);
+Q3 := VectToQ(V3);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Apr\350s travers\351e de la </Font>lens2 :</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">V4 := Multiply(Lentille(f2) , V3);
+Q4 := VectToQ(V4);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Apr\350s une propagation sur une distance Zlens3-Zlens2</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">V5 := Multiply(Propagation(Zlens3-Zlens2) , V4);
+Q5 := VectToQ(V5);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Apr\350s travers\351e de la lens3 :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">V6 := Multiply(Lentille(f3) , V5);
+Q6 := VectToQ(V6);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Apr\350s une propagation sur une distance Zlens3-Zlens2</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">V7 := Multiply(Propagation(Zlens4-Zlens3) , V6);
+Q7 := VectToQ(V7);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Apr\350s travers\351e de la lens3 :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">V8 := Multiply(Lentille(f4) , V7);
+Q8 := VectToQ(V8);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Apr\350s une propagation sur une distance Zlens3-Zlens2</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">V9 := Multiply(Propagation(Zlens5-Zlens4) , V8);
+Q9 := VectToQ(V9);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Apr\350s travers\351e de la lens3 :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">V10 := Multiply(Lentille(f5) , V9);
+Q10 := VectToQ(V10);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Apr\350s une propagation sur une distance Zhublot-Zlens3</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">V11 := Multiply(Propagation(Zhublot-Zlens5) , V10);
+Q11 := VectToQ(V11);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Apr\350s travers\351e du dioptre du hublot, puis une \351paisseur e d'indice Nverre, puis, re-le-dioptre :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">V12 := Multiply(Dioptre(-infinity,1,Nverre) , V11);
+Q12 := VectToQ(V12);
+V13 := Multiply(Propagation(e) , V12);
+Q13 := VectToQ(V13);
+V14:= Multiply(Dioptre(infinity,Nverre,1) , V13);
+Q14:= VectToQ(V14);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Apr\350s une propagation sur une distance Z - (Zhublot + e)  = = =  z - e (on a pos\351 z par d\351finition = distance depuis l'entr\351e du hublot)</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">V15 := Multiply(Propagation(z-e) , V14);
+Q15 := VectToQ(V15);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">Au final, </Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">q11 := Q15;
+</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">q11 est le rayon de courbure complexe dans la chambre \340 vide,<Font bold="true" size="14"> \340 une distance z de l'entr\351e du hublot.</Font></Font></Text-field></Input></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1"><Font background="[0,0,0]">Maintenant, on s'amuse</Font></Text-field></Title><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Voila la position des diff\351rents plans o\371 l'on a calcul\351 les rayons de courbures :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Z0:=ZWaistFibre: 
+Z1:=Zlens1: Z2:=Zlens1: Z3:=Zlens2: Z4:=Zlens2: Z5:=Zlens3: Z6:=Zlens3: Z7:=Zlens4: Z8:=Zlens4: Z9:=Zlens5: Z10:=Zlens5: 
+Z11:=Zhublot: Z12:=Zhublot: Z13:=Zhublot+e: Z14:=Zhublot+e: <Font encoding="ISO8859-1">
+Z15:=Zhublot + 1 : # ce dernier, c'est jusqu'o\371 on tracera la courbe dans la chambre \340 vide</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Les indices des milieux o\371 se propagent les rayons dont on a calcul\351 les rayons de courbures :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Nverre:=1+0*3/2;
+N0:=1: N1:=1: N2:=1: N3:=1: N4:=1: N5:=1: N6:=1: N7:=1: N8:=1: N9:=1: N10:=Nverre: N11:=Nverre: N12:=1: N13:=1: N14:=1:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">e := 0;
+q11 := map(simp,q11);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">LesValeurs qui sont fixes :</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Valeurs;
+ValFixes:=[Zhublot=0e-2, e=1e-3, z0=0e-2, zR0=Pi*w0^2/subs(Valeurs,lambda0), op(Valeurs)]:
+ValFixes := [op(ValFixes), q0=evalf(subs(ValFixes, subs(ValFixes, z0 - I*zR0)))];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">Celles sur lesquelles on pourra jouer. Par exemple:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">ValJoues := [w0 = 0.95e-3, ZWaistFibre=-100e-2, Zlens1=-100e-2, Zlens2=-80e-2, Zlens3=-60e-2, Zlens4=-45e-2, Zlens5=-30e-2, f1=20e-2, f2=20e-2, f3=20e-2, f4=20e-2, f5=50e-2];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">Tracons un exemple de faisceau avec les ValJoues ci-dessus</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">ValTout:=[op(subs(ValJoues,ValFixes)),op(ValJoues)]:
+couleur:=0:
+for i from 0 to 14 do
+Trace||i := PlotGaussQ(
+		subs(ValTout,Q||i), 
+		subs(ValTout,Z||i), 
+		subs(ValTout,Z||(i+1))+0.01, 
+		N||i);
+od:
+elliLens1 := ellipse(subs(ValTout,[Zlens1,0]), 0.002, 0.003, color=black):
+elliLens2 := ellipse(subs(ValTout,[Zlens2,0]), 0.002, 0.003, color=black):
+elliLens3 := ellipse(subs(ValTout,[Zlens3,0]), 0.002, 0.003, color=black):
+elliLens4 := ellipse(subs(ValTout,[Zlens4,0]), 0.002, 0.003, color=black):
+elliLens5 := ellipse(subs(ValTout,[Zlens5,0]), 0.002, 0.003, color=black):
+elliDioptre1 := ellipse(subs(ValTout,[Zhublot,0]), 0.000, 0.003, color=black):
+elliDioptre2 := ellipse(subs(ValTout,[Zhublot+e,0]), 0.000, 0.003, color=black):
+display([seq(Trace||i, i=0..14),elliLens1,elliLens2,elliLens3,elliLens4,elliLens5,elliDioptre1,elliDioptre2]);
+# calcul du waist et de sa position pour le faisceau 14:
+abs(solve(Rayleigh, w0)[1]):
+Waist_Dans_Chambre________<Font encoding="ISO8859-1">\265m_ := evalf(</Font>subs(ValTout, subs(n = 1,     subs(zR = -Im(subs(ValTout, Q14)), %) )), 4) * 1e6;
+Position_Waist_Depuis_Hublot_cm_ := evalf(subs(n = 1, -Re(subs(ValTout, Q14)) ), 4) * 1e2;</Text-field></Input></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1"><Font background="[0,0,0]" encoding="ISO8859-1">Et voila la proc pour 3 lentilles, puis un hublot de 1mm d'\351paisseur</Font></Text-field></Title><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Une proc\351dure qui trace tout le faisceau en fonction de   Z</Font>lens, ZWaistFibre, f       <Font bold="true">
+PS: l'origine des <Font italic="true" size="16">z </Font><Font encoding="ISO8859-1">est \340 la surface externe du hublot</Font></Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Trois_Lentilles_Hublot := proc(W0__, ZWaistFibre__, Zlens1__, Zlens2__, Zlens3__, Zlens4__, Zlens5__, f1__, f2__, f3__, f4__, f5__) global ValTout, couleur;
+local ValJoues__, i, elliLens1, elliLens2, elliLens3, elliLens4, elliLens5, elliDioptre1, elliDioptre2, MOT_52cm
+, DuTexteelliLens1, DuTexteelliLens2, DuTexteelliLens3, DuTexteelliLens1p, DuTexteelliLens2p,
+ DuTexteelliLens3p, DuTexteelliLens4, DuTexteelliLens5, DuTexteelliLens4p, DuTexteelliLens5p,<Font encoding="ISO8859-1">
+Waist_Dans_Chambre________\265m_, tailleLentille, Position_Waist_Depuis_Hublot_cm_, DuTexte1, DuTexte2, DuTexte3;</Font>
+ValJoues__ := [w0 = W0__, ZWaistFibre=ZWaistFibre__, Zlens1=Zlens1__, Zlens2=Zlens2__, Zlens3=Zlens3__, Zlens4=Zlens4__, Zlens5=Zlens5__, f1=f1__, f2=f2__, f3=f3__, f4=f4__, f5=f5__];
+
+ValTout:=[op(subs(ValJoues__, ValFixes)),op(ValJoues__)]:
+couleur:=0:
+for i from 0 to 14 do
+Trace||i := PlotGaussQ(
+		subs(ValTout,Q||i), 
+		subs(ValTout,Z||i), 
+		subs(ValTout,Z||(i+1))+0.01, 
+		N||i);
+od:
+tailleLentille := 0.00115;
+elliLens1 := ellipse(subs(ValTout,[Zlens1,0])      , 0.002, tailleLentille, color=black):
+DuTexteelliLens1 := textplot([subs(ValTout,Zlens1), -tailleLentille, subs(ValTout,Zlens1*1e2) = "cm"],align={BELOW}):
+DuTexteelliLens1p := textplot([subs(ValTout,Zlens1), tailleLentille, f1_cm = subs(ValTout,f1*1e2)],align={ABOVE}):
+elliLens2 := ellipse(subs(ValTout,[Zlens2,0])      , 0.002, tailleLentille, color=black):
+DuTexteelliLens2 := textplot([subs(ValTout,Zlens2), -tailleLentille, evalf(subs(ValTout,Zlens2*1e2),4) = "cm"],align={BELOW}):
+DuTexteelliLens2p := textplot([subs(ValTout,Zlens2), tailleLentille, f2_cm = subs(ValTout,f2*1e2)],align={ABOVE}):
+elliLens3 := ellipse(subs(ValTout,[Zlens3,0])      , 0.002, tailleLentille, color=black):
+DuTexteelliLens3 := textplot([subs(ValTout,Zlens3), -tailleLentille, subs(ValTout,Zlens3*1e2) = "cm"],align={BELOW}):
+DuTexteelliLens3p := textplot([subs(ValTout,Zlens3), tailleLentille, f3_cm = subs(ValTout,f3*1e2)],align={ABOVE}):
+elliLens4 := ellipse(subs(ValTout,[Zlens4,0])      , 0.002, tailleLentille, color=black):
+DuTexteelliLens4 := textplot([subs(ValTout,Zlens4), -tailleLentille, evalf(subs(ValTout,Zlens4*1e2),4) = "cm"],align={BELOW}):
+DuTexteelliLens4p := textplot([subs(ValTout,Zlens4), tailleLentille, f4_cm = subs(ValTout,f4*1e2)],align={ABOVE}):
+elliLens5 := ellipse(subs(ValTout,[Zlens5,0])      , 0.002, tailleLentille, color=black):
+DuTexteelliLens5 := textplot([subs(ValTout,Zlens5), -tailleLentille, subs(ValTout,Zlens5*1e2) = "cm"],align={BELOW}):
+DuTexteelliLens5p := textplot([subs(ValTout,Zlens5), tailleLentille, f5_cm = subs(ValTout,f5*1e2)],align={ABOVE}):
+elliDioptre1 := ellipse(subs(ValTout,[Zhublot,0])  , 0.000, tailleLentille, color=black):
+elliDioptre2 := ellipse(subs(ValTout,[Zhublot+e,0]), 0.000, tailleLentille, color=black):
+MOT_52cm := ellipse(subs(ValTout,[52e-2+e,0]), 1e-2, 1e-4, color=black, filled = true);
+
+# calcul du waist et de sa position pour le faisceau 10:
+abs(solve(Rayleigh, w0)[1]):<Font encoding="ISO8859-1">
+Waist_Dans_Chambre________\265m_ := evalf(subs(ValTout, subs(n = 1,     subs(zR = -Im(subs(ValTout, Q14)), %) ))) * 1e6;</Font>
+Position_Waist_Depuis_Hublot_cm_ := evalf(subs(n = 1, -Re(subs(ValTout, Q14)) )) * 1e2;<Font encoding="ISO8859-1">
+DuTexte1 := textplot([Position_Waist_Depuis_Hublot_cm_/1e2, Waist_Dans_Chambre________\265m_/1e6</Font>
+, "" ],align=ABOVE):<Font encoding="ISO8859-1">
+DuTexte2 := textplot([Position_Waist_Depuis_Hublot_cm_/1e2, Waist_Dans_Chambre________\265m_/1e6
+, evalf(Waist_Dans_Chambre________\265m_, 4) = "\265m"],align=ABOVE):</Font>
+DuTexte3 := textplot([Position_Waist_Depuis_Hublot_cm_/1e2, 0
+, evalf(Position_Waist_Depuis_Hublot_cm_, 4) = "cm"],align=BELOW):
+display([seq(Trace||i, i=0..14),elliLens1,elliLens2,elliLens3,elliLens4,elliLens5,elliDioptre1,elliDioptre2, MOT_52cm, DuTexte1, DuTexte2, DuTexte3
+, DuTexteelliLens1, DuTexteelliLens1p, DuTexteelliLens2, DuTexteelliLens2p, DuTexteelliLens3, DuTexteelliLens3p, DuTexteelliLens4, DuTexteelliLens4p, DuTexteelliLens5, DuTexteelliLens5p]);
+end:</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" style="Text">Voila comment on joue:                      W0 ,          ZWaistFibre ,   Zlens1  ,       Zlens2  ,        Zlens3   ,      Zlens4  ,       Zlens5  ,           f1  ,           f2  ,          f3         f4  ,          f5</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Trois_Lentilles_Hublot(0.5e-3, -350e-2, -140e-2, -115e-2, -57e-2, -42.8e-2,  -21e-2,  10e-2, 15e-2, 10e-2, 15e-2, 20e-2);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">ou encore en faisant une s\351quence de plot :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">display([ seq( Trois_Lentilles_Hublot(
+0.5e-3, -350e-2, -140e-2, -105.5e-2 + Dz*2e-3, -57e-2, -37e-2,  -16.5e-2 + 1*2e-3,  20e-2, 15e-2, 10e-2, 150000e-2, 30e-2) , Dz= -6..6) ], insequence=true);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">display([ seq( Trois_Lentilles_Hublot(
+0.5e-3, -350e-2, -140e-2, -106.7e-2, -57e-2, -37e-2,  -16.5e-2 + 1*2e-3,  20e-2, 15e-2+ Dz*2e-3, 10e-2, 150000e-2, 30e-2) , Dz= -6..6) ], insequence=true);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">display([ seq( Trois_Lentilles_Hublot(0.5e-3, -350e-2
+, -140e-2, -114.0e-2, -75e-2, -47.7e-2+Dz*3e-3,  -25e-2
+,  15e-2, 10e-2, 15e-2, 20e-2, 30e-2) , Dz= -4..4) ], insequence=true);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">display([ seq( Trois_Lentilles_Hublot(0.5e-3, -350e-2
+, -140e-2, -114e-2+Dz*3e-3, -75e-2, -46.5e-2,  -25e-2
+,  15e-2, 10e-2, 15e-2, 20e-2, 30e-2) , Dz= -4..4) ], insequence=true);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" style="Text">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Pouvons nous trouver une disposition les lentilles pour laquelle le wasit varie, tout en restant a la meme position zMOT = 52cm ? ? ?</Text-field><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Pour cela; on r\351-\351crit q11, puis on se fixe des parametres dans ValReduireEspaceDesParametres</Font></Text-field><Text-field layout="Normal" style="Text">Puis, on cherche une combinaison des autres tel que pour deux positions de LensX, on ait deux waist les plus different possible</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">ValFixes;
+ValReduireEspaceDesParametres := [ZWaistFibre = -120e-2, w0 = 1.0, Zlens3 = -25e-2, f1 = 10e-2, f2 = 15e-2];
+q11:
+subs(ValFixes, q11):
+subs(ValReduireEspaceDesParametres, %):
+qqq11 := simp(%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">En fait, avoir la meme position veut dire avoir le meme Re(q11)  ! </Text-field><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">\340 alpha pr\350s</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">alpha := 0.05;
+Im(qqq11) assuming real;
+</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Re(qqq11) assuming positive:
+subs(z=52e-2, %):
+simp(%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/></Worksheet>

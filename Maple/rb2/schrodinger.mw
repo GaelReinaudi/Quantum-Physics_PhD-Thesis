@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet><Version major="6" minor="1"/><View-Properties><Zoom percentage="100"/></View-Properties><Styles><Layout alignment="left" bullet="none" linespacing="0.0" name="Heading 1" spaceabove="8.0" spacebelow="4.0"/><Layout alignment="left" bullet="none" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" name="Normal" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Font background="[0,0,0]" bold="true" executable="true" family="Monospaced" foreground="[255,0,0]" name="Maple Input" opaque="false" size="12"/><Font background="[0,0,0]" bold="true" family="Serif" name="Heading 1" opaque="false" size="18"/></Styles><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">restart;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">carre:=proc(d,f) Heaviside(x-d)*Heaviside(-x+f)/sqrt(f-d);end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">pot:=carre(-6,-5)+carre(5,6)+
+0*1/2*x^2/5		
+	-  0*I*(Heaviside(x-10)*(x-10)^2/5 + Heaviside(-x-10)*(-x-10)^2/5);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">sgl:=I*h*diff(psi(x,t),t)=-h^2/(2*m)*diff(psi(x,t),x$2)+psi(x,t)*pot;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">u:=a(x,t)+I*b(x,t);
+psi:=(x,t)-&gt;u;
+sgl;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">rgl:=evalc(Re(lhs(sgl)))=evalc(Re(rhs(sgl)));
+igl:=evalc(Im(lhs(sgl)))=evalc(Im(rhs(sgl)));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">syst:=[rgl,igl]:
+h:=1;m:=1;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">borne:=25;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">u0:=A(x,t)*exp(I/h*S(x,t));
+IBC0:=[	A(x,0)=exp(-(x+15)^2)/sqrt(Pi/2),
+	A(borne,t)=0,
+	A(-borne,t)=0,
+	S(x,0)=2*x,
+#	D[2](S)(x,0)=0,
+	S(borne,t)=0,
+	S(-borne,t)=0];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">reim:=[evalc(Re(u0)),evalc(Im(u0))];
+IBC:=[	a(x,0)=subs([t=0,x=x],subs(IBC0,subs([t=0,x=x],reim[1]))),
+	a(borne,t)=subs([t=t,x=borne],subs(IBC0,subs([t=t,x=borne],reim[1]))),
+	a(-borne,t)=subs([t=t,x=-borne],subs(IBC0,subs([t=t,x=-borne],reim[1]))),
+	b(x,0)=subs([t=0,x=x],subs(IBC0,subs([t=0,x=x],reim[2]))),
+	b(borne,t)=subs([t=t,x=borne],subs(IBC0,subs([t=t,x=borne],reim[2]))),
+	b(-borne,t)=subs([t=t,x=-borne],subs(IBC0,subs([t=t,x=-borne],reim[2])))];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">pds:=pdsolve([igl,rgl],IBC,numeric,[a(x,t),b(x,t)]	,spacestep=0.1);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">p0r:=plot([evalc(Re(pot))],x=-borne..borne,y=-0.5..1,color=black):
+p0i:=plot([-evalc(Im(pot))],x=-borne..borne,y=0..1,color=red):
+p1:=pds:-animate([[0*b(x,t),color=blue],0*a(x,t),[a(x,t)^2+b(x,t)^2,color=blue]],
+	t=50,frames=200,title="time = %f"):
+plots[display]({p0r,p0i,p1});</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"/></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">restart;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">sgl:=I*h*diff(psi(x,t),t)=-h^2/(2*m)*diff(psi(x,t),x$2);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">u0:=A(x,t)*exp(I/h*S(x,t));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">psi:=(x,t)-&gt;u;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">sgl;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">gl:=sgl/u:
+gl:=simplify(gl):
+gl:=expand(gl);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">rgl:=evalc(Re(lhs(gl)))=evalc(Re(rhs(gl))):
+rgl:=rgl*(-1);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">igl:=evalc(Im(lhs(gl)))=evalc(Im(rhs(gl))):
+igl:=igl*A(x,t)/h:
+igl:=expand(igl);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">syst:=[rgl,igl];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#pdsolve([rgl,igl]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">h:=1;m:=1;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">IBC:=[	A(x,0)=Heaviside(x+1)*Heaviside(-x+1)+0.1,
+	A(borne,t)=0,
+	A(-borne,t)=0,
+#	D[1](A)(-3,t)=exp(-9),
+	S(x,0)=0,
+	S(borne,t)=0,
+	S(-borne,t)=0
+#	,D[1](S)(-3,t)=0
+];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">pds:=pdsolve([igl,rgl],IBC,numeric,[A(x,t),S(x,t)]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">p0r:=plot([evalc(Re(pot))],x=-borne..borne,y=0..3,color=black):
+p0i:=plot([-evalc(Im(pot))],x=-borne..borne,y=0..3,color=red):
+p1:=pds:-animate([[0*b(x,t),color=blue],0*a(x,t),[A(x,t)^2+0*b(x,t)^2,color=blue]],
+	t=1.45,frames=50,title="time = %f"):
+plots[display]({p0r,p0i,p1});</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">plot( exp(-x^2),x=-borne..borne);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">int( exp(-x^2) ,x=-infinity..infinity);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">plot(carre(-2,2));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">##################################################################################################</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">if 1=2 then
+p0r:=plot([Re(pot)],x=-borne..borne,y=0..1,color=black):
+p1 := pds:-plot([[b(x,t),color=blue],a(x,t),[a(x,t)^2+b(x,t)^2,color=green]],t=0):
+p2 := pds:-plot([[b(x,t),color=blue],a(x,t),[a(x,t)^2+b(x,t)^2,color=green]],t=1/10):
+p3 := pds:-plot([[b(x,t),color=blue],a(x,t),[a(x,t)^2+b(x,t)^2,color=green]],t=1/2):
+p4 := pds:-plot([[b(x,t),color=blue],a(x,t),[a(x,t)^2+b(x,t)^2,color=green]],t=1):
+p5 := pds:-plot([[b(x,t),color=blue],a(x,t),[a(x,t)^2+b(x,t)^2,color=green]],t=2):
+plots[display]({p0r,p0i,p1,p2,p3,p4,p5});
+fi;</Text-field></Input></Group><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"/></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">h:=1;m:=1;
+IBC:=[	a(x,0)=exp(-x^2),
+	a(borne,t)=0,
+	a(-borne,t)=0,
+	b(x,0)=exp(-(x-3)^2),
+#	D[2](b)(x,0)=0,
+	b(borne,t)=0,
+	b(-borne,t)=0];</Text-field></Input></Group></Section><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/></Worksheet>

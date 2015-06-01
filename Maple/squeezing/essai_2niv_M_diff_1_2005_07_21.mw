@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet><Version major="6" minor="1"/><View-Properties><Zoom percentage="100"/></View-Properties><Styles><Layout alignment="left" bullet="none" name="Warning"/><Layout alignment="left" bullet="none" linespacing="0.0" name="Heading 1" spaceabove="8.0" spacebelow="4.0"/><Layout alignment="left" firstindent="0.0" leftmargin="0.0" linespacing="0.0" name="Normal" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Layout alignment="centred" bullet="none" linespacing="0.5" name="Maple Output"/><Layout alignment="left" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" name="_pstyle1" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Font background="[0,0,0]" bold="true" executable="true" family="Monospaced" foreground="[255,0,0]" name="Maple Input" readonly="false"/><Font background="[0,0,0]" bold="false" executable="false" family="Lucida Bright" foreground="[0,0,0]" italic="false" name="Text" opaque="false" size="12" underline="false"/><Font background="[0,0,0]" family="Monospaced" foreground="[0,0,255]" name="Warning" opaque="false" readonly="true" size="12"/><Font background="[0,0,0]" bold="true" executable="true" family="Monospaced" foreground="[255,0,0]" italic="false" name="_cstyle1" readonly="false" size="12" underline="false"/><Font background="[0,0,0]" bold="true" family="Serif" name="Heading 1" opaque="false" size="18"/><Font background="[0,0,0]" family="Times New Roman" foreground="[0,0,255]" name="2D Output" opaque="false" readonly="true" size="12"/><Font background="[0,0,0]" executable="false" family="Lucida Bright" name="Page Number" readonly="false" underline="false"/></Styles><Page-Numbers enabled="true" first-number="1" first-numbered-page="1" horizontal-location="right" style="Page Number" vertical-location="top"/><Group><Input><Text-field layout="_pstyle1" prompt="&gt; " style="_cstyle1">restart;	with(ListTools):with(StringTools):</Text-field></Input><Output><Text-field layout="Warning" style="Warning">Warning, the assigned name Group now has a global binding</Text-field></Output><Output><Text-field layout="Warning" style="Warning">Warning, these names have been rebound: Group, Join, Reverse, Rotate, Split</Text-field></Output></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">
+					sigma := gamma[ech]:</Text-field></Input></Group><Section><Title><Text-field layout="Heading 1" style="Heading 1">Proc "simp"</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp:=proc(asimplifier)
+simplify(sort(simplify(simplify(factor(expand(numer(asimplifier))),size),size))
+/
+	sort(simplify(simplify(factor(expand(denom(asimplifier))),size),size)),size) ;
+map(simplify,%,size);	end:</Text-field></Input></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">un programme pour faire commuter des produit d'op\351rateurs</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">
+######			un programme pour faire commuter des produit d'op\351rateurs champs et atomiques</Font>
+######			a choisir parmi ai,aci,ai,aci, et rij, i et j entre 0 et 9<Font encoding="ISO8859-1">
+######			ex : com(  r12r30a1ac2 , a2r17r56ac1  ) tous atach\351s !</Font>
+######			avec maximum 2 champs par commutateur, pour l'instant.
+
+com:=proc(Oa,Ob) 
+local la,lb,dir,indir,dir_,dir__,iszero,i,dir0,indir_,indir__,indir0,out_dir,out_indir,sign_a,sign_b;
+global kkk;<Font encoding="ISO8859-1">
+if op(1,Oa)=-1 then sign_a:=-1 else sign_a:=1;	fi;			######### gestion d'un \351ventuel
+if op(1,Ob)=-1 then sign_b:=-1 else sign_b:=1;	fi;			######### signe n\351gatif !</Font>
+
+la:=[Group( IsDigit, sign_a*Oa )];lb:=[Group( IsDigit, sign_b*Ob )];<Font encoding="ISO8859-1">
+if type(nops(la),odd)=true or type(nops(lb),odd)=true then "erreur_imparit\351_operateur_indice";</Font>
+else
+	la:=[seq([(la[2*i-1],la[2*i])],i=1..nops(la)/2)];
+	lb:=[seq([(lb[2*i-1],lb[2*i])],i=1..nops(lb)/2)];
+	dir:=[op(la),op(lb)];				dir0:=dir;
+	indir:=[op(lb),op(la)];				indir0:=indir;
+
+iszero:=1;		dir__:=dir;	dir_:=dir;			#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(dir)-2 do						#
+	if (op([nops(dir__)-i,1],dir__)="a" 					#
+	    or op([nops(dir__)-i,1],dir__)="ac")				# Met les A en premier
+	and (op([nops(dir__)-i-1,1],dir__)="r"					#    dans l'ordre
+	    or op([nops(dir__)-i-1,2],dir__)&gt;op([nops(dir__)-i,2],dir__)) then	#	dans dir
+		dir_:= subsop(nops(dir__)-i=op(nops(dir__)-i-1,dir__),dir__);	#
+		dir__:= subsop(nops(dir__)-i-1=op(nops(dir__)-i,dir__),dir_);	#
+fi; 	od;	iszero:=`if`(dir=dir__,0,1); dir:=dir__;			#
+od;									#########
+iszero:=1;		indir__:=indir;	indir_:=indir;			#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(indir)-2 do					#
+	if (op([nops(indir__)-i,1],indir__)="a" 				#
+	or op([nops(indir__)-i,1],indir__)="ac")				# Met les A en premier
+	and (op([nops(indir__)-i-1,1],indir__)="r"				#    dans l'ordre
+	or op([nops(indir__)-i-1,2],indir__)&gt;op([nops(indir__)-i,2],indir__)) then#	dans indir
+	indir_:= subsop(nops(indir__)-i=op(nops(indir__)-i-1,indir__),indir__);	#
+	indir__:= subsop(nops(indir__)-i-1=op(nops(indir__)-i,indir__),indir_);	#
+fi; 	od;	iszero:=`if`(indir=indir__,0,1); 	indir:=indir__;		#
+od;									#########
+
+
+iszero:=1;		dir:=dir__;					#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(dir)-2 do						#
+	if (op([nops(dir)-i,1],dir)="r" 					#
+	and op([nops(dir)-i-1,1],dir)="r") then					#
+if 
+Explode(op([nops(dir)-i-1,2],dir))[2]=Explode(op([nops(dir)-i,2],dir))[1] 
+then 	
+dir_:=subsop(nops(dir)-i-1 = ["r",cat(Explode(op([nops(dir)-i-1,2],dir))[1],Explode(op([nops(dir)-i,2],dir))[2])],dir);
+dir__:=subsop(nops(dir_)-i=NULL,dir_);
+else 	dir_:=subsop(nops(dir)-i-1 = ["zero","0"],dir);
+	dir__:=subsop(nops(dir_)-i=NULL,dir_); fi;				# simplification des
+										# Rij_Rkl dans dir
+										#
+fi; 	od;	iszero:=`if`(dir=dir__,0,1); dir:=dir__;			#
+od;									#########
+iszero:=1;		indir:=indir__;					#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(indir)-2 do					#
+	if (op([nops(indir)-i,1],indir)="r" 					#
+	and op([nops(indir)-i-1,1],indir)="r") then				#
+if 
+Explode(op([nops(indir)-i-1,2],indir))[2]=Explode(op([nops(indir)-i,2],indir))[1] 
+then 	
+indir_:=subsop(nops(indir)-i-1 = ["r",cat(Explode(op([nops(indir)-i-1,2],indir))[1],Explode(op([nops(indir)-i,2],indir))[2])],indir);
+indir__:=subsop(nops(indir_)-i=NULL,indir_);
+else 	indir_:=subsop(nops(indir)-i-1 = ["zero","0"],indir);
+	indir__:=subsop(nops(indir_)-i=NULL,indir_); fi;			# simplification des
+										# Rij_Rkl dans indir
+										#
+fi; 	od;	iszero:=`if`(indir=indir__,0,1); indir:=indir__;		#
+od;									#########
+
+
+iszero:=1;		dir:=dir__;					#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(dir)-2 do						#
+	if (Explode(op([nops(dir)-i-1,1],dir))[1]="a" 				###
+	and Explode(op([nops(dir)-i,1],dir))[1]="a" 				#
+	and op([nops(dir)-i-1,2],dir)&lt;&gt;op([nops(dir)-i,2],dir))			#
+	then 		dir_:=subsop(nops(dir)-i-1 = ["zero","0"],dir);		#
+			dir__:=subsop(nops(dir_)-i=NULL,dir_); 			#
+	fi;
+	if (op([nops(dir)-i-1,1],dir)="a" 					###
+	and op([nops(dir)-i,1],dir)="ac") then					#
+		if 
+op([nops(dir)-i-1,2],dir)=op([nops(dir)-i,2],dir)				#
+		then 	
+dir_:=subsop(nops(dir)-i-1 = ["acaplusun",op([nops(dir)-i-1,2],dir)],dir);	#
+dir__:=subsop(nops(dir_)-i=NULL,dir_);
+		else 	dir_:=subsop(nops(dir)-i-1 = ["zero","0"],dir);		#
+			dir__:=subsop(nops(dir_)-i=NULL,dir_); 			# simplification des
+		fi;								# Ai_Acj dans dir
+	fi;									#
+	od;	iszero:=`if`(dir=dir__,0,1); dir:=dir__;			#
+od;									#########
+iszero:=1;		indir:=indir__;					#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(indir)-2 do					#
+	if (Explode(op([nops(indir)-i-1,1],indir))[1]="a" 			###
+	and Explode(op([nops(indir)-i,1],indir))[1]="a" 			#
+	and op([nops(indir)-i-1,2],indir)&lt;&gt;op([nops(indir)-i,2],indir))		#
+	then 		indir_:=subsop(nops(indir)-i-1 = ["zero","0"],indir);	#
+			indir__:=subsop(nops(indir_)-i=NULL,indir_); 		#
+	fi;
+	if (op([nops(indir)-i-1,1],indir)="a" 					###
+	and op([nops(indir)-i,1],indir)="ac") then				#
+		if 
+op([nops(indir)-i-1,2],indir)=op([nops(indir)-i,2],indir)			#
+		then 	
+indir_:=subsop(nops(indir)-i-1 = ["acaplusun",op([nops(indir)-i-1,2],indir)],indir);
+indir__:=subsop(nops(indir_)-i=NULL,indir_);
+		else 	indir_:=subsop(nops(indir)-i-1 = ["zero","0"],indir);	#
+			indir__:=subsop(nops(indir_)-i=NULL,indir_); 		# simplification des
+		fi;								# Ai_Acj dans indir
+	fi;									#
+	od;	iszero:=`if`(indir=indir__,0,1); indir:=indir__;		#
+od;									#########
+dir:=Flatten(dir);							#########
+if Occurrences("zero", dir)&gt;0 then out_dir:=0;					#
+else 	if dir[1]="acaplusun" then 						#
+		dir_:=subsop(2= NULL,dir); 					# AcA+1 pour dir
+		dir_:=subsop(1=	("ac" , op(2,dir) , "a" , op(2,dir)) , dir_);	#
+		dir__:=subsop(2= NULL ,dir);					#
+		dir__:=subsop(1= `if`(nops(dir)=2,1,NULL) ,dir__);		#
+		out_dir:= convert(cat(op(dir_)),symbol) + convert(cat(op(dir__)),symbol);
+	else	if [op(dir),rtyy,rtyy][3]="acaplusun" then 				#
+		dir_:=subsop(4= NULL,dir); 					#
+		dir_:=subsop(3=	("ac" , op(4,dir) , "a" , op(4,dir)) , dir_);	#
+		dir__:=subsop(4= NULL ,dir);					#
+		dir__:=subsop(3= `if`(nops(dir)=2,1,NULL) ,dir__);		#
+		out_dir:= convert(cat(op(dir_)),symbol) + convert(cat(op(dir__)),symbol);
+	else	out_dir:= convert(cat(op(dir)),symbol);				#
+	fi;fi;									#
+fi;									#########
+indir:=Flatten(indir);							#########
+if Occurrences("zero", indir)&gt;0 then out_indir:=0;				#
+else 	if indir[1]="acaplusun" then 						#
+		indir_:=subsop(2= NULL,indir); 					# AcA+1 pour indir
+		indir_:=subsop(1=("ac" , op(2,indir) , "a" , op(2,indir)) , indir_);
+		indir__:=subsop(2= NULL ,indir);				#
+		indir__:=subsop(1= `if`(nops(indir)=2,1,NULL) ,indir__);	#
+		out_indir:= convert(cat(op(indir_)),symbol) + convert(cat(op(indir__)),symbol);
+	else	if [op(indir),rtyy,rtyy][3]="acaplusun" then 				#
+		indir_:=subsop(4= NULL,indir); 					#
+		indir_:=subsop(3=("ac" , op(4,indir) , "a" , op(4,indir)) , indir_);
+		indir__:=subsop(4= NULL ,indir);				#
+		indir__:=subsop(3= `if`(nops(indir)=2,1,NULL) ,indir__);	#
+		out_indir:= convert(cat(op(indir_)),symbol) + convert(cat(op(indir__)),symbol);
+	else	out_indir:= convert(cat(op(indir)),symbol);			#
+	fi;fi;									#
+fi;									#########
+fi;
+sign_a*sign_b*(out_dir-out_indir);	end:	#	PS: 2 CHAMPS PAR COMMUTATEUR MAXIMUM	!
+					com(ac1,a1r28);	#exemple</Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMsJEkkcjI4RzYiISIi</Equation></Text-field></Output></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">						com(a3,ac3);</Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiNJIjFHNiI=</Equation></Text-field></Output></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">						com(-r28,-r82);</Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMsJkkkcjIyRzYiIiIiSSRyODhHRiUhIiI=</Equation></Text-field></Output></Group><Section><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">une procedure pour multiplier les op\351rateurs</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">####	une procedure pour multiplier les op\351rateurs</Font>
+
+foi:=proc(Oa,Ob) local la,lb,pro,pro_,pro__,iszero,i,pro0,out_pro,sign_a,sign_b;
+global kkk;
+if op(1,Oa)=-1 or op(1,Oa)=0 then sign_a:=op(1,Oa);			#########<Font encoding="ISO8859-1">
+else sign_a:=1; fi;								# gestion d'un \351ventuel
+if op(1,Ob)=-1 or op(1,Ob)=0 then sign_b:=op(1,Ob);				# signe n\351gatif !</Font>
+else sign_b:=1; fi;							#########
+
+if (sign_a=0 or sign_b=0) then 						#########
+la:=[Group( IsDigit, zero0 )];lb:=[Group( IsDigit, zero0 )];			# ou bien d'un zero !
+else la:=[Group( IsDigit, sign_a*Oa )];lb:=[Group( IsDigit, sign_b*Ob )]; fi;	#
+									#########<Font encoding="ISO8859-1">
+if type(nops(la),odd)=true or type(nops(lb),odd)=true then "erreur_imparit\351_operateur_indice";</Font>
+else	la:=[seq([(la[2*i-1],la[2*i])],i=1..nops(la)/2)];
+	lb:=[seq([(lb[2*i-1],lb[2*i])],i=1..nops(lb)/2)];
+	pro:=[op(la),op(lb)];				pro0:=pro;
+iszero:=1;		pro__:=pro;					#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(pro)-1 do						#
+	if (op([nops(pro__)-i,1],pro__)="a" 					#
+	or op([nops(pro__)-i,1],pro__)="ac") 					# Met les A en premier
+	and op([nops(pro__)-i-1,1],pro__)="r" then 				#	dans pro
+		pro_:= subsop(nops(pro__)-i=op(nops(pro__)-i-1,pro__),pro__);	#
+		pro__:= subsop(nops(pro__)-i-1=op(nops(pro__)-i,pro__),pro_);	#
+fi; 	od;	iszero:=`if`(pro=pro__,0,1); pro:=pro__;			#
+od;									#########
+iszero:=1;		pro:=pro__;					#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(pro)-1 do						#
+	if (op([nops(pro)-i,1],pro)="r" 					#
+	and op([nops(pro)-i-1,1],pro)="r") then					#
+if 
+Explode(op([nops(pro)-i-1,2],pro))[2]=Explode(op([nops(pro)-i,2],pro))[1] 
+then 	
+pro_:=subsop(nops(pro)-i-1 = ["r",cat(Explode(op([nops(pro)-i-1,2],pro))[1],Explode(op([nops(pro)-i,2],pro))[2])],pro);
+pro__:=subsop(nops(pro_)-i=NULL,pro_);
+else 	pro_:=subsop(nops(pro)-i-1 = ["zero","0"],pro);
+pro__:=subsop(nops(pro_)-i=NULL,pro_); fi;					# simplification des
+										# Rij_Rkl dans pro
+										#
+fi; 	od;	iszero:=`if`(pro=pro__,0,1); pro:=pro__;			#
+od;									#########
+iszero:=1;		pro:=pro__;					#########
+while iszero&lt;&gt;0 do								#
+	for i from 0 to nops(pro)-1 do						#
+	if (Explode(op([nops(pro)-i-1,1],pro))[1]="a" 				###
+	and Explode(op([nops(pro)-i,1],pro))[1]="a" 				#
+	and op([nops(pro)-i-1,2],pro)&lt;&gt;op([nops(pro)-i,2],pro))			#
+	then 		pro_:=subsop(nops(pro)-i-1 = ["zero","0"],pro);		#
+			pro__:=subsop(nops(pro_)-i=NULL,pro_); 			#
+	fi;
+	if (op([nops(pro)-i-1,1],pro)="a" 					###
+	and op([nops(pro)-i,1],pro)="ac") then					#
+		if 
+op([nops(pro)-i-1,2],pro)=op([nops(pro)-i,2],pro)				#
+		then 	
+pro_:=subsop(nops(pro)-i-1 = ["acaplusun",op([nops(pro)-i-1,2],pro)],pro);	#
+pro__:=subsop(nops(pro_)-i=NULL,pro_);
+		else 	pro_:=subsop(nops(pro)-i-1 = ["zero","0"],pro);		#
+			pro__:=subsop(nops(pro_)-i=NULL,pro_); 			# simplification des
+		fi;								# Ai_Acj dans pro
+	fi;									#
+	od;	iszero:=`if`(pro=pro__,0,1); pro:=pro__;			#
+od;									#########
+pro:=Flatten(pro);							#########
+if Occurrences("zero", pro)&gt;0 then out_pro:=0;					#
+else 	if pro[1]="acaplusun" then 						#
+		pro_:=subsop(2= NULL,pro); 					# AcA+1 pour pro
+		pro_:=subsop(1=	("ac" , op(2,pro) , "a" , op(2,pro)) , pro_);	#
+		pro__:=subsop(2= NULL ,pro);					#
+		pro__:=subsop(1= `if`(nops(pro)=2,1,NULL) ,pro__);		#
+		out_pro:= convert(cat(op(pro_)),symbol) + convert(cat(op(pro__,1)),symbol);
+	else	out_pro:= convert(cat(op(pro)),symbol);				#
+	fi;									#
+fi;									#########
+fi;
+#cat(op(Flatten(pro0))),__,((Flatten(pro)))
+out_pro*sign_a*sign_b;
+end:
+#
+#				MARCHE AVEC 2 CHAMPS MAXIMUM !!!!!
+#################################################################################
+fois:=proc(AA,BB)								#
+if nops(AA)=2 and nops(-AA)=2 then						#
+	if nops(BB)=2 and nops(-BB)=2 then					#
+		if AA=op(1,AA)+op(2,AA) and BB=op(1,BB)+op(2,BB) then 		#
+		foi(op(1,AA),op(1,BB))+foi(op(1,AA),op(2,BB))+foi(op(2,AA),op(1,BB))+foi(op(2,AA),op(2,BB));
+		else foi(AA,BB);						#
+		fi;								#
+	else 	if BB=-convert(1,symbol) then subs(convert(1,symbol)=1,-AA); else
+		if BB=convert(1,symbol) then subs(convert(1,symbol)=1,AA); else
+		if AA=op(1,AA)+op(2,AA) then 					#<Font encoding="ISO8859-1">
+		foi(op(1,AA),BB)+foi(op(2,AA),BB); 				# G\350re un signe moins</Font>
+		else foi(AA,BB);						#
+		fi;fi;fi;							# ou une somme de
+	fi;									# DEUX Termes
+else		if AA=-convert(1,symbol) then subs(convert(1,symbol)=1,-BB); else
+		if AA=convert(1,symbol) then subs(convert(1,symbol)=1,BB); else
+	if nops(BB)=2 and nops(-BB)=2 then					# ou un "1" ou un "-1"
+		if BB=op(1,BB)+op(2,BB) then 					#
+		foi(AA,op(1,BB))+foi(AA,op(2,BB));				#
+		else foi(AA,BB);						#
+		fi;								#
+	else 	if BB=-convert(1,symbol) then subs(convert(1,symbol)=1,-AA); else
+		if BB=convert(1,symbol) then subs(convert(1,symbol)=1,AA); else
+		foi(AA,BB);fi;fi;							#
+	fi;fi;fi;									#
+fi; 			end:						#########
+					fois(r57,r73r38ac2);	#	exemple !</Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiNJJ2FjMnI1OEc2Ig==</Equation></Text-field></Output></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1">EVOLUTION____DUE____A____L_ECHANGE____DE____METASTABILITE<Font encoding="ISO8859-1">
+lin\351aris\351e autour de  :  r44_stat=n  ,  r00_stat=N  et sans coh\351rences entres les 5..6 et  1..4.</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font opaque="false">d_ech_||r12 := sigma * (-r12*N + r90*n);
+d_ech_||r21 := sigma * (-r21*N + r09*n);
+d_ech_||r90 := sigma * (-r90*n + r12*N);
+d_ech_||r09 := sigma * (-r09*n + r21*N);
+d_ech_||r11 := sigma * (-r11*N + r99*n);
+d_ech_||r22 := sigma * (-r22*N + r00*n);
+d_ech_||r00 := sigma * (-r00*n + r22*N);
+d_ech_||r99 := sigma * (-r99*n + r11*N);</Font></Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiM+SSpkX2VjaF9yMTJHNiIqJiZJJmdhbW1hR0kqcHJvdGVjdGVkR0YpNiNJJGVjaEdGJSIiIiwmKiZJJHIxMkdGJUYsSSJOR0YlRiwhIiIqJkkkcjkwR0YlRixJIm5HRiVGLEYsRiw=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiM+SSpkX2VjaF9yMjFHNiIqJiZJJmdhbW1hR0kqcHJvdGVjdGVkR0YpNiNJJGVjaEdGJSIiIiwmKiZJJHIyMUdGJUYsSSJOR0YlRiwhIiIqJkkkcjA5R0YlRixJIm5HRiVGLEYsRiw=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiM+SSpkX2VjaF9yOTBHNiIqJiZJJmdhbW1hR0kqcHJvdGVjdGVkR0YpNiNJJGVjaEdGJSIiIiwmKiZJJHI5MEdGJUYsSSJuR0YlRiwhIiIqJkkkcjEyR0YlRixJIk5HRiVGLEYsRiw=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiM+SSpkX2VjaF9yMDlHNiIqJiZJJmdhbW1hR0kqcHJvdGVjdGVkR0YpNiNJJGVjaEdGJSIiIiwmKiZJJHIwOUdGJUYsSSJuR0YlRiwhIiIqJkkkcjIxR0YlRixJIk5HRiVGLEYsRiw=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiM+SSpkX2VjaF9yMTFHNiIqJiZJJmdhbW1hR0kqcHJvdGVjdGVkR0YpNiNJJGVjaEdGJSIiIiwmKiZJJHIxMUdGJUYsSSJOR0YlRiwhIiIqJkkkcjk5R0YlRixJIm5HRiVGLEYsRiw=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiM+SSpkX2VjaF9yMjJHNiIqJiZJJmdhbW1hR0kqcHJvdGVjdGVkR0YpNiNJJGVjaEdGJSIiIiwmKiZJJHIyMkdGJUYsSSJOR0YlRiwhIiIqJkkkcjAwR0YlRixJIm5HRiVGLEYsRiw=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiM+SSpkX2VjaF9yMDBHNiIqJiZJJmdhbW1hR0kqcHJvdGVjdGVkR0YpNiNJJGVjaEdGJSIiIiwmKiZJJHIwMEdGJUYsSSJuR0YlRiwhIiIqJkkkcjIyR0YlRixJIk5HRiVGLEYsRiw=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiM+SSpkX2VjaF9yOTlHNiIqJiZJJmdhbW1hR0kqcHJvdGVjdGVkR0YpNiNJJGVjaEdGJSIiIiwmKiZJJHI5OUdGJUYsSSJuR0YlRiwhIiIqJkkkcjExR0YlRixJIk5HRiVGLEYsRiw=</Equation></Text-field></Output></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field alignment="centred" layout="Normal" style="Text"><Font bold="true" encoding="ISO8859-1" underline="true">  !!      \340 ne pas confondre avec les vraies \351quations non-lin\351aris\351es qui viennent de "sys":      !!  </Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font opaque="false">sys[7];#sys[8];sys[40];</Font></Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMmSSRzeXNHNiI2IyIiKA==</Equation></Text-field></Output></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">proc\351dure de lin\351arisation autour de </Font><Font executable="false">R22=r*n,R11=(1-r)*n,</Font> <Font executable="false">R00=R*N,R99=(1-R)*N,</Font> a1=alpha1 :</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">####                                LINEARISATION AUTOUR DE R44=n, R00=N, A1=alpha1 :
+
+Linearise:=proc(expr) local expr_,expr__,i,j;
+expr_:=expr;
+expr_:=subs([	a1=A1,a2=A2,		ac1=Ac1,ac2=Ac2],expr_);
+expr_:=subs([	A1=a1(t),A2=a2(t),	Ac1=ac1(t),Ac2=ac2(t)],expr_);
+<Font opaque="false">
+expr_:=subs([a1r22=r*n*a1(t),a2r22=r*n*a2(t),ac1r22=r*n*ac1(t),ac2r22=r*n*ac2(t)],expr_);
+expr_:=subs([a1r11=(1-r)*n*a1(t),a2r11=(1-r)*n*a2(t)
+		,ac1r11=(1-r)*n*ac1(t),ac2r11=(1-r)*n*ac2(t)],expr_);</Font>
+for i from 0 to 9 do for j from 0 to 9 do 
+expr_:=subs(		[a1r||i||j=0,ac1r||i||j=0
+			,a2r||i||j=0,ac2r||i||j=0 , r||i||j=0	]	,expr_); 
+od;od;
+expr__:=expr;
+expr__:=subs([seq(seq(r||i||j=R||i||j,j=0..9),i=0..9)],expr__);
+for i from 0 to 9 do for j from 0 to 9 do 
+expr__:=subs(		[a1r||i||j=alpha||1*r||i||j(t),ac1r||i||j=conjugate(alpha||1)*r||i||j(t)
+			,a2r||i||j=0,ac2r||i||j=0  , R||i||j=r||i||j(t),a1=0,a2=0,ac1=0,ac2=0 ,a3=0,ac3=0						,a3r||i||j=0,ac3r||i||j=0]	,expr__);
+od;od;
+simplify(expr_+expr__);
+end:</Text-field></Input></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1">L'EVOLUTION HAMILTONIENNE</Text-field></Title><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">proc\351dure donnant l'\351volution hamiltonienne d'un op\351rateur :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">der:=proc(oper) 			#### L'EVOLUTION HAMILTONIENNE
+-I*(
+gb*com(oper,ac2r23) + gb*com(oper,a2r32) +
+ga*com(oper,ac1r13) + ga*com(oper,a1r31) + 
+
+#GGGGGGGGGGGGGGGGGGGGGGGGgd*com(oper,ac3r57) + GGGGGGGGGGGGGGGGGGGGGGGGgd*com(oper,a3r75) + #GGGGGGGGGGGGGGGGGGGGGGGGgd*com(oper,ac2r68) + GGGGGGGGGGGGGGGGGGGGGGGGgd*com(oper,a2r86) +
+#GGGGGGGGGGGGGGGGGGGGGGGGge*com(oper,ac1r58) + GGGGGGGGGGGGGGGGGGGGGGGGge*com(oper,a1r85) + #GGGGGGGGGGGGGGGGGGGGGGGGge*com(oper,ac1r67) + GGGGGGGGGGGGGGGGGGGGGGGGge*com(oper,a1r76) + 
+
+wc1*com(oper,ac1a1) + wc2*com(oper,ac2a2) +
+
+			########   pour un champ magnetique non nul : les lignes ci-desssous
+w99*com(oper,r99) + w00*com(oper,r00) 
++ w11*com(oper,r11) + w22*com(oper,r22) + w33*com(oper,r33)
+
+);
+end;</Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiM+SSRkZXJHNiJmKjYjSSVvcGVyR0YlRiVGJUYlKiZeIyEiIiIiIiw4KiZJI2diR0YlRiwtSSRjb21HRiU2JDkkSSdhYzJyMjNHRiVGLEYsKiZGL0YsLUYxNiRGM0kmYTJyMzJHRiVGLEYsKiZJI2dhR0YlRiwtRjE2JEYzSSdhYzFyMTNHRiVGLEYsKiZGOkYsLUYxNiRGM0kmYTFyMzFHRiVGLEYsKiZJJHdjMUdGJUYsLUYxNiRGM0kmYWMxYTFHRiVGLEYsKiZJJHdjMkdGJUYsLUYxNiRGM0kmYWMyYTJHRiVGLEYsKiZJJHc5OUdGJUYsLUYxNiRGM0kkcjk5R0YlRixGLComSSR3MDBHRiVGLC1GMTYkRjNJJHIwMEdGJUYsRiwqJkkkdzExR0YlRiwtRjE2JEYzSSRyMTFHRiVGLEYsKiZJJHcyMkdGJUYsLUYxNiRGM0kkcjIyR0YlRixGLComSSR3MzNHRiVGLC1GMTYkRjNJJHIzM0dGJUYsRixGLEYlRiVGJQ==</Equation></Text-field></Output></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i from 0 to 9 do for j from 0 to 9 do <Font opaque="false">
+	if (i=1 or i=2 or i=3 or i=0 or i=9)
+	and(j=1 or j=2 or j=3 or j=0 or j=9) 
+then </Font>
+	Linearise(der(r||i||j));	
+	d_r||i||j:=collect(%,[seq(seq(r||i||j||(t),i=0..9),j=0..9)]):
+	print(d__r||i||j=%);	
+fi;
+od:od:
+for i to 3 do
+	d_a||i:=Linearise(der(a||i));
+	d_ac||i:=Linearise(der(ac||i));
+od:</Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMDBHNiIiIiE=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMDFHNiIqJl4jISIiIiIiLCgqKEkjZ2FHRiVGKS1JKmNvbmp1Z2F0ZUdJKnByb3RlY3RlZEdGLzYjSSdhbHBoYTFHRiVGKS1JJHIwM0dGJTYjSSJ0R0YlRilGKSomSSR3MDBHRiVGKS1JJHIwMUdGJUY0RilGKComSSR3MTFHRiVGKUY4RilGKUYp</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMDJHNiIqKF4jIiIiRigtSSRyMDJHRiU2I0kidEdGJUYoLCZJJHcwMEdGJUYoSSR3MjJHRiUhIiJGKA==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMDNHNiIqJl4jISIiIiIiLCgqKEkjZ2FHRiVGKUknYWxwaGExR0YlRiktSSRyMDFHRiU2I0kidEdGJUYpRikqJkkkdzAwR0YlRiktSSRyMDNHRiVGMEYpRigqJkkkdzMzR0YlRilGNEYpRilGKQ==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMDlHNiIqKF4jISIiIiIiLUkkcjA5R0YlNiNJInRHRiVGKSwmSSR3OTlHRiVGKUkkdzAwR0YlRihGKQ==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMTBHNiIqJl4jIiIiRigsKCooSSNnYUdGJUYoSSdhbHBoYTFHRiVGKC1JJHIzMEdGJTYjSSJ0R0YlRihGKComSSR3MDBHRiVGKC1JJHIxMEdGJUYvRighIiIqJkkkdzExR0YlRihGM0YoRihGKA==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMTFHNiIqKF4jISIiIiIiSSNnYUdGJUYpLCYqJi1JKmNvbmp1Z2F0ZUdJKnByb3RlY3RlZEdGLzYjSSdhbHBoYTFHRiVGKS1JJHIxM0dGJTYjSSJ0R0YlRilGKSomRjFGKS1JJHIzMUdGJUY0RilGKEYp</Equation></Text-field></Output><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMTJHNiIqJl4jIiIiRigsKCooSSNnYUdGJUYoSSdhbHBoYTFHRiVGKC1JJHIzMkdGJTYjSSJ0R0YlRihGKComSSR3MTFHRiVGKC1JJHIxMkdGJUYvRihGKComSSR3MjJHRiVGKEYzRighIiJGKA==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMTNHNiIsLioqXiMhIiIiIiJJI2dhR0YlRipJIm5HRiVGKi1JI2ExR0YlNiNJInRHRiVGKkYqKixeI0YqRipGK0YqRixGKkYtRipJInJHRiVGKkYqKipGKEYqRitGKkknYWxwaGExR0YlRiotSSRyMTFHRiVGL0YqRioqKkYyRipGK0YqRjVGKi1JJHIzM0dGJUYvRipGKiooRjJGKkkkdzExR0YlRiotSSRyMTNHRiVGL0YqRioqKEYoRipJJHczM0dGJUYqRj1GKkYq</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMTlHNiIqJl4jIiIiRigsKCooSSNnYUdGJUYoSSdhbHBoYTFHRiVGKC1JJHIzOUdGJTYjSSJ0R0YlRihGKComSSR3OTlHRiVGKC1JJHIxOUdGJUYvRighIiIqJkkkdzExR0YlRihGM0YoRihGKA==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMjBHNiIqKF4jISIiIiIiLUkkcjIwR0YlNiNJInRHRiVGKSwmSSR3MDBHRiVGKUkkdzIyR0YlRihGKQ==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMjFHNiIqJl4jISIiIiIiLCgqKEkjZ2FHRiVGKS1JKmNvbmp1Z2F0ZUdJKnByb3RlY3RlZEdGLzYjSSdhbHBoYTFHRiVGKS1JJHIyM0dGJTYjSSJ0R0YlRilGKSomSSR3MTFHRiVGKS1JJHIyMUdGJUY0RilGKSomSSR3MjJHRiVGKUY4RilGKEYp</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMjJHNiIiIiE=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMjNHNiIsKiosXiMhIiIiIiJJI2diR0YlRipJInJHRiVGKkkibkdGJUYqLUkjYTJHRiU2I0kidEdGJUYqRioqKkYoRipJI2dhR0YlRipJJ2FscGhhMUdGJUYqLUkkcjIxR0YlRjBGKkYqKiheI0YqRipJJHcyMkdGJUYqLUkkcjIzR0YlRjBGKkYqKihGKEYqSSR3MzNHRiVGKkY6RipGKg==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMjlHNiIqKF4jISIiIiIiLUkkcjI5R0YlNiNJInRHRiVGKSwmSSR3OTlHRiVGKUkkdzIyR0YlRihGKQ==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMzBHNiIqJl4jIiIiRigsKCooSSNnYUdGJUYoLUkqY29uanVnYXRlR0kqcHJvdGVjdGVkR0YuNiNJJ2FscGhhMUdGJUYoLUkkcjEwR0YlNiNJInRHRiVGKEYoKiZJJHcwMEdGJUYoLUkkcjMwR0YlRjNGKCEiIiomSSR3MzNHRiVGKEY3RihGKEYo</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMzFHNiIqJl4jISIiIiIiLC4qKEkjZ2FHRiVGKUkibkdGJUYpLUkkYWMxR0YlNiNJInRHRiVGKUYoKipGLEYpRi1GKUYuRilJInJHRiVGKUYpKihGLEYpLUkqY29uanVnYXRlR0kqcHJvdGVjdGVkR0Y3NiNJJ2FscGhhMUdGJUYpLUkkcjMzR0YlRjBGKUYpKihGLEYpRjVGKS1JJHIxMUdGJUYwRilGKComSSR3MTFHRiVGKS1JJHIzMUdGJUYwRilGKSomSSR3MzNHRiVGKUZBRilGKEYp</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMzJHNiIqJl4jIiIiRigsKioqSSNnYkdGJUYoSSJyR0YlRihJIm5HRiVGKC1JJGFjMkdGJTYjSSJ0R0YlRihGKCooSSNnYUdGJUYoLUkqY29uanVnYXRlR0kqcHJvdGVjdGVkR0Y2NiNJJ2FscGhhMUdGJUYoLUkkcjEyR0YlRjBGKEYoKiZJJHcyMkdGJUYoLUkkcjMyR0YlRjBGKCEiIiomSSR3MzNHRiVGKEY9RihGKEYo</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMzNHNiIqKF4jIiIiRihJI2dhR0YlRigsJiomLUkqY29uanVnYXRlR0kqcHJvdGVjdGVkR0YuNiNJJ2FscGhhMUdGJUYoLUkkcjEzR0YlNiNJInRHRiVGKEYoKiZGMEYoLUkkcjMxR0YlRjNGKCEiIkYo</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yMzlHNiIqJl4jIiIiRigsKCooSSNnYUdGJUYoLUkqY29uanVnYXRlR0kqcHJvdGVjdGVkR0YuNiNJJ2FscGhhMUdGJUYoLUkkcjE5R0YlNiNJInRHRiVGKEYoKiZJJHc5OUdGJUYoLUkkcjM5R0YlRjNGKCEiIiomSSR3MzNHRiVGKEY3RihGKEYo</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yOTBHNiIqKF4jIiIiRigtSSRyOTBHRiU2I0kidEdGJUYoLCZJJHc5OUdGJUYoSSR3MDBHRiUhIiJGKA==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yOTFHNiIqJl4jISIiIiIiLCgqKEkjZ2FHRiVGKS1JKmNvbmp1Z2F0ZUdJKnByb3RlY3RlZEdGLzYjSSdhbHBoYTFHRiVGKS1JJHI5M0dGJTYjSSJ0R0YlRilGKSomSSR3OTlHRiVGKS1JJHI5MUdGJUY0RilGKComSSR3MTFHRiVGKUY4RilGKUYp</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yOTJHNiIqKF4jIiIiRigtSSRyOTJHRiU2I0kidEdGJUYoLCZJJHc5OUdGJUYoSSR3MjJHRiUhIiJGKA==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yOTNHNiIqJl4jISIiIiIiLCgqKEkjZ2FHRiVGKUknYWxwaGExR0YlRiktSSRyOTFHRiU2I0kidEdGJUYpRikqJkkkdzk5R0YlRiktSSRyOTNHRiVGMEYpRigqJkkkdzMzR0YlRilGNEYpRilGKQ==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkX19yOTlHNiIiIiE=</Equation></Text-field></Output></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Section><Title><Text-field layout="Heading 1" style="Heading 1">L'EVOLUTION TOTALE DUE A L'ECHANGE + L'EVOLUTION HAMILTONIENNE</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i from 0 to 9 do 	for j from 0 to 9 do <Font opaque="false">
+	if (i=1 or i=2 or i=3 or i=0 or i=9)
+	and(j=1 or j=2 or j=3 or j=0 or j=9) 
+then </Font>
+	simplify( d_r||i||j + `if`(type(d_ech_r||i||j,symbol)=true,0,d_ech_r||i||j) , size)
+	- ( r||i||j(t) ) * gamma/2*(0+`if`(i in [3],1,0)+`if`(j in [3],1,0))
+	+ r33(t) * ( 0 	+`if`(i=j and i=1,gamma1,0)
+		+`if`(i=j and i=2,gamma2,0));
+
+	de0||r||i||j:=collect( % , [seq(seq(r||i||j||(t),i=0..9),j=0..9)]);
+	print(d_0r||i||j=%);	
+fi;
+od;od;
+
+de0a1:=d_a1 -kappa*a1(t)+sqrt(2*kappa/tau)*a1in;
+de0a2:=d_a2 -kappa*a2(t)+sqrt(2*kappa/tau)*a2in;
+de0ac1:=d_ac1 -kappa*ac1(t)+sqrt(2*kappa/tau)*ac1in; 
+de0ac2:=d_ac2-kappa*ac2(t)+sqrt(2*kappa/tau)*ac2in;</Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMDBHNiIsJComJkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRio2I0kkZWNoR0YlIiIiLCYqJkkkcjIyR0YlRi1JIk5HRiVGLSEiIiomSSRyMDBHRiVGLUkibkdGJUYtRi1GLUYy</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMDFHNiIsJiooXiMhIiIiIiIsJkkkdzAwR0YlRilJJHcxMUdGJUYqRiotSSRyMDFHRiU2I0kidEdGJUYqRioqKkYoRipJI2dhR0YlRiotSSpjb25qdWdhdGVHSSpwcm90ZWN0ZWRHRjY2I0knYWxwaGExR0YlRiotSSRyMDNHRiVGMEYqRio=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMDJHNiIqKF4jIiIiRigtSSRyMDJHRiU2I0kidEdGJUYoLCZJJHcwMEdGJUYoSSR3MjJHRiUhIiJGKA==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMDNHNiIsKCooXiMhIiIiIiIsJkkkdzAwR0YlRilJJHczM0dGJUYqRiotSSRyMDNHRiU2I0kidEdGJUYqRioqKkYoRipJI2dhR0YlRipJJ2FscGhhMUdGJUYqLUkkcjAxR0YlRjBGKkYqKiZGLkYqSSZnYW1tYUdJKnByb3RlY3RlZEdGOUYqI0YpIiIj</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMDlHNiIsJiooXiMhIiIiIiItSSRyMDlHRiU2I0kidEdGJUYqLCZJJHc5OUdGJUYqSSR3MDBHRiVGKUYqRioqJiZJJmdhbW1hR0kqcHJvdGVjdGVkR0Y1NiNJJGVjaEdGJUYqLCYqJkYsRipJIm5HRiVGKkYpKiZJJHIyMUdGJUYqSSJOR0YlRipGKkYqRio=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMTBHNiIsJiooXiMiIiJGKSwmSSR3MDBHRiUhIiJJJHcxMUdGJUYpRiktSSRyMTBHRiU2I0kidEdGJUYpRikqKkYoRilJI2dhR0YlRilJJ2FscGhhMUdGJUYpLUkkcjMwR0YlRjBGKUYp</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMTFHNiIsKCooXiMhIiIiIiJJI2dhR0YlRiosJiomLUkqY29uanVnYXRlR0kqcHJvdGVjdGVkR0YwNiNJJ2FscGhhMUdGJUYqLUkkcjEzR0YlNiNJInRHRiVGKkYqKiZGMkYqLUkkcjMxR0YlRjVGKkYpRipGKiomJkkmZ2FtbWFHRjA2I0kkZWNoR0YlRiosJiomSSRyMTFHRiVGKkkiTkdGJUYqRikqJkkkcjk5R0YlRipJIm5HRiVGKkYqRipGKiomLUkkcjMzR0YlRjVGKkknZ2FtbWExR0YlRipGKg==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMTJHNiIsKComJkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRio2I0kkZWNoR0YlIiIiLCYqJkkkcjEyR0YlRi1JIk5HRiVGLSEiIiomSSRyOTBHRiVGLUkibkdGJUYtRi1GLUYtKiYsJiomXiNGLUYtSSR3MTFHRiVGLUYtKiZeI0YyRi1JJHcyMkdGJUYtRi1GLS1GMDYjSSJ0R0YlRi1GLSoqRjlGLUkjZ2FHRiVGLUknYWxwaGExR0YlRi0tSSRyMzJHRiVGP0YtRi0=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMTNHNiIsKCooXiMiIiJGKSwmSSR3MTFHRiVGKUkkdzMzR0YlISIiRiktSSRyMTNHRiU2I0kidEdGJUYpRikqKEYoRiksJiooSSJuR0YlRiksJkYtRilJInJHRiVGKUYpLUkjYTFHRiVGMEYpRikqJkknYWxwaGExR0YlRiksJi1JJHIxMUdGJUYwRi0tSSRyMzNHRiVGMEYpRilGKUYpSSNnYUdGJUYpRikqJkYuRilJJmdhbW1hR0kqcHJvdGVjdGVkR0ZERikjRi0iIiM=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMTlHNiIsJiooXiMiIiJGKSwmSSR3OTlHRiUhIiJJJHcxMUdGJUYpRiktSSRyMTlHRiU2I0kidEdGJUYpRikqKkYoRilJI2dhR0YlRilJJ2FscGhhMUdGJUYpLUkkcjM5R0YlRjBGKUYp</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMjBHNiIqKF4jISIiIiIiLUkkcjIwR0YlNiNJInRHRiVGKSwmSSR3MDBHRiVGKUkkdzIyR0YlRihGKQ==</Equation></Text-field></Output><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMjFHNiIsKComJkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRio2I0kkZWNoR0YlIiIiLCYqJkkkcjIxR0YlRi1JIk5HRiVGLSEiIiomSSRyMDlHRiVGLUkibkdGJUYtRi1GLUYtKiYsJiomXiNGMkYtSSR3MTFHRiVGLUYtKiZeI0YtRi1JJHcyMkdGJUYtRi1GLS1GMDYjSSJ0R0YlRi1GLSoqRjlGLUkjZ2FHRiVGLS1JKmNvbmp1Z2F0ZUdGKjYjSSdhbHBoYTFHRiVGLS1JJHIyM0dGJUY/Ri1GLQ==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMjJHNiIsJiomJkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRio2I0kkZWNoR0YlIiIiLCYqJkkkcjIyR0YlRi1JIk5HRiVGLSEiIiomSSRyMDBHRiVGLUkibkdGJUYtRi1GLUYtKiYtSSRyMzNHRiU2I0kidEdGJUYtSSdnYW1tYTJHRiVGLUYt</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMjNHNiIsKiooXiMhIiIiIiIsJkkkdzIyR0YlRilJJHczM0dGJUYqRiotSSRyMjNHRiU2I0kidEdGJUYqRioqKkYoRipJI2dhR0YlRipJJ2FscGhhMUdGJUYqLUkkcjIxR0YlRjBGKkYqKixGKEYqSSNnYkdGJUYqSSJyR0YlRipJIm5HRiVGKi1JI2EyR0YlRjBGKkYqKiZGLkYqSSZnYW1tYUdJKnByb3RlY3RlZEdGP0YqI0YpIiIj</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMjlHNiIqKF4jISIiIiIiLUkkcjI5R0YlNiNJInRHRiVGKSwmSSR3OTlHRiVGKUkkdzIyR0YlRihGKQ==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMzBHNiIsKCooXiMiIiJGKSwmSSR3MDBHRiUhIiJJJHczM0dGJUYpRiktSSRyMzBHRiU2I0kidEdGJUYpRikqKkYoRilJI2dhR0YlRiktSSpjb25qdWdhdGVHSSpwcm90ZWN0ZWRHRjY2I0knYWxwaGExR0YlRiktSSRyMTBHRiVGMEYpRikqJkYuRilJJmdhbW1hR0Y2RikjRiwiIiM=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMzFHNiIsKioqXiMhIiIiIiIsJi1JJHIxMUdGJTYjSSJ0R0YlRiktSSRyMzNHRiVGLkYqRipJI2dhR0YlRiotSSpjb25qdWdhdGVHSSpwcm90ZWN0ZWRHRjU2I0knYWxwaGExR0YlRipGKiosRihGKiwmRilGKkkickdGJUYqRipGMkYqSSJuR0YlRiotSSRhYzFHRiVGLkYqRioqKF4jRipGKi1JJHIzMUdGJUYuRiosJkkkdzExR0YlRilJJHczM0dGJUYqRipGKiomRkBGKkkmZ2FtbWFHRjVGKiNGKSIiIw==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMzJHNiIsKiooXiMiIiJGKSwmSSR3MjJHRiUhIiJJJHczM0dGJUYpRiktSSRyMzJHRiU2I0kidEdGJUYpRikqKkYoRilJI2dhR0YlRiktSSRyMTJHRiVGMEYpLUkqY29uanVnYXRlR0kqcHJvdGVjdGVkR0Y4NiNJJ2FscGhhMUdGJUYpRikqLEYoRilJI2diR0YlRilJInJHRiVGKUkibkdGJUYpLUkkYWMyR0YlRjBGKUYpKiZGLkYpSSZnYW1tYUdGOEYpI0YsIiIj</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMzNHNiIsJiooXiMhIiIiIiJJI2dhR0YlRiosJiomLUkqY29uanVnYXRlR0kqcHJvdGVjdGVkR0YwNiNJJ2FscGhhMUdGJUYqLUkkcjEzR0YlNiNJInRHRiVGKkYpKiZGMkYqLUkkcjMxR0YlRjVGKkYqRipGKiomLUkkcjMzR0YlRjVGKkkmZ2FtbWFHRjBGKkYp</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByMzlHNiIsKCooXiMiIiJGKSwmSSR3OTlHRiUhIiJJJHczM0dGJUYpRiktSSRyMzlHRiU2I0kidEdGJUYpRikqKkYoRilJI2dhR0YlRiktSSpjb25qdWdhdGVHSSpwcm90ZWN0ZWRHRjY2I0knYWxwaGExR0YlRiktSSRyMTlHRiVGMEYpRikqJkYuRilJJmdhbW1hR0Y2RikjRiwiIiM=</Equation></Text-field></Output><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByOTBHNiIsJiomJkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRio2I0kkZWNoR0YlIiIiLCYqJkkkcjkwR0YlRi1JIm5HRiVGLSEiIiomSSRyMTJHRiVGLUkiTkdGJUYtRi1GLUYtKiheI0YyRi0tRjA2I0kidEdGJUYtLCZJJHc5OUdGJUYySSR3MDBHRiVGLUYtRi0=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByOTFHNiIsJiooXiMhIiIiIiIsJkkkdzk5R0YlRilJJHcxMUdGJUYqRiotSSRyOTFHRiU2I0kidEdGJUYqRioqKkYoRipJI2dhR0YlRiotSSpjb25qdWdhdGVHSSpwcm90ZWN0ZWRHRjY2I0knYWxwaGExR0YlRiotSSRyOTNHRiVGMEYqRio=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByOTJHNiIqKF4jISIiIiIiLUkkcjkyR0YlNiNJInRHRiVGKSwmSSR3OTlHRiVGKEkkdzIyR0YlRilGKQ==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByOTNHNiIsKCooXiMhIiIiIiIsJkkkdzk5R0YlRilJJHczM0dGJUYqRiotSSRyOTNHRiU2I0kidEdGJUYqRioqKkYoRipJI2dhR0YlRipJJ2FscGhhMUdGJUYqLUkkcjkxR0YlRjBGKkYqKiZGLkYqSSZnYW1tYUdJKnByb3RlY3RlZEdGOUYqI0YpIiIj</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvSSdkXzByOTlHNiIqJiZJJmdhbW1hR0kqcHJvdGVjdGVkR0YpNiNJJGVjaEdGJSIiIiwmKiZJJHI5OUdGJUYsSSJuR0YlRiwhIiIqJkkkcjExR0YlRixJIk5HRiVGLEYsRiw=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiM+SSZkZTBhMUc2IiwqKiheIyEiIiIiIkkkd2MxR0YlRiotSSNhMUdGJTYjSSJ0R0YlRipGKiooRihGKkkjZ2FHRiVGKi1JJHIxM0dGJUYuRipGKiomSSZrYXBwYUdGJUYqRixGKkYpKigiIiMjRipGNyomRjVGKkkkdGF1R0YlRilGOEklYTFpbkdGJUYqRio=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiM+SSZkZTBhMkc2IiwqKiheIyEiIiIiIkkkd2MyR0YlRiotSSNhMkdGJTYjSSJ0R0YlRipGKiooRihGKkkjZ2JHRiVGKi1JJHIyM0dGJUYuRipGKiomSSZrYXBwYUdGJUYqRixGKkYpKigiIiMjRipGNyomRjVGKkkkdGF1R0YlRilGOEklYTJpbkdGJUYqRio=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiM+SSdkZTBhYzFHNiIsKiooXiMiIiJGKUkkd2MxR0YlRiktSSRhYzFHRiU2I0kidEdGJUYpRikqKEYoRilJI2dhR0YlRiktSSRyMzFHRiVGLUYpRikqJkkma2FwcGFHRiVGKUYrRikhIiIqKCIiIyNGKUY3KiZGNEYpSSR0YXVHRiVGNUY4SSZhYzFpbkdGJUYpRik=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiM+SSdkZTBhYzJHNiIsKiooXiMiIiJGKUkkd2MyR0YlRiktSSRhYzJHRiU2I0kidEdGJUYpRikqKEYoRilJI2diR0YlRiktSSRyMzJHRiVGLUYpRikqJkkma2FwcGFHRiVGKUYrRikhIiIqKCIiIyNGKUY3KiZGNEYpSSR0YXVHRiVGNUY4SSZhYzJpbkdGJUYpRik=</Equation></Text-field></Output></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1">CHANGEMENT  DE  VARIBLE     ---&gt;     champ tournant :</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">					e1:=exp(t*I*(w2-w1)):
+champ_tournant:=[]:
+for i from 0 to 9 do for j from 0 to 9 do 
+<Font opaque="false">
+	
+if (i=1 or i=2 or i=3 or i=0 or i=9)
+and(j=1 or j=2 or j=3 or j=0 or j=9) 
+then 
+expo_:='erreur_'; # si erreur si aucun des cas suivant n'arrive.
+if j=1 	then expo_:=exp(-t*I*(-w1))		;fi;
+if j=2 	then expo_:=exp(-t*I*(-w2))		;fi;</Font>
+if j=3 	then expo_:=1;				;fi;
+if j=0 	then expo_:=<Font opaque="false">exp(-t*I*(-w2))		</Font>;fi;
+if j=9 	then expo_:=<Font opaque="false">exp(-t*I*(-w1))		</Font>;fi;
+
+expo__:='erreur__'; # si erreur si aucun des cas suivant n'arrive.<Font opaque="false">
+if i=1 	then expo__:=exp(-t*I*(-w1))		;fi;
+if i=2 	then expo__:=exp(-t*I*(-w2))		;fi;
+if i=3 	then expo__:=1;				;fi;
+if i=0 	then expo__:=exp(-t*I*(-w2))		;fi;
+if i=9 	then expo__:=exp(-t*I*(-w1))		;fi;</Font>
+
+expo:=simplify(expo_/expo__ , assume=(t::real,w1::real,w2::real,wF::real,whf::real));
+champ_tournant:=[op(champ_tournant),r||i||j(t)=s||i||j(t)*expo]:
+fi;
+od;od;
+
+# maintenant, les champs :
+champ_tournant:=[op(champ_tournant),
+alpha||1=salpha1*exp(t*I*(-w1)),
+a1(t)	=sa1(t)*exp(t*I*(-w1)),	a2(t)	=sa2(t)*exp(t*I*(-w2)),
+ac1(t)	=sac1(t)*exp(t*I*(w1)),	ac2(t)	=sac2(t)*exp(t*I*(w2)),
+a1in	=sa1in*exp(t*I*(-w1)),	a2in	=sa2in*exp(t*I*(-w2)),
+ac1in	=sac1in*exp(t*I*(w1)),	ac2in	=sac2in*exp(t*I*(w2)) ]:
+
+nops(champ_tournant);
+#	champ_tournant;</Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMiI00=</Equation></Text-field></Output></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#chang_w:=[seq(seq(w||i||j=w||j||j-w||i||i,j=i+1..9),i=0..9)]; rev_chang_w:=map(rhs=lhs,%):
+#chang_Delta:=[seq(seq(Delta||i||j=w||i||j-w2,j=i+1..9),i=0..9)]; rev_chang_Delta:=map(rhs=lhs,%):
+#chang_delta:=[seq(seq(delta||i||j=w||i||j-(w1-w2),j=i+1..9),i=0..9)]; rev_chang_delta:=map(rhs=lhs,%):
+#nops(chang_w);	nops(chang_Delta);	nops(chang_delta);</Text-field></Input></Group><Section><Title><Text-field layout="Heading 1" style="Heading 1">Dans la base des variables tournantes, on a :</Text-field></Title><Group><Input><Text-field layout="Normal" style="Text">liste pour substitution effectuant un changement de notation de Sij vers Rij et SAi vers Ai<Font encoding="ISO8859-1">
+les Rij sont tranform\351 en Sij lors du changement de variable "champ_tournant"</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">s_vers_pas_de_s:= [
+seq(seq(
+	s||i||j(t)=r||i||j(t),j=0..9),i=0..9)
+,sa1(t)=a1(t),sa2(t)=a2(t),sac1(t)=ac1(t),sac2(t)=ac2(t)
+,salpha||1=alpha||1,sa1in=a1in,sac1in=ac1in,sa2in=a2in,sac2in=ac2in,sa3in=a3in,sac3in=ac3in
+,sa3(t)=a3(t),sac3(t)=ac3(t)
+]:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">petit test pour \351viter les surprise : tout Rij ou Ai restant donne 'ERREUR' si on applique une substitution avec cette liste:</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">test_erreur_tourne:= [
+seq(seq(
+	r||i||j(t)=ERREUR,j=0..9),i=0..9)
+,a1(t)=ERREUR,a2(t)=ERREUR,ac1(t)=ERREUR,ac2(t)=ERREUR
+,alpha||1(t)=ERREUR,a1in=ERREUR,ac1in=ERREUR,a2in=ERREUR,ac2in=ERREUR,a3in=ERREUR,ac3in=ERREUR
+,a3(t)=ERREUR,ac3(t)=ERREUR
+]:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">Changment de variable pour les niveau atomique</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i from 0 to 9 do	for j from 0 to 9 do <Font opaque="false">
+if (i=1 or i=2 or i=3 or i=0 or i=9)
+and(j=1 or j=2 or j=3 or j=0 or j=9) 
+then
+ </Font>	tourn_de0r||i||j:=de0r||i||j - diff(r||i||j(t),t);
+	for k to nops(champ_tournant) do 
+		tourn_de0r||i||j:=(subs( champ_tournant[k] , tourn_de0r||i||j) );
+	od;
+# des simplifications :
+	tourn_de0r||i||j:=isolate(tourn_de0r||i||j,diff(s||i||j(t),t));
+	tourn_de0r||i||j:= simplify( tourn_de0r||i||j , assume=(t::real,w1::real,w2::real,wF::real,whf::real)) ;
+	tourn_de0r||i||j:= map( x-&gt;map(simplify,x,size) ,  collect( rhs(tourn_de0r||i||j) ,[s||i||j(t)])) ;<Font encoding="ISO8859-1">
+# petite verife securit\351 "test_erreur_tourne"</Font>
+# puis on revient en R : "s_vers_pas_de_s"
+	tourn_de0r||i||j:=simplify( subs(s_vers_pas_de_s, subs(test_erreur_tourne , tourn_de0r||i||j) ),size);<Font encoding="ISO8859-1">
+# on sort le resulat \340 l'ecran.</Font>
+	print( d[t]*r||i||j||_= tourn_de0r||i||j );
+fi;
+od;od;
+</Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIwMF9HRidGKiomJkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRi82I0kkZWNoR0YnRiosJiomSSRyMDBHRidGKkkibkdGJ0YqISIiKiZJJHIyMkdGJ0YqSSJOR0YnRipGKkYq</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIwMV9HRidGKiwmKiheI0YqRiosKkkkdzAwR0YnRipJJHcxMUdGJyEiIkkjdzJHRidGKkkjdzFHRidGMkYqLUkkcjAxR0YnRihGKkYqKipeI0YyRipJI2dhR0YnRiotSSpjb25qdWdhdGVHSSpwcm90ZWN0ZWRHRjw2I0knYWxwaGExR0YnRiotSSRyMDNHRidGKEYqRio=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIwMl9HRidGKiooXiNGKkYqLUkkcjAyR0YnRihGKiwmSSR3MDBHRidGKkkkdzIyR0YnISIiRio=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIwM19HRidGKiwmKiYsKiomXiMiIiNGKkkkdzAwR0YnRipGKiomXiMhIiNGKkkkdzMzR0YnRipGKkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRjghIiIqJkYwRipJI3cyR0YnRipGKkYqLUkkcjAzR0YnRihGKiNGKkYxKipeI0Y5RipJI2dhR0YnRipJJ2FscGhhMUdGJ0YqLUkkcjAxR0YnRihGKkYq</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIwOV9HRidGKiwmKigmSSZnYW1tYUdJKnByb3RlY3RlZEdGMDYjSSRlY2hHRidGKiwmKiZJJHIwOUdGJ0YqSSJuR0YnRiohIiIqJkkkcjIxR0YnRipJIk5HRidGKkYqRiotSSRleHBHNiRGMEkoX3N5c2xpYkdGJzYjKiheI0Y3RipGKUYqLCZJI3cyR0YnRjdJI3cxR0YnRipGKkYqRioqKF4jRipGKiwqSSR3OTlHRidGN0kkdzAwR0YnRipGQ0YqRkRGN0YqLUY1RihGKkYq</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIxMF9HRidGKiwmKiheI0YqRiosKkkkdzAwR0YnISIiSSR3MTFHRidGKkkjdzJHRidGMUkjdzFHRidGKkYqLUkkcjEwR0YnRihGKkYqKipGLkYqSSNnYUdGJ0YqSSdhbHBoYTFHRidGKi1JJHIzMEdGJ0YoRipGKg==</Equation></Text-field></Output><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIxMV9HRidGKiwqKiYmSSZnYW1tYUdJKnByb3RlY3RlZEdGMDYjSSRlY2hHRidGKiwmKiZJJHIxMUdGJ0YqSSJOR0YnRiohIiIqJkkkcjk5R0YnRipJIm5HRidGKkYqRipGKioqXiNGN0YqSSNnYUdGJ0YqLUkqY29uanVnYXRlR0YwNiNJJ2FscGhhMUdGJ0YqLUkkcjEzR0YnRihGKkYqKipeI0YqRipGPUYqRkFGKi1JJHIzMUdGJ0YoRipGKiomLUkkcjMzR0YnRihGKkknZ2FtbWExR0YnRipGKg==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIxMl9HRidGKiwoKigmSSZnYW1tYUdJKnByb3RlY3RlZEdGMDYjSSRlY2hHRidGKiwmKiZJJHI5MEdGJ0YqSSJuR0YnRiohIiIqJkkkcjEyR0YnRipJIk5HRidGKkYqRiotSSRleHBHNiRGMEkoX3N5c2xpYkdGJzYjKiheI0YqRipGKUYqLCZJI3cyR0YnRjdJI3cxR0YnRipGKkYqRjcqJiwqKiZGQUYqSSR3MTFHRidGKkYqKiZeI0Y3RipJJHcyMkdGJ0YqRioqJkZKRipGQ0YqRioqJkZBRipGREYqRipGKi1GOUYoRipGKioqRkFGKkkjZ2FHRidGKkknYWxwaGExR0YnRiotSSRyMzJHRidGKEYqRio=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIxM19HRidGKiwmKiYsKiomXiMiIiNGKkkkdzExR0YnRipGKiomXiMhIiNGKkkkdzMzR0YnRipGKkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRjghIiIqJkYwRipJI3cxR0YnRipGKkYqLUkkcjEzR0YnRihGKiNGKkYxKiheI0YqRiosJiooSSJuR0YnRiosJkY5RipJInJHRidGKkYqLUkjYTFHRidGKEYqRioqJkknYWxwaGExR0YnRiosJi1JJHIxMUdGJ0YoRjktSSRyMzNHRidGKEYqRipGKkYqSSNnYUdGJ0YqRio=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIxOV9HRidGKiwmKiheI0YqRiosJkkkdzk5R0YnISIiSSR3MTFHRidGKkYqLUkkcjE5R0YnRihGKkYqKipGLkYqSSNnYUdGJ0YqSSdhbHBoYTFHRidGKi1JJHIzOUdGJ0YoRipGKg==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIyMF9HRidGKiooXiMhIiJGKi1JJHIyMEdGJ0YoRiosJkkkdzAwR0YnRipJJHcyMkdGJ0YuRio=</Equation></Text-field></Output><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIyMV9HRidGKiwoKigmSSZnYW1tYUdJKnByb3RlY3RlZEdGMDYjSSRlY2hHRidGKiwmKiZJJHIwOUdGJ0YqSSJuR0YnRiohIiIqJkkkcjIxR0YnRipJIk5HRidGKkYqRiotSSRleHBHNiRGMEkoX3N5c2xpYkdGJzYjKiheI0YqRipGKUYqLCZJI3cyR0YnRipJI3cxR0YnRjdGKkYqRjcqJiwqKiZeI0Y3RipJJHcxMUdGJ0YqRioqJkZBRipJJHcyMkdGJ0YqRioqJkZBRipGQ0YqRioqJkZIRipGREYqRipGKi1GOUYoRipGKioqRkhGKkkjZ2FHRidGKi1JKmNvbmp1Z2F0ZUdGMDYjSSdhbHBoYTFHRidGKi1JJHIyM0dGJ0YoRipGKg==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIyMl9HRidGKiwmKiYmSSZnYW1tYUdJKnByb3RlY3RlZEdGMDYjSSRlY2hHRidGKiwmKiZJJHIyMkdGJ0YqSSJOR0YnRiohIiIqJkkkcjAwR0YnRipJIm5HRidGKkYqRipGKiomLUkkcjMzR0YnRihGKkknZ2FtbWEyR0YnRipGKg==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIyM19HRidGKiwoKiYsKiomXiMiIiNGKkkkdzIyR0YnRipGKiomXiMhIiNGKkkkdzMzR0YnRipGKkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRjghIiIqJkYwRipJI3cyR0YnRipGKkYqLUkkcjIzR0YnRihGKiNGKkYxKipeI0Y5RipJI2dhR0YnRipJJ2FscGhhMUdGJ0YqLUkkcjIxR0YnRihGKkYqKixGQEYqSSNnYkdGJ0YqSSJyR0YnRipJIm5HRidGKi1JI2EyR0YnRihGKkYq</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIyOV9HRidGKiooXiMhIiJGKi1JJHIyOUdGJ0YoRiosKkkkdzk5R0YnRipJJHcyMkdGJ0YuSSN3MkdGJ0YuSSN3MUdGJ0YqRio=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIzMF9HRidGKiwmKiYsKiomXiMhIiNGKkkkdzAwR0YnRipGKiomXiMiIiNGKkkkdzMzR0YnRipGKkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRjghIiIqJkYwRipJI3cyR0YnRipGKkYqLUkkcjMwR0YnRihGKiNGKkY1KipeI0YqRipJI2dhR0YnRiotSSpjb25qdWdhdGVHRjg2I0knYWxwaGExR0YnRiotSSRyMTBHRidGKEYqRio=</Equation></Text-field></Output><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIzMV9HRidGKiwmKiYsKiomXiMhIiNGKkkkdzExR0YnRipGKiomXiMiIiNGKkkkdzMzR0YnRipGKkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRjghIiIqJkYwRipJI3cxR0YnRipGKkYqLUkkcjMxR0YnRihGKiNGKkY1KiheI0Y5RipJI2dhR0YnRiosJiomLCYtSSRyMTFHRidGKEY5LUkkcjMzR0YnRihGKkYqLUkqY29uanVnYXRlR0Y4NiNJJ2FscGhhMUdGJ0YqRioqKC1JJGFjMUdGJ0YoRipJIm5HRidGKiwmRjlGKkkickdGJ0YqRipGKkYqRio=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIzMl9HRidGKiwoKiYsKiomXiMhIiNGKkkkdzIyR0YnRipGKiomXiMiIiNGKkkkdzMzR0YnRipGKkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRjghIiIqJkYwRipJI3cyR0YnRipGKkYqLUkkcjMyR0YnRihGKiNGKkY1KipeI0YqRipJI2dhR0YnRiotSSRyMTJHRidGKEYqLUkqY29uanVnYXRlR0Y4NiNJJ2FscGhhMUdGJ0YqRioqLEZARipJI2diR0YnRipJInJHRidGKkkibkdGJ0YqLUkkYWMyR0YnRihGKkYq</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIzM19HRidGKiwoKipeI0YqRipJI2dhR0YnRiotSSpjb25qdWdhdGVHSSpwcm90ZWN0ZWRHRjI2I0knYWxwaGExR0YnRiotSSRyMTNHRidGKEYqRioqKl4jISIiRipGL0YqRjRGKi1JJHIzMUdGJ0YoRipGKiomLUkkcjMzR0YnRihGKkkmZ2FtbWFHRjJGKkY5</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXIzOV9HRidGKiwmKiYsKiomXiMhIiNGKkkkdzk5R0YnRipGKiomXiMiIiNGKkkkdzMzR0YnRipGKkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRjghIiIqJkYwRipJI3cxR0YnRipGKkYqLUkkcjM5R0YnRihGKiNGKkY1KipeI0YqRipJI2dhR0YnRiotSSpjb25qdWdhdGVHRjg2I0knYWxwaGExR0YnRiotSSRyMTlHRidGKEYqRio=</Equation></Text-field></Output><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXI5MF9HRidGKiwmKigmSSZnYW1tYUdJKnByb3RlY3RlZEdGMDYjSSRlY2hHRidGKiwmKiZJJHI5MEdGJ0YqSSJuR0YnRiohIiIqJkkkcjEyR0YnRipJIk5HRidGKkYqRiotSSRleHBHNiRGMEkoX3N5c2xpYkdGJzYjKiheI0Y3RipGKUYqLCZJI3cyR0YnRipJI3cxR0YnRjdGKkYqRioqKF4jRipGKiwqSSR3OTlHRidGKkkkdzAwR0YnRjdGQ0Y3RkRGKkYqLUY1RihGKkYq</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXI5MV9HRidGKiwmKiheIyEiIkYqLCZJJHc5OUdGJ0YvSSR3MTFHRidGKkYqLUkkcjkxR0YnRihGKkYqKipGLkYqSSNnYUdGJ0YqLUkqY29uanVnYXRlR0kqcHJvdGVjdGVkR0Y5NiNJJ2FscGhhMUdGJ0YqLUkkcjkzR0YnRihGKkYq</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXI5Ml9HRidGKiooXiNGKkYqLUkkcjkyR0YnRihGKiwqSSR3OTlHRidGKkkkdzIyR0YnISIiSSN3MkdGJ0YzSSN3MUdGJ0YqRio=</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXI5M19HRidGKiwmKiYsKiomXiMiIiNGKkkkdzk5R0YnRipGKiomXiMhIiNGKkkkdzMzR0YnRipGKkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRjghIiIqJkYwRipJI3cxR0YnRipGKkYqLUkkcjkzR0YnRihGKiNGKkYxKipeI0Y5RipJI2dhR0YnRipJJ2FscGhhMUdGJ0YqLUkkcjkxR0YnRihGKkYq</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJXI5OV9HRidGKiomJkkmZ2FtbWFHSSpwcm90ZWN0ZWRHRi82I0kkZWNoR0YnRiosJiomSSRyOTlHRidGKkkibkdGJ0YqISIiKiZJJHIxMUdGJ0YqSSJOR0YnRipGKkYq</Equation></Text-field></Output></Group><Group><Input><Text-field layout="Normal" style="Text">Changment de variable pour les champs</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i to 2 do
+	tourn_de0a||i:=de0a||i - diff(a||i(t),t);
+	tourn_de0ac||i:=de0ac||i - diff(ac||i(t),t);
+	for k to nops(champ_tournant) do 
+		tourn_de0a||i:=(subs(champ_tournant[k],tourn_de0a||i) );
+		tourn_de0ac||i:=(subs(champ_tournant[k],tourn_de0ac||i) );
+	od:
+# des simplifications :
+	tourn_de0a||i:= isolate(tourn_de0a||i ,diff(sa||i(t) ,t)):
+	tourn_de0ac||i:=isolate(tourn_de0ac||i,diff(sac||i(t),t)):
+	tourn_de0a||i:= simplify(tourn_de0a||i ,assume=(t::real,w1::real,w2::real,wF::real,whf::real)):
+	tourn_de0ac||i:=simplify(tourn_de0ac||i,assume=(t::real,w1::real,w2::real,wF::real,whf::real)):
+	tourn_de0a||i:= map(x-&gt;map(simplify,x,size),collect(rhs(tourn_de0a||i), [sa||i(t) ])):
+	tourn_de0ac||i:=map(x-&gt;map(simplify,x,size),collect(rhs(tourn_de0ac||i),[sac||i(t)])):<Font encoding="ISO8859-1">
+# petite verife securit\351 "test_erreur_tourne"</Font>
+# puis on revient en R : "s_vers_pas_de_s"
+	tourn_de0a||i:= simplify( subs(s_vers_pas_de_s, subs(test_erreur_tourne,tourn_de0a||i)) ,size);
+	tourn_de0ac||i:=simplify( subs(s_vers_pas_de_s, subs(test_erreur_tourne,tourn_de0ac||i)),size);<Font encoding="ISO8859-1">
+# on sort le resulat \340 l'ecran.</Font>
+	print( d[t]*a||i||_= tourn_de0a||i );
+	print( d[t]*ac||i||_= tourn_de0ac||i );
+od:</Text-field></Input><Output><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJGExX0dGJ0YqLCgqJiwoKiZeIyEiIkYqSSR3YzFHRidGKkYqSSZrYXBwYUdGJ0YxKiZeI0YqRipJI3cxR0YnRipGKkYqLUkjYTFHRidGKEYqRioqKkYwRipJI2dhR0YnRiotSSRyMTNHRidGKEYqLUkkZXhwRzYkSSpwcm90ZWN0ZWRHRkBJKF9zeXNsaWJHRic2IyooXiMiIiNGKkYpRiosJkkjdzJHRidGKkY2RjFGKkYqRioqKEZFI0YqRkUqJkYzRipJJHRhdUdGJ0YxRklJJWExaW5HRidGKkYq</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJWFjMV9HRidGKiwoKipeI0YqRipJI2dhR0YnRiotSSRyMzFHRidGKEYqLUkkZXhwRzYkSSpwcm90ZWN0ZWRHRjVJKF9zeXNsaWJHRic2IyooXiMhIiNGKkYpRiosJkkjdzJHRidGKkkjdzFHRichIiJGKkYqRioqKCIiIyNGKkZAKiZJJmthcHBhR0YnRipJJHRhdUdGJ0Y+RkFJJmFjMWluR0YnRipGKiomLUkkYWMxR0YnRihGKiwoKiZeI0Y+RipJJHdjMUdGJ0YqRipGQ0YqKiZGLkYqRj1GKkYqRipGPg==</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJGEyX0dGJ0YqLCgqKl4jISIiRipJI2diR0YnRiotSSRyMjNHRidGKEYqLUkkZXhwRzYkSSpwcm90ZWN0ZWRHRjZJKF9zeXNsaWJHRic2IyooXiMiIiNGKkYpRiosJkkjdzJHRidGKkkjdzFHRidGL0YqRipGKiooRjsjRipGOyomSSZrYXBwYUdGJ0YqSSR0YXVHRidGL0ZASSVhMmluR0YnRipGKiomLUkjYTJHRidGKEYqLCgqJl4jRipGKkkkd2MyR0YnRipGKkZCRioqJkYuRipGPUYqRipGKkYv</Equation></Text-field><Text-field layout="Maple Output" style="2D Output"><Equation>NiMvKiYmSSJkRzYiNiNJInRHRiciIiJJJWFjMl9HRidGKiwoKipeI0YqRipJI2diR0YnRiotSSRyMzJHRidGKEYqLUkkZXhwRzYkSSpwcm90ZWN0ZWRHRjVJKF9zeXNsaWJHRic2IyooXiMhIiNGKkYpRiosJkkjdzJHRidGKkkjdzFHRichIiJGKkYqRioqKCIiIyNGKkZAKiZJJmthcHBhR0YnRipJJHRhdUdGJ0Y+RkFJJmFjMmluR0YnRipGKiomLCgqJl4jRj5GKkkkd2MyR0YnRipGKkZDRioqJkYuRipGPEYqRipGKi1JJGFjMkdGJ0YoRipGPg==</Equation></Text-field></Output></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">ET SANS les crois\351s impliquant 5ou6  et  0ou9:</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">########################################################################################################<Font encoding="ISO8859-1">
+#			ET SANS les crois\351s impliquant 5ou6  et  0ou9:				       #
+####	en effet, c'est dernier \351voluent tr\350s vite et ne contribuent pas \340 l'\351voltion du syst\350me :  ####</Font>
+########################################################################################################
+nulles:=[]:
+nulles:=Flatten([	seq([	seq([(r||i||j(t)=0,r||j||i(t)=0)]	,j=0..4),
+				seq([(r||i||j(t)=0,r||j||i(t)=0)]	,j=7..9)]	,i=5..6)	
+		,	seq([	seq([(r||i||j(t)=0,r||j||i(t)=0)]	,j=0..0),
+				seq([(r||i||j(t)=0,r||j||i(t)=0)]	,j=9..9)]	,i=1..8)	]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font bold="true">On obtient :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i from 0 to 9 do	for j from 0 to 9 do 
+	der||i||j:=simplify(subs(nulles,	tourn_de0r||i||j),size) ;<Font encoding="ISO8859-1">
+	if subs(nulles,r||i||j(t))&lt;&gt;0 # si l'\351quadiff n'est pas</Font>
+		then print(d[t]*r||i||j||_=der||i||j );fi;
+od;od;
+
+dea1:=simplify(subs(nulles,tourn_de0a1),size):		d[t]*a1=%;
+dea2:=simplify(subs(nulles,tourn_de0a2),size):		d[t]*a2=%;
+deac1:=simplify(subs(nulles,tourn_de0ac1),size):	d[t]*ac1=%;	
+deac2:=simplify(subs(nulles,tourn_de0ac2),size):	d[t]*ac2=%;
+dea3:=simplify(subs(nulles,tourn_de0a3),size):		d[t]*a3=%;
+deac3:=simplify(subs(nulles,tourn_de0ac3),size):	d[t]*ac3=%;	</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">subset d'\351quation ferm\351 il semble :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Fermee:=[ der47_ = der47 , der38_ = der38 , der72_ = der72 , der81_ = der81 , der43_ = der43 
+	, der32_ = der32 , der65_= der65 , der78_ = der78 , der21_ = der21 , der09_ = der09 , dea2_ = dea2]:
+for i to nops(Fermee) do print(Fermee[i]);
+od;</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#########	on prend  d'abord Delta1=Delta2=0 et wc1=w1,wc2=w2 :	 		     ##########
+#		Delta1:=0; Delta2:=0; theta1:=0; theta2:=0;
+	w77 := w44 + w2;
+	w88 := w77;
+	w44 := w11;
+	w33 := w11;
+	w22 := w11;
+	w66 := w55;
+	w2  := w1;
+	wc2 := w1;	
+	w99 := w00;</Text-field></Input></Group><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">Changer de base -&gt; xy .  (dans le syt\350me ferm\351 de 11 \351quations conduisant \340 R90x)</Font></Text-field></Title><Group><Input><Text-field layout="Normal" style="Text">Liste de substitution pour passer en base xy.<Font encoding="ISO8859-1">
+ne marchera que si les terme non-xy s'\351liminent 2 \340 2 apr\350s le changement de variable</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">base_xy:=[  
+r74(t)=2*I*r74y(t)+r47(t),	r83(t)=2*I*r83y(t)+r38(t),	r72(t)=2*I*r72y(t)+r27(t),
+r81(t)=2*I*r81y(t)+r18(t),	r43(t)=2*r43x(t)-r34(t),	r32(t)=2*r32x(t)-r23(t),
+r65(t)=2*r65x(t)-r56(t),	r87(t)=2*r87x(t)-r78(t),	r21(t)=2*r21x(t)-r12(t),
+r09(t)=2*r90x(t) -r90(t),	ac2(t)=AX(t)-a2(t),	ac2in=AXin-a2in]:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Derx(i,j) donne la d\351riv\351e de Rij_x;
+Dery(i,j) donne la d\351riv\351e de Rij_y;
+Rq : On a rajout\351 les force de Langevin : Fij</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Derx:=proc(i,j)
+(der||i||j + der||j||i)/2;
+simplify(subs(  base_xy   ,%)) - f||i||j||x assuming alpha||1::real;
+end:
+Dery:=proc(i,j)
+(der||i||j - der||j||i)/2/I;
+simplify(subs(  base_xy   ,%)) - f||i||j||y assuming alpha||1::real;
+end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Deriv\351e de la coh\351rence du fondamental suivant X</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Fond_X:= simplify(subs(  base_xy   ,(der09+der90)/2)) -f90x assuming alpha||1::real;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Deriv\351e du champ 2 suivant X celui qui porte le squeezing</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">X:=simplify(subs(  base_xy   ,
+	deac2+dea2	)) assuming alpha||1::real:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Le subset d'\351quation </Font>Fermee en base XY cette fois.</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">FermeeXY:=[Dery(7,4),Dery(8,3),Dery(7,2),Dery(8,1),Derx(4,3),Derx(3,2),Derx(6,5),Derx(8,7),Derx(2,1),X]:
+# on affiche
+for i to nops(FermeeXY)-1 do 
+	print(d[t] * cat('r', op(Explode(op([-1,-1],FermeeXY[i]))[2..4]))= simplify(FermeeXY[i],size));
+od;
+print(d[t] * AX	=FermeeXY[nops(FermeeXY)]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">ces \351quations vont \352tre r\351solues pour Dt = 0 (adiabatique) 
+pour pouvoir trouver l'\351volution de :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">d[t]*r90x(t)=simplify(Fond_X,size);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1" size="18">On \351limine adiabatiquement tout ! : coh\351rences et champ</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"># on fait un {set}
+system_fermee:={op(FermeeXY)}:_;
+Sol_Adiab:=solve(system_fermee,{r74y(t),r83y(t),r72y(t),r81y(t),r43x(t),r32x(t),r65x(t),r87x(t),r21x(t),AX(t)}):_;
+Sol_Adiab:=simplify(Sol_Adiab):_;
+Sol_Adiab:=map(x-&gt;map(simp,simplify(x)),Sol_Adiab):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Alors, la d\351riv\351e de r90x :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Fond_X;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">devient : gx dans lequel on regroupe les termes par forces de langevin</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">gx:=simp(simplify(subs(Sol_Adiab,Fond_X))):
+gx:=sort(map(simp,collect(gx,[r90x(t),f65x,f90x,f32x,f43x,f74y,f83y,f87x,f21x,f81y,f72y,AXin]))):</Text-field></Input></Group></Section><Group><Input><Text-field alignment="centred" layout="Normal" style="Text"><Font bold="true" size="18">
+CALCUL DES COEFFICIENTS DE DIFUSION</Font></Text-field><Text-field alignment="centred" layout="Normal" style="Text"><Font bold="true" encoding="ISO8859-1" size="18">Par la m\351thode Dantan</Font>
+</Text-field></Input></Group><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">La Diffusion due \340 l'emission spontann\351e</Font></Text-field></Title><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">petite proc\351dure donnant le coeff de diffusion entre deux coh\351rences</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">D_em:=proc(operA,operB) 
+gamma||1*(fois(	com(r81,operA),com(operB,r18))+ fois(com(r74,operA),com(operB,r47))	)+
+gamma||2*(fois(	com(r72,operA),com(operB,r27))+ fois(com(r83,operA),com(operB,r38))	)+
+gamma||3*(fois(	com(r82,operA),com(operB,r28))+ fois(com(r73,operA),com(operB,r37))	)+
+gamma||4*(fois(	com(r85,operA),com(operB,r58))+ fois(com(r76,operA),com(operB,r67))	)+
+gamma||5*(fois(	com(r75,operA),com(operB,r57))+ fois(com(r86,operA),com(operB,r68))	)
+
++2*kappa*(fois(	com(ac2,operA),com(operB,a2))	);
+end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">D_em(a2,ac2);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1" size="16">en base xy mais toujours donn\351e en base rij</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Dyy:=proc(i,j,k,l)
+(D_em(r||i||j,r||k||l)-D_em(r||i||j,r||l||k)-D_em(r||j||i,r||k||l)+D_em(r||j||i,r||l||k))/(-4);end:
+Dxx:=proc(i,j,k,l)
+(D_em(r||i||j,r||k||l)+D_em(r||i||j,r||l||k)+D_em(r||j||i,r||k||l)+D_em(r||j||i,r||l||k))/(4);end:
+Dxy:=proc(i,j,k,l)
+(D_em(r||i||j,r||k||l)-D_em(r||i||j,r||l||k)+D_em(r||j||i,r||k||l)-D_em(r||j||i,r||l||k))/(4*I);end:
+Dyx:=proc(i,j,k,l)
+(D_em(r||i||j,r||k||l)+D_em(r||i||j,r||l||k)-D_em(r||j||i,r||k||l)-D_em(r||j||i,r||l||k))/(4*I);end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp(Dxy(4,7,4,7));
+simp(Dyy(7,4,7,4));</Text-field></Input></Group></Section><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1">Et puis pour l'echange !</Text-field></Title><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">on enl\350ve tout les "   (t)   " pour plus de clart\351</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">plus_de_t:=[seq(seq(r||i||j(t)=r||i||j,i=0..9),j=0..9),a1(t)=a1,a2(t)=a2,ac1(t)=ac1,ac2(t)=ac2]:
+nulles0:=Flatten([	seq([	seq([(r||i||j=0,r||j||i=0)],j=0..4),
+				seq([(r||i||j=0,r||j||i=0)],j=7..9)]	,i=5..6)	
+		,	seq([	seq([(r||i||j=0,r||j||i=0)],j=0..0),
+				seq([(r||i||j=0,r||j||i=0)],j=9..9)]	,i=1..8)	]):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">on va calculer les coeff de diffusion \340 l'aide de la matrice F_E_lin lin\351aris\351e --&gt; F_E_lin0</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">F_E_lin0:=subs([r44_stat=n,r00_stat=N,op(nulles0)],evalm(F_E_lin)):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">proc\351dure lin\351arisant les operateurs</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">lineair:=proc(expr)
+subs([seq(seq(r||i||j=0,i=0..9),j=0..9)],
+subs([r44=n,r00=N],expr));end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">base_r:=[r00=r00,r90=r90,r09=r09,r99=r99,op(nulles0)]:
+
+D_ech:=proc(A,B) local bidon1,bidon2,bidon3,i; global test1;
+
+#bidon1:=erreur1;
+#if fois(A,B)&lt;&gt;0 then
+#bidon1:= subs(plus_de_t,
+#subs([kappa=0,ga=0,gb=0,gc=0,r00(t)=r00,r90(t)=r90,r09(t)=r09,r99(t)=r99]
+#	,  de||(fois(A,B))	
+#	 - lineair((A)) * de||B						# le - deA*&lt;B&gt;
+#	 - lineair((B)) * de||A						# le - deB*&lt;A&gt;
+#));
+#else bidon1:=0;fi;
+
+bidon2:=0;
+for i to nops(sys) do 
+if subs(base_r,op([i,1,1,0],sys))=A then
+bidon2:=add(	`if`(F_E_lin0[i,jj]=0,0,	F_E_lin0[i,jj]	* (
+ fois( subs(base_r,op([jj,1,1,0],sys)) , B)				# le (deA)jj . B
+   -   subs(base_r,op([jj,1,1,0],sys)) * lineair((B))			# le -(deA)jj*&lt;B&gt;
+#-B* lineair((subs(base_r,op([jj,1,1,0],sys)) ))			# le -&lt;Ajj&gt;*B		# NON !! #+ lineair(( B* subs(base_r,op([jj,1,1,0],sys)) ))			# le +&lt;Ajj&gt;*&lt;B&gt;		# NON !!
+)
+),jj=1..nops(sys));test1:=F_E_lin0[i,39];fi;od;
+
+bidon3:=0;
+for i to nops(sys) do 
+if subs(base_r,op([i,1,1,0],sys))=B then
+bidon3:=add(	`if`(F_E_lin0[i,jj]=0,0,	F_E_lin0[i,jj]	* (
+ fois( A , subs(base_r,op([jj,1,1,0],sys)))
+   -       subs(base_r,op([jj,1,1,0],sys)) * lineair((A))
+# -A* lineair((subs(base_r,op([jj,1,1,0],sys)) ))						# NON !!
+# + lineair(( A* subs(base_r,op([jj,1,1,0],sys)) ))						# NON !!
+)
+),jj=1..nops(sys));fi;
+od; 
+simplify(0*bidon1-bidon2-bidon3,size);
+end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">D_ech(r43,r43);
+test1;
+op([39,1,1,0],sys);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">D_ech(r43,r43);		D_ech(r34,r43);		D_ech(r43,r34);		D_ech(r34,r34);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Dechyy:=proc(i,j,k,l)
+(D_ech(r||i||j,r||k||l)-D_ech(r||i||j,r||l||k)-D_ech(r||j||i,r||k||l)+D_ech(r||j||i,r||l||k))/(-4);end:
+Dechxx:=proc(i,j,k,l)
+(D_ech(r||i||j,r||k||l)+D_ech(r||i||j,r||l||k)+D_ech(r||j||i,r||k||l)+D_ech(r||j||i,r||l||k))/(4);end:
+Dechxy:=proc(i,j,k,l)
+(D_ech(r||i||j,r||k||l)-D_ech(r||i||j,r||l||k)+D_ech(r||j||i,r||k||l)-D_ech(r||j||i,r||l||k))/(4*I);end:
+Dechyx:=proc(i,j,k,l)
+(D_ech(r||i||j,r||k||l)+D_ech(r||i||j,r||l||k)-D_ech(r||j||i,r||k||l)-D_ech(r||j||i,r||l||k))/(4*I);end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#Dechxy(4,3,9,0):
+#Dechxx(4,3,9,0):
+Dechxx(4,3,4,3):
+simplify(%,size);lineair(%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#Dechxy(4,3,9,0):
+#Dechxx(4,3,9,0):
+Dechxx(4,3,4,3):
+simplify(%,size);lineair(%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#####						et voila !
+#####################################################################################################</Text-field></Input></Group></Section><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1">stockons les coefficients devant les bruits dans l'expression de "Ifx=R90x"</Text-field></Title><Group><Input><Text-field alignment="centred" layout="Normal" style="Text"><Font size="14">Le coefficient pour le bruit du champ entrant :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Cx:=simp(coeff(gx,AXin));</Text-field></Input></Group><Group><Input><Text-field alignment="centred" layout="Normal" style="Text"><Font encoding="ISO8859-1" size="14">Le coefficient pour R90x lui m\352me :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">A:=-simp(coeff(gx,r90x(t)));;</Text-field></Input></Group><Group><Input><Text-field alignment="centred" layout="Normal" style="Text"><Font encoding="ISO8859-1" size="14">Les coefficients pour les bruits Atomiques des diff\351rentes coh\351rence :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i from 0 to 9 do for j from 0 to 9 do
+C_||i||j||x:=simp(simplify(coeff(gx,f||i||j||x)));
+C_||i||j||y:=simp(simplify(coeff(gx,f||i||j||y)));
+if (C_||i||j||x)&lt;&gt;0 then print(C_,i,j,x_,___,C_||i||j||x);fi;
+if (C_||i||j||y)&lt;&gt;0 then print(C_,i,j,y_,___,C_||i||j||y);fi;
+od;od;</Text-field></Input></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">Puis les coefficients de diffusions correspondant \340 des combinaisons non nulles de Cij.Ckl</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i from 0 to 9 do for j from 0 to 9 do for k from 0 to 9 do for l from 0 to 9 do
+
+if (C_||i||j||x)&lt;&gt;0 and (C_||k||l||x)&lt;&gt;0 then 
+diffus||i||j||k||l||x_x:=simp(simplify(
+subs(gamma||1=gamma-gamma||2-gamma||3-gamma||4-gamma||5,Dxx(i,j,k,l)+Dechxx(i,j,k,l))));
+	print(diffusion,i,j,k,l,x_x,___,diffus||i||j||k||l||x_x);
+fi;
+if (C_||i||j||x)&lt;&gt;0 and (C_||k||l||y)&lt;&gt;0 then 
+diffus||i||j||k||l||x_y:=simp(simplify(
+subs(gamma||1=gamma-gamma||2-gamma||3-gamma||4-gamma||5,Dxy(i,j,k,l)+Dechxy(i,j,k,l))));
+	print(diffusion,i,j,k,l,x_y,___,diffus||i||j||k||l||x_y);
+fi;
+if (C_||i||j||y)&lt;&gt;0 and (C_||k||l||x)&lt;&gt;0 then 
+diffus||i||j||k||l||y_x:=simp(simplify(
+subs(gamma||1=gamma-gamma||2-gamma||3-gamma||4-gamma||5,Dyx(i,j,k,l)+Dechyx(i,j,k,l))));
+	print(diffusion,i,j,k,l,y_x,___,diffus||i||j||k||l||y_x);
+fi;
+if (C_||i||j||y)&lt;&gt;0 and (C_||k||l||y)&lt;&gt;0 then 
+diffus||i||j||k||l||y_y:=simp(simplify(
+subs(gamma||1=gamma-gamma||2-gamma||3-gamma||4-gamma||5,Dyy(i,j,k,l)+Dechyy(i,j,k,l))));
+	print(diffusion,i,j,k,l,y_y,___,diffus||i||j||k||l||y_y);
+fi;
+od;od;od;od;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1" size="24">puis la meme chose lin\351aris\351e</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">lineair:=proc(expr)
+subs([seq(seq(r||i||j=0,i=0..9),j=0..9)],
+subs([r44=n,r00=N],expr));end:
+
+for i from 0 to 9 do for j from 0 to 9 do for k from 0 to 9 do for l from 0 to 9 do
+
+if (C_||i||j||x)&lt;&gt;0 and (C_||k||l||x)&lt;&gt;0 then 
+diff_lin||i||j||k||l||x_x:=factor(simplify(lineair(diffus||i||j||k||l||x_x)));
+	if %&lt;&gt;0 then print(diff_lin,i,j,k,l,x_x,___,diff_lin||i||j||k||l||x_x);fi;fi;
+
+if (C_||i||j||x)&lt;&gt;0 and (C_||k||l||y)&lt;&gt;0 then 
+diff_lin||i||j||k||l||x_y:=factor(simplify(lineair(diffus||i||j||k||l||x_y)));
+	if %&lt;&gt;0 then print(diff_lin,i,j,k,l,x_y,___,diff_lin||i||j||k||l||x_y);fi;fi;
+
+if (C_||i||j||y)&lt;&gt;0 and (C_||k||l||x)&lt;&gt;0 then 
+diff_lin||i||j||k||l||y_x:=factor(simplify(lineair(diffus||i||j||k||l||y_x)));
+	if %&lt;&gt;0 then print(diff_lin,i,j,k,l,y_x,___,diff_lin||i||j||k||l||y_x);fi;fi;
+
+if (C_||i||j||y)&lt;&gt;0 and (C_||k||l||y)&lt;&gt;0 then 
+diff_lin||i||j||k||l||y_y:=factor(simplify(lineair(diffus||i||j||k||l||y_y)));
+	if %&lt;&gt;0 then print(diff_lin,i,j,k,l,y_y,___,diff_lin||i||j||k||l||y_y);fi;fi;		od;od;od;od;</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">sansunit:=[	 ga=sqrt(kappa*C*gamma/n)
+		,gc=sqrt(gamma/2*Gamma/3*(1+2*C)*sigma) / alpha||1	
+		,gb=sqrt(kappa*Cb*gamma/n)]:
+
+C=solve(op(1,sansunit),C);
+Gamma=solve(op(2,sansunit),Gamma);
+Cb=solve(op(3,sansunit),Cb);</Text-field></Input></Group><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1">Bruit pour le fondamental</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">subs(gamma||1=gamma-gamma||2-gamma||3-gamma||4-gamma||5,
+add(add(add(add(	diff_lin||i||j||k||l||x_x*C_||i||j||x*C_||k||l||x	+
+			diff_lin||i||j||k||l||x_y*C_||i||j||x*C_||k||l||y	+
+			diff_lin||i||j||k||l||y_x*C_||i||j||y*C_||k||l||x	+
+			diff_lin||i||j||k||l||y_y*C_||i||j||y*C_||k||l||y
+,i=0..9),j=0..9),k=0..9),l=0..9)):
+CiCjDij:=simplify(%,size);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">A;
+'A'=simp(subs(sansunit,A));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">########  !!!  tau est parasite et doit rentrer dans la definition de AXin cf article pinard...  ????????????????????????????????????????????????????????????????????????????????????????????????
+tau:=1;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp(simplify(expand( subs(sansunit, 
+2/N/A*(Cx^2*DXin2+ CiCjDij)	)))):
+Delta_gx_2:=N/4*collect(%,DXin2);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp(simplify(	subs(sansunit,CiCjDij/Cx^2	))):
+additionner_a_DXin2:=map(simp,convert(simp(%),parfrac,C));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group></Section><Group><Input><Text-field alignment="centred" layout="Normal" style="Text"><Font size="36">	 calcul pour Imx = R43x :	</Font></Text-field></Input></Group><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1" executable="false">un syt\350me ferm\351 de 11 \351quations conduisant \340 R43x</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">[Dery(7,4),Dery(8,3),Dery(7,2),Dery(8,1),Derx(8,7),X]:
+syste2:={op(%)}:
+for i to nops(%) do print(%%[i]);od;
+
+_____________________________________________pour__trouver_______________________________________________;
+Diff_r43x(t)=Derx(4,3);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1" size="18">On \351limine adiabatiquement champ et coh\351rences optiques et R87x</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">solve(syste2,{r74y(t),r83y(t),r72y(t),r81y(t),r87x(t),AX(t)}):
+simplify(%):
+sol2:=map(x-&gt;map(simp,x),%):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1" size="18">Puis, \340 partir de l\340, on r\351soud exactement le reste :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">syste3:=(subs(sol2 ,[
+I*omega*r90x(t)+Fond_X,
+I*omega*r32x(t)+Derx(3,2),
+I*omega*r65x(t)+Derx(6,5),I*omega*r21x(t)+Derx(2,1),
+I*omega*r43x(t)+Derx(4,3)
+])):
+syste3:=map(collect,syste3,[r43x(t),r32x(t),r65x(t),r90x(t),r21x(t)]):
+for i to nops(syste3) do ____;syste3[i]; od;		
+syste3:=convert(syste3[1..4],set):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">sol3:=solve(syste3,{r65x(t),r90x(t),r32x(t),r21x(t)}):
+sol3:=simplify(sol3):
+eq_chiante:=subs(sol3,subs(sol2,I*omega*r43x(t)+Derx(4,3))):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">tempo_ch:=map(simplify,collect((eq_chiante),r43x(t))):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">tempo_chi:=map(simp,tempo_ch):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">tempo_chia:=solve(tempo_chi,r43x(t)):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">tempo_chian:=collect(tempo_chia,[f65x,f90x,f32x,f43x,f74y,f83y,f87x,f21x,f81y,f72y,AXin]):
+gmx:=tempo_chian:</Text-field></Input></Group></Section><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"><Font executable="false">stockons les coefficients devant les bruits dans l'expression de "Imx=R43x"</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i from 0 to 9 do for j from 0 to 9 do C||i||j||x:=0;C||i||j||y:=0;od;od:
+CAXin:=simp(subs(sansunit,simp(coeff(gmx,AXin)))):
+C87x:=simp(subs(sansunit,simp(coeff(gmx,f87x)))):
+C81y:=simp(subs(sansunit,simp(coeff(gmx,f81y)))):
+C72y:=simp(subs(sansunit,simp(coeff(gmx,f72y)))):
+C83y:=simp(subs(sansunit,simp(coeff(gmx,f83y)))):
+C90x:=simp(subs(sansunit,simp(coeff(gmx,f90x ))));
+C21x:=simp(subs(sansunit,simp(coeff(gmx,f21x)))):
+C32x:=simp(subs(sansunit,simp(coeff(gmx,f32x)))):
+C43x:=simp(subs(sansunit,simp(coeff(gmx,f43x)))):
+C65x:=simp(subs(sansunit,simp(coeff(gmx,f65x)))):
+C74y:=simp(subs(sansunit,simp(coeff(gmx,f74y)))):
+#verif=0;simplify(subs(sansunit,gmx)-CAXin*AXin-C78x*f87x-C81y*f81y-C72y*f72y-C83y*f83y-C90x*f90x-C21x*f21x-C32x*f32x-C43x*f43x-C65x*f65x-C74y*f74y);</Text-field></Input></Group></Section><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">proc\351dure pour avoir une expression(w) en expression (-w).</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">moins_om:=proc(expr)
+subs(ooomega=-omega,subs(omega=ooomega,expr));end:</Text-field></Input></Group></Section><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">Bruit d\373 au champ (pour le m\351tastable)</Font></Text-field></Title><Group><Input><Text-field alignment="centred" layout="Normal" style="Text"><Font encoding="ISO8859-1">pour le champ (on mettra Diffusion plus tard : c'est le param\352tre de squeezing du champ)</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">pasintAXAX:=simp(CAXin * moins_om(CAXin));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Hypoth\350se N&gt;&gt;n</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp(3*(n^2*sigma^2+omega^2)*n*sigma*C*Gamma		/
+((2*C+1)*(n^2*sigma^4*Gamma^2+(2*N*Gamma+Gamma^2+9*(    0*  n  +1/3*N   )^2)*sigma^2*omega^2+9*omega^4)));</Text-field></Input></Group><Group><Input><Text-field alignment="centred" layout="Normal" style="Text"><Font encoding="ISO8859-1">puis on va calculer le bruit final d\373 au bruit du champ :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">int\351gr\351:=simplify(1/2/Pi * int(%,omega=-infinity..infinity)) assuming positive:</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">simp(subs(petit=0,simplify(algsubs(n^2*Gamma^2=petit*N^2*Gamma^2,int\351gr\351),size))):</Font>
+simplify(%) assuming positive:
+t1:=simp(subs(nC=n*C,subs(n=0,algsubs(n*C=nC,simp(%)))));
+qui_donne_______________________________un_bruit_en_DXin^2;
+n/4,fois,4/n*%%;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">ceci sera \340 multiplier par "le squeezing" du champ DXin^2</Font></Text-field></Input></Group></Section><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1" executable="false">Bruit d\373 aux variables atomiques (pour le m\351tastable)</Font></Text-field></Title><Group><Input><Text-field alignment="centred" layout="Normal" style="Text"><Font size="16">C(w)*C(-w)*Diff :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">for i from 0 to 9 do for j from 0 to 9 do for k from 0 to 9 do for l from 0 to 9 do 
+if C||i||j||x&lt;&gt;0 and C||k||l||x&lt;&gt;0 then
+	pasint||i||j||k||l||x_x:=simp(C||i||j||x * moins_om(C||k||l||x) * diff_lin||i||j||k||l||x_x);
+	if %&lt;&gt;0 then print(_pasint||i||j||k||l||x_x=%);fi;fi;
+if C||i||j||x&lt;&gt;0 and C||k||l||y&lt;&gt;0 then
+	pasint||i||j||k||l||x_y:=simp(C||i||j||x * moins_om(C||k||l||y) * diff_lin||i||j||k||l||x_y);
+	if %&lt;&gt;0 then print(_pasint||i||j||k||l||x_y=%);fi;fi;
+if C||i||j||y&lt;&gt;0 and C||k||l||x&lt;&gt;0 then
+	pasint||i||j||k||l||y_x:=simp(C||i||j||y * moins_om(C||k||l||x) * diff_lin||i||j||k||l||y_x);
+	if %&lt;&gt;0 then print(_pasint||i||j||k||l||y_x=%);fi;fi;
+if C||i||j||y&lt;&gt;0 and C||k||l||y&lt;&gt;0 then
+	pasint||i||j||k||l||y_y:=simp(C||i||j||y * moins_om(C||k||l||y) * diff_lin||i||j||k||l||y_y);
+	if %&lt;&gt;0 then print(_pasint||i||j||k||l||y_y=%);fi;fi;
+od:od:od:od:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field alignment="centred" layout="Normal" style="Text"><Font size="18">somme termes de bruits :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp(pasint4343x_x+pasint4390x_x+pasint9043x_x+pasint7474y_y+pasint9090x_x);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp(3*(1/2*(2*N*C+N+Gamma)*omega^2+1/2*n^2*sigma^2*Gamma)*n*sigma	/
+((2*C+1)*(n^2*sigma^4*Gamma^2+(2*N*Gamma+Gamma^2+(3*     0 * n   + N    )^2)*sigma^2*omega^2+9*omega^4)));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">int\351gr\3512:=simplify(1/2/Pi * int(%,omega=-infinity..infinity)) assuming positive:</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">simp(subs(petit=0,simplify(algsubs(n^2*Gamma^2=petit*N^2*Gamma^2,int\351gr\3512),size))):</Font>
+simplify(%) assuming positive:
+simp(%):
+convert(%,parfrac,C):
+t2:=n/4*convert(subs(zer=0,algsubs(n^2=zer,4/n*%%)),parfrac,C):
+qui_donne_______________________________un_bruit_additionnel;
+%%;<Font encoding="ISO8859-1">
+ou___________\340_aditionner_\340_DXin2;</Font>
+convert(simp(t2/t1),parfrac,C);</Text-field></Input></Group></Section><Group><Input><Text-field alignment="centred" layout="Normal" style="Text"><Font encoding="ISO8859-1" size="36">On R\351cap\351pette</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Fondamentaux:=4/N*Delta_gx_2;
+Metastables:=4/n*t1*DXin2 + 4/n*t2;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">plot(subs([C=100,DXin2=0.5,N=10^6,n=10^0,Gamma=10^(log_Gamma)]
+		,[Fondamentaux,Metastables])
+		,log_Gamma=3..9, axes=boxed
+		,color=[red,blue]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Section collapsed="true"><Title><Text-field layout="Heading 1" style="Heading 1">ANNEXE : <Font encoding="ISO8859-1" size="14">
+La liste de TOUS les coefficients non-nuls de la matrice de DIFFUSION (dans l'\351tat stationnaire r44=n, r00=N)</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">##########################################################################################################
+########################		 ANNEXE                   		##########################
+##########################################################################################################</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">#	UNE liste de TOUS les coefficients non-nuls de la matrice  de DIFFUSION (dans l'\351tat stationnaire r44=n, r00=N)
+#	Calcul effectu\351 en calculant tout les coef, pas comme plus haut o\371 on a calcul\351 que ceux qui nous int\351ressent.</Font>
+
+#List_diffusion:=subs([w=gamma*n,v=N*gamma,u=n*N*gamma[ech]],[[0, 0, x, 0, 0, x, 2*u], [0, 0, x, 4, 4, x, u*(N-2)], [0, 7, x, 0, 7, x, 1/4*v], [0, 7, x, 0, 7, y, 1/4*I*v], [0, 7, y, 0, 7, x, -1/4*I*v], [0, 7, y, 0, 7, y, 1/4*v], [0, 7, x, 7, 0, x, 1/4*v], [0, 7, x, 7, 0, y, -1/4*I*v], [0, 7, y, 7, 0, x, -1/4*I*v], [0, 7, y, 7, 0, y, -1/4*v], [0, 8, x, 0, 8, x, 1/4*v], [0, 8, x, 0, 8, y, 1/4*I*v], [0, 8, y, 0, 8, x, -1/4*I*v], [0, 8, y, 0, 8, y, 1/4*v], [0, 8, x, 8, 0, x, 1/4*v], [0, 8, x, 8, 0, y, -1/4*I*v], [0, 8, y, 8, 0, x, -1/4*I*v], [0, 8, y, 8, 0, y, -1/4*v], [0, 9, x, 0, 9, x, 1/2*u], [0, 9, x, 0, 9, y, 1/2*I*u], [0, 9, y, 0, 9, x, -1/2*I*u], [0, 9, y, 0, 9, y, 1/2*u], [0, 9, x, 3, 4, x, -1/6*3^(1/2)*u], [0, 9, x, 3, 4, y, 1/6*I*3^(1/2)*u], [0, 9, y, 3, 4, x, 1/6*I*3^(1/2)*u], [0, 9, y, 3, 4, y, 1/6*3^(1/2)*u], [0, 9, x, 4, 3, x, -1/6*3^(1/2)*u], [0, 9, x, 4, 3, y, -1/6*I*3^(1/2)*u], [0, 9, y, 4, 3, x, 1/6*I*3^(1/2)*u], [0, 9, y, 4, 3, y, -1/6*3^(1/2)*u], [0, 9, x, 9, 0, x, 1/2*u], [0, 9, x, 9, 0, y, -1/2*I*u], [0, 9, y, 9, 0, x, -1/2*I*u], [0, 9, y, 9, 0, y, -1/2*u], [1, 4, x, 1, 4, x, 1/2*u], [1, 4, x, 1, 4, y, -1/2*I*u], [1, 4, y, 1, 4, x, 1/2*I*u], [1, 4, y, 1, 4, y, 1/2*u], [1, 4, x, 4, 1, x, 1/2*u], [1, 4, x, 4, 1, y, 1/2*I*u], [1, 4, y, 4, 1, x, 1/2*I*u], [1, 4, y, 4, 1, y, -1/2*u], [2, 4, x, 2, 4, x, 1/3*u], [2, 4, x, 2, 4, y, -1/3*I*u], [2, 4, y, 2, 4, x, 1/3*I*u], [2, 4, y, 2, 4, y, 1/3*u], [2, 4, x, 4, 2, x, 1/3*u], [2, 4, x, 4, 2, y, 1/3*I*u], [2, 4, y, 4, 2, x, 1/3*I*u], [2, 4, y, 4, 2, y, -1/3*u], [3, 4, x, 0, 9, x, -1/6*3^(1/2)*u], [3, 4, x, 0, 9, y, -1/6*I*3^(1/2)*u], [3, 4, y, 0, 9, x, -1/6*I*3^(1/2)*u], [3, 4, y, 0, 9, y, 1/6*3^(1/2)*u], [3, 4, x, 3, 4, x, 1/6*u], [3, 4, x, 3, 4, y, -1/6*I*u], [3, 4, y, 3, 4, x, 1/6*I*u], [3, 4, y, 3, 4, y, 1/6*u], [3, 4, x, 4, 3, x, 1/6*u], [3, 4, x, 4, 3, y, 1/6*I*u], [3, 4, y, 4, 3, x, 1/6*I*u], [3, 4, y, 4, 3, y, -1/6*u], [3, 4, x, 9, 0, x, -1/6*3^(1/2)*u], [3, 4, x, 9, 0, y, 1/6*I*3^(1/2)*u], [3, 4, y, 9, 0, x, -1/6*I*3^(1/2)*u], [3, 4, y, 9, 0, y, -1/6*3^(1/2)*u], [4, 1, x, 1, 4, x, 1/2*u], [4, 1, x, 1, 4, y, -1/2*I*u], [4, 1, y, 1, 4, x, -1/2*I*u], [4, 1, y, 1, 4, y, -1/2*u], [4, 1, x, 4, 1, x, 1/2*u], [4, 1, x, 4, 1, y, 1/2*I*u], [4, 1, y, 4, 1, x, -1/2*I*u], [4, 1, y, 4, 1, y, 1/2*u], [4, 2, x, 2, 4, x, 1/3*u], [4, 2, x, 2, 4, y, -1/3*I*u], [4, 2, y, 2, 4, x, -1/3*I*u], [4, 2, y, 2, 4, y, -1/3*u], [4, 2, x, 4, 2, x, 1/3*u], [4, 2, x, 4, 2, y, 1/3*I*u], [4, 2, y, 4, 2, x, -1/3*I*u], [4, 2, y, 4, 2, y, 1/3*u], [4, 3, x, 0, 9, x, -1/6*3^(1/2)*u], [4, 3, x, 0, 9, y, -1/6*I*3^(1/2)*u], [4, 3, y, 0, 9, x, 1/6*I*3^(1/2)*u], [4, 3, y, 0, 9, y, -1/6*3^(1/2)*u], [4, 3, x, 3, 4, x, 1/6*u], [4, 3, x, 3, 4, y, -1/6*I*u], [4, 3, y, 3, 4, x, -1/6*I*u], [4, 3, y, 3, 4, y, -1/6*u], [4, 3, x, 4, 3, x, 1/6*u], [4, 3, x, 4, 3, y, 1/6*I*u], [4, 3, y, 4, 3, x, -1/6*I*u], [4, 3, y, 4, 3, y, 1/6*u], [4, 3, x, 9, 0, x, -1/6*3^(1/2)*u], [4, 3, x, 9, 0, y, 1/6*I*3^(1/2)*u], [4, 3, y, 9, 0, x, 1/6*I*3^(1/2)*u], [4, 3, y, 9, 0, y, 1/6*3^(1/2)*u], [4, 4, x, 0, 0, x, u*(N-2)], [4, 4, x, 4, 4, x, 2*u*n], [4, 7, x, 4, 7, x, 1/4*w], [4, 7, x, 4, 7, y, 1/4*I*w], [4, 7, y, 4, 7, x, -1/4*I*w], [4, 7, y, 4, 7, y, 1/4*w], [4, 7, x, 7, 4, x, 1/4*w], [4, 7, x, 7, 4, y, -1/4*I*w], [4, 7, y, 7, 4, x, -1/4*I*w], [4, 7, y, 7, 4, y, -1/4*w], [4, 8, x, 4, 8, x, 1/4*w], [4, 8, x, 4, 8, y, 1/4*I*w], [4, 8, y, 4, 8, x, -1/4*I*w], [4, 8, y, 4, 8, y, 1/4*w], [4, 8, x, 8, 4, x, 1/4*w], [4, 8, x, 8, 4, y, -1/4*I*w], [4, 8, y, 8, 4, x, -1/4*I*w], [4, 8, y, 8, 4, y, -1/4*w], [7, 0, x, 0, 7, x, 1/4*v], [7, 0, x, 0, 7, y, 1/4*I*v], [7, 0, y, 0, 7, x, 1/4*I*v], [7, 0, y, 0, 7, y, -1/4*v], [7, 0, x, 7, 0, x, 1/4*v], [7, 0, x, 7, 0, y, -1/4*I*v], [7, 0, y, 7, 0, x, 1/4*I*v], [7, 0, y, 7, 0, y, 1/4*v], [7, 4, x, 4, 7, x, 1/4*w], [7, 4, x, 4, 7, y, 1/4*I*w], [7, 4, y, 4, 7, x, 1/4*I*w], [7, 4, y, 4, 7, y, -1/4*w], [7, 4, x, 7, 4, x, 1/4*w], [7, 4, x, 7, 4, y, -1/4*I*w], [7, 4, y, 7, 4, x, 1/4*I*w], [7, 4, y, 7, 4, y, 1/4*w], [8, 0, x, 0, 8, x, 1/4*v], [8, 0, x, 0, 8, y, 1/4*I*v], [8, 0, y, 0, 8, x, 1/4*I*v], [8, 0, y, 0, 8, y, -1/4*v], [8, 0, x, 8, 0, x, 1/4*v], [8, 0, x, 8, 0, y, -1/4*I*v], [8, 0, y, 8, 0, x, 1/4*I*v], [8, 0, y, 8, 0, y, 1/4*v], [8, 4, x, 4, 8, x, 1/4*w], [8, 4, x, 4, 8, y, 1/4*I*w], [8, 4, y, 4, 8, x, 1/4*I*w], [8, 4, y, 4, 8, y, -1/4*w], [8, 4, x, 8, 4, x, 1/4*w], [8, 4, x, 8, 4, y, -1/4*I*w], [8, 4, y, 8, 4, x, 1/4*I*w], [8, 4, y, 8, 4, y, 1/4*w], [9, 0, x, 0, 9, x, 1/2*u], [9, 0, x, 0, 9, y, 1/2*I*u], [9, 0, y, 0, 9, x, 1/2*I*u], [9, 0, y, 0, 9, y, -1/2*u], [9, 0, x, 3, 4, x, -1/6*3^(1/2)*u], [9, 0, x, 3, 4, y, 1/6*I*3^(1/2)*u], [9, 0, y, 3, 4, x, -1/6*I*3^(1/2)*u], [9, 0, y, 3, 4, y, -1/6*3^(1/2)*u], [9, 0, x, 4, 3, x, -1/6*3^(1/2)*u], [9, 0, x, 4, 3, y, -1/6*I*3^(1/2)*u], [9, 0, y, 4, 3, x, -1/6*I*3^(1/2)*u], [9, 0, y, 4, 3, y, 1/6*3^(1/2)*u], [9, 0, x, 9, 0, x, 1/2*u], [9, 0, x, 9, 0, y, -1/2*I*u], [9, 0, y, 9, 0, x, 1/2*I*u], [9, 0, y, 9, 0, y, 1/2*u]]);</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/></Worksheet>

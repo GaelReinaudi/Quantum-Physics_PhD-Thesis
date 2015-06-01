@@ -1,0 +1,154 @@
+\documentclass[a4paper,10pt]{report}
+\usepackage[french]{babel}
+%\usepackage[latin1]{inputenc}
+\usepackage[dvips]{graphicx}
+\usepackage{amssymb}
+
+%--------------------------------------------------------------------
+
+
+%--------------------------------------------------------------------
+  \title{\LARGE
+         \textbf{Spin Squeezing Nucl\'{e}aire}\\
+         \vspace{1.5cm}
+         \textbf{Transfert de squeezing \`{a} l'\'{e}tat fondamental de l'H\'{e}luim
+         par collision d'\'{e}change de m\'{e}tastabilit\'{e} }\\
+         \vspace{1.5cm}
+         %\includegraphics{nano.eps} \vspace{0.8cm}
+}
+  \author{ \Huge  Reinaudi Ga\"{e}l\\
+           \\
+           \LARGE           \vspace{0.7cm}
+           Stage de DEA, MIP $3^{\mbox{\small{\textit{\`{e}me}}}}$ ann\'{e}e\\
+           \vspace{0.2cm}
+           Responsable de stgae : Alice Sinatra.\\
+           \vspace{0.2cm}
+           Laboratoire Kastler Brossel, D\'{e}partement de physique de l'ENS\\
+           \vspace{0.2cm}
+           alice.sinatra@lkb.ens.fr
+         }
+  \date{\LARGE 27 Mars - 28 Juin 2003}
+
+%--------------------------------------------------------------------
+
+
+\begin{document}
+
+\maketitle
+
+%---------------------------------------------------------------------
+
+%\newpage
+%\tableofcontents
+
+%---------------------------------------------------------------------
+
+\newpage
+
+%\begin{left}
+\begin{huge}
+$H= \hbar  g  (a^{+}_{1}   \sigma_{13} + a_{1}   \sigma_{31})$
+
+
+\ \ \ \ \  $     +   \hbar \omega_{0} \sigma_{33} $
+
+\ \ \ \ \  $+   \hbar \omega_{c1} a_{1}^{+}a_{1}
+        +   \hbar \omega_{c2} a_{2}^{+}a_{2}$
+\\
+
+$H=\hbar \frac{\chi}{2} (a^{+}_1 a_1   \rho_{11} + a^{+}_2 a_2 \rho_{22})$
+
+
+$\frac{n}{4} \frac{1}{ 1 +  \frac{\alpha^2  \chi^2  n}{4 \kappa^2} } $\\
+
+$\frac{N}{4} (1- \frac{1}{ 1 +  \frac{\kappa}{v_{th} \sigma n} } )$\\
+
+$\frac{N}{4} (1- \frac{\sigma v_{th} n}{\kappa} \frac{\frac{\alpha^2  \chi^2  n}{4 \kappa^2} }{ 1 +  \frac{\alpha^2  \chi^2  n}{4 \kappa^2} } )$\\
+
+$\frac{n}{4} \left( 1- \frac{1}{1+ \frac{4 \kappa^2}{\chi^2 \alpha^2
+n}}\right)$
+
+$\ $
+
+$\frac{\chi^2 \alpha^2 n}{4 \kappa^2} = C \frac{x^2}{\tilde{\Delta}}
+\frac{\gamma_{sp}}{\kappa}$
+
+
+$\frac{\chi}{2}=\frac{g^2}{\Delta}$
+
+$C=\frac{g^2 n}{2 \kappa \gamma_{sp}}$
+
+$x=\frac{\alpha g \sqrt{2}}{\gamma_{sp}} \ll 1$
+
+$\tilde{\Delta}=\frac{\Delta}{\gamma_{sp}}$
+
+$
+\left \{
+\begin{array}{l}
+
+\rho_{g}' = Tr_{e}\ \rho_{m}\\
+
+\rho_{m}' = \rho_{g} \otimes Tr_{n}\ \rho_{m}
+\end{array}
+\right.
+$
+
+$ \left \{
+\begin{array}{l}
+
+\rho_{g}' = \rho_{m}\\
+
+\rho_{m}' = \rho_{g}
+\end{array}
+\right \} $
+\\
+
+\end{huge}
+
+\begin{Large}
+
+$ \frac{\chi^2 \alpha^2 n}{\kappa^2} \gg 1$\\
+
+$ \sqrt{\chi^2 \alpha^2 n} \gg \kappa \gg \gamma_{ech} \ N \gg \gamma_{ech} \ n$\\
+
+$ \sqrt{\chi^2 \alpha^2 n}\gg \gamma_{ech} \ N \gg \gamma_{ech} \ n \gg \kappa $\\
+
+$\Delta^2 {S}_{x_{fond}} = \frac{N}{4} \ \frac{2 N C}{(N + \Gamma) (2 C + 1)}
+\left ( \Delta^2 Ax_{in} + \frac{\Gamma}{N} + \frac{N + \Gamma}{2 N C} \right
+)$\\
+
+$\Delta^2 {S}_{x_{meta}} = \frac{n}{4} \ \frac{2 \Gamma C}{(N + \Gamma) (2 C +
+1)} \left ( \Delta^2 Ax_{in} + \frac{N}{\Gamma} + \frac{N + \Gamma}{2 \Gamma C}
+\right
+)$\\
+
+$C = \frac{n \ {{g}_{_2}}^2}{\gamma_{sp} \kappa}$\\
+
+$\Gamma = \frac{6 {g_{_1}}^2 \alpha^2}{\gamma_{sp} (1+2C) \gamma_{ech}}$\\
+
+$V_{cond}({S}_{z_{meta}} | {S}_{y_{champ}}) = \frac{n}{4} \left ( \frac{N
+\gamma_{ech} }{ \kappa+(n+N)\gamma_{ech} } + \frac{ 4(n \gamma_{ech} + \kappa)
+\kappa^2 }{ \alpha^2 n^2 \gamma_{ech}^2 \chi^2 + \alpha^2 n \kappa \chi^2 + 4
+\kappa^3 + 4(n+n) \kappa^2 \gamma_{ech} } \right )$\\
+
+$V_{cond}({S}_{z_{fond}} | {S}_{y_{champ}}) = \frac{N}{4} \left ( 1+ \frac{n
+\gamma_{ech} }{ \kappa+(n+N)\gamma_{ech} }
+ -\frac{ \gamma_{ech} n (\alpha^2 n \chi^2 + 4 \kappa^2)}
+        { \alpha^2 n^2 \gamma_{ech}^2 \chi^2 + \alpha^2 n \kappa \chi^2 + 4
+\kappa^3 + 4(n+n) \kappa^2 \gamma_{ech} } \right )$
+
+$ \int e^{i \omega t} < A \ . \ B(t) > dt$\\
+
+$D_{AB} = \frac{d}{dt} < A B > - < \frac{d A}{dt} B> - < A \frac{d B}{dt} >$\\
+
+
+
+\end{Large}
+
+%\end{left}
+
+
+
+
+
+\end{document}

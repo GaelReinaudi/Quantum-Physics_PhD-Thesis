@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet><Version major="6" minor="0"/><View-Properties><Zoom percentage="100"/></View-Properties><Styles><Layout alignment="left" bullet="none" name="Heading 2" spaceabove="8.0" spacebelow="2.0"/><Layout alignment="left" bullet="none" name="Heading 1" spaceabove="8.0" spacebelow="4.0"/><Layout alignment="left" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" name="Normal" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Font background="[0,0,0]" bold="false" family="Lucida Bright" foreground="[0,0,0]" italic="false" name="Text" opaque="false" size="12" underline="false"/><Font background="[0,0,0]" bold="true" family="Serif" name="Heading 2" opaque="false" size="16"/><Font background="[0,0,0]" bold="true" family="Serif" name="Heading 1" opaque="false" size="18"/><Font background="[0,0,0]" bold="true" executable="true" family="Monospaced" foreground="[255,0,0]" name="Maple Input"/><Font background="[0,0,0]" family="Lucida Bright" name="Page Number" underline="false"/></Styles><Page-Numbers enabled="false" first-number="1" first-numbered-page="1" horizontal-location="right" style="Page Number" vertical-location="bottom"/><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Section><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1" size="14">Ce programme ce base sur : 		-les \351quations (1)(2)(3) de l'article PRA-69 043810
+				-la th\350se de Laurent Vernac p.10 et p.17 pour les calculs de Variances
+				-l'\351change de m\351tastabilit\351 , par exemple : Eur.Phys.J. D-21   25-55</Font><Font size="14">
+Il permet de calculer les variances des grandeurs atomics Delta-Sf-X ^2 , Delta-Sf-Y ^2 , Delta-Sm-X ^2 , Delta-Sm-Y ^2<Font encoding="ISO8859-1">
+L'angle de squeezing peut \352tre tourn\351 \340 une vitesse angulaire 'La'.</Font></Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1" italic="false" size="12" underline="false">######	Ce programme ce base sur : 	-les \351quations (1)(2)(3) de l'article PRA-69 043810
+######				-la th\350se de Laurent Vernac p.10 et p.17 en ce qui concerne les calculs de Variances
+######				-l'\351change de m\351tastabilit\351 , par exemple : Eur.Phys.J. D-21   25-55</Font><Font italic="false" size="12" underline="false">
+######	
+######	permet de calculer les variances des grandeurs atomics Delta-Sf-X ^2 , Delta-Sf-Y ^2 , Delta-Sm-X ^2 , Delta-Sm-Y ^2
+######	<Font encoding="ISO8859-1">
+######	L'angle de squeezing peut \352tre tourn\351 \340 une vitesse angulaire 'La'.</Font>
+######	
+
+restart;
+simp:=proc(asimplifier)
+simplify(sort(simplify(simplify(factor(expand(numer(asimplifier))),size),size))
+/
+        sort(simplify(simplify(factor(expand(denom(asimplifier))),size),size)),size) ;
+map(simplify,%,size);        end:
+
+gn:=sigma*n:	gN:=sigma*N:
+Lm:=B*gS;	Lf:=B*gI;</Font>
+La:=0;
+B:=0;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Delta:=0;</Text-field></Input></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1">Equations de base</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font italic="false" size="12" underline="false">d_Sm:=-gN*Sm+gn*Sf + I*Lm*Sm + fm + I*Omega*P;
+
+d_Sf:=-gn*Sf+gN*Sm + I*Lf*Sf + ff;
+
+d_P:=- (gamma1 + I*Delta) *P + I*Omega*Sm + I*g*n*A + fp;
+
+d_A:=-kappa*A + I*g*P + sqrt(2*kappa)*Ain;</Font>
+
+__________CONVENTION__________;
+'S'='Sx'+'i'*'Sy';
+'A'=('Ax'+'i'*'Ay')/2;
+on_fait_Tourner_l_angle_de_squeezing_de_la_lumiere_de_telle_sorte_que;
+Ain(t)=Ain0(t)*exp(I*La*t);
+ou_Ain0(t),est_la_force_de_langevin_a_proprement_parler;</Text-field></Input></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">Elimination adiabatique du champ, puis du m\351tastable</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font italic="false" size="12" underline="false">solve({d_A, d_P=0},{A,P}):
+map(x-&gt;map(simp,x),%);		###	elimination adiabatique du champ et coherence optique</Font>
+assign(%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">d_Sm;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">solve({d_Sm=0},{Sm}):
+adiab:=<Font italic="false" size="12" underline="false">map(x-&gt;map(simp,x),</Font>%);		<Font encoding="ISO8859-1" italic="false" size="12" underline="false">###	elimination adiabatique de la coherence du m\351tastable</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font italic="false" size="12" underline="false">d_Sf:=map(simp,collect(subs(adiab,	d_Sf 	)
+	,[Sf,Sm,ff,fm,fp,Ain]));</Font></Text-field></Input></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1">Calcul de Sf, en fourier</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font italic="false" size="12" underline="false">zero:=map(simp,collect(	d_Sf + I*omega*Sf
+	,[Sf,Sm,ff,fm,fp,Ain]));</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font italic="false" size="12" underline="false">solve(zero=0,{Sf}):
+simplify(%):
+solution:=map(x-&gt;map(simp,x),%):
+collect(%,[fm,fp,Sm,Sf,Ain]):
+map(x-&gt;map(y-&gt;map(simp,y),x),%);</Font></Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Sf='A(omega)'*Ain + 'm(omega)'*fm + 'f(omega)'*ff + 'p(omega)'*fp;</Text-field></Input></Group><Section><Title><Text-field layout="Heading 1" style="Heading 1">expressions de A(w) , m(w) , f(w) , p(w) :</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font italic="false" size="12" underline="false">Les_coeff_dans_Sf_devant_A_fm_ff_fp;
+
+A:=simp(coeff(subs(solution,Sf),Ain));
+
+m:=simp(coeff(subs(solution,Sf),fm));
+
+f:=simp(coeff(subs(solution,Sf),ff));
+
+p:=simp(coeff(subs(solution,Sf),fp));</Font></Text-field></Input></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1">Calcul de la variance Sfx^2= ( <Font executable="false">SfSf + <Font underline="true">Sf</Font>Sf + Sf<Font underline="true">Sf</Font> + <Font underline="true">SfSf</Font> )/4</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font italic="false" size="12" underline="false">moin:=proc(express,rotation) 	subs(qqch= -omega + rotation,  #######################################################################
+		subs(omega=qqch , express));end:
+
+###<Font encoding="ISO8859-1">
+###	rotation !   :  il faut noter que la TF de Ain0(t)*exp(I*La*t) est Ain0(omega+La) qui au carr\351 feront apparaitre les
+###	                Dirac( omega + omega' +/- La +/- La ) suivant les combinaisons de AA , A_A_ , A_A , AA_ que l'on consid\350re</Font>
+###	                cf : annexe "TF rotation"
+
+conj:=proc(express) 	subs([mOmega=Omega, mg=g, mB=B, mDelta=Delta],
+		subs([Omega=-mOmega,g=-mg,B=-mB, Delta=-mDelta] , express));end:
+
+sansunit:=[        g=sqrt(2*kappa*C*gamma1/n),Omega=sqrt((1+2*C)*Gamma*gamma1)    ]:
+C=solve(op(1,sansunit),C);
+Gamma=solve(op(2,sansunit),Gamma);</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#####	PS : !!!!!!!<Font encoding="ISO8859-1">
+#####	a noter que en conjugant toutes les equations jusqu'\340 obtenir </Font>conjugate(Sfx)  ,<Font encoding="ISO8859-1">
+#####	seul 'p' devient '-p' car il contient 'Omega' \340 l'ordre 1, sans 'g'</Font>
+#####	conjuger--&gt;changer le signe de 'Omega' , 'g' , 'Lf' et 'Lm'  (ou'B')...<Font encoding="ISO8859-1">
+#####		C'est le role de la proc\351dure  'conj'</Font>
+</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font italic="false" size="12" underline="false">simplify( moin( A, -2*La ) * A ):
+pasint_AA:=collect(simplify( subs(sansunit,%)),omega);
+   int_AA:=simplify(1/2/Pi*int(	%	,omega=-infinity..infinity)) assuming positive:		_;
+	bruit_AinAin:=simplify(subs(sansunit,int_AA)) * VinAA;</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font italic="false" size="12" underline="false">simplify( conj( moin( A, +2*La )) * conj(A) ):
+pasint_A_A_:=collect(simplify( subs(sansunit,%)),omega);
+   int_A_A_:=simplify(1/2/Pi*int(	%	,omega=-infinity..infinity)) assuming positive:		_;
+	bruit_Ain_Ain_:=simp(subs(sansunit,int_A_A_)) * VinA_A_;</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font italic="false" size="12" underline="false">simplify( conj( moin( A,0 )) * A ):
+pasint_A_A:=collect(simplify( subs(sansunit,%)),omega);
+   int_A_A:=simplify(1/2/Pi*int(	%	,omega=-infinity..infinity)) assuming positive:		_;
+	bruit_Ain_Ain:=simp(subs(sansunit,int_A_A)) * VinA_A;</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font italic="false" size="12" underline="false">simplify( moin( A, 0 ) * conj(A) ):
+pasint_AA_:=collect(simplify( subs(sansunit,%)),omega);
+   int_AA_:=simplify(1/2/Pi*int(	%	,omega=-infinity..infinity)) assuming positive:		_;
+	bruit_AinAin_:=simp(subs(sansunit,int_AA_)) * VinAA_;</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font italic="false" size="12" underline="false">##### PS:les seuls coef de diffusion atomiques non-nuls sont :
+#							# FM* --&gt; -2.sigma.n.N
+#							# FF* --&gt; +2.sigma.n.N
+#							# MM* --&gt; +2.sigma.n.N
+#							# MF* --&gt; -2.sigma.n.N
+#							# PP* --&gt; +2.gamma1.n
+#####							##### PS: pas en base XY !
+simplify( 
+ moin(p,0) * conj(p) * 2*gamma1*n
++moin(m,0) * conj(m) * 2*sigma*n*N
+-moin(m,0) * conj(f) * 2*sigma*n*N
++moin(f,0) * conj(f) * 2*sigma*n*N
+-moin(f,0) * conj(m) * 2*sigma*n*N ):
+collect(simplify( subs(sansunit,%)),omega):
+map(x-&gt;(map(simplify,x,size)),%):
+map(simp,%):	collect(%,omega):	simp(%):
+pasint_B:=collect(%,omega);
+   int_B:=simplify(1/2/Pi*int(	% ,omega=-infinity..infinity) assuming positive):	_;
+	bruit:=simp(subs(sansunit,int_B));</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simp(bruit * 4/N) + <Font italic="false" size="12" underline="false">
+( bruit_AinAin</Font> * 4/N <Font italic="false" size="12" underline="false">+ bruit_Ain_Ain_</Font> * 4/N <Font italic="false" size="12" underline="false">+ bruit_Ain_Ain</Font> * 4/N <Font italic="false" size="12" underline="false">+ bruit_AinAin_</Font> * 4/N ):
+%/4:
+#map(convert,%,parfrac,'C'):
+collect(%,[<Font italic="false" size="12" underline="false">VinAA</Font>,<Font italic="false" size="12" underline="false">VinA_A_</Font>,<Font italic="false" size="12" underline="false">VinA_A</Font>,<Font italic="false" size="12" underline="false">VinAA_</Font>]):
+VSfx2:=map(simplify,%,size);</Text-field></Input></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1" executable="false">La variance du champ electromagnetique squeez\351 :  cf these verte p17.</Font></Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">r:=0.35;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">####	La variance du champ electromagnetique squeez\351 :  cf these verte p17.</Font>
+
+Va_ac:=linalg[matrix](2,2,[cosh(r)^2,1/2*sinh(2*r)*exp(-I*'phi'),1/2*sinh(2*r)*exp(I*'phi'),sinh(r)^2]):
+linalg[matrix](1,2,[conjugate('A'),'A']);
+linalg[matrix](2,1,['A',conjugate('A')]),evalm(Va_ac);
+
+en_squeezant_VinAxx,_on_a_;	theta:=0;
+phi:=2*theta - Pi;	####	these page 17.
+
+AA_:=cosh(r)^2;
+AA:=1/2*sinh(2*r)*exp(-I*phi);
+A_A_:=1/2*sinh(2*r)*exp(I*phi);
+A_A:=sinh(r)^2;
+
+xx:=simplify(	AA	+AA_	+A_A	+A_A_);
+yy:=simplify(	-AA	+AA_	+A_A	-A_A_);
+xy:=simplify(	I*AA	-I*AA_	+I*A_A	-I*A_A_);
+yx:=simplify(	I*AA	+I*AA_	-I*A_A	-I*A_A_);</Text-field></Input></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1"><Font encoding="ISO8859-1">Num\351rique</Font></Text-field></Title><Group><Input><Text-field prompt="&gt; " style="Maple Input">C:=n*g^2/2/kappa/gamma1;
+Gamma:=	100	*sigma*N;
+Gamma_E:=Gamma*(1+2*C);
+Omega:=sqrt(Gamma_E*gamma1);
+##	moy_A:=Omega/g;
+</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">valeur:=[ 	N=24*10^15 , n=10^10 , sigma=155*10^(-12) , kappa=10^7 , gamma1=10^7 ,
+	g=1000*sqrt(2) ,<Font italic="false" size="12" underline="false">VinAA</Font>=AA,<Font italic="false" size="12" underline="false">VinA_A_</Font>=A_A_,<Font italic="false" size="12" underline="false">VinA_A</Font>=A_A,<Font italic="false" size="12" underline="false">VinAA_</Font>=AA_
+		,tau=10^(-10) 
+				];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">uuu:=8;
+							##usehardwareFloats:=deduced;	
+							Digits:=25;autant:=%:
+eval(Digits);
+evalhf(Digits);</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1" size="36">M\351thode par inversion de matrice th\350se verte page 53.</Font></Text-field></Input></Group><Section><Title><Text-field layout="Heading 1" style="Heading 1">T et D</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">with(linalg):with(LinearAlgebra):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Sm:='Sm':Sf:='Sf':P:='P':A:='A':
+inc:=['Sm','Smt','Sf','Sft','P','Pt','A','At']:
+inc:=convert(inc,Matrix);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">T:=&lt;&lt;-sigma*N | 0 | sigma*n | 0 | I*Omega | 0 | 0 | 0&gt;,
+&lt;0 | -sigma*N | 0 | sigma*n | 0 | -I*Omega | 0 | 0&gt;,
+&lt;sigma*N | 0 | -sigma*n | 0 | 0 | 0 | 0 | 0&gt;,
+&lt;0 | sigma*N | 0 | -sigma*n | 0 | 0 | 0 | 0&gt;,
+&lt;I*Omega | 0 | 0 | 0 | -(gamma1+I*Delta) | 0 | I*g*n | 0&gt;,
+&lt;0 | -I*Omega | 0 | 0 | 0 | -(gamma1-I*Delta) | 0 | -I*g*n&gt;,
+&lt;0 | 0 | 0 | 0 | I*g | 0 | -kappa | 0&gt;,
+&lt;0 | 0 | 0 | 0 | 0 | -I*g | 0 | -kappa&gt;&gt;;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">d:=Matrix(8):
+d[3,4]:=2*sigma*n*N:	d[1,2]:=2*sigma*n*N:	d[3,2]:=-2*sigma*n*N:	d[1,4]:=-2*sigma*n*N:	d[5,6]:=2*gamma1*n:	
+d[7,7]:=2*kappa*AA:	d[7,8]:=2*kappa*AA_:	d[8,7]:=2*kappa*A_A:	d[8,8]:=2*kappa*A_A_:
+d:=evalm(d);</Text-field></Input></Group><Section><Title><Text-field layout="Heading 2" style="Heading 2">On norme T pour avoir des coeff friendly
+			t--&gt;*sigma*N</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">inc;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">change_base:=Matrix(8):
+change_base[1,1]:=(n):	change_base[2,2]:=(n):	change_base[3,3]:=(N):	change_base[4,4]:=(N):	
+change_base[5,5]:=(n):	change_base[6,6]:=(n):	change_base[7,7]:=1/sqrt(tau): 	change_base[8,8]:=1/sqrt(tau):	
+change_base:=change_base;
+change_base_inv:=MatrixInverse(change_base):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Tnorme:=simplify(change_base_inv . T . change_base);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">dnorme:=Matrix(uuu,(i,j)-&gt;d[i,j]/change_base[i,i]/change_base[j,j]);</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#evalf(subs(valeur,T),2);
+evalf(subs(valeur,Tnorme),2);
+evalf(subs(valeur,(dnorme)),2);</Text-field></Input></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1">G</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">B:=convert(evalm(	-Tnorme	),array):
+d:=evalm(dnorme):
+### BT:=(-Transpose(Matrix(T))):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">#B:=linalg[randmatrix](8,8);
+#d:=linalg[randmatrix](8,8);</Text-field></Input></Group><Section><Title><Text-field layout="Heading 2" style="Heading 2">defintion d'un B formel pour verif</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">if 1=2 then	uuu:=2;
+	B:=Matrix(uuu,(i,j)-&gt;B||i||j);
+	G:=Matrix(uuu,(i,j)-&gt;G||i||j);
+	d:=Matrix(uuu,(i,j)-&gt;d||i||j);
+fi;
+
+</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">id:=IdentityMatrix(uuu):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">			tt:=time():
+B1:=Matrix(uuu*uuu):
+for i to uuu do 
+for j to uuu do 
+B1[1+uuu*(i-1)..uuu*(i),1+uuu*(j-1)..uuu*(j)]:=id*B[i,j];
+od:od:
+B1;
+			time()-tt;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">			tt:=time():
+B2:=Matrix(uuu*uuu):
+for i to uuu do 
+B2[1+uuu*(i-1)..uuu*(i),1+uuu*(i-1)..uuu*(i)]:=Matrix(B);
+od:
+B2;
+			time()-tt;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">BB:=B1+B2;
+BB:=subs(valeur,BB);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">			tt:=time():
+invBB:=MatrixInverse(evalf(BB));
+			time()-tt;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">ZERO:=convert(simplify((invBB . evalf(BB))-IdentityMatrix(uuu^2)),Matrix);
+simplify(%[1..3,1..3]);
+lescoeff:=[]:
+for i to uuu^2 do for j to uuu^2 do
+lescoeff:=[op(lescoeff),ZERO[i,j]];od:od:nops(lescoeff);
+map(abs,ListTools[Flatten](lescoeff)):
+LE_MAX_EST___,evalf(max(op(%)),2);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">simplify(invBB[1..3,1..3]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Dtilde:=Matrix(uuu*uuu,1):
+verifind:=Matrix(uuu*uuu,1):
+for i to uuu do 
+for j to uuu do 
+Dtilde[j+uuu*(i-1),1]:=d[i,j];
+verifind[j+uuu*(i-1),1]:=indice[i,j];
+od:od:
+Dtilde[1..4,1],verifind[1..4,1];
+Dtilde:=subs(valeur,Dtilde);
+</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Xtilde:=simplify(invBB . Dtilde);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">G0:=Matrix(uuu,uuu):
+verif_ind:=Matrix(uuu,uuu):
+for i to uuu do 
+for j to uuu do 
+G0[i,j]:=Xtilde[j+uuu*(i-1),1];
+verif_ind[i,j]:=verifind[j+uuu*(i-1),1];
+od:od:
+evalf(simplify(G0),2);
+evalf(simplify(verif_ind),2);</Text-field></Input></Group><Section><Title><Text-field layout="Heading 2" style="Heading 2">revenons au vrais valeurs</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">G0_vrais:=evalf(subs(valeur,Matrix(uuu,(i,j)-&gt;G0[i,j]*change_base[i,i]*change_base[j,j])),3);</Text-field></Input></Group></Section></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1">Sfx^2</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">	1/4*4/N*	(G0_vrais[3,3]+G0_vrais[3,4]+G0_vrais[4,3]+G0_vrais[4,4]):
+simplify(subs(valeur,%));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">	1/4*4/n*	(G0_vrais[1,1]+G0_vrais[1,2]+G0_vrais[2,1]+G0_vrais[2,2]):
+simplify(subs(valeur,%));</Text-field></Input></Group></Section><Section><Title><Text-field layout="Heading 1" style="Heading 1">BOUCLE</Text-field></Title><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">boucle:=proc(nbpas)  global VSx2,res_VSfx2,res_VSmx2,lesdeux,nbrdepas,iiii,C,Gamma,Gamma_E,Omega,valeur,T,d,B,BT,id,uuu,tt,B1,i,j,B2,BB,invBB,Dtilde,Xtilde,G0,aaf,aam,d_Sm,d_Sf,d_P,d_A,exacte,cA,m,f,p,pasint_AA,int_AA,bruit_AinAin,pasint_A_A_,int_A_A_,bruit_Ain_Ain_,pasint_A_A,int_A_A,bruit_Ain_Ain,pasint_AA_,int_AA_,bruit_AinAin_,pasint_B,int_B,bruit,VSfx2,FF,MM,eqFF,eqMM	,change_base,change_base_inv , autant, Tnorme, dnorme,G0_vrais , sansunit;
+nbrdepas:=nbpas;
+
+#usehardwareFloats:=deduced;
+#FF:=[]:MM:=[]:eqFF:=[]:eqMM:=NULL:res_VSfx2:=[]:res_VSmx2:=[]:
+for iiii from 0 to nbrdepas do 
+
+	C:=n*g^2/2/kappa/gamma1;
+	Gamma:=	10^(-3+ iiii/nbrdepas *6)	*sigma*N;
+	Gamma_E:=Gamma*(1+2*C);
+	Omega:=sqrt(Gamma_E*gamma1);
+	valeur:=[ 	N=24*10^15 , n=10^10 , sigma=155*10^(-12) , kappa=10^7 , gamma1=10^7 ,
+		g=1000*sqrt(2) ,<Font italic="false" size="12" underline="false">VinAA</Font>=AA,<Font italic="false" size="12" underline="false">VinA_A_</Font>=A_A_,<Font italic="false" size="12" underline="false">VinA_A</Font>=A_A,<Font italic="false" size="12" underline="false">VinAA_</Font>=AA_
+		,	tau=10^(-10) 
+				];
+####################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
+#usehardwareFloats:=false;
+Digits:=autant;
+
+T:=&lt;&lt;-sigma*N | 0 | sigma*n | 0 | I*Omega | 0 | 0 | 0&gt;,
+&lt;0 | -sigma*N | 0 | sigma*n | 0 | -I*Omega | 0 | 0&gt;,
+&lt;sigma*N | 0 | -sigma*n | 0 | 0 | 0 | 0 | 0&gt;,
+&lt;0 | sigma*N | 0 | -sigma*n | 0 | 0 | 0 | 0&gt;,
+
+&lt;I*Omega | 0 | 0 | 0 | -(gamma1+I*Delta) | 0 | I*g*n | 0&gt;,
+&lt;0 | -I*Omega | 0 | 0 | 0 | -(gamma1-I*Delta) | 0 | -I*g*n&gt;,
+&lt;0 | 0 | 0 | 0 | I*g | 0 | -kappa | 0&gt;,
+&lt;0 | 0 | 0 | 0 | 0 | -I*g | 0 | -kappa&gt;&gt;;
+d:=Matrix(8):
+d[3,4]:=2*sigma*n*N:	d[1,2]:=2*sigma*n*N:	d[3,2]:=-2*sigma*n*N:	d[1,4]:=-2*sigma*n*N:	d[5,6]:=2*gamma1*n:	
+d[7,7]:=2*kappa*AA:	d[7,8]:=2*kappa*AA_:	d[8,7]:=2*kappa*A_A:	d[8,8]:=2*kappa*A_A_:
+d:=evalm(d);
+
+Tnorme:=simplify(change_base_inv . T . change_base);
+dnorme:=Matrix(uuu,(i,j)-&gt;d[i,j]/change_base[i,i]/change_base[j,j]);
+
+B:=convert(evalm(	-Tnorme	),array):
+d:=evalm(dnorme):
+
+B1:=Matrix(uuu*uuu):
+for i to uuu do 
+for j to uuu do 
+B1[1+uuu*(i-1)..uuu*(i),1+uuu*(j-1)..uuu*(j)]:=id*B[i,j];
+od:od:
+
+B2:=Matrix(uuu*uuu):
+for i to uuu do 
+B2[1+uuu*(i-1)..uuu*(i),1+uuu*(i-1)..uuu*(i)]:=Matrix(B);
+od:
+
+BB:=B1+B2;
+BB:=subs(valeur,BB);
+
+invBB:=MatrixInverse(evalf(BB));
+
+
+Dtilde:=Matrix(uuu*uuu,1):
+for i to uuu do 
+for j to uuu do 
+Dtilde[j+uuu*(i-1),1]:=d[i,j];
+od:od:
+Dtilde:=subs(valeur,Dtilde);
+
+Xtilde:=simplify(invBB . Dtilde);
+G0:=Matrix(uuu,uuu):
+for i to uuu do 
+for j to uuu do 
+G0[i,j]:=Xtilde[j+uuu*(i-1),1];
+od:od:
+
+G0_vrais:=evalf(subs(valeur,Matrix(uuu,(i,j)-&gt;G0[i,j]*change_base[i,i]*change_base[j,j])),3);
+
+	1/4*4/N*	(G0_vrais[3,3]+G0_vrais[3,4]+G0_vrais[4,3]+G0_vrais[4,4]):
+aaf[iiii]:=simplify(subs(valeur,%));
+
+	1/4*4/n*	(G0_vrais[1,1]+G0_vrais[1,2]+G0_vrais[2,1]+G0_vrais[2,2]):
+aam[iiii]:=simplify(subs(valeur,%));
+
+####################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################<Font italic="false" size="12" underline="false">
+if 1=1 then</Font>
+#usehardwareFloats:=true;
+Digits:=10;<Font italic="false" size="12" underline="false">
+
+B:=0;
+d_Sm:=-gN*'Sm'+gn*'Sf' + I*Lm*'Sm' + fm + I*Omega*'P';
+
+d_Sf:=-gn*'Sf'+gN*'Sm' + I*Lf*'Sf' + ff;
+
+d_P:=- (gamma1 + I*Delta) *'P' + I*Omega*'Sm' + I*g*n*'A' + fp;
+
+d_A:=-kappa*'A' + I*g*'P' + sqrt(2*kappa)*Ain;</Font>
+exacte:=solve(evalf(subs(valeur,{d_Sm=-I*omega*'Sm',d_Sf=-I*omega*'Sf',d_P=-I*omega*'P',d_A=-I*omega*'A'})),{'Sm','Sf','P','A'});<Font italic="false" size="12" underline="false">
+
+							for lesdeux to 2 do 
+				if lesdeux=1 then 
+cA:=(coeff(subs(exacte,Sf),Ain));
+m:=(coeff(subs(exacte,Sf),fm));
+f:=(coeff(subs(exacte,Sf),ff));
+p:=(coeff(subs(exacte,Sf),fp));
+else 
+cA:=(coeff(subs(exacte,Sm),Ain));
+m:=(coeff(subs(exacte,Sm),fm));
+f:=(coeff(subs(exacte,Sm),ff));
+p:=(coeff(subs(exacte,Sm),fp));
+				fi;
+
+
+subs(valeur,simplify( moin( cA, -2*La ) * cA )):
+pasint_AA:=collect(simplify( subs(sansunit,%)),omega);
+   int_AA:=simplify(1/2/Pi*int(	%	,omega=-infinity..infinity)) assuming positive:		_;
+	bruit_AinAin:=subs(valeur,simplify(subs(sansunit,int_AA)) * VinAA);
+subs(valeur,simplify( conj( moin( cA, +2*La )) * conj(cA) )):
+pasint_A_A_:=collect(simplify( subs(sansunit,%)),omega);
+   int_A_A_:=simplify(1/2/Pi*int(	%	,omega=-infinity..infinity)) assuming positive:		_;
+	bruit_Ain_Ain_:=subs(valeur,(subs(sansunit,int_A_A_)) * VinA_A_);
+subs(valeur,simplify( conj( moin( cA,0 )) * cA )):
+pasint_A_A:=collect(simplify( subs(sansunit,%)),omega);
+   int_A_A:=simplify(1/2/Pi*int(	%	,omega=-infinity..infinity)) assuming positive:		_;
+	bruit_Ain_Ain:=subs(valeur,(subs(sansunit,int_A_A)) * VinA_A);
+subs(valeur,simplify( moin( cA, 0 ) * conj(cA) )):
+pasint_AA_:=collect(simplify( subs(sansunit,%)),omega);
+   int_AA_:=simplify(1/2/Pi*int(	%	,omega=-infinity..infinity)) assuming positive:		_;
+	bruit_AinAin_:=subs(valeur,(subs(sansunit,int_AA_)) * VinAA_);
+
+subs(valeur,simplify( 
+ moin(p,0) * conj(p) * 2*gamma1*n
++moin(m,0) * conj(m) * 2*sigma*n*N
+-moin(m,0) * conj(f) * 2*sigma*n*N
++moin(f,0) * conj(f) * 2*sigma*n*N
+-moin(f,0) * conj(m) * 2*sigma*n*N )):
+collect(simplify( subs(sansunit,%)),omega):
+map(x-&gt;(map(simplify,x,size)),%):
+map(simplify,%):	collect(%,omega):	simplify(%):
+pasint_B:=collect(%,omega);
+   int_B:=simplify(1/2/Pi*int(	% ,omega=-infinity..infinity) assuming positive):	_;
+	bruit:=subs(valeur,(subs(sansunit,int_B)));</Font>
+(bruit * 4/N) + <Font italic="false" size="12" underline="false">
+( bruit_AinAin</Font> * 4/N <Font italic="false" size="12" underline="false">+ bruit_Ain_Ain_</Font> * 4/N <Font italic="false" size="12" underline="false">+ bruit_Ain_Ain</Font> * 4/N <Font italic="false" size="12" underline="false">+ bruit_AinAin_</Font> * 4/N ):
+%/4:
+
+VSx2:=simplify(%);<Font italic="false" size="12" underline="false">
+				if lesdeux=1 then </Font>
+res_VSfx2[iiii]:=subs(valeur,VSx2);<Font italic="false" size="12" underline="false">
+else</Font>
+res_VSmx2[iiii]:=subs(valeur,simplify(N/n*VSx2));
+				fi;
+
+							od:
+fi;
+od:
+
+FF:=([	seq([-3+ii/nbrdepas*6,	aaf[ii]]		,ii=0..nbrdepas)],color=red):
+MM:=([	seq([-3+ii/nbrdepas*6,	aam[ii]]		,ii=0..nbrdepas)],color=green):
+
+#if res_VSfx2=[] then eqMM:=[[-3,1],[3,1]];eqFF:=[[-3,0.5],[3,0.5]]; else 
+eqFF:=([	seq([-3+ii/nbrdepas*6,	res_VSfx2[ii]]	,ii=0..nbrdepas)],color=blue):
+eqMM:=([	seq([-3+ii/nbrdepas*6,	res_VSmx2[ii]]	,ii=0..nbrdepas)],color=blue):
+#fi;
+plots[display](plot(FF),plot(MM),plot(eqFF),plot(eqMM));
+
+end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">sdg:=[];</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">if sdg=[] then 3; fi;</Text-field></Input></Group></Section><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">boucle(8);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">eqMM;eqFF;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">MM;FF;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">verif:=subs(valeur,	((Matrix(B)) . G0 + G0 . Transpose(Matrix(B)) - Matrix(d))):
+evalf(verif);
+
+lescoeff:=[]:
+for i to uuu do for j to uuu do
+lescoeff:=[op(lescoeff),(verif)[i,j]];od:od:nops(lescoeff);
+map(abs,ListTools[Flatten](lescoeff)):
+LE_MAX_EST___,evalf(max(op(%)),2);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">evalf(subs(valeur,Matrix(d)),3);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">d;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">inc . T;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/><Text-field/></Worksheet>

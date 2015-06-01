@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet><Version major="6" minor="1"/><View-Properties><Zoom percentage="100"/></View-Properties><Styles><Layout alignment="left" bullet="none" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" name="Normal" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Font background="[0,0,0]" bold="true" executable="true" family="Monospaced" foreground="[255,0,0]" italic="false" name="Maple Input" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false"/><Font background="[0,0,0]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" name="Text" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false"/></Styles><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">restart;
+with(LinearAlgebra):
+with (student):
+with(plots):
+with(plottools):
+simp:=proc(asimplifier)
+simplify(sort(simplify(simplify(factor(expand(numer(asimplifier))),size),size))
+/        sort(simplify(simplify(factor(expand(denom(asimplifier))),size),size)),size) ;
+map(simplify,%,size);        end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Valeurs := [lambda0=1070e-9, k0=2*Pi/1070e-9];
+k:=n*k0;
+lambda:=lambda0/n;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">On r\351-utilise le debut du ficheir "2005_10_10_Faisceau_Gaussien.mw"</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">Le Mode transverse TEM 00 : Se propageant suivant Z</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">TEM_00 := A(x,y,z) = sqrt(2/Pi)*1/w*exp(-(x^2+y^2)/w^2)*exp(I*k*(x^2+y^2)/2/Rc)*exp(-I*Psi);
+Waist := w = w0 * sqrt(1+(z/zR)^2);
+RayonCourbure := Rc = z+zR^2/z;
+Rayleigh := zR = Pi*w0^2/lambda;
+Gouy := Psi = arctan(z/zR);
+TEM00 := subs(Rayleigh, subs([Waist,RayonCourbure,Rayleigh,Gouy],TEM_00));
+ou_encore_ := subs(Rayl=eigh, subs([Waist,RayonCourbure,Rayleigh,Gouy],TEM_00));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Le profile d'intensit\351 dans le plan XZ : coupe le long du faisceau !</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">ww0 := 0.1e-3 ;	[y=0, w0 = ww0, op(Valeurs), n=1]:
+untem00XZ:=abs(subs(%, rhs(TEM00)))^2 :
+#plot3d(untem00XZ, x=-3*ww0..3*ww0,z=-0.1..0.1, numpoints = 2500);
+densityplot(untem00XZ,z=-0.1..0.1,x=-3*ww0..3*ww0,grid=[50 , 200], style = PATCHNOGRID, axes = boxed);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">L'intensit\351 lumineuse dans l'espace.</Font></Text-field><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Puis integr\351 dans un plan XY : doit etre constant pour conserver l'energie en regime stationnaire.</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Intensity := P(x,y,z) = abs(rhs(TEM00)^2) assuming real;
+simplify(map(Doubleint,(Intensity), x=-infinity..infinity, y=-infinity..infinity)):
+value(%) assuming positive;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Retrouvons l'\351quation de la surface (de r\351volution) qui correpond \340 Intensit\351(x,z) = Intensit\351Max(z) / e2 :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1">Intensit\351PlanXZ := subs(y=0 , rhs(Intensity));</Font>
+[solve(<Font encoding="ISO8859-1">Intensit\351PlanXZ</Font> = exp(-2) * subs(x=0,<Font encoding="ISO8859-1">Intensit\351PlanXZ), x)]:
+Intensit\351UnSurE2 := </Font>map(simp,%);</Text-field></Input></Group><Text-field/></Worksheet>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet><Version major="6" minor="1"/><View-Properties><Zoom percentage="100"/></View-Properties><Styles><Layout alignment="left" bullet="none" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" name="Normal" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Font background="[0,0,0]" bold="true" executable="true" family="Monospaced" foreground="[255,0,0]" italic="false" name="Maple Input" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false"/><Font background="[0,0,0]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" name="Text" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false"/></Styles><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">restart;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">UseHardwareFloats :=true;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">cf : http://www.lmov.uvsq.fr/~prd/projets0304/projet4.htm</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">Digits:=15;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">ALGEBRIQUE := 1;</Text-field></Input></Group><Group><Input><Text-field alignment="left" bullet="none" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" prompt="&gt; " rightmargin="0.0" spaceabove="0.0" spacebelow="0.0" style="Maple Input">densite_au_centre := n_MAX;
+#Delta := Delta;250e-6;
+#r:=sqrt(x^2+y^2);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">Les donn\351es du probl\350me</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">valeurs := [hbar=1e-34, omega=2*evalf(Pi)*3e8/780e-9, lambda=780e-9
+, delta=-1, sigma0=780e-9^2/2/evalf(Pi), n_MAX=1e6*1e13, Delta=0.2e-3, Gamma=6.8e6];
+val := proc(expr)  simplify(evalf(subs(valeurs,expr)));  end:
+sigma0:=1/2*lambda^2/Pi;
+'sigma0' = val(sigma0);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1" size="16">d\351finissons un profil de densit\351 d'atomes...</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">n_at:=(x,y)-&gt;exp(-(x^2+y^2)/2/Delta^2);
+plot(val([n_at(x,0),[[Delta,0],[Delta,1]],[[-Delta,0],[-Delta,1]]]),x=-4*val(Delta)..4*val(Delta), color=[red,green,green]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">Ou encore :<Font encoding="ISO8859-1">
+une petite proc\351dure qui d\351finit un plateau avec une largeur, une largeur de pente, et une variable</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">plateau:=proc(largeur,rampe,var)
+(1+tanh((-var+largeur/2)*3/rampe))/2 ;
+end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">qui donne</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">n_at:=(x,y)-&gt;plateau(2*Delta,Delta/1,sqrt(x^2+y^2)):
+'n_at(x,y)' = n_at(x,y);
+plot(val([n_at(x,0),[[Delta,0],[Delta,1]],[[-Delta,0],[-Delta,1]]]),x=-4*val(Delta)..4*val(Delta), color=[red,green,green]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1" size="16">On d\351finit d\351finit l'indice r\351el             "n_ref"  :  r\351fraction</Font><Font size="16">
+                         et l'indice complexe   "n_abs" :  asbsorption</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">n_ref := 1 + 'n_at(x,y)' * sigma0 * lambda/4/(Pi) * (-delta)/(1+delta^2) * densite_au_centre;
+n_abs :=     'n_at(x,y)' * sigma0 * lambda/4/(Pi) * 1/(1+delta^2) * densite_au_centre;
+n_ref := val(n_ref):
+n_abs := val(n_abs):
+n_ref := simplify(n_ref);
+n_abs := simplify(n_abs);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1" size="16">On en prend le gradient de l'indice de r\351fraction :</Font></Text-field><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">on en fait une proc\351dure : grad_n_ref:=proc(x,y) </Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">VectorCalculus[Gradient](n_ref,[x,y]):
+gradn_ref:=simplify(convert(   %   ,Vector));
+grad_n_ref:=proc(xx,yy) 
+global gradn_ref;
+subs([x=xx,y=yy],eval(gradn_ref));
+end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">grad_n_ref(-2*val(Delta),3*val(Delta));val(%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">d\351finissons le vecteur unitaire </Font><Font bold="true">T</Font><Font encoding="ISO8859-1">, tangent \340 la trajectoire d'un rayon</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">T:=convert([Tx,Ty],Vector);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">pour aboutir \340 dT/ds par la relation :</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">'d/ds'*['n*T'] = grad('n');_____soit_____;
+dT/ds = 1/n*( grad(n) - 'T' * (grad(n).'T' ));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">D'abord T fois Grad(n) scalair T :</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">T . grad_n_ref(x,y) assuming Tx::real,Ty::real;		
+T_gradn_ref_T:=simplify(convert(%*T,Vector),size) ;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text">Puis dT/ds :</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">1/n_ref*(grad_n_ref(x,y)-T_gradn_ref_T):
+dT_ds:=simplify(convert(val(%),Vector));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">proc\351dure donnant la trajectoire d'un rayon calculant sa "pos" et son vecteur "dir" pour chaque pas dt</Font>
+on va aussi calculer l'absorbtion, en tenant compte de la saturation : dI/ds = -n_at*Gamma/2*hbar*omega* I/Isat / (1+I/Isat)</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">traj:=proc(xx0,yy0,Txx0,Tyy0,dtt,cc,NN)
+local i;
+global x0,y0,Tx0,Ty0,dt,c,pos,dir,intensite,val,PosLocale,ds,Pe,    timeX,timeT,timeInt;
+x0 := val(xx0);	y0 := val(yy0);
+Tx0 := val(Txx0);	Ty0 := val(Tyy0);
+dt := val(dtt);	c := val(cc);
+
+intensite:=1;
+
+timeX:=0;timeT:=0;timeInt:=0;
+
+Isat := 10;
+#;i;ntensite := intensite * jexp( - n_abs(x||i,y||i) * 2 * 2 * Pi/lambda * ds);
+GHO := val(Gamma*hbar*omega);
+
+for i from 0 to NN do <Font foreground="[0,51,255]">
+## propage la position locale</Font>
+PosLocale := [x=x||i, y=y||i, Tx=Tx||i, Ty=Ty||i];
+ds := val(c/subs(PosLocale, n_ref)*dt);
+time0 := time();
+x||(i+1) := x||i + Tx||i * ds;
+y||(i+1) := y||i + Ty||i * ds;
+timeX := timeX + time()-time0;
+<Font foreground="[0,51,204]">
+## propage les composantes du vecteur T</Font>
+time0 := time();
+Tx||(i+1) := Tx||i + subs(PosLocale, dT_ds[1] )*ds;
+Ty||(i+1) := Ty||i + subs(PosLocale, dT_ds[2] )*ds;
+timeT := timeT + time()-time0;<Font encoding="ISO8859-1" foreground="[0,51,204]">
+## propage l'intensit\351e</Font>
+time0 := time();
+Pe := intensite/2/Isat / (1+intensite/Isat) * ds;
+intensite := intensite - val(n_at(x||i,y||i))* GHO * Pe;
+timeInt := timeInt + time()-time0;
+
+od:
+
+dir:=[seq([Tx||i,Ty||i],i=0..NN)]:	pos:=[seq([x||i,y||i],i=0..NN)]:	end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" style="Text"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">ds;timeX;timeT;timeInt;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" style="Text"><Font encoding="ISO8859-1">pour plein de rayons incidents \351quidistants</Font></Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">tt:=time():
+pos_aploter:=[]:dir_aploter:=[]:intense_finale:=[]:
+for i from 0 to 100 do
+	traj(-5*Delta, i/15*Delta ,1,0,Delta/3e8/10,3e8,200);
+	pos_aploter:=[op(pos_aploter),pos];
+	dir_aploter:=[op(dir_aploter),dir];
+	intense_finale:=[op(intense_finale),evalf(intensite)];
+od:
+time()-tt;</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">plot(pos_aploter,color=red):
+plots[display]([%,plottools[circle]([0,0],2*val(Delta),color=blue)],scaling=constrained);
+plot(dir_aploter,color=red):
+plots[display]([ % ,
+plottools[arc]([0,0],1,	arcsin(min(op(map(x-&gt;x[2],(map(xx-&gt;xx[-1],dir_aploter))))))..	# un cercle
+			arcsin(max(op(map(x-&gt;x[2],(map(xx-&gt;xx[-1],dir_aploter)))))),color=blue)]<Font encoding="ISO8859-1">
+	,title="les directions doivent rester sur le cercle unit\351! (bleu)"</Font>);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1" foreground="[0,0,255]">				####	on extrait les rayons apr\350s l'effet de "mirage"
+				####	l\340 d'o\371 on croit qu'ils viennent</Font>
+pos_final:=[seq(op([i,-1],pos_aploter),i=1..nops(pos_aploter))]:nops(%);
+dir_final:=[seq(op([i,-1],dir_aploter),i=1..nops(pos_aploter))]:nops(%);
+
+affine_final:=[seq(  op([i,-1,-1],dir_aploter)/op([i,-1,-2],dir_aploter) * (x-op([i,-1,-2],pos_aploter)) 
+			+ op([i,-1,-1],pos_aploter)    
+			,i=1..nops(pos_aploter))]:nops(%);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">plot(affine_final,x=-15*val(Delta)..15*val(Delta),color=red):
+plots[display]([%,plottools[circle]([0,0],2*Delta,color=blue)]
+	,title="directions \"mirage\" des rayons");</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font encoding="ISO8859-1" foreground="[0,0,255]">				####	-&gt; la densit\351 de rayon dans le plan objet d'abscisse "Xobj",
+				####	dont on fait l'image grace \340 une lentille</Font>
+dens:=xxobj-&gt;subs(x=xxobj,affine_final):	nops(dens(0));</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"><Font style="Text">####	on convole les rayons par une fonction d'apareil gaussienne :<Font encoding="ISO8859-1">
+####	"pixel_gauss" centr\351e en "yy" et de largeur "pix"</Font></Font>
+pixel_gauss:=proc(yy,ppix)
+exp(-(y-yy)^2/(ppix/2)^2);
+end:</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">detect_plus:= add(pixel_gauss( dens(planobj)[i],pix) * intense_finale[i] ,i=1..nops(dens(0))):
+detect_moins:=0:
+if op([1,1,2],pos_aploter)=0 then
+detect_moins:=add(pixel_gauss(-dens(planobj)[i],pix) * intense_finale[i] ,i=2..nops(dens(0))):
+fi:<Font encoding="ISO8859-1" foreground="[0,0,255]">
+#  ATTENTION "plus" et "moins" seulement si on a consid\351r\351 que les x&gt;=0, et qu'on sym\351trise ...</Font>
+nops(detect_plus);
+en0:=subs(y=0,detect_plus+detect_moins):
+en_bord:=subs(y=4*val(Delta),detect_plus+detect_moins):</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">plot(subs(	[pix= 17e-6,planobj=0]	,(detect_plus+detect_moins)/en0+0*en_bord)
+		,y=-6*val(Delta)..6*val(Delta),numpoints=500<Font encoding="ISO8859-1">
+	,title="CCD d\351tection \134n en bleu : les atomes"):</Font>
+plots[display]([%,plot(val(n_at(x,0)),x=-6*val(Delta)..6*val(Delta),color=blue)]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input">plots[animate](plot,[subs(	[pix= 8e-6]	,(detect_plus+detect_moins)/en_bord)
+		,y=-6*val(Delta)..6*val(Delta)]	,	planobj=-500*val(Delta)..500*val(Delta)):
+plots[display]([%,plot(n_at(x,0),x=-6*val(Delta)..6*val(Delta),color=blue)]);</Text-field></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Group><Input><Text-field layout="Normal" prompt="&gt; " style="Maple Input"/></Input></Group><Text-field alignment="left" bullet="none" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Text-field alignment="left" bullet="none" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Text-field alignment="left" bullet="none" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Text-field alignment="left" bullet="none" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Text-field alignment="left" bullet="none" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Text-field alignment="left" bullet="none" firstindent="0.0" leftmargin="0.0" linebreak="space" linespacing="0.0" rightmargin="0.0" spaceabove="0.0" spacebelow="0.0"/><Text-field/></Worksheet>
