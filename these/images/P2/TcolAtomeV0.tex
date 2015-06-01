@@ -1,0 +1,92 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[xscale=1.4, yscale=1.2]
+
+\def\Ratome{0.05}
+\def\zmax{6}
+\def\vmax{5}
+\def\vzero{3}
+\def\deltav{0.6}
+\def\vmiroir{2}
+\def\Zmiroir{0.8}
+\def\Tun{0.4}
+\def\Tdeux{2.3}
+
+\pgfmathparse{{1
+%*
+%\AxeCourt*sin(\angleenplus*57)*cos(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)+\AxeLong*cos(\angleenplus*57)*sin(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)
+}}
+\let\Xini\pgfmathresult
+
+\pgfmathparse{{1
+%*
+%\AxeLong*cos(\angleenplus*57)*cos(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)-\AxeCourt*sin(\angleenplus*57)*sin(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)
+}}
+\let\Yini\pgfmathresult
+
+\tkzInit[xmin=0,xmax=\zmax,ymin=0,ymax=\vmax]
+\tkzX[label=$z$, orig, noticks]
+\tkzY[label=$v$, noticks]
+
+\tkzFct[samples = 100,color = green, lw=2pt](\Zmiroir+0.01..\zmax)
+{(\x*\vmiroir)/(\x-\Zmiroir)}
+%{1/(\x-\Zmiroir)+\vmiroir}
+
+\draw[blue, opacity=0.6, dashed] (0,\vmiroir) -- +(\zmax,0) 
+node[below left,pos=0, opacity=1]{$\Vmir$};
+\draw[blue, opacity=0.6, dashed] (\Zmiroir,0) -- +(0,\vmax) 
+node[below,pos=0, opacity=1]{$\Zmirini$};
+
+\foreach \VZERR in 
+{{\vzero-\deltav},\vzero,{\vzero+\deltav}}
+{	
+	\pgfmathparse{1*(\VZERR)}
+	\let\VZER\pgfmathresult
+	
+	\pgfmathparse{\Tun*(\VZER)}
+	\let\Zun\pgfmathresult
+	\draw[red, -latex'] (0,\VZER) -- (\Zun-\Ratome,\VZER);
+	
+	\pgfmathparse{(\Zmiroir*\VZER)/(\VZER-\vmiroir)}
+	\let\ZVzero\pgfmathresult
+	\draw[red, -latex'] (0,\VZER) -- (\ZVzero,\VZER);
+
+	\pgfmathparse{2*(\vmiroir)-(\VZER)}
+	\let\Vapres\pgfmathresult
+	\draw[red, -latex'] (\ZVzero,\VZER) -- (\ZVzero,\Vapres);
+
+	\pgfmathparse{\Zmiroir/(\VZER-\vmiroir)}
+	\let\Tcolli\pgfmathresult
+	\pgfmathparse{(\VZER)*\Tcolli + (\Tdeux-(\Tcolli))*\Vapres}
+	\let\Zdeux\pgfmathresult
+	\draw[red, -latex'] (\ZVzero,\Vapres) -- (\Zdeux-\Ratome,\Vapres);
+	
+	\shade[ball color=red] (0,\VZER) circle (\Ratome);
+	\shade[ball color=red] (\Zun,\VZER) circle (\Ratome);
+	\shade[ball color=red] (\Zdeux,\Vapres) circle (\Ratome);
+	
+	\draw[black, dotted] (\Zdeux+\Ratome,\Vapres)--(\zmax-0.3,\Vapres);	
+	\draw[black, dotted] (-\Ratome,\VZER)--(-0.3,\VZER);	
+}
+
+\draw[snake=brace, segment amplitude=0.2cm]%] 
+(-0.3,\vzero-\deltav) -- (-0.3,\vzero+\deltav)
+node[left=2mm, pos=0.5]{$\Delta v$};
+
+\draw[snake=brace, segment amplitude=0.2cm]%] 
+(\zmax-0.3,2*\vmiroir-\vzero+\deltav) -- (\zmax-0.3,2*\vmiroir-\vzero-\deltav)
+node[right=2mm, pos=0.5]{$\Delta v$};
+
+
+\end{tikzpicture}
+
+\end{document}

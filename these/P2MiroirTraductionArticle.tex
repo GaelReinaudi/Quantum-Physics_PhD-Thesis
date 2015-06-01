@@ -1,0 +1,57 @@
+%
+\chapter{Traduction Article Miroir}
+\minitoc
+
+\section{Introduction}
+
+Les jets lents d'atomes ultra-froids ont un immense potentiel pour la métrologie, l'interférence atomique, et la nano-lithographie [bBer97]. L'obtention d'un faisceau ultra froids de neutrons fut rendue possible par réflexion spéculaire sur ne surface de nickel en mouvement dans la direction du faisceau [SNS86]. Cette avancée fut suivie par beaucoup de réalisation, parmi lequel, des expérience d'optique neutronique [WeK86], et interférométrie avec des neutrons [RaW00].
+
+Dans un autre contexte,la décélération d'un jet supersonique pulsé d'atome d'hélium après réflexion sur un miroir cristallin monté sur un rotor est étudié en ce moment [LRB06], avec aussi pour but d'obtenir une source d'atome très intense pour les expérience d'optique atomique.
+
+Dans cet article, nous décrivons le ralentissement de \pats injectés dans un \gm par leur réflexion spéculaire sur un \mimo magnétique, et nous démontrons aussi l'utilisation de cette technique afin de générer un flux continu et intense d'atome ultra-froids guidés magnétiquement. Un tel faisceau est d'importance cruciale  pour réaliser un laser à atome continu générer par un processus d'évaporation forcée appliquée à un jet continu guidé magnétiquement, comme proposé dans [MMD00] et étudié expérimentalement dans [LWR05].
+
+Dans le \refbar, la vitesse des atomes ne fait que changer de sens après la réflexion, passant de $v_i-v_m$ à $v_m-v_i$, ou $v_i$ est la la vitesse moyenne relativement haute du paquet, et $v_m$ est la vitesse du mirroir. Dans le \reflab, la vitesse finale du paquet est donc:\[ v_f=2\,v_m-v_i \].
+Les mirroirs magnétiques reposent sur l'intéraction Zeeman entre un champ magnétique inhomogène et le moment dipolaire magnétique des atomes. Les atoms dans l'état fuiant les champ forts sont ainsi reflchis par la presence d'un champ croissant. Des mirroir magnétiques pour l'optique atomique ont été réalisé de manière varié, en utilidant des disquette informatiques [HBR97], des bande video [RHH00], des arrangement d'aimants permanents [SMR96], ou des micro-electro-aimants [JDT98], [DZL99].
+
+Des \mimo pour atomes froids ont été étudiés jusqu'à présent en utilisant des ondes évanescentes se propageant à la surface d'un prisme, décalée sur le bleu, et modulées dans le temps. Cette technique fut utilisée popur démontrer la manipulation d'atome pour l'optique atomique: focalisatuin de tajectoire atomiques, formation f'images multiples d'un point sourcen et modulation dela phase d'onde de de Broglie [SSD96].
+
+Cet article est organisé de la manière suivante. Dans la section 2 nous décrivons le \setup. Dans la section 3 nous présentons les donnée receuilli lors du ralentissement d'un seul pauet après sa reflexion sur le \mimo. Dans le section 4 nous détaillons le modèle développé pour analyser nos données expériemetale. Finallement, nous discutons des résultats préliminaires quant à l'utilisation de cette technique pour la fromation d'un \jat continu lent et intense.
+
+\section{\setup}
+Le \setup est représenté sur la figure 1a (voire aussi [LWR05]). 
+
+Des \pat de quelque $10^9$ atomes de ${}^87$Rb sont préparés dans un \pmo, alimenté par un Ralzntisseur Zeeman. Le nuage est alors mis en mouvement à une vitesse ajustable $v_i$ grace a une technique de melasse mouvante, puis est pompé optiquement dans l'état fondamental $\left|F=1, m_F=-1\right\rangle$ dont le mooment magnétique est $\mu=\mu_B /2$ ($\mu_B$ est le magnéton de Bohr). Il est lancé vers l'entrée du \gm qui mesure $4.5m$ de long. Ce \gm, placé dans une chambre à ultr-viden est composé de 4 tube de cuivre parralles refroidis par eau (voir la figure 1a et 1b). Pour les resultats présentés ci-dessous, un courant de $200A$ par tube fut utilisé, générant ainsi un \chm transverse $B_g=(b_x,-b_y,0)$ avec un gradient $b=500G/cm$. Au début du \gm, le paquet subit une collision avec un \mimo magnétique.
+
+Ce mirroir est fait d'une paire d'aimant permanent à base de terre-rare (Nb-Fe-B) placé sur un support en forme de U. L'amplitude du \chm controle la reflection des atomes dans le regime adiabatique pour lequel les moment magnétiques suivent les ligne de \chm. La configuratin choisie, avec des aimant face à face avec des aimantations opposées,produit une coline de potentiel de hauteur $\mu B_{max}$ avec $B_{max}=160G$. Cette configuration symétrique minimize le gradient transverse de \chm, évitant ainsi une déflection transverse des trajectoires durant la reflection? Nous avons tracé sur la figure 1c la valeur absolue de la composante longitudinale du \chm mesurée.
+
+Le potentiel transverse ressenti par les atomes dans le \gm est linéaire loin du \mimo du fait de la configuration quadrupolaire à 2 dimensions choisie pour le confiner les atoms transversalement. La contribution du \mimo au champ longitudinal  tend principalement à arrondir le bas du potentiel, resultant en un potentiel transverse semi-harmonique, tout en ne modifiant essentielement pas le gradient transverse produit par le \gm (la correction est moins de 5\% pour notre gamme de parametres). Le miroir magnétique est fixé sur un tapis roulant de 1.2 m de long placé le long du \gm et qui permet de controler sa vitesse dans la gamme de 20cm/s à 120 cm/s. Les fluctuations journalieres de vitesse sont inferieur à 2\%. De manière à controler la position de la collision entre le paquet et le \mimo, nous synchronisons le lancement du \pat dans le \gm avec le mouvement du \mimo.
+
+La région du \pmo est protégée par un bouclier en mu-métal contre l'influence du miroir magnétique. Les atomes entre dans la région du \conv après environ 20cm de propagation dans le \gm. Nous mesurons les caractéristique d'un \pat en analysant le signal d'absorptio d'ue sonde placée à $z_p=175cm$ (sauf autre mention) de la position du \pmo (voir figure 1a). Afin de detecter les atomes, nous balayons 70 fois par seconde la fréquence de la sonde autour de la transition ouverte $\left|5^2S_{1/2};F=1\right\rangle \rightarrow \left|5^2P_{3/2}; F'=0,1,2\right\rangle$, avec une vitesse de baayage d'environs $600MHz/ms$. Nous enregistrons les maximum d'absorption de se signal grace a un circuit electronique echentilloneur bloqueur qui génère un point de donné pour l'absorption toute les 15ms. Cette technique ce revelle etre remaquablement insensilble aux inhomogeneités de \chm, nous fournissant ainsi un signal robust et fiable proportionnel à la densité atomique locale [LWR05].
+
+
+\section{résultats expérimentaux} 
+
+Quand la vitesse relative des atomes  par rapport au \mimo est plus grande que $\approx \sqrt{2 \mu B_{max}/m}$, des atomes passe par dessu la colline de potentielle. Nous avons bien observé cet effet en lancant un \pat a cette vitesse critique sur un mirroir immobile. Du fait de la \dispvitlong du \pat, celui-ci est coupé en une partie transmise et une partie réfléchie, en bon accord avec la hauteur de la barrière de potentiel mesurée.
+
+Le signal \tof d'absorption  représenté dans la figure 2a(i) correpsond à u \pat injecré dans le \gm à une vitesse $v_i=142cm/s$ et une \dispvitlong $\Delta v=12cm/s$ sans la présence du \mimo. Le signal obtenu après la collision avec un \mimo allant à une vitesse $v_m=86 \pm 2 cm/s$ est représenté sur le figure 2a(i). Le \pat a clairement été ralenti. En effet, la vitesse finale mesurée est $\approx 35cm/s$, en bon accord avec (1). Pour cette expérience spécifique, le maximum du pic d'absorption est retardé d'environ 2 s. Le \pat a donc eut plus de temps pour s'étaler, ce qui justifie l'augmentation de l'extension et la diminution d'amplitude du signal de detection.
+
+Nous avons cette meme experience pour différente valeur de la vitesse initiale $v_i$ et pour différentes vitesse du mirroir ($v_m=86 \pm 2cm/s$ et $107 \pm 2 cm/s$). La plage de vitesse que nous avons étudié était essentielement dicté par deux contraintes:(i) la hauteur de barrière finie $\mu B_{max}$ qui limite la plage de vitesse relative entre le \pat et le \mimo pouvant etre étudié, (ii)la longueur sur laquelle la collision se prosuit qui est limiteée par la taille du \conv. De plus, le temps de vie fini des atomes dû aux collision avec le gaz résiduel, combiné avec la sensibilité de la détection, limite la plage de parametre sur laquelle des donnée fiable peuvent etre obtenues.
+
+La vitesse final $v_f$ du \pat mesurée après la collision est représenté sur la figure 2b en focntion de sa vitesse d'injection $v_i$ pour une vitesse de mirroir de $v_m=107 \pm 2 cm/s$. Nous avons pu ralentir des \pat ayant une vitesse initiale de $175cm/s$ jusqu'à $35 cm/s$. La collision enlevant donc 95\% de l'énergie cinétique longitudinale (point axpérimental indiqué par une fleche verticale).
+
+\section{analyse des résultats}
+
+Les lignes continues et fines superposées sur les donnée expérimentale (voir figure 2a) proviennent d'un modèle analytique simple qui fournit une bonne compréhension quantitative de la collision entre le \pat et le \mimo magnétique, ainsi qu'u outil flexible pour ananlyser nos données expérimentale.
+
+Dans cette modélisation, nous supposons que la distribution spatial d'atom est initialmenet une fonction de Dirac. Cette hypothède est résonnable dans la plage de parametres expérimentaux utilisés car la taille du \pat au durant la collision est dictée par la \dispvitlong initiale.
+
+La distribution conjointe position vitesse initiale du modele prend donc la forme: $\pi_0(z,v_z)=N\,\delta(z)p_0(v_z)$ ou $p_0(v_z)$ est la \foncdist de vitesse longitudinale. En pratique, nous utilisons une Gaussienne normalisée à l'unité centrée en $v_i$ et ayant une \dispvitlong $\Delta v$. Le \mimamo est modélisé par une barrière répulsive de potentiel infinie. Si le \mimo est initialement positionné en $z=d$, une particule initialement en $z_i<d$ et possédant une vitesse $v_z$ sera reflechie après une propagation libre sur une distance $z^*=v_z(d-z_i)/(v_z-v_m)$, en un temps $t^*=(d-z_i)/(v_z-v_m)$ et sa vitesse après la collision est, d'apres (1), $v_z'= 2\, v_m-v_z$. La figure 3a montre un exemple d'évolution d'un \pat vu dans l'espace des phases$(z,v_z)$. Nous avons tracé le résultat d'une simulation numérique Monte Carlo  avec $d=0.3m$ et pour les temps $t=0$ et $t=884ms$ où 93\% des atomes ont déjà subit la reflexion.
+
+
+
+\section{génération d'un jet continu}
+
+Dans cette section, nous résumons les méthodes qui ont, jusqu'ici , pus etre utilisées pour former un \jat continu guidé magnétiquement. Nous concluons sur nos résultats préliminaires visant a atteindre ce but, en utilisant un \mimo, et les amélirations que cette technique apporte. 
+
+
+

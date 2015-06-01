@@ -1,0 +1,19 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}
+\tkzInit[xmin=-3,xmax=3,ymin=-0,ymax=4.5]
+\tkzX[orig, noticks]%, poslabel=-.5cm]
+\tkzY[label=$\Uhyp$, noticks]
+\tkzFct[samples = 200,lw = 1pt,color = red](-4..4)
+{(3*x*x+1)**(0.5)}
+\end{tikzpicture}
+\end{document}

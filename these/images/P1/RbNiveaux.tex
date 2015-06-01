@@ -1,0 +1,97 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\newcommand{\DunProperties}{\shadowbox{\begin{minipage}{3.5cm}
+$\lambda_1 \approx \nm{795}$ \\
+$\leftrightarrow \SI{377}{\tera\hertz}$ \\
+$\pulsSpont_1 \approx 2\,\pi\times\SI{5.7}{\mega\hertz}$
+\end{minipage}}}
+\newcommand{\DdeuxProperties}{\shadowbox{\begin{minipage}{3.5cm}
+$\lambda_2 \approx \nm{780}$ \\
+$\leftrightarrow \SI{384}{\tera\hertz}$ \\
+$\pulsSpont_2 \approx 2\,\pi\times\SI{6.1}{\mega\hertz}$
+\end{minipage}}}
+
+
+\def\largeniv{0.75}
+\def\largesniv{0.5}
+\def\Niv{+(-\largeniv,0)[line width=0.075cm]--+(\largeniv,0)}
+\def\sNiv{+(-\largesniv,0)[very thick]--+(\largesniv,0)}
+\def\EcartElecJun{7}
+\def\EcartElecJdeux{11}
+\def\droiteniv{3}
+\def\droitesniv{3}
+\def\facniv{1}
+\def\facsniv{0.15}
+
+\tikzstyle{trans}=[latex'-latex', thick, red]
+\tikzstyle{linkniv}=[draw, thin]
+
+\begin{tikzpicture}[scale=1.5]
+
+\draw (0,0)\Niv node[left, at start]{$\OrbitalS$};
+
+\draw[trans](-0.2,0)--++(0,\EcartElecJun);
+\path[](-0.2,0)--++(0,\EcartElecJun)node(D1)[left,,pos=0.66]{$D_1$};
+\draw(0,\EcartElecJun)\Niv node[left, at start]{$\OrbitalPJun$};
+
+\draw[trans](0.2,0)--++(0,\EcartElecJdeux);
+\path[](0.2,0)--++(0,\EcartElecJdeux)node(D2)[right,pos=0.42]{$D_2$};
+\draw(0,\EcartElecJdeux)\Niv node[left, at start]{$\OrbitalPJdeux$};
+
+\node at (D1)[left= 1em] {\DunProperties};
+\node at (D2)[right= 1em] {\DdeuxProperties};
+
+\foreach \nnn/\nom in {-1/1,1/2}{
+	\draw(0,0)++(\droiteniv,\nnn*\facniv)\Niv node[above, midway]{$F=\nom$};
+	
+	\draw[linkniv](0,0)++(\largeniv,0)--++(\droiteniv-2*\largeniv,\nnn*\facniv);
+	
+	\foreach \snnn in {-\nom,...,\nom}{
+%		\draw(0,0)++(\droiteniv,\nnn*\facniv)
+%		++(\droitesniv,\snnn*\facsniv)\sNiv node[above, midway]{$m_F=\snnn$};	
+		\draw[linkniv](0,0)++(\droiteniv,\nnn*\facniv)++(\largeniv,0)
+		--++(\droitesniv-\largeniv-\largesniv,\snnn*\facsniv);
+	}
+}
+
+\def\facniv{0.2}
+
+\foreach \nnn/\nom in {-5/1,3/2}{
+	\draw(0,\EcartElecJun)++(\droiteniv,\nnn*\facniv)\Niv node[above, midway]{$F=\nom$};	\draw[linkniv](0,\EcartElecJun)++(\largeniv,0)--++(\droiteniv-2*\largeniv,\nnn*\facniv);
+	\foreach \snnn in {-\nom,...,\nom}{
+%		\draw(0,0)++(\droiteniv,\nnn*\facniv)
+%		++(\droitesniv,\snnn*\facsniv)\sNiv node[above, midway]{$m_F=\snnn$};	
+		\draw[linkniv](0,\EcartElecJun)++(\droiteniv,\nnn*\facniv)++(\largeniv,0)
+		--++(\droitesniv-\largeniv-\largesniv,\snnn*\facsniv);
+	}
+}
+
+\def\facniv{0.6}
+
+\foreach \nnn/\nom in {-3/0,-2.2/1,-0.7/3,1.9/3}{
+	\draw(0,\EcartElecJdeux)++(\droiteniv,\nnn*\facniv)\Niv node[above, midway]{$F=\nom$};
+\draw[linkniv](0,\EcartElecJdeux)++(\largeniv,0)--++(\droiteniv-2*\largeniv,\nnn*\facniv);
+	\foreach \snnn in {-\nom,...,\nom}{
+%		\draw(0,0)++(\droiteniv,\nnn*\facniv)
+%		++(\droitesniv,\snnn*\facsniv)\sNiv node[above, midway]{$m_F=\snnn$};	
+%		\ifthenelse{\nom>0}
+		{
+		\draw[linkniv](0,\EcartElecJdeux)++(\droiteniv,\nnn*\facniv)++(\largeniv,0)
+		--++(\droitesniv-\largeniv-\largesniv,\snnn*\facsniv);
+		}{}
+	}
+}
+
+
+\end{tikzpicture}
+
+\end{document}

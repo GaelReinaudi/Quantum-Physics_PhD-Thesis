@@ -1,0 +1,71 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\abstmin{0.5}
+\def\tmin{-\abstmin}
+\def\tmax{7.5}
+\def\tf{7}
+\def\aa{1.5}
+\def\vmax{2}
+\def\zmax{2.1}
+
+\begin{tikzpicture}[xscale=0.52, yscale=1]
+
+\tkzInit[xmin=\tmin,xmax=\tmax,ymin=-1.6,ymax=\zmax]
+\tkzX[label=$t$, orig, noticks]
+\tkzY[label=$\ddzc$, noticks]%, poslabel=-0.6cm]
+\tkzFct[samples = 500,color = red, lw=1.5pt](\tmin..\tmax){
+\aa*\HH{\x}*\HH{\tf-\x} * (\HH{0.5*\tf-\x}-0.5)*2
+}
+\draw[dotted](\tf,-0.2)--(\tf,0.2)node[above, pos=1]{$\tfin$};
+\draw[dotted](0.5*\tf,-0.2)--(0.5*\tf,0.05)node[below left]{$\tfrac{\tfin}{2}$};
+\draw[dotted](-0.1,\aa)--(0.1,\aa)node[left=-0.1cm, pos=0]{$\AccZc$};
+
+\begin{scope}[xshift=\tf cm]
+\begin{scope}[xshift=\abstmin cm]
+\begin{scope}[xshift=1.3 cm]
+\tkzInit[xmin=\tmin,xmax=\tmax,ymin=-1.6,ymax=\zmax]
+\tkzX[label=$t$, orig, noticks]
+\tkzY[label=$\dzc$, noticks]%, poslabel=-0.6cm]
+\tkzFct[samples = 200,color = red, lw=1.5pt](\tmin..\tmax){
+\HH{\x}*\HH{\tf-\x} * \vmax*(1-2*abs(\x-0.5*\tf)/\tf)
+}
+\draw[dotted](\tf,-0.2)--(\tf,0.2)node[below, pos=0]{$\tfin$};
+\draw[dotted](0.5*\tf,-0.2)--(0.5*\tf,\zmax)node[below, pos=0]{$\tfrac{\tfin}{2}$};
+\draw[dotted](-0.1,\vmax)--(0.5*\tf,\vmax)node[left, pos=0]{$\VitZc$};
+
+\begin{scope}[xshift=\tf cm]
+\begin{scope}[xshift=\abstmin cm]
+\begin{scope}[xshift=1.3 cm]
+\tkzInit[xmin=\tmin,xmax=\tmax,ymin=-1.6,ymax=\zmax]
+\tkzX[label=$t$, orig, noticks]
+\tkzY[label=$\zc$, noticks]%, poslabel=-0.6cm]
+\tkzFct[samples = 200,color = red, lw=1.5pt](\tmin..\tmax){
+0.5*\vmax*\HH{\x}*\HH{0.5*\tf-\x}*(\x/\tf*2)**2
++
+0.5*\vmax*\HH{\x-0.5*\tf}*\HH{\tf-\x}*(2-((\x-\tf)/\tf*2)**2)
++
+\vmax*\HH{\x-\tf}
+}
+\draw[dotted](\tf,-0.2)--(\tf,\zmax)node[below, pos=0]{$\tfin$};
+\draw[dotted](-0.1,\vmax)--(\tf,\vmax)node[left, pos=0]{$\DistZc$};
+\end{scope}
+\end{scope}
+\end{scope}
+
+\end{scope}
+\end{scope}
+\end{scope}
+
+
+\end{tikzpicture}
+
+\end{document}

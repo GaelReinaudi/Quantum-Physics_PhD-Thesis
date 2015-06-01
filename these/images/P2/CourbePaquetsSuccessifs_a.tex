@@ -1,0 +1,26 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=2.5]
+
+\put(0,0){\includegraphics[scale=2.5]{OriginCourbePaquetsSuccessifs_a}}
+\path(5.05,1.6);
+
+%\draw (2.5,0) node[below=-2mm]{$t \left[\seconde{}\right]$};
+\path (2.5,0);% node[below=-2mm]{$t \left[\seconde{}\right]$};
+\draw (-0.1,0.85) node[rotate=90]{$n(\zsonde,t) \left[ \ua \right]$};
+
+\node at (0.4,0.85){(a)};
+\node at (1.5,1.0){$\zsonde=\cm{175}$};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\end{tikzpicture}
+\end{document}

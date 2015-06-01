@@ -1,0 +1,29 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\sc{1.6}
+\begin{tikzpicture}
+
+\useasboundingbox (-\sc*.7,-\sc*.3) rectangle (\sc*5,\sc*3.8);
+\put(0,0){\includegraphics[scale=\sc]{OriginCeramDDEDPUPSimu}}
+
+\draw (\sc*2.6,\sc*0) node[below=-2mm]{$\Devi \left[ {\rm mm} \right]$};
+
+\draw (\sc*0-0.5,\sc*1.95) node[rotate=00]{$\GainCeram$};
+
+\draw(\sc*2.8,\sc*1.49)--(\sc*3.56,\sc*2)node[right]{$\CeramLong=\micron{10}$};
+\draw(\sc*2.85,\sc*1.85)--(\sc*3.56,\sc*2.4)node[right]{$\CeramLong=\mm{5}$};
+\draw(\sc*3.2,\sc*2.6)--(\sc*3.56,\sc*2.8)node[right]{$\CeramLong=\mm{10}$};
+\draw(\sc*3.310,\sc*3.1)--(\sc*3.56,\sc*3.2)node[right]{$\CeramLong=\cm{10}$};
+
+\end{tikzpicture}
+
+\end{document}

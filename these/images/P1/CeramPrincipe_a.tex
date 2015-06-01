@@ -1,0 +1,97 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}
+
+\def\distSurf{3}  
+\fill[opacity=1] (-\distSurf,-3.5) rectangle++(-1,7);
+\draw(-\distSurf-1,-1.5)--++(2,-1.7)node[right]{surface};
+%\draw[dashed](-\distSurf,3.5)--++(0,0.5);
+\draw[latex'-latex'](-\distSurf,3.5)--++(\distSurf,0)node[pos=0.5, below]{$\CeramDist$};
+\draw[dashed](0,3.5)--(0,0);
+
+
+\def\numAt{20}
+\def\sizeCloud{1.7}
+\foreach \xx in {1,...,\numAt}{
+\foreach \yy in {1,...,\numAt}{
+\pgfmathparse{1*(rand)*(\xx/\numAt)}
+\let\XX\pgfmathresult
+\pgfmathparse{1*(rand)*(\yy/\numAt)}
+\let\YY\pgfmathresult
+\pgfmathparse{1*(rand)*(\xx/\numAt)}
+\let\XXX\pgfmathresult
+\pgfmathparse{1*(rand)*(\yy/\numAt)}
+\let\YYY\pgfmathresult
+
+%	\draw[->] (\sizeCloud*\XX,\sizeCloud*\YY)--++(\YYY/2,\XXX/2);
+	\shade[ball color=blue] (\sizeCloud*\XX,\sizeCloud*\YY) circle (0.10cm);
+}}
+
+\pgfmathsetseed{2}
+\def\numAt{5}
+\def\sizeCloud{2.5}
+\foreach \xx in {1,...,\numAt}{
+\foreach \yy in {1,...,\numAt}{
+\pgfmathparse{1*(rand)}
+\let\XX\pgfmathresult
+\pgfmathparse{1*(rand)}
+\let\YY\pgfmathresult
+\pgfmathparse{1*(rand)}
+\let\YYY\pgfmathresult
+\pgfmathparse{1*(rand)}
+\let\XXX\pgfmathresult
+\pgfmathparse{\XX*\XX*\XXX*\XXX > 0.25^2*0.75^2}
+\let\ifff\pgfmathresult
+
+\ifthenelse{1=\ifff}
+{
+	\draw[->, red, thick] (\sizeCloud*\XX,\sizeCloud*\YY)--++(\XXX/1,\YYY/2.5);
+}{}
+	\shade[ball color=blue] (\sizeCloud*\XX,\sizeCloud*\YY) circle (0.10cm);
+}}
+
+
+\pgfmathsetseed{69}
+\def\numAt{5}
+\def\sizeCloud{2.5}
+\foreach \xx in {1,...,\numAt}{
+\foreach \yy in {1,...,\numAt}{
+\pgfmathparse{1*(rand)/2}
+\let\XX\pgfmathresult
+\pgfmathparse{1*(rand)}
+\let\YY\pgfmathresult
+\pgfmathparse{1*(rand)}
+\let\YYY\pgfmathresult
+\pgfmathparse{1*(rand)}
+\let\XXX\pgfmathresult
+\pgfmathparse{(\YY*\YY*\YYY*\YYY > 0.75^2*0.325^2) * (abs(\XXX) < 0.82)}
+\let\ifff\pgfmathresult
+
+\ifthenelse{1=\ifff}
+{
+	\draw[->, blue, densely dotted, thick] (\sizeCloud*\XX-0.56,\sizeCloud*\YY)--++(\XXX/2.5,\YYY/1);
+	\shade[ball color=blue] (\sizeCloud*\XX-0.56,\sizeCloud*\YY) circle (0.10cm);
+}{}
+}}
+
+
+
+
+%\shade[ball color=blue] (-\distSurf+0.071,-1) circle (0.10cm);
+%\shade[ball color=blue] (-\distSurf+0.071,1) circle (0.10cm);
+%\shade[ball color=blue] (-\distSurf+0.071,-0.4) circle (0.10cm);
+%\shade[ball color=blue] (-\distSurf+0.071,-1.5) circle (0.10cm);
+
+
+\end{tikzpicture}
+
+\end{document}

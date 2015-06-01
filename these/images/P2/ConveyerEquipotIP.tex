@@ -1,0 +1,58 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[xscale=0.875, yscale=5]
+
+\def\ShiftAimant{4.667}
+
+\small
+\tkzInit[xmin=-7,xmax=6.3,ymin=-3,ymax=0.1]
+\useasboundingbox (-6.99,-0.39) rectangle (9,0.39);
+
+%		\pgfmathparse{\fn*\ShiftAimant}
+%		\let\Shift\pgfmathresult
+%		\pgfmathparse{1*(0.5+\fn)*\ShiftAimant}
+%		\let\ShiftP\pgfmathresult
+		\pgfmathparse{14/30}
+		\let\YScale\pgfmathresult
+\fill[color=red!75!yellow](-15*\YScale,-0.4)rectangle(15*\YScale,0.4);
+
+	\foreach \fnn/\col in {200/60, 150/45, 100/30, 50/15, 250/80, 300/100}{
+		\foreach \fn in {1,...,8}{
+    	\fill[rotate=-90, yscale=\YScale, color=red!\col!yellow] 
+      plot file{ChampConv/ConvEquipotIP\fnn\fn.txt};
+      \draw[rotate=-90, yscale=\YScale] 
+      plot file{ChampConv/ConvEquipotIP\fnn\fn.txt};
+		}
+	}
+	
+\fill[opacity=0.3](-20,0.3)rectangle++(40,0.4);
+\fill[opacity=0.3](-20,-0.3)rectangle++(40,-0.4);
+	
+\fill[color=white](15*\YScale,-0.8)rectangle(20*\YScale,0.8);
+	\foreach \fnn/\col in {0/15, 50/30, 100/45, 150/60, 200/75, 250/80, 300/100}{
+		\pgfmathparse{0.8/8}
+		\let\Trect\pgfmathresult
+		\pgfmathparse{\Trect*(\fnn)*0.02-0.4*7/8+\Trect}
+		\let\Prect\pgfmathresult
+		\draw[color=black,fill=red!\col!yellow] 
+		(\YScale*15+0.1,\Prect)rectangle+(0.7,-\Trect)
+		node[right]{$\gauss{\fnn}$};
+	}
+
+\tkzX[label=$z$, orig, noticks]
+%\tkzY[label=$x$, orig, noticks]
+
+
+
+\end{tikzpicture}
+
+\end{document}

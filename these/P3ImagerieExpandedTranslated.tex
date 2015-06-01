@@ -1,0 +1,1275 @@
+[[Image: AbsImaging-ChapitreImagerie.png | right | 700px]]
+When handling cold atoms, it is essential to characterize the atomic ensembles brought into play
+Physical quantities which we have access are most often:
+* The number of atoms,
+* The spatial distribution of atoms in the cloud
+* The velocity distribution,
+* Density in phase space to a particle.
+
+Techniques to acquire this information is almost entirely optical in nature, that is to say, based on processes of absorption, distribution, or phase of a light wave.
+
+In this chapter, we will describe the two main methods commonly used to produce images of ultra-cold atomic ensembles: fluorescence imaging and imaging absorption in the low saturation regime. Limitations of these methods when it comes to produce images of dense clouds, will lead us to look at more advanced techniques, but more complex to implement.
+Finally, we present a new imaging protocol that we have developed during my second year of PhD. This solves the atomic structures of dense clouds and gives access to precise and quantitative measurements.
+
+
+/ / / / Imaging a cold atomic ensemble / / / /
+
+In this section, we describe an optical minimum, we will introduce the concepts necessary to study the imaging of an atomic ensemble. We will focus on the nature of digital information obtained when taking a picture. Laser-atom interactions are also described, since the equations arising allow use in quantitative data contained in an image.
+
+
+/ / / / / / / / Optics / / / / / / / /
+
+To focus our attention on the principle of imaging methods, we will consider the system as simple as possible neglecting the imperfections of optical components. We will assume in the context of the Gauss approximation.
+The optical axis is taken as the z axis aaaaq bbbbq.
+The figureCCCnrefBrrrrofig: SytemeOptiqueBrrrrc represents a simple optical system for producing the image of the atom cloud on a CCD sensor comprised of a matrix of pixels. We can measure the light intensity distribution aaaaq CCCIxy bbbbq from the object plane.
+[[Image: AbsImaging-SytemeOptique.png | right | 700px]]
+CCCCaptionFigssssBrrrroSchéma representing a simple optical system. The object plane conjugate CCD lies in the cloud. Aaaaq point (x ', y') bbbbq the sensor corresponds to a point aaaaq (x, y) = (CCCtfracBrrrrox'BrrrrcBrrrroCCCGrandisBrrrrc, CCCtfracBrrrroy'BrrrrcBrrrroCCCGrandisBrrrrc) bbbbq the object plane, where aaaaq CCCGrandis = CCCtfracBrrrroCCCLentilleCCDBrrrrcBrrrroCCCNuageLentilleBrrrrc bbbbq is the magnification of the optical system . Brrrrc
+
+
+
+
+In the sequel, we will consider an atomic cloud whose density is denoted atomic aaaaq CCCdensxyz bbbbq. This cloud is located at the object plane of the optical system, and we assume that each point aaaaq CCCxyz bbbbq cloud has a point image aaaaq (x ', y') bbbbq on the CCD.
+This implies that the system is not sensitive to the position z aaaaq bbbbq atoms, but only to their position aaaaq CCCxy bbbbq projected on the object plane.
+
+
+
+
+
+
+Results
+Brrrro
+The existence of this preferred axis of observation, we subsequently lead to consider density column aaaaq CCCdenscolxy bbbbq defined by:
+
+
+aaaaqbbbbq
+CCCdenscolxy CCCequiv CCCIntegraleBrrrroCCCdensxyzBrrrrcBrrrroCCCdzBrrrrc
+CCCpointformule
+
+aaaaqbbbbq
+
+
+
+This corresponds to the surface density of atoms if the cloud was projected onto the plane aaaaq CCCxy bbbbq. Obtain an image of the cloud is to measure this variable.
+Brrrrc
+It is clear that the knowledge of the density column aaaaq CCCdenscolxy bbbbq not enough to determine the atomic density aaaaq CCCdensxyz bbbbq the cloud. This ambiguity of the measure can be lifted by assuming that the cloud has certain symmetries.
+
+/ / / / / / / / / / / / Spatial sampling / / / / / / / / / / / /
+
+The finite number of pixels on the sensor sets a limit on the spatial accuracy of the signal supplied by the CCD. This is called spatial sampling (also referred to as pixelation). For conventional CCD sensors, the size of a pixel is typically of the order of aaaaq CCCLpix = CCCmicronBrrrro5Brrrrc bbbbq. This limitation should be taken into account when we want to make images of atomic ensembles whose spatial extension is very low (typically less than CCCmicronBrrrro100Brrrrc). The optical system will then be designed so as to provide a magnified image of the cloud on the sensor.
+
+
+
+
+/ / / / / / / / / / / / Laser system / / / / / / / / / / / /
+Unless otherwise stated, the laser system that we will consider in the following is shown schematically in figureCCCnrefBrrrrofig: SystemeLaserBrrrrc.
+We can produce light pulses whose duration aaaaq CCCTPulse bbbbq and power aaaaq CCCPLaser bbbbq are precisely controlled. The shortest pulses that we use with our system have a period aaaaq CCCTPulse = CCCnanosBrrrro250Brrrrc bbbbq.
+[[Image: AbsImaging-SystemeLaser.png | right | 700px]]
+CCCCaptionFigsBrrrroSchématisation a single laser system. A diode laser is locked in frequency through a servo circuit. Frequency fluctuations thus obtained should be very small compared to the natural linewidth of aaaaq CCCpulsSpont bbbbq aaaaq POOOOOBrrrro87Brrrrc bbbbqRb. Can typically expect a usable power from a few milliwatts. To have more power, a second laser diode (slave), more powerful, can be injected by the first beam and then deliver tens of milliwatts. An acousto-optic modulator is used to produce light pulse duration and power controlled.
+In order to avoid the inevitable leakage of light through the modulator, a mechanical shutter is used to cut the beam during periods of nonuse. Brrrrc
+
+
+
+
+/ / / / / / / / / / / / Using the CCD as power meter / / / / / / / / / / / /
+
+One final concerning the interpretation of the signal output by the CCD sensor. In normal operation, each pixel produces a signal proportional to aaaaq CCCSignal bbbbq light energy aaaaq CCCEpix bbbbq accumulated during exposure time aaaaq CCCTPulse bbbbq. However, we see later that the information we use in practice is the intensity distribution aaaaq CCCIxy bbbbq in the object plane of the optical system (where is the cloud). The CCD may well provide this information if we know the following parameters:
+* The sensitivity of the sensor,
+* Aaaaq CCCGrandis bbbbq magnification of the optical system that determines the surface that represents a pixel in the object plane,
+* The duration of exposure aaaaq CCCTPulse bbbbq which determines the light power received,
+* Losses and attenuations aaaaq CCCAttenOptique bbbbq on the beam path in the optical system, between the object plane and the sensor.
+
+We shall denote by aaaaq I'CCCxpyp bbbbq the intensity distribution measured on the sensor. The intensity aaaaq CCCIxy bbbbq in the object plane is then deduced by the expression:
+
+
+aaaaqbbbbq
+CCCIxy CCCAttenOptique SPACEFG CCCGrandisPOOOOO2 SPACEFG = I '(x CCCGrandis SPACEFG, CCCGrandis SPACEFG y)
+
+aaaaqbbbbq
+
+
+
+Throughout the remainder of this chapter, the signals from the CCD will be systematically interpreted in terms of intensity aaaaq CCCIxy bbbbq in the object plane.
+
+
+
+
+ResultatsBrrrro
+However, in order to emphasize the experimental nature of the quantity measured by the CCD, we use the notation to denote aaaaq CCCIccdxy bbbbq intensity aaaaq CCCIxy bbbbq observed in the object plane where is the atomic cloud.
+Brrrrc
+
+
+/ / / / / / / / Interaction atom laser / / / / / / / /
+
+To interpret the data acquired by optical methods, it is important to know the process of interaction between the atoms and the electromagnetic field.
+The detailed description of these processes is beyond the scope of this manuscript. However, we recall some basic notions in the simple case of a two-level atom interacting with a coherent monochromatic light wave.
+If experimentally relevant to an atom having an energy complex structure is discussed in laCCCautorefBrrrrosec: ipafosBrrrrc.
+
+
+
+/ / / / / / / / / / / / Modelling atom with two energy levels / / / / / / / / / / / /
+
+[[Image: AbsImaging-EnergieAtome2Niveaux.png | right | 700px]]
+And we examine the interaction between the atoms in the cloud and the monochromatic light from a laser pulse aaaaq CCCpulsLaser bbbbq. We consider the simple case of an atom with two energy levels: the ground state by aaaaq CCCEtatG bbbbq and excited state aaaaq CCCEtatE bbbbq. Energy aaaaq CCCenergieGE bbbbq between these two levels is a resonant angular frequency
+aaaaq CCCpulsReso = CCCtfracBrrrroCCCenergieGEBrrrrcBrrrroCCChbarBrrrrc
+ bbbbq.
+
+
+This transition has a natural linewidth aaaaq CCCpulsSpont bbbbq linked to the life aaaaq CCCtSpont bbbbq the excited level. The disagreement between the laser pulse and aaaaq CCCpulsLaser bbbbq pulsation resonance aaaaq CCCpulsReso bbbbq be noted aaaaq CCCdesac bbbbq aaaaqbbbbq
+CCCdesac CCCequiv CCCpulsLaser - CCCpulsReso
+CCCpointformule
+aaaaqbbbbq
+
+
+
+
+CCCRemarqueTitreBrrrroÉlargissement inhomogèneBrrrrcBrrrro
+We neglect in the rest of the inhomogeneous broadening sources, that is to say, we will consider that the atoms of the cloud all react the same way towards the light. The resonance angular frequency aaaaq CCCpulsReso bbbbq is thus the same for all atoms. This implies in particular that:
+* The temperature of the cloud is small compared with the Doppler temperature to get rid of the Doppler effect. For aaaaq POOOOOBrrrro87Brrrrc bbbbqRb, aaaaq CCCTDoppler CCCapprox CCCmicroKBrrrro146Brrrrc bbbbq.
+* There is no significant gradient magnetic field on the spatial extension of the cloud.
+
+More generally, any type of confinement (magnetic dipole, etc.) moving the energy levels of atoms, must be cut when taking pictures. This means that the cloud is then ballistic expansion.
+Brrrrc
+
+
+
+/ / / / / / / / / / / / Optical Bloch equations / / / / / / / / / / / /
+
+Just remember that in the case considered here of a coherent light wave acting on a two-tier system, it is possible to describe the evolution of atomic populations and coherences through the optical Bloch equations. These are obtained by making several approximations that we recall here:
+* Rotating field approximation
+,
+* The short memory approximation
+,
+* It is also assumed that all frequencies typical coupling between atom and field are negligible compared to the optical frequency
+.
+
+In the sequel, we will consider the steady
+ achieved by an atom subject to a laser wave intensity aaaaq CCCIlaser bbbbq, detuned to aaaaq CCCdesac bbbbq.
+
+
+
+aaaaqbbbbq
+CCCPopuE = CCCfracBrrrro1BrrrrcBrrrro2Brrrrc SPACEFG CCCfracBrrrroCCCsatBrrrrcBrrrro1 + CCCsatBrrrrc
+CCCvirguleformule
+
+aaaaqbbbbq
+
+
+
+where aaaaq CCCsat bbbbq is the saturation parameter of the transition. It is proportional to the laser intensity aaaaq CCCIlaser bbbbq and depends on the disagreement aaaaq CCCdesac bbbbq following a Lorentzian law:
+
+
+
+aaaaqbbbbq
+CCCsat CCCequiv CCCIsurIsat
+SPACEFG LLLPO CCCfracBrrrro1BrrrrcBrrrro 1 + LLLPA CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc RRRPA POOOOO2 Brrrrc RRRPO
+CCCpointformule
+
+aaaaqbbbbq
+
+
+
+
+
+aaaaq CCCIsat bbbbq designates the saturation intensity at resonance, which is the value of the intensity of laser resonators, having aaaaq CCCPopuE = CCCtfracBrrrroCCCPopuEmaxBrrrrcBrrrro2Brrrrc = CCCtfracBrrrro1BrrrrcBrrrro4Brrrrc bbbbq.
+It is expressed simply by the rate of spontaneous emission in the case of a two-level atom:
+
+
+
+aaaaqbbbbq
+CCCIsat = CCCfracBrrrro2 SPACEFG CCCpiPOOOOO2 SPACEFG CCChbar SPACEFG c SPACEFG CCCpulsSpontBrrrrcBrrrro3 SPACEFG CCClambdaPOOOOO3Brrrrc
+CCCpointformule
+
+aaaaqbbbbq
+
+
+
+CCCRemarqueTitreBrrrroEffet of saturationBrrrrcBrrrro
+[[Image: AbsImaging-CourbeSat.png | right | 700px]]
+Note that the population in the excited state is a nonlinear function of the intensity aaaaq CCCIlaser bbbbq (see figure below cons)
+aaaaqbbbbq
+CCCPopuECCCxrightarrow [CCCIlaser CCCrightarrow CCCinfty] = BrrrroBrrrrcCCCPopuEmax CCCtfracBrrrro1BrrrrcBrrrro2Brrrrc
+aaaaqbbbbq
+This saturation effect is purely quantum. It is related to the fact that an atom can emit a photon stimulated so since its excited state aaaaq CCCEtatE bbbbq, and with the same probability to absorb a from its ground state aaaaq CCCEtatG bbbbq.
+Brrrrc
+
+
+
+In the remainder of this chapter, unless otherwise stated, we will assume implicitly a laser wave with no disagreement: aaaaq CCCdesac bbbbq = 0. We will explain the reasons for this choice laCCCautorefBrrrrosec: ImagerieDesaccordeeBrrrrc.
+
+
+/ / / / / / / / Absorption and scattering of light in an atomic cloud / / / / / / / /
+ 
+We now consider a set of atomic atomic density aaaaq CCCdensxyz bbbbq subjected to a laser wave whose intensity distribution is aaaaq CCCIxyz bbbbq.
+We will express the power light absorbed and distributed within the cloud. Relationships that will be obtained in this sub-section will be used later in this chapter.
+CCCRemarqueBrrrro
+Parameter aaaaq CCCsat bbbbq is proportional to the laser intensity and aaaaq CCCIxyz bbbbq depends coordinates aaaaq CCCxyz bbbbq. However, to alleviate the expressions, we will retain the notation to express aaaaq CCCsat bbbbq aaaaq CCCsatCCCxyz bbbbq.
+Brrrrc
+
+
+
+Each atom absorbs and scatters,
+ an average number aaaaq CCCpulsSpont SPACEFG CCCPopuE bbbbq of photons per unit time. At each point CCCxyz the cloud (which is the atomic density aaaaq CCCdensxyz bbbbq), power aaaaq CCCDiffBrrrroCCCPdifBrrrrc bbbbq absorbed and diffused in an elementary volume aaaaq CCCdxyz bbbbq is given by:
+CCCnResultatBrrrroCCCbeginBrrrroalignBrrrrc
+CCCDiffBrrrroCCCPdifBrrrrc & = CCChbar SPACEFG CCCpulsReso SPACEFG CCCpulsSpont SPACEFG CCCPopuE SPACEFG CCCdens SPACEFG CCCdxyz CCCnonumber CCCCCC
+& = CCChbar SPACEFG CCCpulsReso SPACEFG CCCpulsSpont SPACEFG CCCfracBrrrro1BrrrrcBrrrro2Brrrrc
+% SPACEFG CCCfracBrrrro1BrrrrcBrrrro1 + + CCCIsurIsatxyz LLLPA CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc RRRPA POOOOO2Brrrrc
+SPACEFG CCCfracBrrrroCCCsatBrrrrcBrrrro1 + CCCsatBrrrrc
+SPACEFG CCCdensxyz SPACEFG CCCdxyz
+CCCvirguleformule
+
+CCCendBrrrroalignBrrrrc
+Brrrrc
+CCCnRemarqueBrrrroNotons that expressionCCCnrefBrrrroeq: PdifBrrrrc does not involve any assumption about the spatial distribution of the laser intensity aaaaq CCCIxyz bbbbq within the cloud. This expression is valid, for example, whether it is for a wave passing through the cloud, or to a standing wave produced by a set of laser beams.
+Brrrrc
+
+
+
+
+/ / / / Reliability of image capture / / / /
+
+
+The measurement protocols described in the next section are the most destructive measures, that is to say, changing the properties of clouds whose image is made. Indeed, the absorption and scattering of photons, is changing the properties of the atomic cloud (size, temperature, CCCldots).
+For this reason, it is often impossible to perform two successive measurements on the same cloud.
+CCCRemarqueBrrrro
+In the following (including laCCCautorefBrrrrosec: ipafosBrrrrc), when we propose to repeatedly image the same cloud, we must keep in mind that each measurement is actually performed on a different atomic cloud, but carefully prepared in the same experimental conditions. Good reproducibility of the experiment is then provided four CCCtextitBrrrrosine nonBrrrrc to ensure the production of repeated identical clouds.
+Brrrrc
+
+
+It is more important that the properties of the atomic cloud does not change significantly when taking a picture, otherwise the image is no longer usable. On this point, we propose in this section to discuss the reliability of an image taken in the case of a single laser pulse aaaaq CCCTPulse bbbbq illuminating a cloud. We assume for simplicity that the saturation parameter aaaaq CCCsat bbbbq is the same for each atom cloud.
+
+/ / / / / / / / Diffusion due to thermal agitation / / / / / / / /
+
+Before considering the effect of light on the external degrees of freedom of atoms, recall that, in most cases encountered, the confinement of the cloud is cut at the time of image acquisition. The ballistic expansion of the cloud while taking picture must be considered. Indeed, if we consider a cloud hdy balance defined by the temperature T aaaaq bbbbq, the mean square velocity of the atoms in the cloud is aaaaq CCCDv = CCCsqrtBrrrroCCCtfracBrrrroCCCkb SPACEFG TBrrrrcBrrrromBrrrrcBrrrrc bbbbq. Each atom moves on average
+ of d = aaaaq CCCTPulse SPACEFG CCCDv bbbbq during the aaaaq CCCTPulse bbbbq pulse. The distance d aaaaq bbbbq is an upper bound on the spatial resolution that can be expected when taking a picture.
+CCCApplicationNumeriqueBrrrro
+Consider a cloud whose equilibrium temperature T = hdy is aaaaq CCCmicroKBrrrro100Brrrrc bbbbq. Calculate the maximum aaaaq CCCTPulse bbbbq compatible with diffusion of atomic positions below aaaaq d = ??CCCmicronBrrrro10Brrrrc bbbbq (this corresponds to the typical size aaaaq CCCLpix bbbbq represented by a CCD pixel in the object plane):
+
+
+
+aaaaqbbbbq
+CCCTPulse CCCleqslant of SPACEFG CCCsqrtBrrrroCCCfracBrrrromBrrrrcBrrrroCCCkb SPACEFG TBrrrrcBrrrrc CCCapprox CCCmicrosBrrrro100Brrrrc
+CCCpointformule
+
+aaaaqbbbbq
+
+
+
+If this condition is true, each atom contributes, on average, more than one pixel on the CCD.
+Brrrrc
+
+
+/ / / / / / / / Acceleration due to radiation pressure / / / / / / / /
+
+The first effect of the laser on the position and velocity of the atoms is the radiation pressure. This pushes the atoms in the direction of propagation of the laser wave. According to expressionCCCnrefBrrrroeq: PdifBrrrrc each atom absorbs (and diffuse in a random direction) an average number
+aaaaq CCCtfracBrrrroCCCpulsSpontBrrrrcBrrrro2Brrrrc SPACEFG CCCtfracBrrrroCCCsatBrrrrcBrrrro1 + CCCsatBrrrrc bbbbq
+of photons per unit time. This corresponds to a mean acceleration a aaaaq bbbbq, an average speed aaaaq v_CCCTPulse bbbbq and a spatial displacement means aaaaq d_CCCTPulse bbbbq at the end of the pulse duration aaaaq CCCTPulse bbbbq:
+aaaaqbbbbq
+a = CCCvrecul SPACEFG CCCfracBrrrroCCCpulsSpontBrrrrcBrrrro2Brrrrc SPACEFG CCCfracBrrrroCCCsatBrrrrcBrrrro1 + CCCsatBrrrrc
+CCCvirguleformule
+CCCqquad
+v_CCCTPulse = CCCTPulse SPACEFG CCCvrecul SPACEFG CCCfracBrrrroCCCpulsSpontBrrrrcBrrrro2Brrrrc SPACEFG CCCfracBrrrroCCCsatBrrrrcBrrrro1 + CCCsatBrrrrc
+CCCvirguleformule
+CCCqquad
+d_CCCTPulse = CCCTPulsePOOOOO2 SPACEFG CCCvrecul SPACEFG CCCfracBrrrroCCCpulsSpontBrrrrcBrrrro4Brrrrc SPACEFG CCCfracBrrrroCCCsatBrrrrcBrrrro1 + CCCsatBrrrrc
+CCCvirguleformule
+aaaaqbbbbq
+where aaaaq CCCvrecul = CCCtfracBrrrroCCChbar SPACEFG kBrrrrcBrrrromBrrrrc = CCCtfracBrrrroCCChbar SPACEFG CCCpulsResoBrrrrcBrrrrom SPACEFG cBrrrrc bbbbq is the recoil velocity of the atom (aaaaq CCCapproxCCCmmpsBrrrro6Brrrrc bbbbq for aaaaq POOOOOBrrrro87Brrrrc bbbbqRb).
+
+CCCApplicationNumeriqueBrrrro
+What condition must be fulfilled for a shift Doppler negligible compared to the natural width aaaaq CCCpulsSpont bbbbq transition? We can write:
+
+aaaaqbbbbq
+v_CCCTPulse SPACEFG CCCfracBrrrro2 SPACEFG CCCpiBrrrrcBrrrroCCClambdaBrrrrc CCCll CCCpulsSpont
+CCCvirguleformule
+
+aaaaqbbbbq
+where aaaaq CCClambda bbbbq is the wavelength of the laser. We thus obtain the condition on the duration aaaaq CCCTPulse bbbbq of the light pulse and saturation parameter aaaaq CCCsat bbbbq:
+
+aaaaqbbbbq
+CCCTPulse SPACEFG CCCfracBrrrroCCCsatBrrrrcBrrrro1 + CCCsatBrrrrc CCCll CCCfracBrrrroCCClambdaBrrrrcBrrrroCCCpi SPACEFG CCCvreculBrrrrc CCCapprox CCCmicrosBrrrro40Brrrrc
+CCCpointformule
+
+aaaaqbbbbq
+We can therefore allow very intense light pulses (1 aaaaq CCCsat CCCgtrsim bbbbq) whose duration is of the order of microseconds. For a pulse whose intensity is low (1 aaaaq CCCsat CCCll bbbbq), duration aaaaq CCCTPulse bbbbq may be larger (tens of microseconds for an intensity aaaaq CCCIlaser = CCCtfracBrrrroCCCIsatBrrrrcBrrrro10Brrrrc bbbbq).
+Brrrrc
+
+
+/ / / / / / / / Heating due to spontaneous emission / / / / / / / /
+
+The second effect is related to the re-emission of photons in random directions and tends to diffuse the velocity vectors of each atom. This translates into a warm cloud. In the notations used above, we express the rate of heating of the cloud during the light pulse:
+aaaaqbbbbq
+CCCDeriveBrrrroTBrrrrcBrrrrotBrrrrc = CCCfracBrrrroCCCpulsSpontBrrrrcBrrrro2Brrrrc SPACEFG CCCfracBrrrrom SPACEFG CCCvreculPOOOOO2BrrrrcBrrrroCCCkbBrrrrc SPACEFG CCCfracBrrrroCCCsatBrrrrcBrrrro1 + CCCsatBrrrrc
+CCCpointformule
+aaaaqbbbbq
+
+CCCApplicationNumeriqueBrrrro
+In the case of rubidium, the heating can be expressed numerically, depending on the saturation parameter aaaaq CCCsat bbbbq:
+aaaaqbbbbq
+CCCDeriveBrrrroTBrrrrcBrrrrotBrrrrc CCCapprox CCCfracBrrrroCCCsatBrrrrcBrrrro1 + CCCsatBrrrrc CCCtimes CCCmicroKpmicrosBrrrro7Brrrrc
+CCCpointformule
+aaaaqbbbbq
+This heating is not a problem as long as it does not significantly affect the distribution of the atoms during image capture (see CCCautorefBrrrrosec: FiabilitéImageThiqBrrrrc).
+Brrrrc
+
+
+
+/ / / / Imaging Techniques usual / / / /
+
+Different techniques can be used to obtain a representative picture of the atomic density of the cloud. In this section, we present the two main methods currently used, then we mark the limits of the latter when it comes to produce images of dense clouds.
+
+
+/ / / / / / / / Fluorescence Imaging / / / / / / / /
+
+The technique that seems easiest to implement is simply CCCsotosayBrrrroéclairerBrrrrc the atomic cloud and collect the light scattered by it through the optical system. We speak fluorescence imaging.
+As shown figureCCCnrefBrrrrofig: OptiqueFluoBrrrrc, the incident laser beam can not along the optical axis z aaaaq bbbbq so as not to hinder the detection of the light scattered by the cloud.
+[[Image: AbsImaging-OptiqueFluo.png | right | 700px]]
+CCCCaptionFigssssBrrrroSchéma illustrating a simple optical system to image fluorescence. The incident laser beam can not along the optical axis z aaaaq bbbbq so as not to interfere with the detection of the light scattered by the cloud. We symbolically represented the spontaneous emission of a few photons. Only a fraction of these is emitted in the direction of the system optique.Brrrrc
+
+
+The spontaneous emission of photons is isotropic and only a fraction of the scattered light is collected by the optical system. If aaaaq CCCRLentille bbbbq is the radius of the lens and the distance aaaaq CCCNuageLentille bbbbq cloud-lens, it is CCCsotosayBrrrrovueBrrrrc by the cloud as a solid angle:
+aaaaqbbbbq
+= 2 CCCAngleSolide SPACEFG CCCpi SPACEFG LLLPA RRRPA
+CCCpointformule
+aaaaqbbbbq
+Assuming that all the photons that reach the lens are sent to the CCD sensor, it measures a fraction aaaaq CCCtfracBrrrroCCCAngleSolideBrrrrcBrrrro4 SPACEFG CCCpiBrrrrc bbbbq of the light scattered by the cloud.
+The signal measured by the CCD sensor is:
+
+
+
+
+aaaaqbbbbq
+CCCIccdxy
++ = CCCIbackxy CCCFractionAngleSolide SPACEFG CCCIntegraleBrrrroBrrrroCCCPdifCCCxyzBrrrrcBrrrrcBrrrroCCCdzBrrrrc
+CCCvirguleformule
+
+aaaaqbbbbq
+
+
+ 
+where aaaaq CCCIbackxy bbbbq means the intensity of the background light
+which is measured by the CCD even in the absence of the cloud and aaaaq BrrrroCCCPdifBrrrrc bbbbq is the power light scattered by the cloud (see laCCCautorefBrrrrosec: PuissanceDiffuseeBrrrrc).
+Note that the integral involved in the expressionCCCnrefBrrrroeq: IccdFluoPdifBrrrrc reflects the fact that each point aaaaq CCCxyz bbbbq cloud has a aaaaq CCCxy bbbbq image on the CCD.
+
+
+/ / / / / / / / / / / / Signals measured by the CCD / / / / / / / / / / / /
+
+According to expressionCCCnrefBrrrroeq: PdifBrrrrc power distributed within the atomic cloud can be written:
+
+
+
+aaaaqbbbbq
+CCCIccdxy
+= CCCIbackxy
++ CCCFractionAngleSolide
+SPACEFG CCCfracBrrrroCCChbar SPACEFG CCCpulsReso SPACEFG CCCpulsSpontBrrrrcBrrrro2Brrrrc
+SPACEFG CCCIntegraleBrrrroCCCfracBrrrroCCCsatBrrrrcBrrrro1 + CCCsatBrrrrc SPACEFG CCCdensxyzBrrrrcBrrrroCCCdzBrrrrc
+CCCpointformule
+
+aaaaqbbbbq
+
+
+ 
+This relationship involves the local light intensity aaaaq CCCIxyz bbbbq through the saturation parameter aaaaq CCCsat bbbbq. But in practice, this intensity is not uniform in space for two reasons:
+* The transverse profile of the laser intensity is never completely uniform,
+* Laser intensity decreases during its propagation through the cloud.
+
+It is difficult, from the signal aaaaq CCCIccdxy bbbbq, extract quantitative information on the atomic density aaaaq CCCdensxyz bbbbq.
+
+
+
+
+ResultatsBrrrro
+In practice, the usual technique of fluorescence imaging is to consider that the entire cloud is subjected to the same light intensity. We can write the equation:
+
+
+
+aaaaqbbbbq
+CCCIccdxy
+CCCapprox CCCIbackxy
++ CCCFractionAngleSolide
+SPACEFG CCCfracBrrrroCCChbar SPACEFG CCCpulsReso SPACEFG CCCpulsSpontBrrrrcBrrrro2Brrrrc SPACEFG CCCfracBrrrroCCCsat_0BrrrrcBrrrro1 + CCCsat_0Brrrrc SPACEFG
+SPACEFG CCCdenscolxy
+CCCvirguleformule
+
+aaaaqbbbbq
+
+
+ 
+aaaaq CCCsat_0 bbbbq where is a parameter to be estimated saturation CCCsotosayBrrrroglobalBrrrrc taking into account the disagreement and the average light intensity at the atomic cloud.
+The second member of the expressionCCCnrefBrrrroeq: IccdFluoApproxBrrrrc has a term proportional to the column density aaaaq CCCdenscolxy bbbbq.
+Brrrrc
+
+
+The figureCCCnrefBrrrrofig: ImagesFluoBrrrrc shows an image of a cloud in the magneto-optical trap described in chapitreCCCnrefBrrrrochap: JetAtomiqueBrrrrc.
+[[Image: AbsImaging-FluoMotLoad_treslent0142.png | right | 700px]]
+CCCCaptionFigsBrrrroImagerie fluorescence taken when loading the magneto-optical trap described in chapitreCCCnrefBrrrrochap: JetAtomiqueBrrrrc. Typically CCCvalBrrrroE9Brrrrc atoms are illuminated by six laser beams of magneto-optical trap whose disagreement aaaaq CCCdesacCCCapprox-3 SPACEFG CCCpulsSpont bbbbq.Brrrrc
+
+
+
+To estimate the saturation parameter aaaaq CCCsat_0 bbbbq which corresponds to the figureCCCnrefBrrrrofig: ImagesFluoBrrrrc, we consider the following parameters:
+* 6 laser beams are involved, * intensity is about aaaaq ICCCapprox2 SPACEFG CCCIsat bbbbq,
+* Beams is disagreement aaaaq CCCdesacCCCapprox-3 SPACEFG CCCpulsSpont bbbbq,
+* We neglect the magnetic field inhomogeneity.
+
+According to expressionCCCnrefBrrrroeq: ParamSatBrrrrc, we deduce aaaaq CCCsat_0 CCCapprox CCCvalBrrrro0.3Brrrrc bbbbq.
+
+
+/ / / / / / / / / / / / Measurement protocol for imaging fluorescence / / / / / / / / / / / /
+
+
+The expressionCCCnrefBrrrroeq: IccdFluoApproxBrrrrc therefore contains a background signal aaaaq CCCIbackxy bbbbq, and a useful signal, proportional to the density column. In practice, it overcomes the first term in capturing not one, but two images on the CCD.
+* The first is an image of the atomic cloud in the presence of laser light excitation, the signal collected corresponds to the expressionCCCnrefBrrrroeq: IccdFluoBrrrrc
+* The second is an image taken under the same conditions but in the absence of cloud, the measured signal is then composed only of the term aaaaq CCCIccdxy = CCCIbackxy bbbbq.
+
+
+
+
+
+ResultatsBrrrro
+A simple subtraction of the two images provides a useful signal giving the density column
+aaaaqbbbbq
+CCCdenscolxy = CCCfracBrrrro4 SPACEFG CCCpiBrrrrcBrrrroCCCAngleSolideBrrrrc SPACEFG CCCfracBrrrro2BrrrrcBrrrroCCChbar SPACEFG CCCpulsReso SPACEFG CCCpulsSpontBrrrrc SPACEFG
+ LLLPA
+CCCIccdxyAvecNuage - CCCIccdxySansNuage
+ RRRPA
+CCCpointformule
+aaaaqbbbbq
+Brrrrc
+
+
+
+/ / / / / / / / Imaging absorption in the low saturation regime / / / / / / / /
+
+The other common method is by absorption imaging. This is to inform the atomic cloud with a progressive wave laser and to the image of his shadow (see figureCCCnrefBrrrrofig: OptiqueAbsorptionBrrrrc).
+[[Image: AbsImaging-OptiqueAbsorption.png | right | 700px]]
+CCCCaptionFigssBrrrroSchéma illustrating a simple optical system to image absorption. The cloud absorbs some of the incident laser light. The image of the shadow is collected by the sensor CCD.Brrrrc
+
+
+
+Throughout its propagation through the cloud, the laser beam is absorbed and distributed. We will consider a laser beam propagating along z direction aaaaq bbbbq. The expressionCCCnrefBrrrroeq: PdifBrrrrc determines the elementary variation aaaaq CCCDiffBrrrroCCCIlaserBrrrrc bbbbq intensity of the laser during the propagation in the cloud over a length aaaaq CCCdz bbbbq:
+CCCbeginBrrrroalignBrrrrc
+CCCDiffBrrrroCCCIxyzBrrrrc
+& = CCCfracBrrrroCCCDiffBrrrroCCCPdifBrrrrcBrrrrcBrrrroCCCdx SPACEFG CCCdyBrrrrc
+CCCnonumberCCCCCC
+& = CCChbar SPACEFG CCCpulsReso SPACEFG CCCpulsSpont SPACEFG CCCfracBrrrro1BrrrrcBrrrro2Brrrrc
+SPACEFG CCCfracBrrrroCCCsatBrrrrcBrrrro1 + CCCsatBrrrrc
+SPACEFG CCCdensxyz SPACEFG CCCdz
+CCCpointformule
+
+CCCendBrrrroalignBrrrrc
+By showing explicitly the dependence of intensity in the saturation parameter (expressionCCCnrefBrrrroeq: ParamSatBrrrrc), we obtain a nonlinear differential equation of the first order aaaaq CCCIxyz bbbbq verified during the crossing of the cloud:
+CCCbeginBrrrroalignBrrrrc
+CCCDeriveBrrrroCCCIxyzBrrrrcBrrrrozBrrrrc
+& = - CCCfracBrrrroCCChbar SPACEFG CCCpulsReso SPACEFG CCCpulsSpontBrrrrcBrrrro2Brrrrc
+SPACEFG CCCIsurIsatxyz
+SPACEFG CCCfracBrrrro1BrrrrcBrrrro1 + + CCCIsurIsatxyz LLLPA CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc RRRPA POOOOO2Brrrrc
+SPACEFG CCCdensxyz
+CCCpointformule
+
+CCCendBrrrroalignBrrrrc
+
+/ / / / / / / / / / / / Absorption in the low saturation regime / / / / / / / / / / / /
+
+The usual technique absorption imaging is to use a resonant laser beam (aaaaq CCCdesac bbbbq = 0), and the intensity of which is small compared to the saturation intensity. We then speak imaging absorption in the low saturation regime. In this limit, we can consider that atoms have a linear response to the laser intensity.
+The expressionCCCnrefBrrrroeq: dIabsGeneraleBrrrrc with aaaaq CCCsatCCCll bbbbq allows one to obtain the linear differential equation of first order:
+CCCbeginBrrrroalignBrrrrc
+CCCDeriveBrrrroCCCIxyzBrrrrcBrrrrozBrrrrc
+& =
+- CCCseceff
+SPACEFG CCCIxyz
+SPACEFG CCCdensxyz
+CCCvirguleformule
+
+CCCendBrrrroalignBrrrrc
+where aaaaq CCCseceff = CCCfracBrrrroCCChbar SPACEFG CCCpulsReso SPACEFG CCCpulsSpontBrrrrcBrrrro2 SPACEFG CCCIsatBrrrrc bbbbq is the cross section of the resonance transition excited by the laser. For a two-tier system, and after expressionCCCnrefBrrrroeq: IsatExprBrrrrc she expressed very simply in terms of the wavelength of the laser aaaaq CCClambda bbbbq:
+aaaaqbbbbq
+CCCseceff = CCCfracBrrrro3 SPACEFG CCClambdaPOOOOO2BrrrrcBrrrro2 SPACEFG CCCpiBrrrrc
+CCCpointformule
+aaaaqbbbbq
+
+
+Equation différentielleCCCnrefBrrrroeq: EqDiffAbsBasseIntBrrrrc is remarkably simple and solved exactly:
+
+
+
+
+ResultatsBrrrro
+If we denote by aaaaq CCCIinxy bbbbq laser intensity when it reaches the cloud, we can express the intensity of the laser aaaaq CCCIoutxy bbbbq after crossing the cloud by the relation:
+
+
+
+aaaaqbbbbq
+CCCIoutxy = CCCIinxy SPACEFG CCCexpoBrrrro-CCCseceff SPACEFG CCCdenscolxyBrrrrc
+CCCvirguleformule
+
+aaaaqbbbbq
+
+
+
+which is nothing other than the Beer-Lambert law, that is to say, the law governing the absorption in a medium having a linear response to intensity. The dimensionless quantity aaaaq CCCseceff SPACEFG CCCdenscolxy bbbbq is called optical depth and can be denoted aaaaq CCCOptProfCCCxy bbbbq.
+Brrrrc
+
+
+
+CCCnomeRemonteBrrrroCCCIinBrrrrcBrrrroIntensité incident laser imager on nuageBrrrrcBrrrro4cmBrrrrcCCCnomeRemonteBrrrroCCCIoutBrrrrcBrrrroIntensité laser imager after crossing the nuageBrrrrcBrrrro3cmBrrrrc
+
+For the remainder of this chapter, it is useful to differentiate between two physical quantities as follows:
+* Optical depth:
+
+
+
+aaaaqbbbbq
+CCCOptProfCCCxy CCCequiv CCCseceff SPACEFG CCCdenscolxy
+
+CCCvirguleformule
+aaaaqbbbbq
+
+
+
+which is a characteristic of the atomic cloud, and whose value is by definition independent of the method used to measure
+* CCCdo and we define by:
+
+
+
+aaaaqbbbbq
+CCCOptDensCCCxy
+CCCequiv CCCLnBrrrro CCCfracBrrrroCCCIinxyBrrrrcBrrrroCCCIoutxyBrrrrc Brrrrc
+CCCvirguleformule
+aaaaqbbbbq
+
+
+
+and describes the relative attenuation of the laser light passing through the cloud.
+
+
+
+
+
+ResultatsBrrrro
+In the imaging protocol by low absorption saturation these two quantities are equal aaaaq CCCOptProf = CCCOptDens bbbbq. In lesCCCautorefBrrrrosec: LimitesNuageDenseBrrrrc etCCCnrefBrrrrosec: ipafosBrrrrc we will have to consider the fact that aaaaq CCCOptProf bbbbq and aaaaq CCCOptDens bbbbq are not equal in general. The CCCdo depends, among other things, the intensity and detuning of the laser imager.
+Brrrrc
+
+
+
+/ / / / / / / / / / / / Measurement protocol / / / / / / / / / / / /
+
+In practice, as in the case of fluorescence imaging, the CCD sensor measures light background aaaaq CCCIbackxy bbbbq. The extraction protocol density column aaaaq CCCdenscolxy bbbbq involves capturing three images:
+* The first is an image of the atomic cloud in the presence of laser light excitation, the signal is collected aaaaq CCCIccdxy = + CCCIbackxy CCCIoutxy bbbbq.
+* The second is an image taken under the same conditions but in the absence of cloud, the measured signal is then aaaaq CCCIccdxy CCCIbackxy = + CCCIinxy bbbbq since the laser is not absorbed.
+* The third is an image taken under the same conditions but in the absence of cloud and laser imaging, the measured signal is then composed only of the term aaaaq CCCIbackxy bbbbq.
+
+
+
+
+
+ResultatsBrrrro
+A mathematical operation performed for each pixel aaaaq CCCxy bbbbq CCD makes it possible to calculate the density column:
+CCCbeginBrrrroalignBrrrrc
+CCCseceff SPACEFG CCCdenscolxy
+& =
+CCCLnBrrrro
+CCCfracBrrrro
+CCCIccdxySansNuage - CCCIbackxy
+BrrrrcBrrrro
+CCCIccdxyAvecNuage - CCCIbackxy
+Brrrrc
+Brrrrc CCCnonumber CCCCCC
+& =
+CCCLnBrrrro
+CCCfracBrrrroCCCIinxyBrrrrcBrrrroCCCIoutxyBrrrrc
+Brrrrc
+CCCequiv CCCOptDensCCCxy
+
+CCCendBrrrroalignBrrrrc
+CCCff
+Brrrrc
+
+
+
+This imaging protocol by absorption in the low saturation regime has a major quality: the CCD sensitivity and the characteristics of the transition (aaaaq CCCIsat bbbbq, aaaaq CCCseceff bbbbq) does not need to be known to provide quantitative measures of CCCdo. Indeed, only the ratio of the two intensities aaaaq CCCIin bbbbq and aaaaq CCCIout bbbbq occurs.
+
+
+
+The figureCCCnrefBrrrrofig: ImagesAbsorBrrrrc shows an example of images taken for absorption imaging protocol.
+CCCsubfloat [cloudless] Brrrro [[Image: AbsImaging-2005_12_16_A_movie_2_00060_NoAt.png | right | 700px]] Brrrrc SPACEFG
+CCCsubfloat [with cloud] Brrrro [[Image: AbsImaging-2005_12_16_A_movie_2_00060_With.png | right | 700px]] Brrrrc SPACEFG
+CCCsubfloat [column density] Brrrro [[Image: AbsImaging-2005_12_16_A_movie_2_00060Absor.png | right | 700px]] Brrrrc
+CCCCaptionFigsBrrrroExemple images taken by the imaging protocol absorption. The image (a) corresponds to the laser light alone, that is to say in the absence of the atom cloud. Image (b) is taken at the same condion the image (a), but in the presence of the cloud. The image CCCsotosayBrrrrode fondBrrrrc is not shown because it is essentially all black. By applying formuleCCCnrefBrrrroeq: DensColAbsorptionBrrrrc each pixel aaaaq CCCxy bbbbq, we obtain the image (c) represents the CCCdo aaaaq CCCOptDensCCCxy bbbbq of nuage.Brrrrc
+
+
+
+/ / / / Reliability of a measure on a very dense cloud / / / /
+
+Both techniques previously described in laCCCautorefBrrrrosec: ImagerieUsuellesBrrrrc are fairly simple to implement and are widely used. However, we shall see in this section, the dense cloud processing technology makes these little adaptéesCCCciteBrrrroKDS99, KSN01Brrrrc. Here we will highlight the limitations of these protocols.
+
+
+/ / / / / / / / Limitations of fluorescence imaging protocol / / / / / / / /
+
+At the theoretical study of fluorescence imaging protocol (CCCautorefBrrrrosec: ipfBrrrrc), we have implicitly made an important simplifying assumption. It is assumed that all photons emitted spontaneously in the cloud can reach the CCD with the same probability.
+In reality, there may be a scattered photon by an atom is immediately re-absorbed into the cloud by another atom.
+[[Image: AbsImaging-EmissionRéabsorption.png | right | 700px]]
+
+This means that the optical system can be observed that the apparent surface of the cloud.
+
+
+
+
+aaaaqbbbbq
+CCCDlibre SPACEFG CCCseceffsat SPACEFG CCCoverlineBrrrroCCCdensBrrrrc CCCequiv 1
+CCCvirguleformule
+
+aaaaqbbbbq
+
+
+
+aaaaq CCCseceffsat bbbbq where is the cross section of the transition taking into account the saturation:
+
+
+
+aaaaqbbbbq
+CCCseceffsat CCCequiv CCCseceff SPACEFG CCCfracBrrrro1BrrrrcBrrrro1 + CCCsatBrrrrc
+CCCpointformule
+
+aaaaqbbbbq
+
+
+
+We can identify two behaviors limits depending on the characteristic size of the cloud aaaaq CCCLZnuage bbbbq along the optical axis:
+* If aaaaq CCCDlibreCCCggCCCLZnuage bbbbq, then a photon will have little chance of being re-absorbed in the cloud
+* However, if aaaaq CCCDlibre CCCll CCCLZnuage bbbbq, each scattered photon will most likely be re-absorbed and re-emitted and re-absorbed ... many times before leaving the cloud.
+
+
+
+
+
+ResultatsBrrrro
+Considering that the column density of the cloud aaaaq CCCdenscol bbbbq is about aaaaq CCCoverlineBrrrroCCCdensBrrrrc SPACEFG CCCLZnuage bbbbq, and after expressionsCCCnrefBrrrroeq: SecEffSatBrrrrc etCCCnrefBrrrroeq: LibreParcoursBrrrrc, we can identify a criterion on the optical depth of the cloud.
+Thus, the process of re-absorption can be neglected if
+
+
+
+aaaaqbbbbq
+CCCseceff SPACEFG CCCdenscol CCCll CCCsat 1 +
+CCCpointformule
+
+aaaaqbbbbq
+
+
+
+CCCfinformule
+Brrrrc
+
+
+
+CCCApplicationNumerique
+Brrrro
+Estimate the intensity required to obtain a usable image in two common cases:
+* In the magneto-optical trap described in laCCCautorefBrrrrosec: PaquetsPmoBrrrrc, the atomic density of a cloud is typically CCCatpccBrrrro2EBrrrro10BrrrrcBrrrrc. With a transverse size (along the axis of the optical system) aaaaq CCCLZnuageCCCapproxCCCmmBrrrro5Brrrrc bbbbq, the optical depth reached
+aaaaqbbbbq
+CCCAvecTexteBrrrroCCCseceff SPACEFG CCCdenscolBrrrrcBrrrroCCCtiny PMOBrrrrc CCCapprox 30
+CCCpointformule
+aaaaqbbbbq
+* In a Bose-Einstein condensate of rubidium atomic density typically reaches CCCatpccBrrrroEBrrrro14BrrrrcBrrrrc. Consider a typical size aaaaq CCCLZnuageCCCapproxCCCmicronBrrrro10Brrrrc bbbbq. Under these conditions the optical depth reaches
+aaaaqbbbbq
+CCCAvecTexteBrrrroCCCseceff SPACEFG CCCdenscolBrrrrcBrrrroCCCtiny BECBrrrrc CCCapprox 300
+CCCpointformule
+aaaaqbbbbq
+
+There is therefore need to have very high intensities. Indeed expressionCCCnrefBrrrroeq: NegligeReAbsorptionBrrrrc which gives the criterion validity of a measure requires the use of intensities of hundreds or even thousands of times greater than the saturation intensity.
+Brrrrc
+
+
+/ / / / / / / / / / / / Fluorescence imaging system is extremely saturating / / / / / / / / / / / /
+
+The team D.Weiss (Berkeley, California) has implemented a protocol for fluorescence imaging in a regime of extreme saturation to consider a compressed magneto-optical trap atoms CésiumCCCciteBrrrroDLH00Brrrrc. It uses a laser Titanium Sapphire delivering CCCSIBrrrro500BrrrrcBrrrroCCCmilliCCCwattBrrrrc resonant light. The laser imager is retro-reflected to balance radiative forces induced by the absorption of photons repeated. With an imaging beam whose radius aaaaq CCCtfracBrrrro1BrrrrcBrrrroCCCexpoBrrrro2BrrrrcBrrrrc bbbbq of CCCmmBrrrro4Brrrrc, it is possible to obtain currents of up to aaaaq CCCvalBrrrro2000Brrrrc SPACEFG CCCIsat bbbbq.
+
+The use of such intensities is very interesting in many ways on the physical plane:
+* Aaaaq CCCPopuE bbbbq population of the excited state is very close
+its limiting value aaaaq CCCPopuEmax = CCCtfracBrrrro1BrrrrcBrrrro2Brrrrc bbbbq. Thus, each average atom emits aaaaq CCCtfracBrrrroCCCpulsSpontBrrrrcBrrrro2Brrrrc bbbbq photons per second, regardless of fluctuations in the local intensity of the laser beam. The measures are quantitative.
+* The saturation parameter aaaaq CCCsat bbbbq is large compared to unity, even if the laser is not perfectly resonant. This method is thus insensitive to the disagreement of the laser or the presence of magnetic field gradient. In particular it is operable to perform an image of a magneto-optical trap.
+* Cross section aaaaq CCCseceffsat bbbbq saturated transition is very low (see CCCvpagerefBrrrrosec: ReAbsorptionBrrrrc). Thus, the measured optical densities are much higher. Another physical interpretation of this phenomenon is that the process of re-absorption within the cloud are offset by the process of stimulated emission, since the population aaaaq CCCPopuE bbbbq of the excited state is almost identical to the population of aaaaq CCCPopuG bbbbq the ground state.
+
+The technique described in the référenceCCCciteBrrrroDLH00Brrrrc is accurate, robust and allowed the group to measure D.Weiss CCCdo the order of CCCvalBrrrro100Brrrrc.
+
+
+/ / / / / / / / Limitations low saturation absorption imaging / / / / / / / /
+
+When capturing image data are recorded and processed by a computer system. This involves scanning the signals delivered by the CCD sensor.
+In this sub-section, we show how this measure prohibits high optical densities by absorption imaging technique weakly saturated.
+
+
+/ / / / / / / / / / / / Scan signal provided by the CCD / / / / / / / / / / / /
+
+The signal aaaaq CCCSignalCCCxy bbbbq the CCD sensor outputs the result of an analog-digital conversion on a number of bits aaaaq CCCNbit bbbbq. This implies a discretization of the signal amplitude aaaaq CCCSignalCCCxy bbbbq since it can take that aaaaq 2POOOOOBrrrroCCCNbitBrrrrc bbbbq possible values: aaaaqbbbbq
+000 ... 01.000 ... 10.000 ... 11, CCCldotsCCCldotsCCCldots, 111 ... 11 ... 10CCCtextBrrrroetBrrrrc111
+CCCpointformule
+aaaaqbbbbq
+aaaaqbbbbq
+CCCSignalPas = CCCfracBrrrroCCCSignalMaxBrrrrcBrrrro2POOOOOBrrrroCCCNbitBrrrrc-1Brrrrc CCCvirguleformule
+aaaaqbbbbq
+aaaaq CCCSignalPas bbbbq where is the limit of accuracy on the signal provided by the sensor.
+
+
+CCCRemarqueBrrrro
+This should be also taken into account the electronic noise of the camera. It plays an important role in interpreting signals. Note however, that even in the total absence of noise, the discretization of the amplitude is the ultimate limit of accuracy. In the following we neglect the effects of noise to focus on the impact of digitization.
+Brrrrc
+
+
+CCCApplicationNumerique
+Brrrro
+The CCD used in our experimental model is a Basler A102 f monochrome.
+The signal is digitized on aaaaq CCCNbit = 8 bbbbq aaaaq or 12 bits bbbbq choice. The sensitivity of the sensor has been calibrated by us.
+ For the wavelength we use (aaaaq CCCnmBrrrro780Brrrrc bbbbq) and in the absence of electronic gain, the discretization thus measured corresponds to an energy-deaaaaq CCCSIBrrrro9.3E 17BrrrrcBrrrroCCCjouleBrrrrc bbbbq or aaaaq bbbbq 365 photons.
+Brrrrc
+
+/ / / / / / / / / / / / Limitations CCCdo measurable absorption imaging / / / / / / / / / / / /
+
+
+Now emphasize the limits of the imaging protocol described by absorption saturation in low laCCCautorefBrrrrosec: ipafasBrrrrc.
+The use of images taken by this method is due to the expressionCCCnrefBrrrroeq: DensColAbsorptionBrrrrc that we recall here:
+aaaaqbbbbq
+CCCseceff SPACEFG CCCdenscolxy
+=
+CCCLnBrrrro
+CCCfracBrrrroCCCIinxyBrrrrcBrrrroCCCIoutxyBrrrrc
+Brrrrc
+CCCequiv CCCOptDensCCCxy
+CCCtextBrrrro (recall the équationCCCnrefBrrrroeq: DensColAbsorptionBrrrrc CCCpagerefBrrrroeq page: DensColAbsorptionBrrrrc) Brrrrc
+CCCpointformule
+aaaaqbbbbq
+However, if the cloud CCCdo is important, then the value of the intensity aaaaq CCCIout bbbbq after crossing the cloud can become extremely low
+ relative to the incident intensity aaaaq CCCIin bbbbq. In other words, the cloud can absorb almost all incident light.
+
+We will show that this is a real problem with measuring the CCD.
+To make best use of the full range of possible values ??for the signal aaaaq CCCSignalCCCxy bbbbq,
+we set the optical system so that the value aaaaq CCCSignalMax bbbbq corresponds to the maximum intensity of the laser imager when it is not absorbed, that is to say:
+aaaaqbbbbq
+CCCSignalMax SPACEFG CCClongleftrightarrow SPACEFG CCCIinmax CCCequiv CCCsup (CCCIinxy)
+CCCpointformule
+aaaaqbbbbq
+The discretization aaaaq CCCSignalPas bbbbq corresponds to:
+aaaaqbbbbq
+CCCSignalPas = CCCfracBrrrroCCCSignalMaxBrrrrcBrrrro2POOOOOCCCNbit-1Brrrrc
+CCCquad CCClongleftrightarrow CCCquad
+CCCIPas = CCCfracBrrrroCCCIinmaxBrrrrcBrrrro2POOOOOCCCNbit-1Brrrrc
+CCCpointformule
+aaaaqbbbbq
+This requires a discretization of the values ??obtained with the expressionCCCnrefBrrrroeq: DensColAbsorptionBrrrrc which involves the ratio of the two intensities aaaaq CCCIin bbbbq and aaaaq CCCIout bbbbq.
+It is particularly important to examine the accuracy obtained when using this expression with aaaaq CCCIin bbbbq and aaaaq CCCIout bbbbq taking discrete values ??by not aaaaq CCCIPas bbbbq. A simple differentiation of expressionCCCnrefBrrrroeq: DensColAbsorptionBrrrrc allows us to estimate the accuracy of the measurement:
+CCCbeginBrrrroalignBrrrrc
+CCCDelta LLLPA CCCseceff SPACEFG CCCdenscol RRRPA & = + CCCfracBrrrroCCCIPasBrrrrcBrrrroCCCIoutBrrrrc CCCfracBrrrroCCCIPasBrrrrcBrrrroCCCIinBrrrrc CCCnonumber CCCCCC
+CCCapprox & CCCfracBrrrroCCCIPasBrrrrcBrrrroCCCIoutBrrrrc CCCqquad CCCtextBrrrropuisqu'on guess aaaaq CCCIoutCCCllCCCIin bbbbqBrrrrc CCCnonumber
+CCCpointformule
+CCCendBrrrroalignBrrrrc
+ 
+CCCApplicationNumeriqueBrrrro
+Estimate the maximum optical densities which we have access, taking into account the discretization of the signal from the CCD in the following two cases:
+* For coding aaaaq CCCNbit bbbbq = 8 bits, expressionCCCnrefBrrrroeq: DensColAbsorptionBrrrrc may give a value that is at most
+aaaaqbbbbq
+CCCOptDens
+=
+CCCLnBrrrro
+CCCfracBrrrroCCCSignalMaxBrrrrcBrrrroCCCSignalPasBrrrrc
+Brrrrc
+=
+CCCLnBrrrro 2POOOOOCCCNbit-1 Brrrrc
+CCCapprox CCCvalBrrrro5.5Brrrrc
+CCCpointformule
+aaaaqbbbbq
+However, if we want to have a relative accuracy of aaaaq 10CCCpercent bbbbq the calculated CCCdo not exceed aaaaq CCCOptDens = CCCvalBrrrro4.5Brrrrc bbbbq.
+* In the case aaaaq CCCNbit bbbbq = 12, the calculated CCCdo is at most aaaaq CCCOptDens = CCCvalBrrrro8.3Brrrrc bbbbq, but in order to have a relative accuracy of aaaaq 10CCCpercent bbbbq the CCCdo must be less than aaaaq CCCOptDens = CCCvalBrrrro7.5Brrrrc bbbbq
+
+Brrrrc
+
+
+We understand why the imaging protocol by low absorption saturation is limited to optical depth measurements in the range of CCCvalBrrrro4Brrrrc-CCCvalBrrrro5Brrrrc.
+We will show in laCCCautorefBrrrrosec: ipafosBrrrrc how this problem can be circumvented by using the non-linear response of atoms.
+
+/ / / / / / / / Absorption of a laser beam detuned / / / / / / / /
+
+One way around this limitation is to reduce the absorption of laser imager playing the odds aaaaq CCCdesac bbbbq laser. Indeed, the expression CCCvrefBrrrroeq: PdifBrrrrc shows that we can reduce the absorption by detuning the laser imager. We then show that the expressionCCCnrefBrrrroeq: DensColAbsorptionBrrrrc becomes:
+
+
+
+aaaaqbbbbq
+CCCOptDensCCCxy
+CCCequiv CCCLnBrrrro CCCfracBrrrroCCCIinxyBrrrrcBrrrroCCCIoutxyBrrrrc Brrrrc
++ = CCCfracBrrrroCCCseceff SPACEFG CCCdenscolxyBrrrrcBrrrro1 LLLPA CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc RRRPA POOOOO2Brrrrc
+CCCvirguleformule
+
+aaaaqbbbbq
+
+
+
+
+CCCApplicationNumeriqueBrrrro
+Just for example, to resolve the disagreement aaaaq CCCdelta = CCCpulsSpont bbbbq for a CCCdo of aaaaq 7 bbbbq resonance becomes close to unity.
+Brrrrc
+
+
+However, for a non-resonant laser, the atom cloud is as a dispersive medium. For a two-level atom, the refractive index is given aaaaq CCCnrefracImaginaire bbbbq parCCCciteBrrrroKDS99Brrrrc:
+aaaaqbbbbq
+CCCnrefracImaginaireCCCxyz
+= 1 + CCCdensCCCxyz SPACEFG CCCfracBrrrroCCCseceff SPACEFG CCClambdaBrrrrcBrrrro4 SPACEFG CCCpiBrrrrc
+ SPACEFG LLLPA
+CCCfracBrrrro CCCim BrrrrcBrrrro1 + LLLPA CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc RRRPA POOOOO2Brrrrc
+-
+CCCfracBrrrro CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc BrrrrcBrrrro1 + LLLPA CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc RRRPA POOOOO2Brrrrc
+ RRRPA
+CCCvirguleformule
+aaaaqbbbbq
+where aaaaq CCClambda bbbbq is the wavelength of the laser, and aaaaq CCCdensCCCxyz bbbbq is the atomic density of the cloud. The imaginary part of aaaaq CCCnrefracImaginaire bbbbq matches the character absorbing medium. The real part of aaaaq CCCnrefracImaginaire bbbbq:
+
+
+
+aaaaqbbbbq
+BrrrroCCCnrefracxyzBrrrrc
+= 1 - CCCdensCCCxyz SPACEFG CCCfracBrrrroCCCseceff SPACEFG CCClambdaBrrrrcBrrrro4 SPACEFG CCCpiBrrrrc
+ SPACEFG CCCfracBrrrro CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc BrrrrcBrrrro1 + LLLPA CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc RRRPA POOOOO2Brrrrc
+CCCvirguleformule
+
+aaaaqbbbbq
+
+
+
+corresponds to the character which induces the dispersive phase of the wave and hence its refraction.
+ 
+
+ 
+[[Image: AbsImaging-LentilleGradientIndice.png | right | 700px]] This phenomenon of refraction that the atomic ensemble acts as a lens gradient index of the laser imager. The light rays are deflected so that the resulting image on the CCD, which corresponds to the light intensity from the object plane is distorted: it is an effect of CCCsotosayBrrrromirage optiqueBrrrrc. In the illustration below cons, we represent some rays and their extensions (dotted line) in the object plane. The deflection of rays towards the center of the cloud (where the atomic density is high) reflects the fact that aaaaq BrrrroCCCnrefracBrrrrc bbbbq is higher here
+to CCCvalBrrrro1Brrrrc.
+
+The figureCCCnrefBrrrrofig: ImageNuageDesaccordeBrrrrc provides an example of images made on a dense atomic cloud, with no disagreement, and disagreement with aaaaq CCCdesac = -2 SPACEFG CCCpulsSpont bbbbq.
+It shows clearly the effect of lens on the second image.
+CCCsubfloat [aaaaq CCCdesac bbbbq = 0]
+Brrrro [[Image: AbsImaging-Det0Gamma_000Absor.png | right | 700px]] BrrrrcCCCqquad
+CCCsubfloat [aaaaq CCCdesac = -2 SPACEFG CCCpulsSpont bbbbq]
+Brrrro [[Image: 2-Det AbsImaging Gamma_000Absor.png | right | 700px]] Brrrrc
+CCCCaptionFigsBrrrroExemples images carried on an atomic cloud dense product by a magneto-optical two-dimensional compressed (due to the elongated shape of the cloud, it is distinguished in that a part of the images).
+Image (a) is taken by the imaging technique described in saturated absorption weakly laCCCautorefBrrrrosec: ipafasBrrrrc with a resonant laser (aaaaq CCCdesac bbbbq = 0).
+The image (b) is taken in the same experimental conditions, but by detuning the laser imager aaaaq CCCdesac = -2 SPACEFG CCCpulsSpont bbbbq.
+Clearly observed lensing on the second image: the central area is dark because of the refraction of rays of the beam imager.
+Brrrrc
+
+
+
+Disclaim a test that can determine whether the image of a cloud with a detuned beam is exploitable.
+CCCnewline
+The equation that describes the propagation of light rays in the cloud is derived from the eikonal equation and can be put in the form:
+aaaaqbbbbq
+Brrrro
+CCCDeriveBrrrroBrrrrcBrrrrosBrrrrc LLLPA CCCnrefrac SPACEFG CCCVecteurBrrrrouBrrrrc RRRPA Brrrrc
+ =
+BrrrroCCCGradientBrrrroCCCnrefracBrrrrcBrrrrc
+CCCvirguleformule
+aaaaqbbbbq
+where aaaaq CCCVecteurBrrrrouBrrrrc bbbbq is the unit vector carried by the path of the light beam and aaaaq bbbbq s is the curvilinear abscissa along the path.
+An order of magnitude calculation to estimate the standard deviation aaaaq CCCdeviR bbbbq a radius in the transverse plane after propagation through the cloud on a length aaaaq CCCLZnuage bbbbq:
+aaaaqbbbbq
+Brrrro
+CCCnrefrac SPACEFG CCCfracBrrrroCCCdeviRBrrrrcBrrrroCCCLZnuagePOOOOO2Brrrrc CCCapprox CCCfracBrrrroCCCdeviRBrrrrcBrrrroCCCLZnuagePOOOOO2Brrrrc Brrrrc
+ CCCapprox
+ BrrrroCCCfracBrrrroCCCnrefrac-1BrrrrcBrrrroCCCRnuageBrrrrcBrrrrc
+ CCCpointformule
+aaaaqbbbbq
+
+
+
+
+
+ResultatsBrrrro
+Using expressionsCCCnrefBrrrroeq: ODhorsResoBrrrrc etCCCnrefBrrrroeq: nrefractionBrrrrc we can extract the following criterion to estimate the effect of refraction is negligible:
+aaaaqbbbbq
+CCCfracBrrrroCCCdeviRBrrrrcBrrrroCCCRnuageBrrrrc CCCapprox
+CCCOptDens SPACEFG CCCfracBrrrroCCClambda SPACEFG CCCLZnuageBrrrrcBrrrroCCCRnuagePOOOOO2Brrrrc
+ SPACEFG CCCfracBrrrroCCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc
+CCCll 1
+CCCvirguleformule
+aaaaqbbbbq
+This expression involves the CCCdo off resonance, which remember, must be of the order of unity in order to obtain a quality image.
+Brrrrc
+
+
+
+CCCApplicationNumerique
+Brrrro
+Calculate this criterion in both cases considered above usual (page CCCpagerefBrrrroan: ProfondeurOptiquesBrrrrc)
+* Optical depth aaaaq CCCOptProfExpr CCCapprox 30 bbbbq a cloud of magneto-optical trap, encourages us to use a disagreement aaaaq CCCdesac CCCapprox 1.5 SPACEFG CCCpulsSpont bbbbq. Cloud with a typical size CCCmboxBrrrroaaaaq CCCLZnuageCCCapprox2 SPACEFG CCCRnuageCCCapproxCCCmmBrrrro5Brrrrc bbbbqBrrrrc, we obtain:
+aaaaqbbbbq
+CCCAvecTexteBrrrroCCCfracBrrrroCCCdeviRBrrrrcBrrrroCCCRnuageBrrrrcBrrrrcBrrrroCCCtiny PMOBrrrrc CCCapprox CCCfracBrrrroCCClambda SPACEFG CCCLZnuageBrrrrcBrrrroCCCRnuagePOOOOO2Brrrrc
+ SPACEFG CCCfracBrrrroCCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc
+ CCCapprox CCCvalBrrrro3EBrrrro-3BrrrrcBrrrrc
+CCCpointformule
+aaaaqbbbbq
+* In a Bose-Einstein condensate atom aaaaq POOOOOBrrrro87Brrrrc bbbbqRb, the optical depth is typically aaaaq CCCOptProfExpr CCCapprox 300 bbbbq and dimensions CCCmboxBrrrroaaaaq CCCLZnuageCCCapprox2 SPACEFG CCCRnuageCCCapproxCCCmicronBrrrro10Brrrrc bbbbqBrrrrc. Using a disagreement aaaaq CCCdesac CCCapprox SPACEFG CCCpulsSpont bbbbq 5, we obtain:
+aaaaqbbbbq
+CCCAvecTexteBrrrroCCCfracBrrrroCCCdeviRBrrrrcBrrrroCCCRnuageBrrrrcBrrrrcBrrrroCCCtiny BECBrrrrc CCCapprox CCCfracBrrrroCCClambda SPACEFG CCCLZnuageBrrrrcBrrrroCCCRnuagePOOOOO2Brrrrc
+ SPACEFG CCCfracBrrrroCCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc
+ CCCapprox CCCvalBrrrro5Brrrrc
+CCCpointformule
+aaaaqbbbbq
+
+We can therefore use a priori detuned laser in the first case, but not in the second.
+Brrrrc
+
+CCCRemarqueTitreBrrrroImagerie by contrast phaseBrrrrcBrrrro
+An imaging technique called by contrast phaseCCCciteBrrrroKDS99Brrrrc is precisely to exploit the phase shift of the laser by the cloud to measure the real part of the refractive index by an interferometric method.
+An experimental demonstration of this very effective method is the subject of the référenceCCCciteBrrrroTWP04Brrrrc.
+Brrrrc
+
+
+
+
+
+/ / / / / / / / On an open transition Absorption / / / / / / / /
+
+
+Another method that can be used to obtain an image by absorbing optically thick cloud is to use laser imager not on cyclante transition, but an open transition.
+
+/ / / / / / / / / / / / For each atom Two photons / / / / / / / / / / / /
+
+When an atom is excited about the open transition, then there is a probability
+aaaaqbbbbq
+p = CCCfracBrrrro1BrrrrcBrrrro2Brrrrc
+aaaaqbbbbq
+that it falls in the state CCCEtatSFBrrrro1Brrrrc, becoming again a candidate for the absorption of a photon. If the atom falls
+ in CCCEtatSFBrrrro2Brrrrc, it can no longer absorb the laser photons.
+
+In order to make such a quantitative measurement of absorption, we need to calculate the number of photons that are absorbed by each atom on average. Aaaaq probability P (n) has bbbbq atom absorb aaaaq exactly n photons bbbbq corresponds to the probability of falling aaaaq n-1 times bbbbq CCCEtatSFBrrrro1Brrrrc, then falling into CCCEtatSFBrrrro2Brrrrc:
+aaaaqbbbbq
+P (n) =-pPOOOOOBrrrron 1Brrrrc SPACEFG (1-p)
+CCCpointformule
+aaaaqbbbbq
+
+
+
+
+Results
+Brrrro
+We infer the average number aaaaq CCCMoyenneBrrrronBrrrrc bbbbq of photons absorbed by an atom before it falls in the state CCCEtatSFBrrrro2Brrrrc:
+aaaaqbbbbq
+CCCMoyenneBrrrronBrrrrc
+N = CCCsum_Brrrron 1BrrrrcPOOOOOBrrrroCCCinftyBrrrrc SPACEFG = P (n)
+N = CCCsum_Brrrron = 1BrrrrcPOOOOOBrrrroCCCinftyBrrrrc SPACEFG pPOOOOOBrrrron 1Brrrrc SPACEFG-(1-p)
+= CCCfracBrrrro1BrrrrcBrrrro1-pBrrrrc
+= 2
+CCCpointformule
+aaaaqbbbbq
+So each atom absorbs an average aaaaq 2 bbbbq photons.
+Brrrrc
+
+
+/ / / / / / / / / / / / Interests and cons / / / / / / / / / / / /
+
+This imaging technique on an open transition has two major advantages:
+* It is quantitative in the sense that the number of photons absorbed accurately reflects the number of atoms in the cloud.
+* It is more robustness. Indeed, the presence of magnetic field gradient, or any other source of widening the transition cyclante not modify in any way the quantitative nature of this technique.
+
+
+
+The main disadvantage of this method lies in the weakness of the signals to be measured as the number of photons absorbed per unit area of ??the imaging beam is only twice the density of the cloud column.
+CCCApplicationNumeriqueBrrrro
+Consider a practical example to show that the absorption signal on an open transition is very low. A cloud of atoms can absorb typically CCCvalBrrrroE9Brrrrc CCCvalBrrrro2E9Brrrrc photons. If we consider that the transverse size
+2 is aaaaq SPACEFG CCCRnuageCCCapproxCCCmmBrrrro10Brrrrc bbbbq, the absorption per unit area of ??the imaging beam is typically:
+aaaaqbbbbq
+2 SPACEFG CCCdenscolCCCapprox CCCfracBrrrroCCCvalBrrrro2E9BrrrrcBrrrrcBrrrroCCCRnuagePOOOOO2Brrrrc CCCapprox CCCSIBrrrroE10BrrrrcBrrrrophotonCCCperCCCsquareBrrrroCCCcentiCCCmeterBrrrrcBrrrrc
+CCCpointformule
+aaaaqbbbbq
+The surface shown in the object plane by a pixel of the CCD sensor is typically aaaaq CCCLpix = CCCmicronBrrrro5Brrrrc bbbbq, it will be very sensitive to variations below CCCvalBrrrro2500Brrrrc photons. This performance is achievable with CCD cooled.
+Brrrrc
+
+
+CCCRemarqueBrrrroNotons that the use of an open transition was also studied in the context of the fluorescence imaging. We can see référenceCCCciteBrrrroMOR07Brrrrc.Brrrrc
+
+
+/ / / / Imaging absorption in the regime of strong saturation / / / /
+
+In this section, we describe the absorption imaging protocol that we have developed in order to acquire and exploit quantitatively, images of dense atomic ensembles.
+We begin by giving some arguments that challenge the quantitative imaging low absorption saturation described in laCCCautorefBrrrrosec: ipafasBrrrrc. It is indeed quite sensitive to experimental imperfections.
+
+/ / / / / / / / Position of the problem / / / / / / / /
+
+Let us define an important point about the quantitative nature of the low saturation absorption imaging. We specified a definite advantage of this method is that the sensitivity of the CCD, and the characteristics of the transition (aaaaq CCCIsat bbbbq and aaaaq CCCseceff bbbbq) does not need to be known to give quantitative measures of CCCdo (see expression CCCvrefBrrrroeq: DensColAbsorptionBrrrrc). However, it is necessary to know precisely the cross section aaaaq CCCseceff bbbbq transition to calculate the column density aaaaq CCCdenscolCCCxy bbbbq, size of interest.
+
+
+
+
+aaaaqbbbbq
+CCCseceff = CCCfracBrrrro3 SPACEFG CCClambdaPOOOOO2BrrrrcBrrrro2 SPACEFG CCCpiBrrrrc
+CCCvirguleformule
+
+aaaaqbbbbq
+
+
+ 
+practice must take into account the energy structure of the atom.
+
+
+[[Image: AbsImaging-Rb2niveaux.png | right | 700px]] Thus, the selectivity of transition rules between sub-niveauBrrrroxBrrrrc mean that in the case of aaaaq POOOOOBrrrro87Brrrrc bbbbqRb, we can consider the two-tier structure aaaaq CCCBrrrroCCCEtatG bbbbq, aaaaq CCCEtatECCCBrrrrc bbbbq described above if, for example:
+
+
+
+aaaaqbbbbq
+CCCbeginBrrrrocasesBrrrrc
+CCCEtatG & = CCCEtatSFmFBrrrro2BrrrrcBrrrro-CCCCCC 2Brrrrc
+CCCEtatE & = CCCEtatPFmFBrrrro3BrrrrcBrrrro-3Brrrrc
+CCCendBrrrrocasesBrrrrc
+CCCvirguleformule
+
+aaaaqbbbbq
+
+
+
+but this is true only in the case where the laser light is perfectly circularly polarized aaaaq CCCsigmaPOOOOOBrrrro-Brrrrc bbbbq.
+
+
+In addition, other experimental imperfections can alter the character of the absorbing atomic medium. One can for example concern:
+* The laser pulse imager is not exactly at resonance (aaaaq CCCdesac CCCneq bbbbq 0)
+* That the spectral width of the laser is non-negligible compared to the natural width aaaaq CCCpulsSpont bbbbq transition,
+* A residual magnetic field moves the sub-niveauBrrrroxBrrrrc Zeeman, implying that the imaging laser becomes non-resonant.
+
+In addition, if the laser pulse is very short, and the number of photons absorbed per atom is of the order of ten, one must consider the transient optical Bloch equations. The initial distribution of the populations of Zeeman sub-niveauBrrrroxBrrrrc plays an important role in absorption.
+
+CCCRemarqueBrrrro
+Note that the effect of experimental imperfections is always to decrease the absorption of light.
+Brrrrc
+
+
+
+We propose in the remainder of this chapter to answer this question. We describe the experimental imperfections by a correction parameter, then we present our imaging protocol to measure this parameter and interpret quantitative images of dense atomic clouds.
+
+
+/ / / / / / / / Intensity saturation CCCemphBrrrroeffective / / / / / / / /
+ and cross section effectiveBrrrrc
+
+In the sequel, we denote by aaaaq CCCseceff bbbbq and aaaaq CCCIsat bbbbq, the cross section and the saturation intensity of the transition closed:
+aaaaqbbbbq
+CCCEtatSFmFBrrrro2BrrrrcBrrrro-2BrrrrcCCClongleftrightarrowCCCEtatPFmFBrrrro3BrrrrcBrrrro-3Brrrrc
+CCCpointformule
+aaaaqbbbbq
+However, we must account for the experimental inevitable imperfections that make this ideal case closed transition is only theoretical.
+
+
+
+
+ResultatsBrrrro
+We assume that it is always possible to model the interaction of atoms with the laser wave cloud by effective cross section aaaaq CCCseceffeff bbbbq and effective saturation intensity aaaaq CCCIsateff bbbbq:
+CCCbeginBrrrroalignBrrrrc
+CCCseceffeff & CCCequiv CCCfracBrrrroCCCseceffBrrrrcBrrrroCCCImperfBrrrrc CCCnonumber CCCCCC
+CCCIsateff & CCCequiv CCCImperf SPACEFG CCCseceff
+CCCvirguleformule
+
+CCCendBrrrroalignBrrrrc
+where aaaaq CCCImperf bbbbq a correction parameter is greater than 1 aaaaq bbbbq must be determined experimentally.
+Brrrrc
+
+
+
+CCCnomeRemonteBrrrroCCCseceffeffBrrrrcBrrrroSection effectiveBrrrrcBrrrro3.3cmBrrrrcCCCnomeRemonteBrrrroCCCIsateffBrrrrcBrrrroIntensité effective saturation correction effectiveBrrrrcBrrrro2.4cmBrrrrcCCCnomeRemonteBrrrroCCCImperfBrrrrcBrrrroParamètre realizing imperfections expérimentalesBrrrrcBrrrro1.7cmBrrrrc
+The équationCCCnrefBrrrroeq: DensColAbsorptionBrrrrc can be rewritten in the form
+aaaaqbbbbq
+CCCseceffeff SPACEFG CCCdenscolxy = CCCfracBrrrroCCCseceffBrrrrcBrrrroCCCImperfBrrrrc SPACEFG CCCdenscolxy
+= CCCLnBrrrro CCCfracBrrrroCCCIinxyBrrrrcBrrrroCCCIoutxyBrrrrc Brrrrc
+CCCvirguleformule
+aaaaqbbbbq
+which calculates aaaaq CCCdenscolxy bbbbq from knowledge aaaaq CCCIinxy bbbbq, aaaaq CCCIoutxy bbbbq and aaaaq CCCImperf bbbbq.
+Note that aaaaq CCCImperf bbbbq is a priori situation-specific experimental data, that is to say, it must be determined in a systematic way to exploit the images taken by absorption.
+
+
+
+The problem is the following:
+We will show in the following that the answer to this question CCCldots is non-linear.
+
+/ / / / / / / / Reply nonlinear atoms / / / / / / / /
+
+We saw in laCCCautorefBrrrrosec: LimiteIpafasBrrrrc the limit of imaging protocol weakly saturated absorption lies in the fact that the laser light can be extremely attenuated when passing through the cloud. This is mainly due to the exponential nature of the Beer-Lambert law (see equation linear differential CCCvrefBrrrroeq: EqDiffAbsBasseIntBrrrrc).
+
+One can overcome this limitation by using the non-linear response of the atoms to a laser excitation, that is to say, by saturating the transition. For this, we use higher laser intensities. This is called imaging absorption in the regime of strong saturation.
+
+Recall that in the general case, the evolution of the laser intensity during the propagation in the cloud is given by the differential equation non-linéaireCCCnrefBrrrroeq: EqDiffAbsGeneraleBrrrrc. Thereof, in the case of a resonant laser (aaaaq CCCdesac bbbbq = 0), and taking into account the correction parameter aaaaq CCCImperf bbbbq, is written:
+
+
+
+aaaaqbbbbq
+CCCDeriveBrrrroCCCIxyzBrrrrcBrrrrozBrrrrc
+= - CCCdensxyz
+SPACEFG CCCfracBrrrroCCCseceffBrrrrcBrrrroCCCImperfBrrrrc
+SPACEFG CCCfracBrrrroCCCIxyzBrrrrcBrrrro1 + CCCdfracBrrrroCCCIxyzBrrrrcBrrrroCCCImperf SPACEFG CCCIsatBrrrrcBrrrrc
+CCCpointformule
+
+aaaaqbbbbq
+
+
+
+This expression is valid for any value of the intensity aaaaq CCCIxyz bbbbq, unlike the expressionCCCnrefBrrrroeq: EqDiffAbsBasseIntBrrrrc, which is valid only in the limit of low intensities.
+
+
+
+
+
+ResultatsBrrrro
+The équationCCCnrefBrrrroeq: EqDiffAbsResonanceBrrrrc fits by separation of variables and to calculate the column density aaaaq CCCdenscolxy bbbbq from measuring aaaaq CCCIinxy bbbbq, aaaaq CCCIoutxy bbbbq and aaaaq CCCImperf bbbbq, without assuming that the intensity is low to aaaaq CCCIsat bbbbq:
+
+
+
+aaaaqbbbbq
+CCCOptProfExprCCCxy CCCequiv CCCOptProfCCCxyImperf
+= CCCImperf SPACEFG CCCLnBrrrro CCCfracBrrrroCCCIinxyBrrrrcBrrrroCCCIoutxyBrrrrc Brrrrc
++ CCCfracBrrrroCCCIinxy - CCCIoutxyBrrrrcBrrrroCCCIsatBrrrrc
+CCCvirguleformule
+
+aaaaqbbbbq
+
+
+
+and where aaaaq CCCIinxy bbbbq aaaaq CCCIoutxy bbbbq have the same definition as in laCCCautorefBrrrrosec: ipafasBrrrrc:
+CCCbeginBrrrroalignBrrrrc
+CCCbeginBrrrrocasesBrrrrc
+CCCIinxy CCCequiv & CCCIccdxySansNuage - CCCIbackxy CCCnonumber
+ CCCCCC
+CCCIoutxy CCCequiv & CCCIccdxyAvecNuage - CCCIbackxy CCCnonumber
+CCCendBrrrrocasesBrrrrc
+CCCendBrrrroalignBrrrrc
+Note that expressionCCCnrefBrrrroeq: DensColAbsHighIntResonanceBrrrrc taken within aaaaq CCCIin, CCCIoutCCCllCCCIsat bbbbq, restores well expressionCCCnrefBrrrroeq: DensColAbsorptionBrrrrc, with one difference, however: the correction parameter aaaaq CCCImperf bbbbq in the calculation of the density colonne.Brrrrc
+
+
+
+We must emphasize two important points related to the use of expressionCCCnrefBrrrroeq: DensColAbsHighIntResonanceBrrrrc to operate the imaging absorption in the regime of strong saturation:
+* It is necessary to calibrate the sensitivity of the CCD sensor to measure absolute
+Unlike aaaaq CCCIinxy - CCCIoutxy bbbbq. Each pixel of the CCD then serves power meter. This requires perfectly calibrate losses and attenuations aaaaq CCCAttenOptique bbbbq involved in the path of the laser beam in the optical system between the cloud and the sensor (see laCCCautorefBrrrrosec: SystOptiqueBrrrrc).
+* Expression of the column density relationCCCnrefBrrrroeq: DensColAbsHighIntResonanceBrrrrc is noteworthy because it contains two terms, one of which involves only the correction parameter aaaaq CCCImperf bbbbq. It is this property that allows us to determine the latter.
+
+
+
+
+
+ResultatsBrrrro
+Optical depth aaaaq CCCOptProfCCCxyImperf bbbbq seems to depend correction parameter. There is nothing, as we outlined in laCCCautorefBrrrrosec: ipafasBrrrrc, the optical depth = aaaaq CCCOptProf CCCOptProfExpr bbbbq is a characteristic of the cloud, independent of the measurement. Parameter aaaaq CCCImperf bbbbq is the value for which the expressionCCCnrefBrrrroeq: DensColAbsHighIntResonanceBrrrrc gives the optical depth. This is an experimental parameter, as well as aaaaq CCCIinxy bbbbq and aaaaq CCCIoutxy bbbbq.
+Brrrrc
+
+
+
+
+CCCsubsection [Protocol measurement and determination of the correction parameter] BrrrroProtocole measurement and determination of the correction parameter aaaaq CCCImperf bbbbqBrrrrc
+
+Now describe the protocol that we have developed to carry out the measurement of density of an atomic cloud column density. To make this statement more concrete, we will support our reasoning with experimental data.
+CCCRemarqueBrrrro
+The atomic cloud that will be discussed in the following is obtained by loading the magneto-optical trap described in laCCCautorefBrrrrosec: PaquetsPmoBrrrrc. Column density of the cloud is voluntarily taken low (aaaaq CCCsimeq bbbbq 3) in order to compare our technique to its counterpart low intensity. An example image of dense atomic cloud is given in laCCCautorefBrrrrosec: ImageNuageDenseBrrrrc.
+Brrrrc
+
+
+
+The image of the cloud is done, as in laCCCautorefBrrrrosec: ipafasBrrrrc, using 3 images (an image with the cloud, one without the cloud, and an image of the background light). We take a whole series of images of clouds prepared under identical conditions, but using different incident laser intensities aaaaq CCCIin bbbbq. The range of values ??used to aaaaq CCCIin bbbbq typically lasts about 1 aaaaq bbbbq or aaaaq bbbbq two orders of magnitude. For our experimental example (see Figure CCCvrefBrrrrofig: PleinImagesNuageBrrrrc), we use eight values ??ranging from aaaaq CCCIin CCCapprox CCCtfracBrrrroCCCIsatBrrrrcBrrrro20Brrrrc CCCapprox CCCmWpcmcBrrrro0.09Brrrrc bbbbq and aaaaq CCCIin = 10 CCCIsat CCCtimes CCCapprox CCCmWpcmcBrrrro18Brrrrc bbbbq.
+CCCsubfloat [aaaaq CCCIin CCCapprox CCCtfracBrrrroCCCIsatBrrrrcBrrrro20Brrrrc bbbbq]
+Brrrro [[Image: AbsImaging-Sig_M_200_00000_With.png | right | 700px]] Brrrrc SPACEFG
+CCCsubfloat [aaaaq CCCIin CCCapprox CCCtfracBrrrroCCCIsatBrrrrcBrrrro2Brrrrc bbbbq]
+Brrrro [[Image: AbsImaging-Sig_M_016_00000_With.png | right | 700px]] Brrrrc SPACEFG
+CCCsubfloat [aaaaq CCCIin CCCapprox SPACEFG CCCIsat bbbbq 3]
+Brrrro [[Image: AbsImaging-Sig_M_004_00000_With.png | right | 700px]] Brrrrc SPACEFG
+CCCsubfloat [aaaaq CCCIin CCCapprox 10 SPACEFG CCCIsat bbbbq]
+Brrrro [[Image: AbsImaging-Sig_M_001_00000_With.png | right | 700px]] Brrrrc
+CCCCaptionFigsBrrrroReprésentation the absorption of the laser beam incident to different intensities. These correspond to (a) = aaaaq CCCIin CCCmWpcmcBrrrro0.09Brrrrc bbbbq, (b) = aaaaq CCCIin CCCmWpcmcBrrrro1.1Brrrrc bbbbq, (c) = aaaaq CCCIin CCCmWpcmcBrrrro4.5Brrrrc bbbbq, (d) = aaaaq CCCIin CCCmWpcmcBrrrro18Brrrrc bbbbq.
+The exposure times of the CCD are varied respectively CCCmicrosBrrrro50Brrrrc to CCCnanosBrrrro250Brrrrc. We do not represent in each case that the image in the presence of the atomic cloud (see laCCCautorefBrrrrosec: ipafasBrrrrc).
+It was found that the cloud absorbs a large fraction of the light when it is very intense (a). Over the incident intensity aaaaq CCCIin bbbbq, the higher the fraction of light passing through the cloud is high. The image (d), the cloud absorbs less than half of the incident light.
+Brrrrc
+
+
+
+aaaaqbbbbq
+CCCImperf SPACEFG CCCLnBrrrro CCCfracBrrrroCCCIinBrrrrcBrrrroCCCIoutBrrrrc Brrrrc
+CCCtextBrrrroetBrrrrc
+CCCfracBrrrroCCCIin - CCCIoutBrrrrcBrrrroCCCIsatBrrrrc
+CCCvirguleformule
+aaaaqbbbbq
+ involved with different weights. In fact we can show that:
+* The first term (log) is a decreasing function of the incident intensity aaaaq CCCIin bbbbq,
+* The other end (differential) is an increasing function of the incident intensity aaaaq CCCIin bbbbq.
+
+
+
+
+
+ResultatsBrrrro
+The idea is as follows:
+* For a single cloud, we have different frames, which must, however, possible to calculate all the same optical depth by expressionCCCnrefBrrrroeq: DensColAbsHighIntResonanceBrrrrc since it makes no assumption about the incident intensity of the laser,
+* Or the two terms of this expression are involved with different weights, and the first one involves the correction parameter aaaaq CCCImperf bbbbq.
+
+We deduce that there is only one possible value for aaaaq CCCImperf bbbbq that reconciles all images.
+Brrrrc
+
+
+
+To illustrate this, suppose the space of a moment that aaaaq CCCImperf bbbbq = 1, that is to say, the experimental situation corresponds exactly to the theoretical case of a two-level atom subject to a laser wave resonator.
+[[Image: AbsImaging-AllureAlphaEgal1.png | right | 700px]]
+In this case, the images that are subject to the figureCCCnrefBrrrrofig: PleinImagesNuageBrrrrc do not all have the same value of the optical depth. The figure represents the optical depth against aaaaq CCCOptProfMax bbbbq cloud
+depending aaaaq CCCIin bbbbq, average value of the laser intensity. The saturation intensity is indicated by a dotted line. The error bars are obtained by performing each action a dozen times.
+The growth curve shows that, assuming aaaaq CCCImperf bbbbq = 1, we underestimate the decreasing term (log) of expressionCCCnrefBrrrroeq: DensColAbsHighIntResonanceBrrrrc. This therefore means queaaaaq CCCImperf> 1 bbbbq.
+
+
+/ / / / / / / / / / / / Adjust the correction parameter / / / / / / / / / / / /
+
+To determine aaaaq CCCImperf bbbbq, we consider it as a variable, which we denote adjustable aaaaq CCCImperfVarie bbbbq.
+
+CCCRemarqueBrrrro
+We use this notation in order not to confuse the adjustable variable aaaaq CCCImperfVarie bbbbq with CCCsotosayBrrrrovraieBrrrrc value aaaaq CCCImperf bbbbq. In other words, aaaaq CCCImperf bbbbq is the particular value of the correction parameter which should be adjusted on aaaaq CCCImperfVarie bbbbq.
+Brrrrc
+
+
+
+As in the previous example (we considered the ideal case aaaaq CCCImperfVarie bbbbq = 1), we calculate the optical depth aaaaq CCCOptProfCCCxyImperfVarie bbbbq by expressionCCCnrefBrrrroeq: DensColAbsHighIntResonanceBrrrrc for each intensity aaaaq CCCIin bbbbq used.
+Recall that aaaaq CCCOptProf bbbbq is a physical characteristic of the cloud and does not depend on how we practice the measurement. In other words, for all incident intensities used, we expect to obtain the same optical depth by expressionCCCnrefBrrrroeq: DensColAbsHighIntResonanceBrrrrc.
+The figureCCCnrefBrrrrofig: PleinAlphaCourbeBrrrrc represents some of the curves obtained by using different values ??for the parameters aaaaq CCCImperfVarie bbbbq.
+[[Image: AbsImaging-PleinAlphaCourbe.png | right | 700px]]
+CCCCaptionFigssBrrrroReprésentation optical depth of the cloud aaaaq CCCOptProfMax bbbbq calculated with the expressionCCCnrefBrrrroeq: DensColAbsHighIntResonanceBrrrrc, depending aaaaq CCCIin bbbbq (mean value of the intensity of the imaging beam on the cloud). To improve the readability of the figure, the error bars have not been shown here.
+Each curve corresponds to a different value of the correction parameter aaaaq CCCImperfVarie bbbbq used when calculating the expressionCCCnrefBrrrroeq: DensColAbsHighIntResonanceBrrrrc.
+We use the following values ??for aaaaq CCCImperfVarie bbbbq (bottom to top): aaaaq CCCImperfVarie = CCCvalBrrrro1Brrrrc bbbbq (see figureCCCnrefBrrrrofig: AllureAlphaEgal1Brrrrc), then aaaaq CCCImperfVarie = CCCvalBrrrro2Brrrrc bbbbq; aaaaq CCCvalBrrrro2.2Brrrrc bbbbq; aaaaq CCCvalBrrrro2.4Brrrrc bbbbq .. . aaaaq CCCvalBrrrro3.8Brrrrc bbbbq; aaaaq CCCvalBrrrro4Brrrrc bbbbq.
+Brrrrc
+
+CCCCahierBrrrro7, 140Brrrrc
+
+* Some curves are decreasing, suggesting that the aaaaq CCCImperfVarie bbbbq used is too large,
+* Some are increasing, indicating that the aaaaq CCCImperfVarie bbbbq used is too low,
+* One of these curves (aaaaq CCCImperfVarie bbbbq = 3) varies less than the other, approaching the expected behavior of total independence against the incident intensity aaaaq CCCIin bbbbq.
+
+
+
+% Hs
+[[Image: AbsImaging-PleinAlphaSTD.png | right | 700px]]
+CCCCaptionFigsBrrrroÉcarts kinds aaaaq CCCDeltaOP bbbbq each curve figureCCCnrefBrrrrofig: PleinAlphaCourbeBrrrrc depending on the value of aaaaq CCCImperfVarie bbbbq used. The presence of a minimum value aaaaq CCCImperfVarie CCCequiv CCCImperf = CCCvalBrrrro2.95Brrrrc bbbbq is derived by fitting a hyperbolic function (red line). Brrrrc
+
+
+We deduce as in the case of our example, aaaaq CCCImperf = CCCvalBrrrro2.95Brrrrc bbbbq, and we can, with this value, use the quantitative information contained in the images of absorption. In the case of our example, we measure an optical depth = aaaaq CCCOptProfMax CCCvalBrrrro8.4Brrrrc bbbbq and a total number of atoms N = aaaaq CCCvalBrrrro3.4EBrrrro8BrrrrcBrrrrc bbbbq.
+We also verified that the parameter aaaaq CCCImperf bbbbq depends on the polarization of the beam imager.
+
+
+/ / / / / / / / Conclusion / / / / / / / /
+
+We conclude this chapter by presenting examples of images taken and interpreted using our imaging protocol absorption in the regime of strong saturation. We also recapitulate three major qualities of this technique.
+
+/ / / / / / / / / / / / Examples of images used by our protocol / / / / / / / / / / / /
+
+The figuresCCCnrefBrrrrofig: ImageNuageTresDenseBrrrrc etCCCnrefBrrrrofig: PhotosArticleImagerieBrrrrc present two examples of dense atomic clouds produced by a two-dimensional magneto-optical trap tablet. In these test cases, the correction parameter has been adjusted by the method described in laCCCautorefBrrrrosec: ProtocoleMesureImperfBrrrrc a value aaaaq CCCImperf = CCCvalBrrrro2.12Brrrrc bbbbq. We measure and optical depths up CCCvalBrrrro20Brrrrc (for figureCCCnrefBrrrrofig: ImageNuageTresDenseBrrrrc).
+On figureCCCnrefBrrrrofig: PhotosArticleImagerieBrrrrc, we find that the bimodal structure resulting from compression is not apparent when using the low saturating regime. In addition, the use of a detuned laser does not exploit the resulting image.
+[[Image: AbsImaging-A_00015AbsorCoupe.png | right | 700px]]
+CCCCaptionFigssBrrrroImage representative optical depth aaaaq CCCOptProfCCCxy = CCCseceff SPACEFG CCCdenscolxy bbbbq a dense atom cloud produced by a magneto-optical two-dimensional compressed (due to the elongated shape of the cloud, it is distinguished in that a part of the image) . The graph represents the value of the optical depth along the dotted line. The optical depths rule out the use of high imaging low absorption saturation. To interpret the image, we fit a sum of two Gaussian function that characterizes the bimodal structure of the cloud (the function is shown in red on the graph). Brrrrc
+
+
+[[Image: AbsImaging-PhotosArticleImagerie_opt.png | right | 700px]]
+CCCCaptionFigsBrrrroTrois optical depth measurements made on a single atom cloud tablet. On the right, there is the aaaaq CCCOptProf bbbbq profile along the dashed line in the image. The measurement is performed in three different ways: CCCCCC
+(A) applying the protocol of low absorption imaging saturante.CCCCCC
+(B) a laser to tune aaaaq CCCdesac SPACEFG CCCpulsSpont bbbbq = -3 is used. The effect of lens makes the image inexploitable.CCCCCC
+(C) is obtained using our absorption imaging technique strongly saturante.CCCCCC
+Only this last image shows the bimodal structure resulting from compression. The measure on (a) may give higher values ??to aaaaq CCCapprox3 bbbbq (dotted line drawn on the graph). Brrrrc
+
+
+
+/ / / / / / / / / / / / Summary of the advantages of our protocol / / / / / / / / / / / /
+
+Finally summarize the main advantages of our imaging protocol absorption in the regime of strong saturation:
+* Optical system needed to apply this method is quite standard and does not require heavy equipment. It is likely that any device for making images taken by absorption in the low saturation regime can be immediately adapted to carry our protocol.
+* The use of laser intensities above the saturation intensity overcomes the problems associated with almost complete absorption of the laser light by an optically thick cloud (aaaaq CCCOptProf> 5 bbbbq). We can observe very high optical depths where low intensity imaging is ineffective (see laCCCautorefBrrrrosec: LimiteIpafasBrrrrc). To properly observe an optical depth aaaaq CCCOptProf bbbbq, the laser intensity is typically required:
+aaaaqbbbbq
+CCCIlaser = CCCfracBrrrroCCCOptProfBrrrrcBrrrroCCCImperfBrrrrc SPACEFG CCCIsat
+CCCpointformule
+aaaaqbbbbq
+* Determination of the correction parameter aaaaq CCCImperf bbbbq can use the images quantitatively by absorption. It should also be noted that the measurements on optically less dense atomic clouds (which can be imaged by the usual technique in weakly saturating regime) should always take into account the value of the correction parameter aaaaq CCCImperf bbbbq. Let us recall that it intervenes in the calculation of column density (see expressionCCCnrefBrrrroeq: DensColAbsHighIntResonanceBrrrrc).

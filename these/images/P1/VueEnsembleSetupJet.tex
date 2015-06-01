@@ -1,0 +1,62 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}
+
+\def\Lfig{\FigWidthSansCm}
+\pgfmathparse{\Lfig/910*1200}
+\let\Hfig\pgfmathresult
+
+\newcommand{\four}{\fbox{\begin{minipage}{7cm}
+\subsubsection{Four à recirculation}
+Une dizaine de grammes de \Rb sont chauffés à environ \SI{140}{\degreecelsius}.
+Le four produit un jet collimaté d'environ $\atps{2E{12}}$.
+\end{minipage}}}
+
+\newcommand{\ralen}{\fbox{\begin{minipage}{7cm}
+\subsubsection{Ralentisseur Zeeman}
+Il mesure un mètre de long. $10\%$ des atomes issus du four sont ralentis à une vitesse d'environ \mps{20}.\end{minipage}}}
+
+\newcommand{\chpmo}{\fbox{\begin{minipage}{7cm}
+\subsubsection{Chambre du \pmo}
+Le taux de capture du piège est de $\atps{2E{10}}$.
+%Les désaccords des 3 paires de faisceaux contra-propageant sont réglables indépendamment afin de pouvoir lancé les \pats par une technique de mélasse mouvante.
+Les bobines produisant les \chms ne sont pas représentées.
+Cinq fois par seconde, un \pat contenant $\val{2E{9}}$ atomes  est injecté dans le \gm.
+\end{minipage}}}
+
+\newcommand{\guidetexte}{\fbox{\begin{minipage}{7cm}
+\subsubsection{Guide magnétique}
+Les quatre tubes de cuivre produisent le \chm \qp.
+Le guide est entouré d'un tube de verre dans lequel règne un vide poussé.
+\end{minipage}}}
+
+%\useasboundingbox (0,0) rectangle ++(\Lfig,\Hfig);
+
+\begin{overpic}[width=\FigWidth, unit=1cm]{VueEnsembleSetupJet_}
+
+\draw[latex'-, color=black, very thick] (\Lfig,\Hfig) ++(-1.7,-0.7) -- ++(-1.5,-0.5)
+node[left]{\four};
+
+\draw[latex'-, color=black, very thick] (\Lfig,\Hfig) ++(-6,-5.5) -- ++(-1,0.5)
+node[left]{\ralen};
+
+\draw[latex'-, color=black, very thick] (\Lfig,\Hfig) ++(-9,-12) -- ++(1,0.2)
+node[right]{\chpmo};
+
+\draw[latex'-, color=black, very thick] (\Lfig,\Hfig) ++(-6,-16) -- ++(-1,-1.5)
+node[left]{\guidetexte};
+
+\end{overpic}
+
+\end{tikzpicture}
+
+\end{document}

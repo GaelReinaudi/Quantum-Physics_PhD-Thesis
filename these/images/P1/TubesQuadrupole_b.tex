@@ -1,0 +1,31 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}
+
+\tkzInit[xmin=-3,xmax=3,ymin=-3,ymax=3]
+\useasboundingbox (-3,-3) rectangle (4.76,3);
+\put(-3,-3){\includegraphics{TubesQuadrupole_b_nu}}
+%\tkzX[orig, noticks]
+%\tkzY[noticks]
+\node at (1.2,1.2){$+I$};
+\node at (-1.2,-1.2){$+I$};
+\node at (-1.2,1.2){$-I$};
+\node at (1.2,-1.2){$-I$};
+\def\stepG{0.73}
+\def\startG{-2.56}
+
+\foreach \step/\LesG in {0/0,1/50,2/100,3/150,4/200,5/250,6/300,7/350}{
+\node[right] at (3.7,\startG+\step*\stepG){{\SI{\LesG}{G}}};
+}
+\end{tikzpicture}
+
+\end{document}

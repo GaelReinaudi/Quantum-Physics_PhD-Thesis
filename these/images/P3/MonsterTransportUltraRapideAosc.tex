@@ -1,0 +1,47 @@
+\ttfamily\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\abstmin{0.05}
+%\def\tmin{5}
+%\def\tmax{56.5}
+\def\tmin{1}
+\def\tmax{2.19}
+\def\vmax{2.0}
+\def\zmax{1.7}
+\def\zmaxstep{0.3}
+\def\xPi{3.14159}
+\def\xt{(\x*6.2832)}
+\def\xHeaviside{\HH}
+\def\eps{0.15}
+
+\begin{tikzpicture}[xscale=1.1, yscale=0.42]
+
+\tkzInit[xmin=0,xmax=\tmax,ymin=-0.002,ymax=\zmax, xstep=0.2, ystep=\zmaxstep]
+\tkzX[label=$\frac{\PulsUh\,\tfin}{2\,\pi}$, orig]%, poslabel=-1.1cm]%, noticks
+\tkzY[label=$\Aosc$, noticks]
+%\tkzY[label=$\frac{\left|{\Fourier{\ddzcn}}\right|}{\PulsUh\,\tfin}$, poslabel=-1.7cm, noticks]
+\tkzFct[samples = 500,color = red, lw=2pt](0.001..\tmax){
+1/\eps/\eps*(
+4.*abs(sin(.1250000000*\xt)*sin(.2500000000*\xt)*(-4.*sin(0.6250000000e-1*\xt)**2+\eps)/\xt)
+)
+/\xt
+}
+
+\draw (0.5/0.2,0)
+%circle(0.125 and 0.25)++(0,-0.25)
+[dotted]--++(0,+2)node[above=-0.15cm]{$\tfrac{\PulsUh\,\tfin}{2\,\pi}\approx\tfrac{4\,\sqrt{\epsilon}}{\pi}$};
+
+%\draw[dotted](-0.1,\zmax/\zmaxstep)--(0.1,\zmax/\zmaxstep)node[left=-0.1cm, pos=0]{$\val{\zmax}$};
+
+
+\end{tikzpicture}
+
+\end{document}

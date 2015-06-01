@@ -1,0 +1,93 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\abstmin{0.05}
+\def\tmin{-\abstmin}
+\def\tmax{1.1}
+\def\tf{7}
+\def\aa{1.5}
+\def\vmax{2}
+\def\zmax{4.3}
+\def\xPi{3.14159}
+\def\xt{\x}
+\def\xHeaviside{\HH}
+
+\begin{tikzpicture}[xscale=0.55, yscale=0.4]
+
+\tkzInit[xmin=\tmin,xmax=\tmax,ymin=-\zmax,ymax=\zmax, xstep=0.16]
+\tkzX[label=$t$, orig, noticks]
+\tkzY[label=$\ddzc$, noticks]%, poslabel=-0.6cm]
+\tkzFct[samples = 500,color = blue](\tmin..\tmax){
+(
+2.869760000*(\xHeaviside{0.5-\xt}-.5)*\xHeaviside{\xt}*\xHeaviside{1-\xt}
+)
+}
+\tkzFct[samples = 500,color = red, lw=2pt](\tmin..\tmax){
+(
+(.97658*sin(2*\xPi*\xt)*\xPi-.56512*sin(4*\xPi*\xt)*\xPi+0.7008e-1*sin(6*\xPi*\xt)*\xPi)*\xHeaviside{\xt}*\xHeaviside{1-\xt}
+)
+}
+\draw[dotted](-0.2,4.2)--(2.9,4.2)node[right, pos=1]{$\AccZc$};
+%\draw[dotted](0.5*\tf,-0.2)--(0.5*\tf,0.05)node[below left]{$\tfrac{\tfin}{2}$};
+%\draw[dotted](-0.1,\aa)--(0.1,\aa)node[left=-0.1cm, pos=0]{$\AccZc$};
+
+\begin{scope}[xshift=\tf cm]
+\begin{scope}[xshift=\abstmin cm]
+\begin{scope}[xshift=1.3 cm]
+\tkzInit[xmin=\tmin,xmax=\tmax,ymin=-\zmax,ymax=\zmax, xstep=0.16]
+\tkzX[label=$t$, orig, noticks]
+\tkzY[label=$\dzc$, noticks]%, poslabel=-0.6cm]
+\tkzFct[samples = 500,color = blue](\tmin..\tmax){
+\vmax*\vmax*(
+(-2.869760000*\xt+1.434880000)*\xHeaviside{\xt-.5000000000}+(1.434880000*\xt-1.434880000)*\xHeaviside{\xt-1.}+1.434880000*\xHeaviside{\xt}*\xt
+)
+}
+\tkzFct[samples = 200,color = red, lw=2pt](\tmin..\tmax){
+\vmax*\vmax*(
+(0.35875-0.48829*cos(2*\xPi*\xt)+0.14128*cos(4*\xPi*\xt)-0.1168/10*cos(6*\xPi*\xt))*\xHeaviside{\xt}*\xHeaviside{1-\xt}
+)
+}
+\draw[](1.4,0.6)--(2,-2)node[right]{Blackman-Harris};
+%\draw[dotted](\tf,-0.2)--(\tf,0.2)node[below, pos=0]{$\tfin$};
+%\draw[dotted](0.5*\tf,-0.2)--(0.5*\tf,\zmax)node[below, pos=0]{$\tfrac{\tfin}{2}$};
+%\draw[dotted](-0.1,\vmax)--(0.5*\tf,\vmax)node[left, pos=0]{$\VitZc$};
+
+\begin{scope}[xshift=\tf cm]
+\begin{scope}[xshift=\abstmin cm]
+\begin{scope}[xshift=1.3 cm]
+\tkzInit[xmin=\tmin,xmax=\tmax,ymin=-\zmax,ymax=\zmax, xstep=0.16]
+\tkzX[label=$t$, orig, noticks]
+\tkzY[label=$\zc$, noticks]%, poslabel=-0.6cm]
+\tkzFct[samples = 500,color = blue](\tmin..\tmax){
+1.4*\vmax*\vmax*\vmax*(
+-1.434880000*(\xt-.5000000000)**2*\xHeaviside{\xt-.5000000000}+.7174400000*(\xt-1.)**2*\xHeaviside{\xt-1.}+.7174400000*\xHeaviside{\xt}*\xt**2
+)
+}
+\tkzFct[samples = 200,color = red, lw=2pt](\tmin..\tmax){
+1.4*\vmax*\vmax*\vmax*(
+(-0.3587500000*\xt+0.6196432451e-3*sin(18.84955592*\xt)+.3587500000+0.7771376716/10*sin(6.283185307*\xt)-0.1124270518/10*sin(12.56637061*\xt))*\xHeaviside{\xt-1}+.3587500000*\xHeaviside{\xt}*\xt-0.6196432451e-3*\xHeaviside{\xt}*sin(18.84955592*\xt)+0.1124270518/10*\xHeaviside{\xt}*sin(12.56637061*\xt)-0.7771376716e-1*\xHeaviside{\xt}*sin(6.283185307*\xt)
+)
+}
+\draw[dotted](-0.2,4.0)--(5,4.0)node[left, pos=0.0]{$\DistZc$};
+%\draw[dotted](\tf,-0.2)--(\tf,\zmax)node[below, pos=0]{$\tfin$};
+%\draw[dotted](-0.1,\vmax)--(\tf,\vmax)node[left, pos=0]{$\DistZc$};
+\end{scope}
+\end{scope}
+\end{scope}
+
+\end{scope}
+\end{scope}
+\end{scope}
+
+
+\end{tikzpicture}
+
+\end{document}

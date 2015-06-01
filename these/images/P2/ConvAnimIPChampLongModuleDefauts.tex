@@ -1,0 +1,137 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\newcommand{\ConvFonctionChampIPSolRaide}[1]{
+(\HHsmooth{((#1)-25)/10} * \HHsmooth{(-(#1)+155)/3} * 1.2)} 
+\newcommand{\ConvFonctionChampIPSolRaideLong}[1]{(2*
+(\HHsmooth{((#1)-25)/10} * \HHsmooth{(-(#1)+155)/6} * 1.2) )+0.05 } 
+\newcommand{\ConvFonctionChampIPSolMou}[1]{
+(\HHsmooth{((#1)-25)/10} * \HHsmooth{(-(#1)+165)/20} * 1.2)} 
+
+\newcommand{\ConvFonctionChampIPRaide}[2]{
+(\ConvFonctionChamp{#1}{#2} + \ConvFonctionChampIPSolRaide{#1})} 
+\newcommand{\ConvFonctionChampIPRaidePourPGFparser}[2]{
+(\ConvFonctionChampPourPGFparser{#1}{#2} + \ConvFonctionChampIPSolRaide{#1})} 
+\newcommand{\ConvFonctionChampIPRaideModule}[2]{
+(abs(\ConvFonctionChampIPRaide{#1}{#2}))} 
+\newcommand{\ConvFonctionChampIPRaideModulePourPGFparser}[2]{
+(abs(\ConvFonctionChampIPPourPGFparserRaide{#1}{#2}))} 
+\newcommand{\ConvFonctionChampIPRaideLong}[2]{
+(\ConvFonctionChamp{#1}{#2} + \ConvFonctionChampIPSolRaideLong{#1})} 
+\newcommand{\ConvFonctionChampIPRaideLongPourPGFparser}[2]{
+(\ConvFonctionChampPourPGFparser{#1}{#2} + \ConvFonctionChampIPSolRaideLong{#1})} 
+\newcommand{\ConvFonctionChampIPRaideLongModule}[2]{
+(abs(\ConvFonctionChampIPRaideLong{#1}{#2}))} 
+\newcommand{\ConvFonctionChampIPRaideLongModulePourPGFparser}[2]{
+(abs(\ConvFonctionChampIPPourPGFparserRaide{#1}{#2}))} 
+\newcommand{\ConvFonctionChampIPMou}[2]{
+(\ConvFonctionChamp{#1}{#2} + \ConvFonctionChampIPSolMou{#1})} 
+\newcommand{\ConvFonctionChampIPMouPourPGFparser}[2]{
+(\ConvFonctionChampPourPGFparser{#1}{#2} + \ConvFonctionChampIPSolMou{#1})} 
+\newcommand{\ConvFonctionChampIPMouModule}[2]{
+(abs(\ConvFonctionChampIPMou{#1}{#2}))} 
+\newcommand{\ConvFonctionChampIPMouModulePourPGFparser}[2]{
+(abs(\ConvFonctionChampIPMouPourPGFparser{#1}{#2}))} 
+
+
+\newcommand{\ConvIPDessinBparaModuleDefauts}[1]{
+\begin{scope}[join=bevel]
+\def\shiftRight{16cm}
+
+\tkzInit[xmin=120,xmax=180,xstep=4,ymin=-0.001,ymax=3.4,ystep=1]
+\tkzX[orig, noticks, label={$z$}]%, poslabel=0ex]
+\tkzY[label={$\Module{\Bpara}$}, noticks]%, poslabel=-6ex]
+%\draw[dashed](30/5,2.2)--(155/5,2.2);
+%\draw[dashed](30/5,0.2)--(155/5,0.2);
+%\draw[latex'-latex'](155/5,0.2)--(155/5,2.2)node[right]{$2\,\ConvBamplit$};
+\tkzFct[color=red, samples=200](120..180){
+abs(\ConvFonctionChampIPRaide{\x}{#1})}
+\draw[dashed](11,0.1)ellipse (3 and 0.3);
+
+\draw(4,4)node[below right, text width=3cm]
+{solénoïde de trop faible diamètre, ou trop court};
+
+\begin{scope}[xshift=\shiftRight]
+
+\tkzInit[xmin=130,xmax=190,xstep=4,ymin=-0.001,ymax=3.4,ystep=1]
+\tkzX[orig, noticks, label={$z$}]%, poslabel=0ex]
+\tkzY[label={$\Module{\Bpara}$}, noticks]%, poslabel=-6ex]
+\tkzFct[color=red, samples=200](130..190){
+abs(\ConvFonctionChampIPRaideLong{\x}{#1+0.5})}
+\begin{scope}[xscale=0.666, yscale=0.2]    
+\def\numAt{10}
+\def\sizeCloud{2}
+\pgfmathsetseed{242}
+\foreach \xx in {0,...,\numAt}{
+	\pgfmathparse{1*(rand)*(\sizeCloud/2*\xx/\numAt)+10}
+	\let\XX\pgfmathresult
+	\pgfmathparse{6-7/3*(\XX-10)}
+	\let\YY\pgfmathresult
+	\shade[ball color=blue] (\XX,\YY) circle (0.30cm);}
+\draw[blue, -latex'](11,6)--++(2.5,-3);
+\end{scope}
+
+\draw(4.5,4)node[below right, text width=3.5cm]
+{compensation par l'utilisation d'un courant plus élevé};
+
+\end{scope}
+
+\begin{scope}[xshift=2*\shiftRight]
+
+\tkzInit[xmin=130,xmax=185,xstep=4,ymin=-0.001,ymax=3.4,ystep=1]
+\tkzX[orig, noticks, label={$z$}]%, poslabel=0ex]
+\tkzY[label={$\Module{\Bpara}$}, noticks]%, poslabel=-6ex]
+\tkzFct[color=red, samples=200](130..200){
+abs(\ConvFonctionChampIPMou{\x}{#1+0.3})}
+\begin{scope}[xscale=0.666, yscale=0.2]    
+\def\numAt{10}
+\def\sizeCloud{2}
+\pgfmathsetseed{242}
+\foreach \xx in {0,...,\numAt}{
+	\pgfmathparse{1*(rand)*(\sizeCloud/2*\xx/\numAt)+13.5}
+	\let\XX\pgfmathresult
+	\pgfmathparse{3.5-2.5/3*(\XX-13.5)}
+	\let\YY\pgfmathresult
+	\shade[ball color=blue] (\XX,\YY) circle (0.30cm);}
+\draw[blue, -latex'](14.5,3.7)--++(3,-2.02);
+\end{scope}
+
+\draw(4,4)node[below right, text width=3cm]
+{solénoïde de trop grand diamètre, ou trop long};
+
+\end{scope}
+
+
+\end{scope}
+}
+
+\begin{frame}
+
+  \begin{animateinline}[
+  begin={\begin{tikzpicture}[xscale=0.3]}
+  , end={\end{tikzpicture}}]{10}
+
+    \ConvIPDessinBparaModuleDefauts{0.0}\newframe
+    \ConvIPDessinBparaModuleDefauts{0.1}\newframe
+    \ConvIPDessinBparaModuleDefauts{0.2}\newframe
+    \ConvIPDessinBparaModuleDefauts{0.3}\newframe
+    \ConvIPDessinBparaModuleDefauts{0.4}\newframe
+    \ConvIPDessinBparaModuleDefauts{0.5}\newframe
+    \ConvIPDessinBparaModuleDefauts{0.6}\newframe
+    \ConvIPDessinBparaModuleDefauts{0.7}\newframe
+    \ConvIPDessinBparaModuleDefauts{0.8}\newframe
+    \ConvIPDessinBparaModuleDefauts{0.9}
+  \end{animateinline}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\end{document}

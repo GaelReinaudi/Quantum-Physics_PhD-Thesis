@@ -1,0 +1,50 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\ww{0.005}
+\def\zz{0.7}
+\def\zmax{6.8}
+\def\eps{0.1}
+\def\yscale{80}
+\def\xscale{3}
+\def\temzz{\ww*(1+\x*\x/\xscale/\xscale/\zz/\zz)**(0.5)}
+\pgfmathparse{\yscale*\ww*(1+\zmax*\zmax/\xscale/\xscale/\zz/\zz)^(0.5)}
+\let\ymax\pgfmathresult
+
+\begin{tikzpicture}[scale=1]
+
+\tkzInit[xmin=-\zmax,xmax=\zmax,ymin=-\ymax,ymax=\ymax]
+\tkzX[label=$z$, orig, noticks]
+\tkzY[label=$r$, noticks]
+\tkzFct[samples = 200,color = red](-\zmax..\zmax)
+{\yscale*\temzz}
+\tkzFct[samples = 200,color = red](-\zmax..\zmax)
+{-\yscale*\temzz}
+\node[] at (\zmax-1.4,\ymax) {$\wz$};
+
+% distance RF
+\draw[latex'-latex', color=blue]
+(0,1.414*\yscale*\ww+\eps) -- +(\xscale*\zz,0)
+node[above,pos=0.5]{$\zR$};
+
+% waist
+\draw[latex'-latex', color=blue]
+(-\eps,0) -- +(0,\yscale*\ww)
+node[left,pos=0.5]{$\wzero$};
+% waist à zr
+\draw[latex'-latex', color=blue]
+(\xscale*\zz,0) -- +(0,1.414*\yscale*\ww)
+node[right,pos=0.5]{$\sqrt{2}\,\wzero$};
+
+
+\end{tikzpicture}
+
+\end{document}

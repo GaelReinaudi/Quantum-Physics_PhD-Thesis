@@ -1,0 +1,35 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\sc{2.5}
+\def\ysc{2.5}
+\begin{tikzpicture}
+
+\useasboundingbox (-\sc*.3,-\ysc*.15) rectangle (\sc*5.0,\ysc*3.9);
+\put(0,0){\includegraphics[scale=\sc]{OriginConvQP1pkt}}
+
+\draw (\sc*2.5,\ysc*0) node[below=-2mm]{$t \left[ {\rm s} \right]$};
+\draw (\sc*0-0.4,\ysc*1.8) node[rotate=90]{$n(\zsonde,t) \left[ \ua \right]$};
+
+\normalsize
+\draw(\sc*2.5,\ysc*3.4)
+node[right, text width=5cm]{sans \conv (\p libre)\\$\vinj$ = \cmps{80}};
+\draw(\sc*2.5,\ysc*2.2)
+node[right, text width=5cm]{avec \conv, $\ConvBamplit=\gauss{9}$\\$\vconv\approx\vinj$ = \cmps{80}};
+\draw(\sc*2.5,\ysc*0.9)
+node[right, text width=5cm]{avec \conv, $\ConvBamplit=\gauss{55}$\\$\vconv\approx\vinj$ = \cmps{80}};
+
+\draw(\sc*1.98,\ysc*0.9)node{\large $\bullet$};
+\draw(\sc*1.95,\ysc*2.1)node{\large $\bullet$};
+
+\end{tikzpicture}
+
+\end{document}

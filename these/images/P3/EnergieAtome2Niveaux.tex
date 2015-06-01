@@ -1,0 +1,26 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[thick, scale=1]
+\draw (0,0) -- +(3,0) node[right]{$\EtatG$} ++(0,4) -- +(3,0) node[right]{$\EtatE$};
+\path[pattern=north east lines](0,4-0.1) rectangle +(3,0.2);
+\draw[latex'-latex', dotted](0.5,0) -- ++(0,4) node[pos=0.5, left]{$\hbar\,\pulsReso$};
+\draw[latex'-latex'](1,0) -- ++(0,4.5) node[pos=0.5, right]{$\hbar\,\pulsLaser$};
+\draw[dashed](0,0) ++(0,4.5) -- ++(3,0) node[right]{};
+\draw[latex'-latex'](-0.05,4) --++(0,0.5) node[pos=0.5, left]{$\hbar\,\desac$};
+\draw[-latex', snake=snake, line after snake=1mm](2.25,4)--+(0,-4);
+
+\draw[<-](2.7,4-0.1) --++(0,-0.3)node[pos=1, right]{$\pulsSpont$};
+\draw[<-](2.7,4+0.1) --++(0,+0.3);
+\draw[-](2.7,4-0.1) --++(0,+0.3);
+\end{tikzpicture}
+
+\end{document}

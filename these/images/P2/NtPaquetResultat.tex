@@ -1,0 +1,38 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+    \def\z{\x}
+    \def\vi{1.42}
+    \def\vm{.86}
+    \def\ta{0.5}
+    \def\Dv{0.13}
+\newcommand{\FoncPaquet}[1]{0.5*2**0.5*(\HH{(\vm*((#1)+\ta)-\z)/(#1)}*exp(-0.5*(\vi*#1-\z)*(\vi*(#1)-\z)/((#1)**2*\Dv**2))+exp(-2*((-0.5*\vi+\vm)*(#1)-0.5*\z+\vm*\ta)*((-0.5*\vi+\vm)*(#1)-0.5*\z+\vm*\ta)/((#1)**2*\Dv**2))-exp(-2*((-0.5*\vi+\vm)*(#1)-0.5*\z+\vm*\ta)*((-0.5*\vi+\vm)*(#1)-0.5*\z+\vm*\ta)/((#1)**2*\Dv**2))*\HH{((-\ta-(#1))*\vm+\z)/(#1)})/(3.14159**(0.5)*\Dv*(#1))}
+
+\newcommand{\PaquetDessinZT}[1]{\begin{scope}[join=bevel]
+\tkzInit[xmax=2.9,xstep=.5,ymax=10,ystep=5]
+\tkzX[orig, noticks, label={$z$}]%, poslabel=-3ex]
+\tkzY[label={$n(z,t)$}, noticks]%, poslabel =-8ex]
+\tkzFct[color=red, samples=100](0..3){
+(\FoncPaquet{#1})}\end{scope}}
+
+
+\begin{tikzpicture}[xscale=2.1, yscale=1.7]
+\tkzInit[xmax=2.9,xstep=.5,ymax=10,ystep=5]
+\tkzFct[color=red,samples=1000](0..3){\FoncPaquet{.35}}
+\tkzFct[color=green,samples=1000](0..3){\FoncPaquet{1.05}}
+\tkzFct[color=blue,samples=1000](0..3){\FoncPaquet{3.3}}
+\node[red] at (1,2){(a)};
+\node[green] at (2.5,0.85){(b)};
+\node[blue] at (3.6,0.4){(c)};
+\tkzX[orig, noticks, label={$z$}]%, poslabel=-3ex]
+\tkzY[label={$n(z,t)$}, noticks]%, poslabel =-8ex]
+\end{tikzpicture}
+\end{document}

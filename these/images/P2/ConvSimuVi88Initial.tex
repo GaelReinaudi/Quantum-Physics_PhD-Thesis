@@ -1,0 +1,95 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\newcommand{\PictureWidth}{13.5}
+\pgfmathparse{-5}
+\let\zminPicture\pgfmathresult
+\pgfmathparse{175}
+\let\zmaxPicture\pgfmathresult
+\pgfmathparse{-50}
+\let\vminPicture\pgfmathresult
+\pgfmathparse{150}
+\let\vmaxPicture\pgfmathresult
+
+\pgfmathparse{\zminPicture}		\let\zminGraph\pgfmathresult
+\pgfmathparse{80}		\let\zmaxGraph\pgfmathresult
+\pgfmathparse{-10}		\let\vminGraph\pgfmathresult
+\pgfmathparse{120}		\let\vmaxGraph\pgfmathresult
+
+\begin{tikzpicture}
+\pgfmathparse{-1*\zminPicture/(\zmaxPicture-\zminPicture)*\PictureWidth}
+\let\OriginX\pgfmathresult
+\pgfmathparse{-1*\vminPicture/(\vmaxPicture-\vminPicture)*0.5*\PictureWidth}
+\let\OriginY\pgfmathresult
+\pgfmathparse{1*(-\OriginX)}
+\let\Xmin\pgfmathresult
+\pgfmathparse{1*(\PictureWidth-\OriginX)}
+\let\Xmax\pgfmathresult
+\pgfmathparse{1*(-\OriginY)}
+\let\Ymin\pgfmathresult
+\pgfmathparse{1*(0.5*\PictureWidth-\OriginY)}
+\let\Ymax\pgfmathresult
+
+\pgfmathparse{1*((\zmaxPicture-\zminPicture)/\PictureWidth)}
+\let\XscaleGraph\pgfmathresult
+\pgfmathparse{1/\XscaleGraph}
+\let\invXscaleGraph\pgfmathresult
+\pgfmathparse{1*((\vmaxPicture-\vminPicture)/(0.5*\PictureWidth))}
+\let\YscaleGraph\pgfmathresult
+\pgfmathparse{1/\YscaleGraph}
+\let\invYscaleGraph\pgfmathresult
+
+\useasboundingbox 
+(\zminGraph*\invXscaleGraph-0.25,\vminGraph*\invYscaleGraph-0.1) 
+rectangle (\zmaxGraph*\invXscaleGraph+0.8, \vmaxGraph*\invYscaleGraph+0.8);
+
+\put(\Xmin,\Ymin){\includegraphics[width=\PictureWidth cm]{Simus/Vinj88Free0000}}
+\put(\Xmin,\Ymin){\includegraphics[width=\PictureWidth cm]{Simus/Vinj88Free0007}}
+\put(\Xmin,\Ymin){\includegraphics[width=\PictureWidth cm]{Simus/Vinj88Free0017}}
+
+\draw[dotted](\zmaxGraph*\invXscaleGraph*0.9 , 120*\invYscaleGraph)node{\scriptsize $+$}
+node[text width=4cm]{$\vinj=\cmps{88}$
+ ~~~~~~~~~ $\Tlong = \microK{150}$
+%  ~~~~~~~~~ $\vconv = \cmps{88}$
+%  ~~~~~~~~~ $\vconv = \cmps{88}$
+  };
+%\draw[dotted](\Xmin,50*\invYscaleGraph)--(\Xmax,50*\invYscaleGraph)
+%node[above left, pos=1]{$\vconv=\cmps{50}$};
+
+\pgfmathparse{20}
+\let\TicksEvery\pgfmathresult
+\pgfmathparse{1*\TicksEvery/\XscaleGraph}
+\let\XscaleForTicks\pgfmathresult
+\pgfmathparse{1/\XscaleForTicks}
+\let\invXscaleForTicks\pgfmathresult
+\pgfmathparse{1*\zminGraph*\invXscaleForTicks}
+\let\XminForTicks\pgfmathresult
+\pgfmathparse{1*\zmaxGraph*\invXscaleForTicks}
+\let\XmaxForTicks\pgfmathresult
+
+%\begin{scope}[xscale=\XscaleForTicks]
+%\tkzInit[xmin=\zminGraph,xmax=\zmaxGraph,xstep=\TicksEvery
+%        ,ymin=\vminGraph,ymax=\vmaxGraph,ystep=\YscaleGraph]
+%\tkzX[orig, label={$z$}, poslabel=0ex]
+%\tkzY[label={$\vz$}, noticks, poslabel=-4ex]
+%\end{scope}
+\begin{scope}[join=bevel]
+\tkzInit[xmin=\zminGraph,xmax=\zmaxGraph,xstep=\XscaleGraph
+        ,ymin=\vminGraph,ymax=\vmaxGraph,ystep=\YscaleGraph]
+\tkzX[orig, noticks, label={$z$}]%, poslabel=0ex]
+\tkzY[label={$\vz$}, noticks]%, poslabel=-4ex]
+%\tkzFct[color=red, samples=1000](0..\zmaxGraph){10*\ConvFonctionChampIPModule{\x}{0.04}}
+\end{scope}
+
+
+\end{tikzpicture}
+
+\end{document}

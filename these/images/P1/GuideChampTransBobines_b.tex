@@ -1,0 +1,61 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[xscale=1.2,yscale=1]
+
+\def\xmax{2.3}
+\def\zmax{2.6}
+\def\numFlecheZ{10}
+\def\numFlecheX{5}
+
+\tkzInit[xmin=-2.7,xmax=2.3,ymin=-2.7,ymax=2.3]
+\useasboundingbox (-2.7,-3) rectangle (2.99,3);
+\tkzX[label=$z$, orig, noticks]
+%\tkzY[label=$x$, noticks]
+\foreach \zz in {0,...,\numFlecheZ}{
+		\foreach \xx in {0.2,1,1.8,3.1,5.1}{
+		\pgfmathparse{1*(atan((\zz-\numFlecheZ/5))+90)/180}
+		\let\DeviL\pgfmathresult
+		\pgfmathparse{1*(atan((-\zz+\numFlecheZ*4/5))+90)/180}
+		\let\DeviR\pgfmathresult
+		
+    \draw[latex'-, blue](-\zmax,-\xx/6)++(0,\DeviL*\DeviR)
+    ++(2*\zmax/\numFlecheZ*\zz,\xmax/\numFlecheX*\xx)--++(0,+\xx/6);
+    \draw[latex'-, blue](-\zmax,+\xx/6)++(0,\DeviL*\DeviR)
+    ++(2*\zmax/\numFlecheZ*\zz,-\xmax/\numFlecheX*\xx)--++(0,-\xx/6);
+		}
+}
+\fill[opacity=0.3](-2*\zmax,\xmax-0.6)rectangle++(4*\zmax,0.5);
+%\draw[very thick, latex'-](\zmax-1,\xmax+0.2)--++(1,0) node[right, pos=1, black]{$I$};
+\fill[opacity=0.3](-2*\zmax,-\xmax+0.6)rectangle++(4*\zmax,-0.5);
+%\draw[very thick, -latex'](\zmax-1,-\xmax-0.2)--++(1,0) node[right, pos=1, black]{$I$};
+\tkzInit[xmin=-2.7,xmax=2.7,ymin=-2.7,ymax=2.3]
+\tkzFct[samples = 200,color = red](-4..4)
+{1
+*(1*(atan((\zmax+\x)/(2*\zmax/\numFlecheZ)-\numFlecheZ/5)+3.14/2)/3.14)
+*(1*(atan((\zmax-\x)/(2*\zmax/\numFlecheZ)-\numFlecheZ/5)+3.14/2)/3.14)
+}
+
+\foreach \bb in{0,1,2,3,4,5}{
+\draw[fill=black!20] (-1.5,-3+\bb/10)rectangle++(3,.1);
+\draw[fill=black!20] (-1.5,3-\bb/10)rectangle++(3,-.1);
+}
+\draw[-latex', line width=.2cm, orange](-1,-2.7)--++(2,0);%node[above right=2mm, pos=0.5]{$I$};
+\draw[-latex', line width=.2cm, orange](-1,2.7)--++(2,0) ;%node[below right=2mm, pos=0.5]{$I$};
+
+\draw[-latex', line width=.1cm, orange](1.3,-1.95)--++(1.5,0);%node[above right=2mm, pos=0.5]{$I$};
+\draw[latex'-, line width=.1cm, orange](1.3,1.95)--++(1.5,0) ;%node[below right=2mm, pos=0.5]{$I$};
+
+\fill[blue](-0.5,\xmax-0.6)rectangle++(1,-0.6);
+\fill[blue](-0.5,-\xmax+0.6)rectangle++(1,0.6);
+\end{tikzpicture}
+
+\end{document}

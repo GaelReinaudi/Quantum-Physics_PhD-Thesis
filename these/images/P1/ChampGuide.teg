@@ -1,0 +1,84 @@
+% TeXgraph version 1.92
+% Fenetre Xmin Xmax Ymin Ymax Xscale Yscale
+100#-1#1#-1#1#3#3##
+% Marges gauche droite haut bas cadre gestion_couleur comptgraph
+101#0#0#0#0#0#1#10##
+% Affectation des Variables theta et phi
+18##[theta:=0.5236, phi:=1.0472, OriginalCoord(1)]##
+% Déclaration des Macros
+% Déclaration des Eléments graphiques
+% objet1 (Utilisateur)
+18##[Arrows:=1,NbPoints:=10,FillStyle:=2,FillColor:=16711680,ForMinToMax:=1,tMin:=-0.81,tMax:=0.81,DotStyle:=1,LabelStyle:=10,LabelSize:=7]##
+14#objet1#Implicit(
+(
+(64000.0*((y^2+x^2)/(8.+25.*y^2+25.*x^2-20.*y+20.*x)/(8.+25.*y^2+25.*x^2+20.*y-20.*x)/(8.+25.*y^2+25.*x^2-20.*y-20.*x)/(8.+25.*y^2+25.*x^2+20.*y+20.*x))^(1/2))
+-
+100
+)
+)#-1##
+% objet2 (Utilisateur)
+18##[Arrows:=0,NbPoints:=50,FillStyle:=0,FillColor:=16777215,ForMinToMax:=0,DotStyle:=0,LabelStyle:=0,LabelSize:=3]##
+14#objet2#Implicit(
+(
+(64000.0*((y^2+x^2)/(8.+25.*y^2+25.*x^2-20.*y+20.*x)/(8.+25.*y^2+25.*x^2+20.*y-20.*x)/(8.+25.*y^2+25.*x^2-20.*y-20.*x)/(8.+25.*y^2+25.*x^2+20.*y+20.*x))^(1/2))
+-
+200
+)
+)#-1##
+% objet3 (Utilisateur)
+18##[FillColor:=1]##
+14#objet3#Implicit(
+(
+(64000.0*((y^2+x^2)/(8.+25.*y^2+25.*x^2-20.*y+20.*x)/(8.+25.*y^2+25.*x^2+20.*y-20.*x)/(8.+25.*y^2+25.*x^2-20.*y-20.*x)/(8.+25.*y^2+25.*x^2+20.*y+20.*x))^(1/2))
+-
+300
+)
+)#-1##
+% objet4 (Utilisateur)
+14#objet4#Implicit(
+(
+(64000.0*((y^2+x^2)/(8.+25.*y^2+25.*x^2-20.*y+20.*x)/(8.+25.*y^2+25.*x^2+20.*y-20.*x)/(8.+25.*y^2+25.*x^2-20.*y-20.*x)/(8.+25.*y^2+25.*x^2+20.*y+20.*x))^(1/2))
+-
+400
+)
+)#-1##
+% objet5 (Utilisateur)
+14#objet5#Implicit(
+(
+(64000.0*((y^2+x^2)/(8.+25.*y^2+25.*x^2-20.*y+20.*x)/(8.+25.*y^2+25.*x^2+20.*y-20.*x)/(8.+25.*y^2+25.*x^2-20.*y-20.*x)/(8.+25.*y^2+25.*x^2+20.*y+20.*x))^(1/2))
+-
+500
+)
+)#-1##
+% objet6 (Utilisateur)
+14#objet6#Implicit(
+(
+(64000.0*((y^2+x^2)/(8.+25.*y^2+25.*x^2-20.*y+20.*x)/(8.+25.*y^2+25.*x^2+20.*y-20.*x)/(8.+25.*y^2+25.*x^2-20.*y-20.*x)/(8.+25.*y^2+25.*x^2+20.*y+20.*x))^(1/2))
+-
+50
+)
+)#-1##
+% objet7 (Utilisateur)
+14#objet7#Implicit(
+(
+(64000.0*((y^2+x^2)/(8.+25.*y^2+25.*x^2-20.*y+20.*x)/(8.+25.*y^2+25.*x^2+20.*y-20.*x)/(8.+25.*y^2+25.*x^2-20.*y-20.*x)/(8.+25.*y^2+25.*x^2+20.*y+20.*x))^(1/2))
+-
+150
+)
+)#-1##
+% objet8 (Utilisateur)
+14#objet8#Implicit(
+(
+(64000.0*((y^2+x^2)/(8.+25.*y^2+25.*x^2-20.*y+20.*x)/(8.+25.*y^2+25.*x^2+20.*y-20.*x)/(8.+25.*y^2+25.*x^2-20.*y-20.*x)/(8.+25.*y^2+25.*x^2+20.*y+20.*x))^(1/2))
+-
+250
+)
+)#-1##
+% objet9 (Utilisateur)
+14#objet9#Implicit(
+(
+(64000.0*((y^2+x^2)/(8.+25.*y^2+25.*x^2-20.*y+20.*x)/(8.+25.*y^2+25.*x^2+20.*y-20.*x)/(8.+25.*y^2+25.*x^2-20.*y-20.*x)/(8.+25.*y^2+25.*x^2+20.*y+20.*x))^(1/2))
+-
+350
+)
+)#-1##

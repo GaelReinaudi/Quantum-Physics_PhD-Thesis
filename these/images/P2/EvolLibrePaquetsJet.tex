@@ -1,0 +1,113 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=0.6]%, thick]
+
+
+\def\eps{0.3}
+\def\zmax{20}
+\def\vmax{6.5}
+\def\deltav{0.6}
+\def\deltaz{0.3}
+\def\vzero{5.5}
+\def\vmiroir{3.75}
+\def\Zmiroir{0.5}
+\def\Zpatimage{{2*\Zmiroir}}
+\def\vapres{{(2*\vmiroir-\vzero)}}
+\def\tint{0.9}
+\def\NpatAvant{3}
+\def\NpatApres{20}
+
+\pgfmathparse{{ 1*(\Zmiroir+\deltaz) / (\vzero-\deltav-\vmiroir)}}
+\let\tStartApres\pgfmathresult
+%\def\tStartApres{1}
+\pgfmathparse{{ \deltaz+(\Zmiroir-\deltaz)*(\vzero+\deltav)/ (\vzero+\deltav-\vmiroir)}}
+\let\ZdebutCol\pgfmathresult
+\pgfmathparse{{ -\deltaz+(\Zmiroir+\deltaz)*(\vzero-\deltav)/ (\vzero-\deltav-\vmiroir)}}
+\let\ZfinCol\pgfmathresult
+
+
+\tkzInit[xmin=0,xmax=\zmax,ymin=0,ymax=\vmax]
+\useasboundingbox (-2.2,-1.0) rectangle (\zmax+1.4,\vmax+1.0);
+\tkzX[label=$z$, orig, noticks]%, poslabel = -2.5ex]
+\tkzY[label=$\vz$, noticks]
+
+%\draw[blue, opacity=0.3, dashed] (0,\vmiroir) -- +(\zmax,0) 
+%node[below left,pos=0, opacity=1]{$ \Vmir$};
+%\draw[blue, opacity=0.3, dashed] (\Zmiroir,0) -- +(0,\vmax) 
+%node[below,pos=0, opacity=1]{$ \Zmirini$};
+%
+
+\foreach \tt in {0,1,...,\NpatAvant}
+{
+\def\Tun{\tt*\tint}
+\draw[fill=blue!60, very thin] 
+(0,\vzero)++(-\deltaz,-\deltav)
+  ++({\Tun*(\vzero-\deltav)}, 0) 
+--++(\Tun*2*\deltav,2*\deltav)
+--++(2*\deltaz,0)
+--++(-\Tun*2*\deltav,-2*\deltav)
+--cycle;
+}
+\draw[latex'-latex'](\vzero*\tint, \vzero-\deltav-\eps)--++(\vzero*\tint,0)
+node[below, midway]{$\distpat$};
+\draw[dotted](\vzero*\tint, \vzero-\deltav-\eps)++(\vzero*\tint,0)--++(0,2*\deltav+\eps);
+\draw[dotted](\vzero*\tint, \vzero-\deltav-\eps)--++(0,2*\deltav+\eps);
+
+\shade[top color=blue!0, bottom color=blue!40]
+(0.83*\zmax,\vzero-0.05)rectangle(\zmax-0.5,\vzero+1.5*\deltav);
+\shade[top color=blue!40, bottom color=blue!0]
+(0.83*\zmax,\vzero)rectangle(\zmax-0.5,\vzero-1.5*\deltav);
+
+\draw[fill=white] 
+(0.83*\zmax,\vzero)++(-0.75*\deltav,0)
+  ++(0.5,1) 
+--++(1.5*\deltav,0)
+--++(-3*1.166,-6*1.166)
+--++(-1.5*\deltav,0)
+--cycle;
+\draw[white, very thick] 
+(0.83*\zmax,\vzero)++(-0.75*\deltav,0)
+  ++(0.5,1) 
+--++(3,0)
+++(-3*1.166,-6*1.166)
+--++(-3,0);
+
+\draw[-latex'] (0,\vzero)++(\deltaz,-\deltav)++(\eps,0)--++({(\vzero-\deltav)/10},0);
+\draw[-latex'] (0,\vzero)++(\deltaz,-0)++(\eps,0)--++({(\vzero-0)/10},0);
+\draw[-latex'] (0,\vzero)++(\deltaz,+\deltav)++(\eps,0)--++({(\vzero+\deltav)/10},0);
+
+
+\draw[<->]%snake=brace, segment amplitude=0.10cm]
+(-\deltaz-\eps,\vzero-\deltav) -- (-\deltaz-\eps,\vzero+\deltav)
+node[left, pos=0.5]{ $\DeltaVPaquet$};
+
+\draw[densely dotted]%snake=brace, segment amplitude=0.10cm]
+(+\deltaz,\vzero-\deltav) -- (+\deltaz,\vzero-\deltav-2*\eps);
+\draw[densely dotted]%snake=brace, segment amplitude=0.10cm]
+(-\deltaz,\vzero-\deltav) -- (-\deltaz,\vzero-\deltav-2*\eps);
+\draw[<-]%snake=brace, segment amplitude=0.10cm]
+(+\deltaz,\vzero-\deltav-2*\eps) -- (2*\deltaz,\vzero-\deltav-2*\eps);
+\draw%snake=brace, segment amplitude=0.10cm]
+(+\deltaz,\vzero-\deltav-2*\eps) -- (-\deltaz,\vzero-\deltav-2*\eps);
+\draw[->]%snake=brace, segment amplitude=0.10cm]
+(-3*\deltaz,\vzero-\deltav-2*\eps) -- (-\deltaz,\vzero-\deltav-2*\eps)
+node[below, pos=0.3]{ $\DeltaZPaquet$};
+
+\draw[<->]%] 
+(\zmax-0.5*\eps,\vzero+\deltav) -- (\zmax-0.5*\eps,\vzero-\deltav)
+node[right, pos=0.5]{ $\DeltaVPaquet$};
+
+\path(1,1.1*\vmax)node[right]{(a): propagation libre de \patss};
+
+\end{tikzpicture}
+
+\end{document}

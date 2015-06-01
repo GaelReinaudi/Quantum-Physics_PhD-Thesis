@@ -1,0 +1,132 @@
+\newcommand{\TitreThese}{
+Manipulation et refroidissement par évaporation forcée d'ensembles atomiques ultra-froids pour la production d'un jet intense dans le régime de dégénérescence quantique : vers l'obtention d'un \textit{laser à atomes continu}}
+
+\usepackage{ifthen}
+\usepackage{ifpdf}
+
+%\usepackage[pdftex]{thumbpdf}
+\usepackage[pdftex]{graphicx} % pour l'incusion de graphiques
+
+
+\graphicspath{{images/}}
+%\setkeys{Gin}{width=\linewidth}
+
+\usepackage[intlimits]{amsmath}
+\usepackage{amssymb}
+% pour des représentation de vecteur sympa pour les physiciens
+\usepackage{vector}
+\usepackage{array}
+\usepackage{slashbox}% pour couper une case de tableau en deux
+
+% figures avec sous-figures et sous-captions:
+\usepackage[subrefformat=subparens]{subfig}
+
+% pour des références en language naturel
+\usepackage[english]{varioref} 
+
+% pour des supers graphiques trop cool, mieux que PSTricks
+\usepackage{tikz,tkz-fct,tkz-2d}
+\usetikzlibrary{shapes,snakes,arrows,patterns}
+
+\usepackage[np,autolanguage]{numprint}
+
+\usepackage[autoplay, loop, poster]{animate} % pour animer des dessins
+
+% texte sur des images
+\usepackage[abs]{overpic}
+\setlength\unitlength{1cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pour pouvoir avoir des fleche depuis le texte vers des formule par exemple:
+% http://www.fauskes.net/pgftikzexamples/global-nodes/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For every picture that defines or uses external nodes, you'll have to apply the 'remember picture' style. To avoid some typing, we'll apply the style to all pictures.
+\tikzstyle{every picture}+=[remember picture] 
+% By default all math in TikZ nodes are set in inline mode. Change this to displaystyle so that we don't get small fractions.
+\everymath{\displaystyle}
+
+% espace intéligent pour la fin d'une nexcommand en text
+\usepackage{xspace}
+
+%gestion des unité !
+\usepackage[amssymb]{SIunits}
+\usepackage{sistyle}
+\SIstyle{German} 
+
+\usepackage{picins}
+\usepackage{fancybox}
+
+\usepackage{movie15}
+% hachurer du texte avec \sout{Texte à barrer}\xout{Texte à hachurer}\uwave{Texte à souligner par une vaguelette}
+\usepackage[normalem]{ulem}
+
+
+% pour ajouter localement une ligne à une page
+% contient une commande pour checker si on est sur un page odd or even
+\usepackage{addlines}
+\usepackage{mparhack}
+
+% Si on veut des mini-tables des matieres (utiliser minitoc-hyper en conjonction avec tlhypref) :
+\ifpdf % le monde PDF
+\usepackage[english]{minitoc-hyper}
+\else % le monde DVI/PS
+\usepackage[english]{minitoc}
+\fi
+
+% Liste notations
+\usepackage[refpage,english,intoc]{nomencl}  %intoc rajoute une ligne dans la toc
+
+%\usepackage{tocbibind}                     % toc,lotf,bib,index in toc
+%\usepackage[numbers,sort&compress]{natbib} % Good [47] type referencing
+%\usepackage{hypernat}                      % Makes natbibs s&c play w/ hyperref
+
+\ifpdf % le monde PDF
+%\usepackage{hyperref} % pour des références cliquables
+\usepackage[pdftex, colorlinks = true
+%						, pdfstartview = FitH
+%						, colorlinks=false,
+						, linkcolor = blue, citecolor = blue, urlcolor = blue, pdfpagelabels, pagebackref]{tlhypref}
+\hypersetup{pdfauthor={Gael Reinaudi},
+pdftitle={\TitreThese},
+pdfsubject={Thèse de doctorat},
+pdfkeywords={physique,quantique,laser,atome,dégénérescence,froid,manipulation,atomique,refroidissement,évaporation,jet}}
+\else % le monde DVI/PS
+\fi
+% ********************************************************************
+% get the links to the figures and tables right
+%\RequirePackage[all]{hypcap} % to be loaded after hyperref package
+% ********************************************************************
+% setup the style of the backrefs from the bibliography
+\newcommand{\backrefnotcitedstring}{\relax}%(Not cited.)
+\newcommand{\backrefcitedsinglestring}[1]{Cité à la page~#1.}
+\newcommand{\backrefcitedmultistring}[1]{Cité aux pages~#1.}
+\RequirePackage[hyperpageref]{backref} % to be loaded after hyperref package
+   \renewcommand{\backreftwosep}{ et~} % seperate 2 pages
+   \renewcommand{\backreflastsep}{, et~} % seperate last of longer list
+   \renewcommand*{\backref}[1]{}  % Disable standard
+   \renewcommand*{\backrefalt}[4]{% Detailed backref
+      \ifcase #1 %
+         \backrefnotcitedstring%
+      \or
+         \backrefcitedsinglestring{#2}%
+      \else
+         \backrefcitedmultistring{#2}%
+      \fi} 
+% ********************************************************************
+
+% Si l'on produit le PDF avec pdflatex, ceci remplace la plupart
+% des polices EC par des polices CM, plus adaptees a la generation de PDF,
+% car ayant des equivalents PS :
+\usepackage{aeguill}
+% Pour tout savoir sur les polices
+% (cette ligne n'est pas necessaire au traitement du fichier)
+%\usepackage[infoshow]{tracefnt}
+
+% évite les under-over full box...
+%\usepackage[auto=false]{microtype} % 2010-05-27
+%\usepackage{microtype}
+
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{lmodern}
+

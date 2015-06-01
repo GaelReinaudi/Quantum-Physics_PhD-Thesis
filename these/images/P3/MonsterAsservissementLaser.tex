@@ -1,0 +1,41 @@
+\documentclass[11pt]{article}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+
+\begin{document}
+\input{../../New_Commande_Gael}
+
+\tikzstyle{block}=[draw, fill=blue!20]
+\tikzstyle{split}=[inner sep=1pt]
+\tikzstyle{beam} = [->, red, very thick]
+\tikzstyle{elec} = [->, thin]
+
+
+\begin{tikzpicture}[node distance=4cm,auto,>=latex', minimum size=1.7cm]
+    \node [block, text width=1.5cm] (laser) {laser de puissance};
+%    \node [split] (spl) [right of=laser] {};
+    \node [block, text width=1.7cm] (aom) [right of=laser] {\aom};
+    \path [] (laser) -- node[split, name=spl] {} (slave);
+    \node [block, text width=2cm] (clic) [right of=slave] {Obturateur m\'ecanique};
+    \node [block, text width=2.1cm] (aom) [right of=clic] {Modulateur acousto-optique};
+
+    \node [block, text width=3cm] (asser) [below of=spl] {Circuit d'asservissement de fr\'equence};
+
+    \node [coordinate] (end) [right of=aom, node distance=2cm]{};
+    \draw[beam] (laser) -- (slave);
+ %   \draw[beam] (spl) -- (slave);
+    \draw[beam, thin] (spl) -- (asser);
+%    \draw[elec] (asser.west) -| (laser.south west);
+    \draw[elec] (asser) -| (laser);
+    \draw[beam] (slave) -- (clic) ;
+    \draw[beam] (clic) -- (aom) ;
+    \draw[beam] (aom) -- (end) ;
+\end{tikzpicture}
+
+\end{document}

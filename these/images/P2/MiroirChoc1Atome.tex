@@ -1,0 +1,142 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\HauteurCase{5}
+% la grid
+%\draw[step=1, color=black!5!] (-7,-7) grid (7,7);			
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Le mirroir	
+\newcommand{\MyMirroir}[1]{%
+\filldraw[rounded corners,fill=green!20] 
+(#1) 
+++(-0.15,-1.5)  rectangle +(0.3,3);
+}
+%%% L'atome
+\newcommand{\MyAtome}[1]{%
+\shade[ball color=red] (#1) circle (.5cm);
+}
+
+\def\ground{%
+    -- +(0mm,-4.0mm) {
+        [yshift=-4mm]
+        +(-2mm,0mm) -- +(2mm,0mm)
+                +(-1mm,-1mm) -- +(1mm,-1mm)
+                +(-0.3mm,-2mm) -- +(0.3mm,-2mm)
+        }
+}
+\begin{tikzpicture}[scale=1, auto, inner sep=2mm]
+\draw[xstep=6, ystep=5, thick] (-6,-\HauteurCase) grid (6,\HauteurCase);			
+
+% Numéro des differrents cadrans 
+\tikzstyle{numer}=[rectangle, draw=black, dashed, fill=black!10, thick]
+\node (origin) [inner sep=0] at (0,0) {};
+\node[above left = 0.5mm] at (origin) [numer] {1};
+\node[above right = 0.5mm] at (origin) [numer] {2};
+\node[below right = 0.5mm] at (origin) [numer] {3};
+\node[below left = 0.5mm] at (origin) [numer] {4};
+
+%%%% Séparation autour du bord de l'image
+\draw[snake=brace, thick, raise snake=0.5mm, segment amplitude=0.5cm] (-6,\HauteurCase) -- (0,\HauteurCase)
+node[above=1cm, midway, anchor=center]{\reflab};
+\draw[snake=brace, thick, raise snake=2pt, segment amplitude=0.5cm] (0,\HauteurCase) -- (6,\HauteurCase)
+node[above=1cm, midway, anchor=center]{\refmir};
+\draw[snake=brace, thick, raise snake=2pt, segment amplitude=0.5cm] (-6,-\HauteurCase) -- (-6,0)
+node[left=1cm, midway, anchor=center, rotate = 90]{après la collision};
+\draw[snake=brace, thick, raise snake=2pt, segment amplitude=0.5cm] (-6,0) -- (-6,\HauteurCase)
+node[left=1cm, midway, anchor=center, rotate = 90]{avant la collision};
+		
+\def\FacteurVitesse{1.5}
+\begin{scope}[inner sep=0.5mm]
+
+\def\PosAt{-5+0.5, \HauteurCase/2}
+\def\PosMi{-2+0.5, \HauteurCase/2}
+
+% Du flou avec des répetitions en transparence
+\begin{scope}[semitransparent, draw opacity =0, xshift=-0.1cm]
+\begin{scope}[nearly transparent, draw opacity =0, xshift=-0.1cm]
+\MyMirroir{\PosMi} 
+\end{scope}
+\MyMirroir{\PosMi} 
+\end{scope}
+\MyMirroir{\PosMi}
+\draw(\PosMi)++(0,-1)--++(-0.5,-0.6)node[below left]{miroir};
+
+\begin{scope}[very nearly transparent, xshift=-0.2cm]%,shading angle=-30]
+\begin{scope}[very nearly transparent, xshift=-0.2cm]%,shading angle=-30]
+\MyAtome{\PosAt}
+\end{scope}
+\MyAtome{\PosAt}
+\end{scope}
+\MyAtome{\PosAt}
+\draw (\PosAt)++(80:0.3)--++(0.5,0.6)node[above right]{atome};
+%%% Vitesses
+\draw[-latex, ultra thick] (\PosAt) ++(0.5,0) -- ++(1.4*\FacteurVitesse,0) node[above = 1mm, midway]{};
+\draw[-latex, ultra thick] (\PosMi) -- ++(0.85*\FacteurVitesse,0) node[above = 1mm, midway]{$\Vmir$};
+\draw (\PosAt)++(0,-0.8) node{$\vat=\cmps{140}$};
+\draw (\PosMi)++(0,1.8) node{$\Vmir=\cmps{85}$};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\def\PosAt{-5+6, \HauteurCase/2}
+\def\PosMi{-2+6, \HauteurCase/2}
+\MyMirroir{\PosMi}
+\begin{scope}[very nearly transparent, xshift=-0.1cm, shade=full]
+\begin{scope}[very nearly transparent, xshift=-0.1cm, shade=full]
+\MyAtome{\PosAt}
+\end{scope}
+\MyAtome{\PosAt}
+\end{scope}
+\MyAtome{\PosAt}
+\draw[-latex, ultra thick] (\PosAt) ++(0.5,0) -- ++(0.55*\FacteurVitesse,0) node[above = 1mm, midway]{};
+\draw[very thick] (\PosMi) -- ++(0.5,0) node[above right, midway]{$\Vmir \equiv 0$} \ground;
+\draw (\PosAt)++(0.5,-0.8) node{$\vat=\cmps{55}$};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\def\PosAt{-4+6, -\HauteurCase/2}
+\def\PosMi{-2+6, -\HauteurCase/2}
+\MyMirroir{\PosMi}
+\begin{scope}[very nearly transparent, xshift=0.1cm, shade=full]
+\begin{scope}[very nearly transparent, xshift=0.1cm, shade=full]
+\MyAtome{\PosAt}
+\end{scope}
+\MyAtome{\PosAt}
+\end{scope}
+\MyAtome{\PosAt}
+\draw[-latex, ultra thick] (\PosAt) ++(-0.5,0) -- ++(-0.55*\FacteurVitesse,0) node[above = 1mm, midway]{$\vat$};
+\draw[very thick] (\PosMi) -- ++(0.5,0) node[above right, midway]{$\Vmir \equiv 0$} \ground;
+\draw (\PosAt)++(-0.3,-0.8) node{$\vat=\cmps{-55}$};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\def\PosAt{-4+0.5, -\HauteurCase/2}
+\def\PosMi{-2+0.5, -\HauteurCase/2}
+\begin{scope}[semitransparent, draw opacity =0, xshift=-0.1cm]
+\begin{scope}[nearly transparent, draw opacity =0, xshift=-0.1cm]
+\MyMirroir{\PosMi} 
+\end{scope}
+\MyMirroir{\PosMi} 
+\end{scope}
+\MyMirroir{\PosMi}
+\begin{scope}[very nearly transparent, xshift=-0.1cm]
+\MyAtome{\PosAt}
+\end{scope}
+\MyAtome{\PosAt}
+\draw[-latex, ultra thick] (\PosAt) ++(0.5,0) -- ++(0.3*\FacteurVitesse,0) node[above = 1mm, midway]{$\vat$};
+\draw[-latex, ultra thick] (\PosMi) -- ++(0.85*\FacteurVitesse,0) node[above = 1mm, midway]{$\Vmir$};
+\draw (\PosAt)++(0,-0.8) node{$\vat=\cmps{30}$};
+\draw (\PosMi)++(-0.5,1.8) node{$\Vmir=\cmps{85}$};
+%
+\end{scope}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\end{tikzpicture}
+\end{document}

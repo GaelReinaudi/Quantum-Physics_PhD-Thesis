@@ -1,0 +1,36 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=1]
+
+
+\tkzInit[xmin=-2.8,xmax=2.5,ymin=0,ymax=3.1]
+%\useasboundingbox (-4,-3) rectangle (4,3);
+
+\tkzFct[samples = 201,color = red](-3..3)
+{abs(exp(-(2*sqrt(\x*\x*2)))*\x*20)}
+
+\tkzX[orig, noticks, label=$z$]
+\tkzY[noticks, label={$\Bpara$}]
+
+	\draw[dotted](-0.5,2.6) -- (0.7,2.6) node[right]{$\Bparamir$};
+
+	\draw[latex'-latex', color=black]
+	(-2.5,2) -- (-0.36,2)
+	node[above,pos=0.5]{$\approx \cm{5}$}
+	;
+	\draw[dotted](-2.5,-0.1) -- (-2.5,2.7) node[right]{};
+	\draw[dotted](-0.36,-0.1) -- (-0.36,2.7) node[right]{};
+
+
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,32 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[xscale=1.5,yscale=0.7]
+
+\pgfmathparse{{1
+}}
+\let\Xini\pgfmathresult
+
+\pgfmathparse{{1
+}}
+\let\Yini\pgfmathresult
+
+\tkzInit[xmin=0,xmax=0.3,ymin=-0.01,ymax=1, ystep=0.2, xstep=0.1]
+\tkzX[label=$y$]
+\tkzY[label=$\frac{\Vmiropt}{\vinj}\vphantom{\dfrac{\Vmiropt}{\dfrac{\Vmiropt}{\vinj}}}$, orig]%, poslabel=0.2cm]%
+
+\tkzInit[xmin=0,xmax=0.33,ymin=-0.01,ymax=1, ystep=0.2, xstep=0.1]
+\tkzFct[samples = 100, color=red, lw=1pt](0..0.33)
+{0.3333+0.3333*\x+0.3333*(1-\x-2*\x**2)**(0.5)}
+
+\end{tikzpicture}
+
+\end{document}

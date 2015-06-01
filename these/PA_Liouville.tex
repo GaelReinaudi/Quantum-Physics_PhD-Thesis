@@ -1,0 +1,108 @@
+\chapter{Théorème de Liouville et \termetech{Démon de Maxwell}}\label{annexe:ThLi}
+\minitoc
+
+\section{Le \thLi}\label{sec:ThLi}
+Les conditions très générales d'application du \thLi pour les systèmes dynamiques
+%\footnote{Il existe un autre \thLi dans le domaine de l'analyse complexe, sans rapport avec les systèmes dynamiques (pour information, celui-ci stipule que toute fonction entière bornée est constante).}
+ en font un théorème remarquable. 
+Il peut être énoncé de la manière suivante pour un système de $N$ particules en évolution hamiltonienne:
+
+\Resultat
+{%
+\noindent Pour toute distribution 
+$
+\rho(x^1,y^1,z^1,...,x^N,y^N,z^N ; v_x^1,v_y^1,v_z^1,...,v_x^N,v_y^N,v_z^N)
+$
+définie dans l'\edpNp (à $6\,N$ dimensions), la valeur de $\rho$ se conserve le long de toute trajectoire correspondant à une évolution hamiltonienne dans cet \edpNp:
+\begin{equation*}
+	\frac{\ddint \rho}{\ddint t} = 0
+	\virguleformule
+	\label{eq:LiouvilleTh}
+\end{equation*}
+et une interprétation géométrique de ceci peut se formuler de cette manière:
+tout volume défini dans l'\edpNp se conserve lors d'une évolution hamiltonienne du système.
+}
+
+Il est très important dans cet énoncé de ne pas confondre \emph{l'\edpNp} avec \emph{l'\edpup}.
+Ce serait une erreur que de prétendre:
+\parole{Tout volume défini dans l'\edpup se conserve lors de l'évolution hamiltonienne du système.}
+
+\casse
+
+\Remarque{
+Une objection immédiate à cette formulation erronée est la suivante: si l'on connait la position et la vitesse de toutes les particules, nous pouvons \sotosay{imaginer} un potentiel dépendant du temps qui va pouvoir toutes les réunir dans un volume arbitrairement petit et avec des vitesses arbitrairement faibles. Le volume occupé par le système dans l'\edpup peut donc être arbitrairement réduit%
+\footnotemark%
+. C'est d'ailleurs le principe de fonctionnement du refroidissement dit \termetech{stochastique}~\cite{StochCool}. 
+}\label{Rq:ObjectionLiouville}
+\footnotetext{
+Une image plus parlante consiste, par exemple, à imaginer un court de tennis sur lequel des balles sont éparpillées. 
+Connaissant la position des balles, nous pouvons aisément les saisir, puis les ranger dans une boîte. Cette opération correspond à une forte augmentation de la \ddedpup du système puisque la distance entre les balle ainsi que les vitesses relatives deviennent arbitrairement faibles.
+}
+
+\section{Volume dans l'\edp à \textit{N} particules}% et entropie}
+
+La notion de \emph{densité} ou de \emph{volume}, définie dans l'\edpNp pourrait paraître superflue puisqu'\emph{un seul point} de cet espace à $6\,N$ dimensions \emph{définit entièrement} le système mécanique%
+\footnote{Un point de l'\edp à $6\,N$ dimensions correspond en effet à la donnée des $N$ vecteurs positions et des $N$ vecteurs vitesses des $N$ particules du système.}%
+.
+En pratique cependant, nous disposons le plus souvent d'informations partielles sur l'état d'un système. En d'autres termes, nous n'avons pas d'information sur l'état du système \emph{à l'échelle microscopique}, \cad sur la position et la vitesse de chaque particule.
+
+\RemarqueTitre{Un exemple}{\label{Rq:ExempleThLi}
+Lorsque nous décrivons l'état d'un gaz par les seules données que sont la pression $P$, le volume $V$, la température $T$, il existe dans l'\edpNp un nombre infini de points possibles qui sont compatibles avec la situation macroscopique donnée. 
+}
+L'ensemble de tous les états microscopiques décrivant le même état macroscopique ($P$, $V$, $T$) définit un \emph{volume dans l'\edpNp}.
+\Resultat{
+Le manque d'informations sur le système, autrement dit son \emph{entropie}, est associée à un volume $\Omega$ dans l'\edpNp%
+\footnotemark%
+. On peut en effet définir l'entropie d'un système isolé par~\cite{Hua87}:
+\[
+S \equiv \kb\,\ln\left(\Omega\right)
+\pointformule
+\]
+\finformule
+}
+
+\footnotetext{
+Mathématiquement, le volume dans l'\edpNp s'exprime en fonction de la densité $\rho(p,q)$ dans l'\edpNp~\cite{Hua87} : 
+$ \Omega = \IntegraleBornes{\rho(p,q)}{\ddint^{3\,N} p \ddint^{3\,N} q}{\text{}}{}%
+.$
+}
+
+Dans le cas (mentionné précédemment) %dans la remarque \vpageref[en haut de cette page]{Rq:ObjectionLiouville}) 
+où l'on connait la position et la vitesse de toutes les particules, l'entropie du système est pour ainsi dire nulle. Le volume $\Omega$ est donc \emph{réduit à un point} de l'\edpNp. Il n'y a aucune objection à faire évoluer de manière hamiltonienne l'état décrit par ce point vers une situation pour laquelle les particules sont physiquement plus proches les unes des autres dans l'\edpup.
+
+\casse
+
+\section{Le Démon de Maxwell}
+Un opérateur qui connaîtrait le système à l'échelle microscopique pourrait donc, au moins en principe, le faire évoluer vers un état de plus faible entropie.
+Ce type d'évolution, formulée en 1867 par James Clerk Maxwell comme une possible violation du second principe de la \thdy, a été rendue célèbre sous la forme personnifiée du bien connu \emph{Démon de Maxwell}. Cet \sotosay{être imaginaire} qui, connaissant la vitesse et la position de chaque particule, pourrait faire diminuer l'entropie d'un système, sans fournir de travail.
+En d'autres termes, une information, même partielle, sur un système peut être utilisée afin de diminuer son entropie.
+
+\Remarque{Voilà l'énoncé de \sotosay{l'expérience de pensée} de Maxwell, issu d'un texte publié en 1871~\cite{Max71}:
+\begin{quote}\parole{
+... if we conceive of a being whose faculties are so sharpened that he can follow every molecule in its course, such a being, whose attributes are as essentially finite as our own, would be able to do what is impossible to us. For we have seen that molecules in a vessel full of air at uniform temperature are moving with velocities by no means uniform, though the mean velocity of any great number of them, arbitrarily selected, is almost exactly uniform. Now let us suppose that such a vessel is divided into two portions, $A$ and $B$, by a division in which there is a small hole, and that a being, who can see the individual molecules, opens and closes this hole, so as to allow only the swifter molecules to pass from $A$ to $B$, and only the slower molecules to pass from $B$ to $A$. He will thus, without expenditure of work, raise the temperature of $B$ and lower that of $A$, in contradiction to the second law of thermodynamics.%
+}
+\end{quote}
+}
+
+\section{Retour sur la \techmimo}
+La mise en \oe uvre de la \techmimo exploite le fait que l'entropie de \pats distincts est plus faible que celle du jet continu obtenu par leur recouvrement. Ainsi, en utilisant une connaissance accrue du système, nous allons pouvoir réduire la distance $\distpat$ entre \pats sans augmenter la \dispvitlong. En d'autres termes, le volume $\Omega$ dans l'\edpNp traité par cette méthode est faible.
+
+
+Par comparaison, l'utilisation d'une \secpent\footnote{Ceci est d'ailleurs valable pour tout potentiel indépendant du temps.} n'implique aucune connaissance sur les positions des atomes. La \secpent traite un système dont l'entropie est \sotosay{a priori grande}, \cad que le volume $\Omega$ traité par cette méthode est très grand. 
+%La conservation de \emph{ce} volume, dictée par le \thLi, implique que la \ddedpup du \jat après la \secpent obtenu soit égale, en moyenne, à la \ddedpup de la distribution de particules avant la \secpent.
+
+\Resultat{
+Le \mimo \sotosay{agit} comme un \emph{démon de Maxwell}. Nous pouvons d'ailleurs exprimer la limite absolue de cette technique quant à la \ddedpup du jet ainsi formé. 
+Le miroir n'utilisant pas une information à l'échelle microscopique, \cad sur les atomes individuels, il sera impossible de dépasser la densité initiale d'un \pat.
+%:\vspace{-10pt}
+%\[
+%	\rhomoym
+%	<  \rhomoyp
+%	\equiv  \frac{\Npat\,\hbar}{\DeltaZPaquet\,\DeltaVPaquet\,m}
+%\pointformule
+%\]
+%\finformule
+}%
+
+
+\NoteGael{Dessin d'un bébé-démon qui range les paquets plus près les uns des autres dans l'\edpup}

@@ -1,0 +1,23 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=1]
+
+\put(0,0){\includegraphics[scale=1]{OriginMiroirPaquetLibre120}}
+\path(5.05,4.15);
+
+\draw (2.5,0) node[below=-2mm]{$t \left[\seconde{}\right]$};
+\draw (0-0.4,2.1) node[rotate=90]{$n(\zsonde,t) \left[ \ua \right]$};
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\end{tikzpicture}
+\end{document}

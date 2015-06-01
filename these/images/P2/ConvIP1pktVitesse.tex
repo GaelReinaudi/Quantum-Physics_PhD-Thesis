@@ -1,0 +1,50 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\sc{2.5}
+\def\ysc{2.5}
+\begin{tikzpicture}
+
+\useasboundingbox (-\sc*.35,-\ysc*.13) rectangle (\sc*5.0,\ysc*3.9);
+\put(0,0){\includegraphics[scale=\sc]{OriginConvIP1pktVitesse}}
+
+\draw (\sc*2.5,\ysc*0) node[below=-2mm]{$t \left[ {\rm s} \right]$};
+\draw (\sc*0-0.4,\ysc*2) node[rotate=90]{$n(\zsonde,t) \left[ \ua \right]$};
+
+\normalsize
+\draw(\sc*0.15,\ysc*3.59)
+node[right, text width=8cm]{\p libre, $\vinj$ = \cmps{88}};
+\draw(\sc*0.15,\ysc*3.09)
+node[right, text width=5cm]{$\vconv$ = \cmps{115}};
+\draw(\sc*0.15,\ysc*2.593)
+node[right, text width=5cm]{$\vconv$ = \cmps{90}};
+\draw(\sc*0.15,\ysc*2.095)
+node[right, text width=5cm]{$\vconv$ = \cmps{82}};
+\draw(\sc*0.15,\ysc*1.596)
+node[right, text width=5cm]{$\vconv$ = \cmps{65}};
+\draw(\sc*0.15,\ysc*1.09)
+node[right, text width=5cm]{$\vconv$ = \cmps{50}};
+\draw(\sc*0.15,\ysc*0.6)
+node[right, text width=5cm]{$\vconv$ = \cmps{33}};
+
+\draw(\sc*1.45,\ysc*3.09-0.4)node{\large $\bullet$};
+\draw(\sc*1.60,\ysc*2.593-0.4)node{\large $\bullet$};
+\draw(\sc*1.81,\ysc*2.095-0.4)node{\large $\bullet$};
+\draw(\sc*2.12,\ysc*1.596-0.4)node{\large $\bullet$};
+\draw(\sc*2.65,\ysc*1.09-0.4)node{\large $\bullet$};
+\draw(\sc*3.85,\ysc*0.6-0.4)node{\large $\bullet$};
+
+\draw(\sc*2.40,\ysc*3.09-0.3)node{\large $\div$};
+\draw(\sc*2.75,\ysc*2.593-0.3)node{\large $\div$};
+\draw(\sc*1.75,\ysc*0.6-0.3)node{\large $\ast$};
+\end{tikzpicture}
+
+\end{document}

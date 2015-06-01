@@ -1,0 +1,56 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\ww{1.43}
+\def\zz{1}
+\def\rmax{2.4}
+\def\zmax{7.}
+\def\eps{0.2}
+\def\temzz{((1+\x*\x/\zz/\zz)**(0.5))}
+\def\gaussi{(exp(-2*\x*\x/\ww/\ww))}
+
+\begin{tikzpicture}[xscale=0.7, yscale=0.75]
+
+\tkzInit[xmin= -\zmax,xmax=\zmax,ymin= -5.1,ymax=0]
+\tkzX[label=$z$, orig, noticks]
+\tkzY[label=$\Udip$, noticks]%, poslabel=-0.1cm]
+\tkzFct[samples = 200,color = red]( -\zmax..\zmax){5*( -1/(\temzz)**2)}
+\tkzFct[samples = 200,color = blue]( -\zmax..\zmax){5*( -1+1*(\x/\zz)**2)}
+%\tkzFct[samples = 200,color = green]( -\zmax..\zmax){%5*( -1 + 1*(\x/\zz)**2  - 1*(\x/\zz)**4)}
+%\tkzFct[samples = 200,color = yellow]( -\zmax..\zmax){%
+%5*( -1 + 0.5*(\x/\zz)**2  - 0.375*(\x/\zz)**4) + 0.3125*(\x/\zz)**6)}
+%\tkzFct[samples = 200,color = green]( -\zz-0.2..\zz+0.2){5*( - 1.0+0.5*(\x/\zz)**2  - 0.375*(\x/\zz)**4  + 0.3125*(\x/\zz)**6 -0.2734375*(\x/\zz)**8  + 0.24609375*(\x/\zz)**10 + 0.2094726562*(\x/\zz)**14  -0.2255859375*(\x/\zz)**12 + 0.1854705811*(\x/\zz)**18  - 0.1963806152*(\x/\zz)**16 -0.176197052*(\x/\zz)**20 + 0.1681880951*(\x/\zz)**22 - 0.1611802578*(\x/\zz)**24 +0.1549810171*(\x/\zz)**26 - 0.1494459808*(\x/\zz)**28 + 0.1444644481*(\x/\zz)**30 -0.1399499341*(\x/\zz)**32 + 0.1358337596*(\x/\zz)**34 + 0.1285853206*(\x/\zz)**38 -0.1320605996*(\x/\zz)**36 - 0.1253706876*(\x/\zz)**40 + 0.1223856712*(\x/\zz)**42 -0.1196041787*(\x/\zz)**44 + 0.1170040879*(\x/\zz)**46 - 0.1145665027*(\x/\zz)**48 -0.1101160347*(\x/\zz)**52 + 0.1122751727*(\x/\zz)**50 - 0.1061469052*(\x/\zz)**56 +0.1080768489*(\x/\zz)**54 + 0.1043167861*(\x/\zz)**58)}
+
+% waist à zr
+\draw[dashed, color=blue](\zz,0.1) -- (\zz,-4)node[above=-0.1cm,pos=0]{$\zR$};
+\draw[dashed, color=blue](-\zz,0.1) -- (-\zz,-4);%node[above,pos=0]{$\zR$};
+\draw[dashed, color=blue](-0.2,-5) -- (0.2,-5)node[left,pos=0]{$-\Uprof$};
+
+\begin{scope}[xshift=\zmax cm]
+\begin{scope}[xshift=\rmax cm]
+\begin{scope}[xshift=1 cm]
+\tkzInit[xmin=-\rmax,xmax=\rmax,ymin=-5,ymax=0]
+\tkzX[label=$r$, orig, noticks]
+\tkzY[label=$$, noticks]
+\tkzFct[samples = 200,color = red](-\rmax..\rmax){-5*\gaussi}
+\tkzFct[samples = 200,color = blue]( -\rmax..\rmax){5*( -1+2*(\x/\ww)**2)}
+
+\draw[dashed, color=blue](\ww,0.1) -- (\ww,-4)node[above=-0.1cm,pos=0]{$\wzero$};
+\draw[dashed, color=blue](-\ww,0.1) -- (-\ww,-4);%node[above,pos=0]{$\zR$};
+
+\end{scope}
+\end{scope}
+\end{scope}
+
+
+\end{tikzpicture}
+
+\end{document}

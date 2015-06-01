@@ -1,0 +1,56 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=1, auto
+, y={(0cm,1cm)}
+, x={(0.4cm,0.3cm)}
+%, y={(0cm,0cm)}
+, z={(1cm,0cm)}
+]
+\def\XYmax{3}
+\def\Zmin{-7}
+\def\Zmax{7}
+\def\Znuage{-5}
+\def\Taillenuage{1}
+\def\Zccd{5}
+\def\Tailleccd{2}
+\def\Taillelentille{2}
+
+
+\draw[-latex', color=black, thick]
+(-\XYmax,0,0) -- (\XYmax,0,0) node[right,pos=1]{$x$};
+\draw[-latex', color=black]
+(0,-\XYmax,0) -- (0,\XYmax,0) node[right,pos=1]{$y$};
+\draw[-latex', color=black]
+(0,0,\Zmin) -- (0,0,\Zmax) node[right,pos=1]{$z$};
+
+% nuage
+\def\numcouche{20}
+\foreach \couche in {-\numcouche,...,\numcouche}
+{ 
+\pgfmathparse{sqrt(\Taillenuage^2-(\couche/\numcouche*\Taillenuage)^2)}
+\let\Taillecouche\pgfmathresult
+\fill[black, opacity=0.1] (0,0,\Znuage+\couche*\Taillenuage/\numcouche) circle (\Taillecouche);
+}
+
+\draw[red] (0,0,0) circle (\Taillelentille);
+\draw[blue, fill, opacity=0.5] (-\Tailleccd,-\Tailleccd,\Zccd) -- (-\Tailleccd,\Tailleccd,\Zccd)-- (\Tailleccd,\Tailleccd,\Zccd)-- (\Tailleccd,-\Tailleccd,\Zccd) -- cycle;
+
+%\useasboundingbox (-2.3,-2.1) rectangle ++(\FigWidth,\Hfig);
+%\tkzInit[xmin=-5,xmax=5,ymin=-3,ymax=3]
+%\tkzX[label=$z$, orig, noticks, lw=1.2pt]
+%\tkzY[label=$\Uhyp$, noticks, lw=1.2pt]
+%\tkzFct[samples = 200,color = red](-2+0.17..2-0.17){(3*x*x+0)**(0.5)+.3}
+
+
+\end{tikzpicture}
+
+\end{document}

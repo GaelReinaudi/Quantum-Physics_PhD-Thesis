@@ -1,0 +1,110 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=0.6]%, thick]
+
+\def\eps{0.05}
+\def\zmax{20}
+\def\vmax{6.5}
+\def\deltav{0.5}
+\def\deltaz{0.2}
+\def\vzero{5.5}
+\def\vmiroir{3.5}
+\def\Zmiroir{0.5}
+\def\Zpatimage{{2*\Zmiroir}}
+\def\vapres{{(2*\vmiroir-\vzero)}}
+\def\tint{0.9}
+\def\NpatAvant{0}
+\def\NpatApres{20}
+
+\pgfmathparse{{ 1*(\Zmiroir+\deltaz) / (\vzero-\deltav-\vmiroir)}}
+\let\tStartApres\pgfmathresult
+%\def\tStartApres{1}
+\pgfmathparse{{ \deltaz+(\Zmiroir-\deltaz)*(\vzero+\deltav)/ (\vzero+\deltav-\vmiroir)}}
+\let\ZdebutCol\pgfmathresult
+\pgfmathparse{{ -\deltaz+(\Zmiroir+\deltaz)*(\vzero-\deltav)/ (\vzero-\deltav-\vmiroir)}}
+\let\ZfinCol\pgfmathresult
+
+\footnotesize
+
+\tkzInit[xmin=0,xmax=\zmax,ymin=0,ymax=\vmax]
+\useasboundingbox (-1.6,-0.2) rectangle (\zmax+1.5,\vmax+0.8);
+\tkzX[label=$z$, orig, noticks]%, poslabel = -2.5ex]
+\tkzY[label=$\vz$, noticks]
+
+\draw[blue, opacity=0.3, dashed] (0,\vmiroir) -- +(\zmax,0) 
+node[left,pos=0, opacity=1]{$\tiny \Vmir$};
+%\draw[blue, opacity=0.3, dashed] (\Zmiroir,0) -- +(0,\vmax) 
+%node[below,pos=0, opacity=1]{$\tiny \Zmirini$};
+
+
+\foreach \tt in {0,...,\NpatAvant}
+{
+\def\Tun{\tt*\tint}
+\draw[fill=blue!60] 
+(0,\vzero)++(-\deltaz,-\deltav)
+  ++({\Tun*(\vzero-\deltav)}, 0) 
+--++(\Tun*2*\deltav,2*\deltav)
+--++(2*\deltaz,0)
+--++(-\Tun*2*\deltav,-2*\deltav)
+--cycle;
+}
+
+\draw[-latex'] (0,\vzero)++(\deltaz,-\deltav)++(\eps,0)--++({(\vzero-\deltav)/10},0);
+\draw[-latex'] (0,\vzero)++(\deltaz,-0)++(\eps,0)--++({(\vzero-0)/10},0);
+\draw[-latex'] (0,\vzero)++(\deltaz,+\deltav)++(\eps,0)--++({(\vzero+\deltav)/10},0);
+
+%\tkzFct[samples = 100, color = green!30
+%, lw=\deltaz cm](\ZdebutCol..\ZfinCol)
+%{(\x*\vmiroir)/(\x-\Zmiroir)}
+
+
+\foreach \tt in {0,...,\NpatApres}
+{
+\pgfmathparse{{ 1*(\tt*\tint+\tStartApres)}}
+\let\Tdeux\pgfmathresult
+
+\path[fill=green!60]%
+(\Zpatimage,\vapres)++(-\deltaz,-\deltav)
+  ++({\Tdeux*(\vapres-\deltav)}, 0) 
+--++({\Tdeux*2*\deltav},2*\deltav)
+--++(2*\deltaz,0)
+--++({-\Tdeux*2*\deltav},-2*\deltav)
+--cycle;
+}
+
+
+\draw[snake=brace, segment amplitude=0.05cm]%] 
+(-\deltaz-\eps,\vzero-\deltav) -- (-0.3,\vzero+\deltav)
+node[left, pos=0.5]{\footnotesize $\DeltaVPaquet$};
+
+\draw[snake=brace, segment amplitude=0.05cm]%] 
+(+\deltaz,\vzero-\deltav-\eps) -- (-\deltaz,\vzero-\deltav-\eps)
+node[below left, pos=0.5]{\footnotesize $\DeltaZPaquet$};
+
+\path[color=white, fill] 
+(\zmax,2*\vmiroir-\vzero-\deltav-\eps)
+++(-0.5,0) rectangle ++(9,9);%2*\deltav+2*\eps);
+
+\draw[black, dotted] (\zmax-\eps,2*\vmiroir-\vzero+\deltav)--++(-0.5,0);	
+\draw[black, dotted] (\zmax-\eps,2*\vmiroir-\vzero-\deltav)--++(-0.5,0);	
+
+\draw[snake=brace, segment amplitude=0.05cm]%] 
+(\zmax-\eps,2*\vmiroir-\vzero+\deltav) -- (\zmax-\eps,2*\vmiroir-\vzero-\deltav)
+node[right, pos=0.5]{$\footnotesize \DeltaVPaquet$};
+
+\path[fill = red, opacity=0.2](\ZdebutCol,0)rectangle(\ZfinCol,\vmax);
+\draw (\ZfinCol/2+\ZdebutCol/2,\vmax*4/5)--(\ZfinCol+0.5,\vmax)
+ node[right]{zone d'action du \mimo};
+
+\end{tikzpicture}
+
+\end{document}

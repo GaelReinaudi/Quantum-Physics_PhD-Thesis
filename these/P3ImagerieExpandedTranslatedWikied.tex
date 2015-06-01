@@ -1,0 +1,1278 @@
+$ \newcommand{\LO}{ {\lambda} } $ $ \newcommand{\Irz}{I(r,z)} $ $ \newcommand{\temzz}{ {TEM$_{00}$}} $ $ \newcommand{\wzero}{ {w_0} } $ $ \newcommand{\zR}{ {z_{\rm R} } } $ $ \newcommand{\wz}{ {w(z)} } $ $ \newcommand{\wzexpr}{\wzero\,\sqrt{1+ \left( \frac{z}{\zR} \right)^2 } } $ $ \newcommand{\zRexpr}{ {\pi\,\frac{\wzero^2}{\LO} } } $ $ \newcommand{\Udip}{ {U_{\rm dip} } } $ $ \newcommand{\Udiph}{ {U_{\rm h} } } $ $ \newcommand{\Udiphxyz}{ {U_{\rm h}\xyz} } $ $ \newcommand{\Udipxyz}{ {U_{\rm dip}\xyz} } $ $ \newcommand{\Uprof}{ { {U_0} } } $ $ \newcommand{\Pmin}{ {P_{\rm min} } } $ $ \newcommand{\Ptrans}{ {P_{\rm f} } } $ $ \newcommand{\desacU}{ {\Delta_{_{1} } } } $ $ \newcommand{\desacD}{ {\Delta_{_{2} } } } $ $ \newcommand{\deseffcarre}{ {\Delta_{_{12} }^{\hphantom{1}2} } } $ $ \newcommand{\Gammadif}{ {\Gamma_{\rm dif} } } $ $ \newcommand{\dT}{ {\Derive{T}{t} } } $ $ \newcommand{\tdT}{ {\tDerive{T}{t} } } $ $ \newcommand{\PulsTrans}{ {\omega_{r} } } $ $ \newcommand{\PulsLong}{ {\omega_{z} } } $ $ \newcommand{\Uh}{ {U_{\rm h} } } $ $ \newcommand{\zc}{ {z_{\rm c} } } $ $ \newcommand{\dzc}{ {\dot{\zc} } } $ $ \newcommand{\ddzc}{ {\ddot{\zc} } } $ $ \newcommand{\dzct}{ {\dzc(t)} } $ $ \newcommand{\ddzct}{ {\ddzc(t)} } $ $ \newcommand{\ddzcn}{ {\widehat{a} } } $ $ \newcommand{\tadim}{ {u} } $ $ \newcommand{\ddzcnv}{ {\ddzcn(\tadim)} } $ $ \newcommand{\zct}{ {\zc(t)} } $ $ \newcommand{\tfin}{ {T_{\rm f} } } $ $ \newcommand{\Fe}{ {F_{\rm e} } } $ $ \newcommand{\zp}{ {\tilde{z} } } $ $ \newcommand{\vp}{ {\tilde{v} } } $ $ \newcommand{\zpt}{ {\zp(t)} } $ $ \newcommand{\vpt}{ {\vp(t)} } $ $ \newcommand{\PulsUh}{ {\omega} } $ $ \newcommand{\Aosc}{ {\mathcal{A} } } $ $ \newcommand{\AccZc}{A_{\rm m} } $ $ \newcommand{\VitZc}{ {V_{\rm m} } } $ $ \newcommand{\DistZc}{ {D} } $ $ \newcommand{\PulsLongLor}{ {\omega_{z}^{\rm lor} } } $ $ \newcommand{\zmaxTraj}{ {z_{\rm m} } } $ $ \newcommand{\OperR}{ {\mathbf{\widehat{R} } } } $ $ \newcommand{\OperE}{ {\mathbf{\widehat{E} } } } $ $ \newcommand{\OperP}{ {\mathbf{\widehat{d} } } } $ $ \newcommand{\Evect}{ {\Vecteur{E} } } $ $ \newcommand{\Pvect}{ {\Vecteur{d} } } $ $ \newcommand{\Eampl}{ {\widetilde{E} } } $ $ \newcommand{\Pampl}{ {\widetilde{d} } } $ $ \newcommand{\Polarisation}{ {\Vecteur{\epsilon_{_{\rm L} } } } } $ $ \newcommand{\Vcav}{ {V_{\rm c} } } $ $ \newcommand{\Nph}{N} $ $ \newcommand{\Ener}{ {\mathcal{E} } } $ $ \newcommand{\VAL}{ {\mathbf{\widehat{V}_{\rm AL} } } } $ $ \newcommand{\EAL}{ {\mathcal{\Ener}_{\rm AL} } } $ $ \newcommand{\omegaHF}{ {\omega_{\rm hf} } } $ $ \newcommand{\AiN}{ { {A_i, \Nph} } } $ $ \newcommand{\AjN}{ { {A_j, \Nph'} } } $ $ \newcommand{\EcartMini}{ {\Delta\Ener_{ij} } } $ $ \newcommand{\Eneri}{ {\Ener_{i} } } $ $ \newcommand{\Enerj}{ {\Ener_{j} } } $ $ \newcommand{\Deltaij}{ {\omega_{ij} } } $ $ \newcommand{\EneriN}{ {\Ener_{i\Nph} } } $ $ \newcommand{\EnerjN}{ {\Ener_{j\Nph'} } } $ $ \newcommand{\PropUI}{\zeta} $ $ \newcommand{\polarindice}{ {q} } $ $ \renewcommand{\unit}[1]{\ERREUR} $ $ \newcommand{\val}[1]{ {\num{#1} } } $ $ \newcommand{\valpm}[2]{ {\val{#1}\pm\val{#2} } } $ $ \newcommand{\SiPlusOuMoins}[3]{ {\val{#1}\pm#2{#3} } } $ $ \newcommand{\atparsec}[1]{#1{ {\rm at}/s}} $ $ \newcommand{se}[1]{#1{s} } $ $ \newcommand{\rps}[1]{#1{\radian/s} } $ $ \newcommand{\smun}[1]{#1{\reciprocals} } $ $ \newcommand{\Hz}[1]{#1{\hertz} } $ $ \newcommand{\Hzpm}[2]{\SiPlusOuMoins{#1}{#2}{\hertz} } $ $ \newcommand{\kHz}[1]{#1{\kilo\hertz} } $ $ \newcommand{\atps}[1]{#1{ {\rm at}/s}} $ $ \newcommand{\atpcc}[1]{#1{ {\rm at}/{\rm cm}^3}} $ $ \newcommand{\m}[1]{#1{m}} $ $ \newcommand{\mps}[1]{#1{m/s}} $ $ \newcommand{\mpsc}[1]{#1{m/\squares}} $ $ \newcommand{\cm}[1]{#1{cm}} $ $ \newcommand{\mm}[1]{#1{mm}} $ $ \newcommand{\micron}[1]{#1{\mu m}} $ $ \newcommand{\nm}[1]{#1{n m}} $ $ \newcommand{\ms}[1]{#1{ms}} $ $ \newcommand{\micros}[1]{#1{\mu s}} $ $ \newcommand{\nanos}[1]{#1{n s}} $ $ \newcommand{\cmps}[1]{#1{cm/s}} $ $ \newcommand{\cmpspm}[2]{\SiPlusOuMoins{#1}{#2}{cm/s}} $ $ \newcommand{\mmps}[1]{#1{mm/s}} $ $ \newcommand{\microK}[1]{#1{\mu K}} $ $ \newcommand{\microKps}[1]{#1{\mu K/s}} $ $ \newcommand{\microKpm}[2]{\SiPlusOuMoins{#1}{#2}{\mu K}} $ $ \newcommand{\microKpmicros}[1]{#1{\mu K/{\mu s} }} $ $ \newcommand{mK}[1]{#1{mK}} $ $ \newcommand{\gausspcm}[1]{#1{ {\rm G}/{\rm cm} }} $ $ \newcommand{\gauss}[1]{#1{ {\rm G} }} $ $ \newcommand{\eV}[1]{#1{\electronvolt}} $ $ \newcommand{\W}[1]{#1{W}} $ $ \newcommand{\mW}[1]{#1{mW}} $ $ \newcommand{\Wpcmc}[1]{#1{W/\square{cm} }} $ $ \newcommand{\mWpcmc}[1]{#1{mW/\square{cm} }} $ $ \newcommand{\HH}[1]{(((#1) + abs(#1))/(2*(#1)))} $ $ \newcommand{\HHsmooth}[1]{((#1)/(sqrt(((#1*2)*(#1*2)+1)))+0.5)} $ $ \newcommand{\pointformule}{\, .} $ $ \newcommand{\virguleformule}{\, ,} $ $ \newcommand{\ua}{ {\rm u.a.} } $ $ \newcommand{\xy}{ {(x,y)} } $ $ \newcommand{\xyz}{ {(x,y,z)} } $ $ \newcommand{\xpyp}{ {(x',y')} } $ $ \newcommand{\xpypzp}{ {(x',y',z')} } $ $ \newcommand{\OrbitalS}{ { {5^2 {\rm S}_{ {1}/{2} } } } } $ $ \newcommand{\OrbitalP}{ { {5^2 {\rm P}_{ {3}/{2} } } } } $ $ \newcommand{\OrbitalPJun}{ { {5^2 {\rm P}_{ {1}/{2} } } } } $ $ \newcommand{\OrbitalPJdeux}{ { {5^2 {\rm P}_{ {3}/{2} } } } } $ $ \newcommand{\OrbitalSJ}{ { { {\rm S}_{ {1}/{2} } } } } $ $ \newcommand{\Ket}[1]{ {\left| {#1} \right\rangle} } $ $ \newcommand{\Bra}[1]{ {\left\langle  {#1} \right|} } $ $ \newcommand{\BraOpKet}[3]{ {\left\langle #1\vphantom{#1#3} \right| #2 \left| #3\vphantom{#1#3} \right\rangle} } $ $ \newcommand{\BraAbsKet}[3]{ {\left\langle #1\vphantom{#1#3} \right\| #2 \left\| #3\vphantom{#1#3} \right\rangle} } $ $ \newcommand{\BraKet}[2]{ {\left\langle #1\vphantom{#1#2} \right| \left. #2 \vphantom{#1#2} \right\rangle} } $ $ \newcommand{\Etat}[1]{ {\Ket{#1} } } $ $ \newcommand{\mF}{ {m_{_F} } } $ $ \newcommand{\gF}{ {g_{_F} } } $ $ \newcommand{\FmF}[2]{ {F=#1 , \mF=#2} } $ $ \newcommand{\EtatFmF}[2]{ {\Etat{ \FmF{#1}{#2} } } } $ $ \newcommand{\EtatF}[1]{ {\Etat{ F=#1 } } } $ $ \newcommand{\EtatSFmF}[2]{ {\Etat{\OrbitalS, \FmF{#1}{#2} } } } $ $ \newcommand{\EtatSF}[1]{ {\Etat{\OrbitalS, F=#1 } } } $ $ \newcommand{\EtatPFmF}[2]{ {\Etat{\OrbitalP, \FmF{#1}{#2} } } } $ $ \newcommand{\EtatPF}[1]{ {\Etat{\OrbitalP, F=#1 } } } $ $ \newcommand{\lambdaDB}{ {\lambda_{\rm dB} } } $ $ \newcommand{\vrecul}{ {v_{\rm rec} } } $ $ \newcommand{\Trecul}{ {T_{\rm rec} } } $ $ \newcommand{\TDoppler}{ {T_{\rm Dop} } } $ $ \newcommand{\TransCycle}{ { {\EtatSF{2} \longrightarrow \EtatPF{3} } } } $ $ \newcommand{\TransOpen}{ { {\EtatSF{1} \longrightarrow \EtatPF{2} } } } $ $ \newcommand{\nurf}{ {\nu_{\rm rf} } } $ $ \newcommand{\numo}{ {\nu_{\rm mo} } } $ $ \newcommand{\Rrf}{ {R_{\rm rf} } } $ $ \newcommand{\Rnurf}{ {R\left( \nurf \right)} } $ $ \newcommand{\etaexpr}{ {\frac{h\,\nurf - \mu\,\Bpara}{\kb\,\Ttrans} } } $ $ \newcommand{\alphaexpr}{ {\frac{\mu\,\Bpara}{\kb\,T} } } $ $ \newcommand{\Lantenne}{ { {\Delta Z}_{\rm ant} } } $ $ \newcommand{\Ncol}{ {N_{\hspace{-1pt}\rm c} } } $ $ \newcommand{\Lguide}{ {L} } $ $ \newcommand{\Hpente}{ {H} } $ $ \newcommand{\Ham}{ {\mathcal{H} } } $ $ \newcommand{\mRb}{ {m_{_{\rm Rb} } } } $ $ \newcommand{\vectr}{\vec{r} } $ $ \newcommand{\vectu}{\vec{u} } $ $ \newcommand{\vectB}   { {\Vecteur{B} } } $ $ \newcommand{\vectBr}  { {\Vecteur{B}\left( \vectr \right)} } $ $ \newcommand{\vectBxyz}{ {\Vecteur{B}\xyz} } $ $ \newcommand{\modB}{ {\Module{\vectB} } } $ $ \newcommand{\modBr}{ {\Module{\vectBr} } } $ $ \newcommand{\kb}{ {k_{_{\rm B} } } } $ $ \newcommand{\muB}{\mu_{\rm B} } $ $ \newcommand{\const}{ {\mbox{const} } } $ $ \newcommand{\cc}{ {\mbox{\textit{c.c.} } } } $ $ \newcommand{\Nlong}{n} $ $ \newcommand{\Nlongini}{\Nlong_{\rm i} } $ $ \newcommand{\Tlong}{T_{z} } $ $ \newcommand{\Ttrans}{T_{\bot} } $ $ \newcommand{\Tlongini}{\Tlong^{\rm i} } $ $ \newcommand{\Tlongfin}{\Tlong^{\rm f} } $ $ \newcommand{\Tini}{T_{\rm i} } $ $ \newcommand{\Tfin}{T_{\rm f} } $ $ \newcommand{\Ti}{T_{\rm i} } $ $ \newcommand{\Tf}{T_{\rm f} } $ $ \newcommand{\Teq}{T_{\rm eq} } $ $ \newcommand{\Teqini}{\Ti} $ $ \newcommand{\Teqfin}{\Tf} $ $ \newcommand{\expoNue}[1]{\mathrm{e}^{\left.#1\right.} } $ $ \newcommand{\expo}[1]{\expoNue{#1} } $ $ \newcommand{\Expo}[1]{\exp \hspace{-2pt} \left(#1\right)} $ $ \newcommand{\Ln}[1]{ {\ln\left(#1\right)} } $ $ \newcommand{\Dirac}[1]{\DIRAC{#1} } $ $ \newcommand{\DIRAC}[1]{\delta \hspace{-3pt} \left[ #1\larger{#1} \right]} $ $ \newcommand{\Heaviside}[1]{\Theta \hspace{-3pt} \left[ #1\larger{#1} \right]} $ $ \newcommand{\MoyenneBraKet}[1]{\left\langle #1 \right\rangle} $ $ \newcommand{\Moyenne}[1]{\overline{#1} } $ $ \newcommand{\im}{ {i} } $ $ \newcommand{\dd}{\mathrm{d} } $ $ \newcommand{\ddint}{\, \dd} $ $ \newcommand{\Diff}[1]{ {\dd #1} } $ $ \newcommand{\dx}{ {\Diff{x} } } $ $ \newcommand{\dy}{ {\Diff{y} } } $ $ \newcommand{\dz}{ {\Diff{z} } } $ $ \newcommand{\dxy}{ {\dx\,\dy} } $ $ \newcommand{\dxyz}{ {\dx\,\dy\,\dz} } $ $ \newcommand{\Derive}[2]{ {\frac{\dd #1}{\dd #2} } } $ $ \newcommand{\tDerive}[2]{ {\frac{\dd #1}{\dd #2} } } $ $ \newcommand{\ttDerive}[2]{ {\frac{\dd #1}{\dd #2} } } $ $ \newcommand{\Integrale}[2]{ {\int{#1} \, #2} } $ $ \newcommand{\Reelle}[1]{ {\mathop{\mathrm{Re} }\left[#1\right]} } $ $ \newcommand{\Imaginaire}[1]{ {\mathop{\mathrm{Im} }\left[#1\right]} } $ $ \newcommand{\larger}[1]{\vphantom{ {#1}_A^A} } $ $ \newcommand{\Avec}[2]{ { {\left.#1 \larger{\larger{#1} }\right\rvert }_{#2} } } $ $ \newcommand{\AvecTexte}[2]{ {\Avec{#1}{\mbox{\scriptsize{#2} } } } } $ $ \newcommand{\IntegraleBornes}[4]{\int_{#3}^{#4}#1 \, #2} $ $ \newcommand{\Operateur}[1]{\widehat{#1} } $ $ \newcommand{\Vecteur}[1]{\overrightarrow{#1} } $ $ \newcommand{\vVecteur}[3]{\begin{pmatrix} {#1}\\{#2}\\{#3} \end{pmatrix} } $ $ \newcommand{\vVecteurXYZ}[1]{\begin{pmatrix} {#1}_{x}\\{#1}_{y}\\{#1}_{z} \end{pmatrix} } $ $ \newcommand{\Module}[1]{ {\left\lvert{#1}{\vphantom{ {#1}^2} }\right\rvert} } $ $ \newcommand{\Fourier}[1]{ {\vphantom{\Bigl[\Bigr.} }{\mathcal{F}\bigl[{#1}\bigr]} } $ $ \newcommand{\Gradient}[1]{\Vecteur{\nabla} \left( #1 \right) } $ $ \newcommand{\Divergence}[1]{\Vecteur{\nabla} \cdot #1 } $ $ \newcommand{\Npat}{N_{\rm p} } $ $ \newcommand{\tcol}{t_{\mathrm {col} } } $ $ \newcommand{\Eat}{\Ener} $ $ \newcommand{\Eatini}{\Eat_{\rm i} } $ $ \newcommand{\Eatfin}{\Eat_{\rm f} } $ $ \newcommand{\zsonde}{ {z_{\rm s} } } $ $ \newcommand{\Lcol}{\mathcal{L}_{\rm c} } $ $ \newcommand{\Tcol}{\mathcal{T}_{\rm c} } $ $ \newcommand{\Trep}{\tau} $ $ \newcommand{\Trepmin}{ {\Trep_{_{\hspace{-2pt} \rm min} } } } $ $ \newcommand{\vinj}{v_{ {\rm {inj} } } } $ $ \newcommand{\vmoy}{ {\Moyenne{v} } } $ $ \newcommand{\distpat}{ {D_{\rm p} } } $ $ \newcommand{\distpatapres}{ {\distpat'} } $ $ \newcommand{\nmoyz}{ {\Moyenne{n_z} } } $ $ \newcommand{\rhomoyz}{ {\Moyenne{\rho_z} } } $ $ \newcommand{\vat}{v_{\mathrm {at} } } $ $ \newcommand{\vini}{v_{0} } $ $ \newcommand{\vinicol}{\vini^{\rm col} } $ $ \newcommand{\vmax}{ {v_{\mathrm {max} } } } $ $ \newcommand{\vatini}{ {v_{\mathrm {at} }^{\rm i} } } $ $ \newcommand{\vatfin}{ {v_{\mathrm {at} }^{\rm f} } } $ $ \newcommand{\vjet}{ {\overline{v_z} } } $ $ \newcommand{\deltavjet}{ {\Delta v_z} } $ $ \newcommand{\vjetini}{ {\overline{v_{\rm i} } } } $ $ \newcommand{\vjetfin}{ {\overline{v_{\rm f} } } } $ $ \newcommand{\sinalpha}{ {\sin(\alpha)} } $ $ \newcommand{\DeltaZPaquet}{ {2\,\Delta {z} } } $ $ \newcommand{\DeltaVPaquet}{ {2\,\Delta {v} } } $ $ \newcommand{\flux}{ {\Phi} } $ $ \newcommand{\fluxapres}{ {\flux'} } $ $ \newcommand{\rapflux}{ {\varphi} } $ $ \newcommand{\gammacol}{ {\gamma_{\rm c} } } $ $ \newcommand{\gammacolapres}{ {\gammacol'} } $ $ \newcommand{\njet}{ {n} } $ $ \newcommand{\njetaxe}{ {n_{0} } } $ $ \newcommand{\rhojetaxe}{ {\rho_{0} } } $ $ \newcommand{\rhojetaxeapres}{ {\rhojetaxe'} } $ $ \newcommand{\Emoy}{\Moyenne{\Ener} } $ $ \newcommand{\Emoyapres}{\Moyenne{\Ener'} } $ $ \newcommand{\etalim}{ {\eta_{\rm lim} } } $ $ \newcommand{\Distrib}{\mathcal{D} } $ $ \newcommand{\Distribini}{\Distrib_0} $ $ \newcommand{\fjet}{ {f} } $ $ \newcommand{\fjetPara}{ {\fjet_{z} } } $ $ \newcommand{\fjetTrans}{ {\fjet_{\bot} } } $ $ \newcommand{\vx}{ {v_{ x} } } $ $ \newcommand{\vy}{ {v_{ y} } } $ $ \newcommand{\vz}{ {v_{ z} } } $ $ \newcommand{\vtrans}{ {v_{\rm \bot} } } $ $ \newcommand{\Lz}{ {L_{ z} } } $ $ \newcommand{\Etrans}{ {E_{\rm \bot} } } $ $ \newcommand{\Bx}{ {B_{ x} } } $ $ \newcommand{\By}{ {B_{ y} } } $ $ \newcommand{\Bz}{ {B_{ z} } } $ $ \newcommand{\Btrans}{ {B_{\rm \bot} } } $ $ \newcommand{\Btransmax}{ {B_{\rm \bot}^{\rm max} } } $ $ \newcommand{\Btransguide}{ {B_{\rm \bot}^{\rm g} } } $ $ \newcommand{\Bpara}{ {B_0} } $ $ \newcommand{\Bparamir}{ {B_0^{\rm mir} } } $ $ \newcommand{\espTubes}{a} $ $ \newcommand{\gradB}{ {b'} } $ $ \newcommand{\Ulin}{ {U_{\rm lin} } } $ $ \newcommand{\Uhyp}{ {U_{\rm hyp} } } $ $ \newcommand{\Upar}{ {U_{\rm par} } } $ $ \newcommand{\Rdef}{ { {R_0} } } $ $ \newcommand{\Udef}{ { {U_0} } } $ $ \newcommand{\zat}{z_{\mathrm {at} } } $ $ \newcommand{\Vmir}{V_{\rm {m} } } $ $ \newcommand{\Vmiropt}{ {\Vmir^\ast} } $ $ \newcommand{\Zmir}{Z_{\mathrm {m} } } $ $ \newcommand{\Zmirini}{\Zmir^{\mathrm i} } $ $ \newcommand{\EpMir}{ {\delta_{\rm m} } } $ $ \newcommand{\vrel}{ {v_{\rm r} } } $ $ \newcommand{\vfin}{ {v_{\rm f} } } $ $ \newcommand{\Rmax}{R} $ $ \newcommand{\Dz}{ {\Delta z} } $ $ \newcommand{\Dzini}{ {\Delta {z} } } $ $ \newcommand{\Dv}{ {\Delta v} } $ $ \newcommand{\omegaL}{ {\omega_{_{\rm L} } } } $ $ \newcommand{\rhomoypat}{\AvecTexte{\rhomoyz}{\p} } $ $ \newcommand{\rhomoypente}{\AvecTexte{\rhomoyz}{pente} } $ $ \newcommand{\rhomoylibre}{\AvecTexte{\rhomoyz}{libre} } $ $ \newcommand{\rhomoymiroir}{\AvecTexte{\rhomoyz}{miroir} } $ $ \newcommand{\rhomoyp}{\rho_{\rm p} } $ $ \newcommand{\rhomoym}{\rho'} $ 
+$ \newcommand{\Nbit}{ {N_{\rm b} } } $ $ \newcommand{\Signal}{ {\mathcal{S} } } $ $ \newcommand{\SignalMax}{ {\mathcal{S}_{\rm max} } } $ $ \newcommand{\SignalMin}{ {\mathcal{S}_{\rm min} } } $ $ \newcommand{\SignalPas}{ {\delta \mathcal{S} } } $ $ \newcommand{\Epix}{ {E_{\rm pix} } } $ $ \newcommand{\Lpix}{ {L_{\rm pix} } } $ $ \newcommand{\Grandis}{ {\gamma} } $ $ \newcommand{\TPulse}{ {\tau} } $ $ \newcommand{\PLaser}{ {P_{_{\rm L} } } } $ $ \newcommand{\AttenOptique}{ {\eta} } $ $ \newcommand{\Iccd}{ {I_{_{\hspace{-1pt}{\rm CCD} } } } } $ $ \newcommand{\Iccdxy}{ {\Iccd(x,y)} } $ $ \newcommand{\IccdxySansNuage}{ {\AvecTexte{\Iccdxy}{sans nuage} } } $ $ \newcommand{\IccdxyAvecNuage}{ {\AvecTexte{\Iccdxy}{avec nuage} } } $ $ \newcommand{\Ilaser}{ {I} } $ $ \newcommand{\Ixy}{ {\Ilaser\xy} } $ $ \newcommand{\Ixyz}{ {\Ilaser\xyz} } $ $ \newcommand{\Iback}{ {\Ilaser_{\rm bkg} } } $ $ \newcommand{\Ibackxy}{ {\Iback\xy} } $ $ \newcommand{\Iin}{ {\Ilaser_{\rm in} } } $ $ \newcommand{\Iinmax}{ {\Ilaser_{\rm in}^{\rm max} } } $ $ \newcommand{\IPas}{ {\delta \Ilaser} } $ $ \newcommand{\Iinxy}{ {\Iin\xy} } $ $ \newcommand{\Iout}{ {\Ilaser_{\rm out} } } $ $ \newcommand{\IoutPas}{ {\delta \Iout} } $ $ \newcommand{\Ioutxy}{ {\Iout\xy} } $ $ \newcommand{\dens}{ {n} } $ $ \newcommand{\densxyz}{ {\dens\xyz} } $ $ \newcommand{\denscol}{ { {\rho_{\rm{c} } } } } $ $ \newcommand{\denscolxy}{ {\denscol\xy} } $ $ \newcommand{\sat}{ {s} } $ $ \newcommand{\seceff}{ {\sigma_{_{\hspace{-1pt}{0} } } } } $ $ \newcommand{\seceffsat}{ {\sigma_{\hspace{-1pt}{\sat} } } } $ $ \newcommand{\Isat}{ {I^{\rm sat}_{0} } } $ $ \newcommand{\IsurIsat}{ {\dfrac{\Ilaser}{\Isat} } } $ $ \newcommand{\IsurIsatxyz}{ {\dfrac{\Ixyz}{\Isat} } } $ $ \newcommand{\Idif}{ {I_{\rm dif} } } $ $ \newcommand{\Idifxyz}{ {\Idif\xyz} } $ $ \newcommand{\Pdif}{ {\mathcal{P}_{\rm dif} } } $ $ \newcommand{\Pdifxyz}{ {\mathcal{P}_{\rm dif}\xyz} } $ $ \newcommand{\seceffeff}{ {\sigma_{_{\hspace{-2pt}{\rm eff} } } } } $ $ \newcommand{\Isateff}{ {I^{\rm sat}_{_{\hspace{-2pt}{\rm eff} } } } } $ $ \newcommand{\Dlibre}{ {\ell} } $ $ \newcommand{\LZnuage}{ {L_{\rm z} } } $ $ \newcommand{\Rnuage}{ {R} } $ $ \newcommand{\texpo}{ {\tau} } $ $ \newcommand{\PopuG}{ {P_{\rm g} } } $ $ \newcommand{\PopuE}{ {P_{\rm e} } } $ $ \newcommand{\PopuEmax}{ {P_{\rm e}^{\rm max} } } $ $ \newcommand{\EtatG}{ {\Etat{\rm g} } } $ $ \newcommand{\EtatE}{ {\Etat{\rm e} } } $ $ \newcommand{\TransGE}{ {\EtatG \longleftrightarrow \EtatE} } $ $ \newcommand{\energieGE}{ {E_{\rm ge} } } $ $ \newcommand{\tSpont}{ {\tau_{ {\rm s} } } } $ $ \newcommand{\pulsSpont}{ {\Gamma} } $ $ \newcommand{\pulsReso}{ {\omega_{_{\hspace{-1pt}{\rm A} } } } } $ $ \newcommand{\pulsLaser}{ {\omega_{_{\rm L} } } } $ $ \newcommand{\desac}{ {\delta} } $ $ \newcommand{\Lentille}{ {\mathcal{L} } } $ $ \newcommand{\RLentille}{ {R_\mathcal{L} } } $ $ \newcommand{\NuageLentille}{ {D_\Lentille} } $ $ \newcommand{\LentilleCCD}{ {D_{_{\rm \hspace{-1pt} CCD} } } } $ $ \newcommand{\AngleSolide}{ {\Omega} } $ $ \newcommand{\FractionAngleSolide}{ {\frac{\AngleSolide}{4\,\pi} } } $ $ \newcommand{\nrefracImaginaire}{ {n_{\rm ref} } } $ $ \newcommand{\nrefrac}{ {\Reelle{\nrefracImaginaire} } } $ $ \newcommand{\nrefracxyz}{ {\Reelle{\nrefracImaginaire\xyz} } } $ $ \newcommand{\deviR}{ {\Delta R} } $ $ \newcommand{\ImperfVarie}{ {\alpha} } $ $ \newcommand{\Imperf}{ {\ImperfVarie^{*} } } $ $ \newcommand{\xyImperf}{ {(x,y;\Imperf)} } $ $ \newcommand{\xyImperfVarie}{ {(x,y;\ImperfVarie)} } $ $ \newcommand{\OptDens}{ { O\hspace{-2pt}D} } $ $ \newcommand{\OptProf}{ { po} } $ $ \newcommand{\OptDensMax}{ {\OptDens} } $ $ \newcommand{\OptProfMax}{ {\OptProf} } $ $ \newcommand{\OptProfExpr}{ {\seceff\,\denscol} } $ $ \newcommand{\DeltaOP}{ {\Delta \OptProf} } $ 
+
+[[Image: AbsImaging-ChapitreImagerie.png | right | 700px]]
+When handling cold atoms, it is essential to characterize the atomic ensembles brought into play
+Physical quantities which we have access are most often:
+* The number of atoms,
+* The spatial distribution of atoms in the cloud
+* The velocity distribution,
+* Density in phase space to a particle.
+
+Techniques to acquire this information is almost entirely optical in nature, that is to say, based on processes of absorption, distribution, or phase of a light wave.
+
+In this chapter, we will describe the two main methods commonly used to produce images of ultra-cold atomic ensembles: fluorescence imaging and imaging absorption in the low saturation regime. Limitations of these methods when it comes to produce images of dense clouds, will lead us to look at more advanced techniques, but more complex to implement.
+Finally, we present a new imaging protocol that we have developed during my second year of PhD. This solves the atomic structures of dense clouds and gives access to precise and quantitative measurements.
+
+
+=Imaging a cold atomic ensemble =
+
+In this section, we describe an optical minimum, we will introduce the concepts necessary to study the imaging of an atomic ensemble. We will focus on the nature of digital information obtained when taking a picture. Laser-atom interactions are also described, since the equations arising allow use in quantitative data contained in an image.
+
+
+==Optics ==
+
+To focus our attention on the principle of imaging methods, we will consider the system as simple as possible neglecting the imperfections of optical components. We will assume in the context of the Gauss approximation.
+The optical axis is taken as the z axis $ $.
+The figure\nref{fig: SytemeOptique} represents a simple optical system for producing the image of the atom cloud on a CCD sensor comprised of a matrix of pixels. We can measure the light intensity distribution $ \Ixy $ from the object plane.
+[[Image: AbsImaging-SytemeOptique.png | right | 700px]]
+\CaptionFigssss{Schéma representing a simple optical system. The object plane conjugate CCD lies in the cloud. $ point (x ', y') $ the sensor corresponds to a point $ (x, y) = (\tfrac{x'}{\Grandis}, \tfrac{y'}{\Grandis}) $ the object plane, where $ \Grandis = \tfrac{\LentilleCCD}{\NuageLentille} $ is the magnification of the optical system . }
+
+
+
+
+In the sequel, we will consider an atomic cloud whose density is denoted atomic $ \densxyz $. This cloud is located at the object plane of the optical system, and we assume that each point $ \xyz $ cloud has a point image $ (x ', y') $ on the CCD.
+This implies that the system is not sensitive to the position z $ $ atoms, but only to their position $ \xy $ projected on the object plane.
+
+
+
+
+
+
+Results
+{
+The existence of this preferred axis of observation, we subsequently lead to consider density column $ \denscolxy $ defined by:
+
+
+$$
+\denscolxy \equiv \Integrale{\densxyz}{\dz}
+\pointformule
+
+$$
+
+
+
+This corresponds to the surface density of atoms if the cloud was projected onto the plane $ \xy $. Obtain an image of the cloud is to measure this variable.
+}
+It is clear that the knowledge of the density column $ \denscolxy $ not enough to determine the atomic density $ \densxyz $ the cloud. This ambiguity of the measure can be lifted by assuming that the cloud has certain symmetries.
+
+===Spatial sampling ===
+
+The finite number of pixels on the sensor sets a limit on the spatial accuracy of the signal supplied by the CCD. This is called spatial sampling (also referred to as pixelation). For conventional CCD sensors, the size of a pixel is typically of the order of $ \Lpix = \micron{5} $. This limitation should be taken into account when we want to make images of atomic ensembles whose spatial extension is very low (typically less than \micron{100}). The optical system will then be designed so as to provide a magnified image of the cloud on the sensor.
+
+
+
+
+===Laser system ===
+Unless otherwise stated, the laser system that we will consider in the following is shown schematically in figure\nref{fig: SystemeLaser}.
+We can produce light pulses whose duration $ \TPulse $ and power $ \PLaser $ are precisely controlled. The shortest pulses that we use with our system have a period $ \TPulse = \nanos{250} $.
+[[Image: AbsImaging-SystemeLaser.png | right | 700px]]
+\CaptionFigs{Schématisation a single laser system. A diode laser is locked in frequency through a servo circuit. Frequency fluctuations thus obtained should be very small compared to the natural linewidth of $ \pulsSpont $ $ ^{87} $Rb. Can typically expect a usable power from a few milliwatts. To have more power, a second laser diode (slave), more powerful, can be injected by the first beam and then deliver tens of milliwatts. An acousto-optic modulator is used to produce light pulse duration and power controlled.
+In order to avoid the inevitable leakage of light through the modulator, a mechanical shutter is used to cut the beam during periods of nonuse. }
+
+
+
+
+===Using the CCD as power meter ===
+
+One final concerning the interpretation of the signal output by the CCD sensor. In normal operation, each pixel produces a signal proportional to $ \Signal $ light energy $ \Epix $ accumulated during exposure time $ \TPulse $. However, we see later that the information we use in practice is the intensity distribution $ \Ixy $ in the object plane of the optical system (where is the cloud). The CCD may well provide this information if we know the following parameters:
+* The sensitivity of the sensor,
+* $ \Grandis $ magnification of the optical system that determines the surface that represents a pixel in the object plane,
+* The duration of exposure $ \TPulse $ which determines the light power received,
+* Losses and attenuations $ \AttenOptique $ on the beam path in the optical system, between the object plane and the sensor.
+
+We shall denote by $ I'\xpyp $ the intensity distribution measured on the sensor. The intensity $ \Ixy $ in the object plane is then deduced by the expression:
+
+
+$$
+\Ixy \AttenOptique \, \Grandis^2 \, = I '(x \Grandis \,, \Grandis \, y)
+
+$$
+
+
+
+Throughout the remainder of this chapter, the signals from the CCD will be systematically interpreted in terms of intensity $ \Ixy $ in the object plane.
+
+
+
+
+Resultats{
+However, in order to emphasize the experimental nature of the quantity measured by the CCD, we use the notation to denote $ \Iccdxy $ intensity $ \Ixy $ observed in the object plane where is the atomic cloud.
+}
+
+
+==Interaction atom laser ==
+
+To interpret the data acquired by optical methods, it is important to know the process of interaction between the atoms and the electromagnetic field.
+The detailed description of these processes is beyond the scope of this manuscript. However, we recall some basic notions in the simple case of a two-level atom interacting with a coherent monochromatic light wave.
+If experimentally relevant to an atom having an energy complex structure is discussed in la\autoref{sec: ipafos}.
+
+
+
+===Modelling atom with two energy levels ===
+
+[[Image: AbsImaging-EnergieAtome2Niveaux.png | right | 700px]]
+And we examine the interaction between the atoms in the cloud and the monochromatic light from a laser pulse $ \pulsLaser $. We consider the simple case of an atom with two energy levels: the ground state by $ \EtatG $ and excited state $ \EtatE $. Energy $ \energieGE $ between these two levels is a resonant angular frequency
+$ \pulsReso = \tfrac{\energieGE}{\hbar}
+ $.
+
+
+This transition has a natural linewidth $ \pulsSpont $ linked to the life $ \tSpont $ the excited level. The disagreement between the laser pulse and $ \pulsLaser $ pulsation resonance $ \pulsReso $ be noted $ \desac $ $$
+\desac \equiv \pulsLaser - \pulsReso
+\pointformule
+$$
+
+
+
+
+\RemarqueTitre{Élargissement inhomogène}{
+We neglect in the rest of the inhomogeneous broadening sources, that is to say, we will consider that the atoms of the cloud all react the same way towards the light. The resonance angular frequency $ \pulsReso $ is thus the same for all atoms. This implies in particular that:
+* The temperature of the cloud is small compared with the Doppler temperature to get rid of the Doppler effect. For $ ^{87} $Rb, $ \TDoppler \approx \microK{146} $.
+* There is no significant gradient magnetic field on the spatial extension of the cloud.
+
+More generally, any type of confinement (magnetic dipole, etc.) moving the energy levels of atoms, must be cut when taking pictures. This means that the cloud is then ballistic expansion.
+}
+
+
+
+===Optical Bloch equations ===
+
+Just remember that in the case considered here of a coherent light wave acting on a two-tier system, it is possible to describe the evolution of atomic populations and coherences through the optical Bloch equations. These are obtained by making several approximations that we recall here:
+* Rotating field approximation
+,
+* The short memory approximation
+,
+* It is also assumed that all frequencies typical coupling between atom and field are negligible compared to the optical frequency
+.
+
+In the sequel, we will consider the steady
+ achieved by an atom subject to a laser wave intensity $ \Ilaser $, detuned to $ \desac $.
+
+
+
+$$
+\PopuE = \frac{1}{2} \, \frac{\sat}{1 + \sat}
+\virguleformule
+
+$$
+
+
+
+where $ \sat $ is the saturation parameter of the transition. It is proportional to the laser intensity $ \Ilaser $ and depends on the disagreement $ \desac $ following a Lorentzian law:
+
+
+
+$$
+\sat \equiv \IsurIsat
+\, \left. \frac{1}{ 1 + \left( \dfrac{2 \, \desac}{\pulsSpont} \right) ^2 } \right.
+\pointformule
+
+$$
+
+
+
+
+
+$ \Isat $ designates the saturation intensity at resonance, which is the value of the intensity of laser resonators, having $ \PopuE = \tfrac{\PopuEmax}{2} = \tfrac{1}{4} $.
+It is expressed simply by the rate of spontaneous emission in the case of a two-level atom:
+
+
+
+$$
+\Isat = \frac{2 \, \pi^2 \, \hbar \, c \, \pulsSpont}{3 \, \lambda^3}
+\pointformule
+
+$$
+
+
+
+\RemarqueTitre{Effet of saturation}{
+[[Image: AbsImaging-CourbeSat.png | right | 700px]]
+Note that the population in the excited state is a nonlinear function of the intensity $ \Ilaser $ (see figure below cons)
+$$
+\PopuE\xrightarrow [\Ilaser \rightarrow \infty] = {}\PopuEmax \tfrac{1}{2}
+$$
+This saturation effect is purely quantum. It is related to the fact that an atom can emit a photon stimulated so since its excited state $ \EtatE $, and with the same probability to absorb a from its ground state $ \EtatG $.
+}
+
+
+
+In the remainder of this chapter, unless otherwise stated, we will assume implicitly a laser wave with no disagreement: $ \desac $ = 0. We will explain the reasons for this choice la\autoref{sec: ImagerieDesaccordee}.
+
+
+==Absorption and scattering of light in an atomic cloud ==
+ 
+We now consider a set of atomic atomic density $ \densxyz $ subjected to a laser wave whose intensity distribution is $ \Ixyz $.
+We will express the power light absorbed and distributed within the cloud. Relationships that will be obtained in this sub-section will be used later in this chapter.
+\Remarque{
+Parameter $ \sat $ is proportional to the laser intensity and $ \Ixyz $ depends coordinates $ \xyz $. However, to alleviate the expressions, we will retain the notation to express $ \sat $ $ \sat\xyz $.
+}
+
+
+
+Each atom absorbs and scatters,
+ an average number $ \pulsSpont \, \PopuE $ of photons per unit time. At each point \xyz the cloud (which is the atomic density $ \densxyz $), power $ \Diff{\Pdif} $ absorbed and diffused in an elementary volume $ \dxyz $ is given by:
+\nResultat{\begin{align}
+\Diff{\Pdif} & = \hbar \, \pulsReso \, \pulsSpont \, \PopuE \, \dens \, \dxyz \nonumber \\
+& = \hbar \, \pulsReso \, \pulsSpont \, \frac{1}{2}
+% \, \frac{1}{1 + + \IsurIsatxyz \left( \dfrac{2 \, \desac}{\pulsSpont} \right) ^2}
+\, \frac{\sat}{1 + \sat}
+\, \densxyz \, \dxyz
+\virguleformule
+
+\end{align}
+}
+\nRemarque{Notons that expression\nref{eq: Pdif} does not involve any assumption about the spatial distribution of the laser intensity $ \Ixyz $ within the cloud. This expression is valid, for example, whether it is for a wave passing through the cloud, or to a standing wave produced by a set of laser beams.
+}
+
+
+
+
+=Reliability of image capture =
+
+
+The measurement protocols described in the next section are the most destructive measures, that is to say, changing the properties of clouds whose image is made. Indeed, the absorption and scattering of photons, is changing the properties of the atomic cloud (size, temperature, \ldots).
+For this reason, it is often impossible to perform two successive measurements on the same cloud.
+\Remarque{
+In the following (including la\autoref{sec: ipafos}), when we propose to repeatedly image the same cloud, we must keep in mind that each measurement is actually performed on a different atomic cloud, but carefully prepared in the same experimental conditions. Good reproducibility of the experiment is then provided four \textit{sine non} to ensure the production of repeated identical clouds.
+}
+
+
+It is more important that the properties of the atomic cloud does not change significantly when taking a picture, otherwise the image is no longer usable. On this point, we propose in this section to discuss the reliability of an image taken in the case of a single laser pulse $ \TPulse $ illuminating a cloud. We assume for simplicity that the saturation parameter $ \sat $ is the same for each atom cloud.
+
+==Diffusion due to thermal agitation ==
+
+Before considering the effect of light on the external degrees of freedom of atoms, recall that, in most cases encountered, the confinement of the cloud is cut at the time of image acquisition. The ballistic expansion of the cloud while taking picture must be considered. Indeed, if we consider a cloud hdy balance defined by the temperature T $ $, the mean square velocity of the atoms in the cloud is $ \Dv = \sqrt{\tfrac{\kb \, T}{m} } $. Each atom moves on average
+ of d = $ \TPulse \, \Dv $ during the $ \TPulse $ pulse. The distance d $ $ is an upper bound on the spatial resolution that can be expected when taking a picture.
+\ApplicationNumerique{
+Consider a cloud whose equilibrium temperature T = hdy is $ \microK{100} $. Calculate the maximum $ \TPulse $ compatible with diffusion of atomic positions below $ d = ??\micron{10} $ (this corresponds to the typical size $ \Lpix $ represented by a CCD pixel in the object plane):
+
+
+
+$$
+\TPulse \leqslant of \, \sqrt{\frac{m}{\kb \, T} } \approx \micros{100}
+\pointformule
+
+$$
+
+
+
+If this condition is true, each atom contributes, on average, more than one pixel on the CCD.
+}
+
+
+==Acceleration due to radiation pressure ==
+
+The first effect of the laser on the position and velocity of the atoms is the radiation pressure. This pushes the atoms in the direction of propagation of the laser wave. According to expression\nref{eq: Pdif} each atom absorbs (and diffuse in a random direction) an average number
+$ \tfrac{\pulsSpont}{2} \, \tfrac{\sat}{1 + \sat} $
+of photons per unit time. This corresponds to a mean acceleration a $ $, an average speed $ v_\TPulse $ and a spatial displacement means $ d_\TPulse $ at the end of the pulse duration $ \TPulse $:
+$$
+a = \vrecul \, \frac{\pulsSpont}{2} \, \frac{\sat}{1 + \sat}
+\virguleformule
+\qquad
+v_\TPulse = \TPulse \, \vrecul \, \frac{\pulsSpont}{2} \, \frac{\sat}{1 + \sat}
+\virguleformule
+\qquad
+d_\TPulse = \TPulse^2 \, \vrecul \, \frac{\pulsSpont}{4} \, \frac{\sat}{1 + \sat}
+\virguleformule
+$$
+where $ \vrecul = \tfrac{\hbar \, k}{m} = \tfrac{\hbar \, \pulsReso}{m \, c} $ is the recoil velocity of the atom ($ \approx\mmps{6} $ for $ ^{87} $Rb).
+
+\ApplicationNumerique{
+What condition must be fulfilled for a shift Doppler negligible compared to the natural width $ \pulsSpont $ transition? We can write:
+
+$$
+v_\TPulse \, \frac{2 \, \pi}{\lambda} \ll \pulsSpont
+\virguleformule
+
+$$
+where $ \lambda $ is the wavelength of the laser. We thus obtain the condition on the duration $ \TPulse $ of the light pulse and saturation parameter $ \sat $:
+
+$$
+\TPulse \, \frac{\sat}{1 + \sat} \ll \frac{\lambda}{\pi \, \vrecul} \approx \micros{40}
+\pointformule
+
+$$
+We can therefore allow very intense light pulses (1 $ \sat \gtrsim $) whose duration is of the order of microseconds. For a pulse whose intensity is low (1 $ \sat \ll $), duration $ \TPulse $ may be larger (tens of microseconds for an intensity $ \Ilaser = \tfrac{\Isat}{10} $).
+}
+
+
+==Heating due to spontaneous emission ==
+
+The second effect is related to the re-emission of photons in random directions and tends to diffuse the velocity vectors of each atom. This translates into a warm cloud. In the notations used above, we express the rate of heating of the cloud during the light pulse:
+$$
+\Derive{T}{t} = \frac{\pulsSpont}{2} \, \frac{m \, \vrecul^2}{\kb} \, \frac{\sat}{1 + \sat}
+\pointformule
+$$
+
+\ApplicationNumerique{
+In the case of rubidium, the heating can be expressed numerically, depending on the saturation parameter $ \sat $:
+$$
+\Derive{T}{t} \approx \frac{\sat}{1 + \sat} \times \microKpmicros{7}
+\pointformule
+$$
+This heating is not a problem as long as it does not significantly affect the distribution of the atoms during image capture (see \autoref{sec: FiabilitéImageThiq}).
+}
+
+
+
+=Imaging Techniques usual =
+
+Different techniques can be used to obtain a representative picture of the atomic density of the cloud. In this section, we present the two main methods currently used, then we mark the limits of the latter when it comes to produce images of dense clouds.
+
+
+==Fluorescence Imaging ==
+
+The technique that seems easiest to implement is simply \sotosay{éclairer} the atomic cloud and collect the light scattered by it through the optical system. We speak fluorescence imaging.
+As shown figure\nref{fig: OptiqueFluo}, the incident laser beam can not along the optical axis z $ $ so as not to hinder the detection of the light scattered by the cloud.
+[[Image: AbsImaging-OptiqueFluo.png | right | 700px]]
+\CaptionFigssss{Schéma illustrating a simple optical system to image fluorescence. The incident laser beam can not along the optical axis z $ $ so as not to interfere with the detection of the light scattered by the cloud. We symbolically represented the spontaneous emission of a few photons. Only a fraction of these is emitted in the direction of the system optique.}
+
+
+The spontaneous emission of photons is isotropic and only a fraction of the scattered light is collected by the optical system. If $ \RLentille $ is the radius of the lens and the distance $ \NuageLentille $ cloud-lens, it is \sotosay{vue} by the cloud as a solid angle:
+$$
+= 2 \AngleSolide \, \pi \, \left( \right)
+\pointformule
+$$
+Assuming that all the photons that reach the lens are sent to the CCD sensor, it measures a fraction $ \tfrac{\AngleSolide}{4 \, \pi} $ of the light scattered by the cloud.
+The signal measured by the CCD sensor is:
+
+
+
+
+$$
+\Iccdxy
++ = \Ibackxy \FractionAngleSolide \, \Integrale{ {\Pdif\xyz} }{\dz}
+\virguleformule
+
+$$
+
+
+ 
+where $ \Ibackxy $ means the intensity of the background light
+which is measured by the CCD even in the absence of the cloud and $ {\Pdif} $ is the power light scattered by the cloud (see la\autoref{sec: PuissanceDiffusee}).
+Note that the integral involved in the expression\nref{eq: IccdFluoPdif} reflects the fact that each point $ \xyz $ cloud has a $ \xy $ image on the CCD.
+
+
+===Signals measured by the CCD ===
+
+According to expression\nref{eq: Pdif} power distributed within the atomic cloud can be written:
+
+
+
+$$
+\Iccdxy
+= \Ibackxy
++ \FractionAngleSolide
+\, \frac{\hbar \, \pulsReso \, \pulsSpont}{2}
+\, \Integrale{\frac{\sat}{1 + \sat} \, \densxyz}{\dz}
+\pointformule
+
+$$
+
+
+ 
+This relationship involves the local light intensity $ \Ixyz $ through the saturation parameter $ \sat $. But in practice, this intensity is not uniform in space for two reasons:
+* The transverse profile of the laser intensity is never completely uniform,
+* Laser intensity decreases during its propagation through the cloud.
+
+It is difficult, from the signal $ \Iccdxy $, extract quantitative information on the atomic density $ \densxyz $.
+
+
+
+
+Resultats{
+In practice, the usual technique of fluorescence imaging is to consider that the entire cloud is subjected to the same light intensity. We can write the equation:
+
+
+
+$$
+\Iccdxy
+\approx \Ibackxy
++ \FractionAngleSolide
+\, \frac{\hbar \, \pulsReso \, \pulsSpont}{2} \, \frac{\sat_0}{1 + \sat_0} \,
+\, \denscolxy
+\virguleformule
+
+$$
+
+
+ 
+$ \sat_0 $ where is a parameter to be estimated saturation \sotosay{global} taking into account the disagreement and the average light intensity at the atomic cloud.
+The second member of the expression\nref{eq: IccdFluoApprox} has a term proportional to the column density $ \denscolxy $.
+}
+
+
+The figure\nref{fig: ImagesFluo} shows an image of a cloud in the magneto-optical trap described in chapitre\nref{chap: JetAtomique}.
+[[Image: AbsImaging-FluoMotLoad_treslent0142.png | right | 700px]]
+\CaptionFigs{Imagerie fluorescence taken when loading the magneto-optical trap described in chapitre\nref{chap: JetAtomique}. Typically E9 atoms are illuminated by six laser beams of magneto-optical trap whose disagreement $ \desac\approx-3 \, \pulsSpont $.}
+
+
+
+To estimate the saturation parameter $ \sat_0 $ which corresponds to the figure\nref{fig: ImagesFluo}, we consider the following parameters:
+* 6 laser beams are involved, * intensity is about $ I\approx2 \, \Isat $,
+* Beams is disagreement $ \desac\approx-3 \, \pulsSpont $,
+* We neglect the magnetic field inhomogeneity.
+
+According to expression\nref{eq: ParamSat}, we deduce $ \sat_0 \approx 0.3 $.
+
+
+===Measurement protocol for imaging fluorescence ===
+
+
+The expression\nref{eq: IccdFluoApprox} therefore contains a background signal $ \Ibackxy $, and a useful signal, proportional to the density column. In practice, it overcomes the first term in capturing not one, but two images on the CCD.
+* The first is an image of the atomic cloud in the presence of laser light excitation, the signal collected corresponds to the expression\nref{eq: IccdFluo}
+* The second is an image taken under the same conditions but in the absence of cloud, the measured signal is then composed only of the term $ \Iccdxy = \Ibackxy $.
+
+
+
+
+
+Resultats{
+A simple subtraction of the two images provides a useful signal giving the density column
+$$
+\denscolxy = \frac{4 \, \pi}{\AngleSolide} \, \frac{2}{\hbar \, \pulsReso \, \pulsSpont} \,
+ \left(
+\IccdxyAvecNuage - \IccdxySansNuage
+ \right)
+\pointformule
+$$
+}
+
+
+
+==Imaging absorption in the low saturation regime ==
+
+The other common method is by absorption imaging. This is to inform the atomic cloud with a progressive wave laser and to the image of his shadow (see figure\nref{fig: OptiqueAbsorption}).
+[[Image: AbsImaging-OptiqueAbsorption.png | right | 700px]]
+\CaptionFigss{Schéma illustrating a simple optical system to image absorption. The cloud absorbs some of the incident laser light. The image of the shadow is collected by the sensor CCD.}
+
+
+
+Throughout its propagation through the cloud, the laser beam is absorbed and distributed. We will consider a laser beam propagating along z direction $ $. The expression\nref{eq: Pdif} determines the elementary variation $ \Diff{\Ilaser} $ intensity of the laser during the propagation in the cloud over a length $ \dz $:
+\begin{align}
+\Diff{\Ixyz}
+& = \frac{\Diff{\Pdif} }{\dx \, \dy}
+\nonumber\\
+& = \hbar \, \pulsReso \, \pulsSpont \, \frac{1}{2}
+\, \frac{\sat}{1 + \sat}
+\, \densxyz \, \dz
+\pointformule
+
+\end{align}
+By showing explicitly the dependence of intensity in the saturation parameter (expression\nref{eq: ParamSat}), we obtain a nonlinear differential equation of the first order $ \Ixyz $ verified during the crossing of the cloud:
+\begin{align}
+\Derive{\Ixyz}{z}
+& = - \frac{\hbar \, \pulsReso \, \pulsSpont}{2}
+\, \IsurIsatxyz
+\, \frac{1}{1 + + \IsurIsatxyz \left( \dfrac{2 \, \desac}{\pulsSpont} \right) ^2}
+\, \densxyz
+\pointformule
+
+\end{align}
+
+===Absorption in the low saturation regime ===
+
+The usual technique absorption imaging is to use a resonant laser beam ($ \desac $ = 0), and the intensity of which is small compared to the saturation intensity. We then speak imaging absorption in the low saturation regime. In this limit, we can consider that atoms have a linear response to the laser intensity.
+The expression\nref{eq: dIabsGenerale} with $ \sat\ll $ allows one to obtain the linear differential equation of first order:
+\begin{align}
+\Derive{\Ixyz}{z}
+& =
+- \seceff
+\, \Ixyz
+\, \densxyz
+\virguleformule
+
+\end{align}
+where $ \seceff = \frac{\hbar \, \pulsReso \, \pulsSpont}{2 \, \Isat} $ is the cross section of the resonance transition excited by the laser. For a two-tier system, and after expression\nref{eq: IsatExpr} she expressed very simply in terms of the wavelength of the laser $ \lambda $:
+$$
+\seceff = \frac{3 \, \lambda^2}{2 \, \pi}
+\pointformule
+$$
+
+
+Equation différentielle\nref{eq: EqDiffAbsBasseInt} is remarkably simple and solved exactly:
+
+
+
+
+Resultats{
+If we denote by $ \Iinxy $ laser intensity when it reaches the cloud, we can express the intensity of the laser $ \Ioutxy $ after crossing the cloud by the relation:
+
+
+
+$$
+\Ioutxy = \Iinxy \, \expo{-\seceff \, \denscolxy}
+\virguleformule
+
+$$
+
+
+
+which is nothing other than the Beer-Lambert law, that is to say, the law governing the absorption in a medium having a linear response to intensity. The dimensionless quantity $ \seceff \, \denscolxy $ is called optical depth and can be denoted $ \OptProf\xy $.
+}
+
+
+
+\nomeRemonte{\Iin}{Intensité incident laser imager on nuage}{4cm}\nomeRemonte{\Iout}{Intensité laser imager after crossing the nuage}{3cm}
+
+For the remainder of this chapter, it is useful to differentiate between two physical quantities as follows:
+* Optical depth:
+
+
+
+$$
+\OptProf\xy \equiv \seceff \, \denscolxy
+
+\virguleformule
+$$
+
+
+
+which is a characteristic of the atomic cloud, and whose value is by definition independent of the method used to measure
+* \do and we define by:
+
+
+
+$$
+\OptDens\xy
+\equiv \Ln{ \frac{\Iinxy}{\Ioutxy} }
+\virguleformule
+$$
+
+
+
+and describes the relative attenuation of the laser light passing through the cloud.
+
+
+
+
+
+Resultats{
+In the imaging protocol by low absorption saturation these two quantities are equal $ \OptProf = \OptDens $. In les\autoref{sec: LimitesNuageDense} et\nref{sec: ipafos} we will have to consider the fact that $ \OptProf $ and $ \OptDens $ are not equal in general. The \do depends, among other things, the intensity and detuning of the laser imager.
+}
+
+
+
+===Measurement protocol ===
+
+In practice, as in the case of fluorescence imaging, the CCD sensor measures light background $ \Ibackxy $. The extraction protocol density column $ \denscolxy $ involves capturing three images:
+* The first is an image of the atomic cloud in the presence of laser light excitation, the signal is collected $ \Iccdxy = + \Ibackxy \Ioutxy $.
+* The second is an image taken under the same conditions but in the absence of cloud, the measured signal is then $ \Iccdxy \Ibackxy = + \Iinxy $ since the laser is not absorbed.
+* The third is an image taken under the same conditions but in the absence of cloud and laser imaging, the measured signal is then composed only of the term $ \Ibackxy $.
+
+
+
+
+
+Resultats{
+A mathematical operation performed for each pixel $ \xy $ CCD makes it possible to calculate the density column:
+\begin{align}
+\seceff \, \denscolxy
+& =
+\Ln{
+\frac{
+\IccdxySansNuage - \Ibackxy
+}{
+\IccdxyAvecNuage - \Ibackxy
+}
+} \nonumber \\
+& =
+\Ln{
+\frac{\Iinxy}{\Ioutxy}
+}
+\equiv \OptDens\xy
+
+\end{align}
+\ff
+}
+
+
+
+This imaging protocol by absorption in the low saturation regime has a major quality: the CCD sensitivity and the characteristics of the transition ($ \Isat $, $ \seceff $) does not need to be known to provide quantitative measures of \do. Indeed, only the ratio of the two intensities $ \Iin $ and $ \Iout $ occurs.
+
+
+
+The figure\nref{fig: ImagesAbsor} shows an example of images taken for absorption imaging protocol.
+\subfloat [cloudless] { [[Image: AbsImaging-2005_12_16_A_movie_2_00060_NoAt.png | right | 700px]] } \,
+\subfloat [with cloud] { [[Image: AbsImaging-2005_12_16_A_movie_2_00060_With.png | right | 700px]] } \,
+\subfloat [column density] { [[Image: AbsImaging-2005_12_16_A_movie_2_00060Absor.png | right | 700px]] }
+\CaptionFigs{Exemple images taken by the imaging protocol absorption. The image (a) corresponds to the laser light alone, that is to say in the absence of the atom cloud. Image (b) is taken at the same condion the image (a), but in the presence of the cloud. The image \sotosay{de fond} is not shown because it is essentially all black. By applying formule\nref{eq: DensColAbsorption} each pixel $ \xy $, we obtain the image (c) represents the \do $ \OptDens\xy $ of nuage.}
+
+
+
+=Reliability of a measure on a very dense cloud =
+
+Both techniques previously described in la\autoref{sec: ImagerieUsuelles} are fairly simple to implement and are widely used. However, we shall see in this section, the dense cloud processing technology makes these little adaptées\cite{KDS99, KSN01}. Here we will highlight the limitations of these protocols.
+
+
+==Limitations of fluorescence imaging protocol ==
+
+At the theoretical study of fluorescence imaging protocol (\autoref{sec: ipf}), we have implicitly made an important simplifying assumption. It is assumed that all photons emitted spontaneously in the cloud can reach the CCD with the same probability.
+In reality, there may be a scattered photon by an atom is immediately re-absorbed into the cloud by another atom.
+[[Image: AbsImaging-EmissionRéabsorption.png | right | 700px]]
+
+This means that the optical system can be observed that the apparent surface of the cloud.
+
+
+
+
+$$
+\Dlibre \, \seceffsat \, \overline{\dens} \equiv 1
+\virguleformule
+
+$$
+
+
+
+$ \seceffsat $ where is the cross section of the transition taking into account the saturation:
+
+
+
+$$
+\seceffsat \equiv \seceff \, \frac{1}{1 + \sat}
+\pointformule
+
+$$
+
+
+
+We can identify two behaviors limits depending on the characteristic size of the cloud $ \LZnuage $ along the optical axis:
+* If $ \Dlibre\gg\LZnuage $, then a photon will have little chance of being re-absorbed in the cloud
+* However, if $ \Dlibre \ll \LZnuage $, each scattered photon will most likely be re-absorbed and re-emitted and re-absorbed ... many times before leaving the cloud.
+
+
+
+
+
+Resultats{
+Considering that the column density of the cloud $ \denscol $ is about $ \overline{\dens} \, \LZnuage $, and after expressions\nref{eq: SecEffSat} et\nref{eq: LibreParcours}, we can identify a criterion on the optical depth of the cloud.
+Thus, the process of re-absorption can be neglected if
+
+
+
+$$
+\seceff \, \denscol \ll \sat 1 +
+\pointformule
+
+$$
+
+
+
+\finformule
+}
+
+
+
+\ApplicationNumerique
+{
+Estimate the intensity required to obtain a usable image in two common cases:
+* In the magneto-optical trap described in la\autoref{sec: PaquetsPmo}, the atomic density of a cloud is typically \atpcc{2E{10} }. With a transverse size (along the axis of the optical system) $ \LZnuage\approx5 mm $, the optical depth reached
+$$
+\AvecTexte{\seceff \, \denscol}{\tiny PMO} \approx 30
+\pointformule
+$$
+* In a Bose-Einstein condensate of rubidium atomic density typically reaches \atpcc{E{14} }. Consider a typical size $ \LZnuage\approx\micron{10} $. Under these conditions the optical depth reaches
+$$
+\AvecTexte{\seceff \, \denscol}{\tiny BEC} \approx 300
+\pointformule
+$$
+
+There is therefore need to have very high intensities. Indeed expression\nref{eq: NegligeReAbsorption} which gives the criterion validity of a measure requires the use of intensities of hundreds or even thousands of times greater than the saturation intensity.
+}
+
+
+===Fluorescence imaging system is extremely saturating ===
+
+The team D.Weiss (Berkeley, California) has implemented a protocol for fluorescence imaging in a regime of extreme saturation to consider a compressed magneto-optical trap atoms Césium\cite{DLH00}. It uses a laser Titanium Sapphire delivering 500{mW} resonant light. The laser imager is retro-reflected to balance radiative forces induced by the absorption of photons repeated. With an imaging beam whose radius $ \tfrac{1}{\expo{2} } $ of 4 mm, it is possible to obtain currents of up to $ 2000 \, \Isat $.
+
+The use of such intensities is very interesting in many ways on the physical plane:
+* $ \PopuE $ population of the excited state is very close
+its limiting value $ \PopuEmax = \tfrac{1}{2} $. Thus, each average atom emits $ \tfrac{\pulsSpont}{2} $ photons per second, regardless of fluctuations in the local intensity of the laser beam. The measures are quantitative.
+* The saturation parameter $ \sat $ is large compared to unity, even if the laser is not perfectly resonant. This method is thus insensitive to the disagreement of the laser or the presence of magnetic field gradient. In particular it is operable to perform an image of a magneto-optical trap.
+* Cross section $ \seceffsat $ saturated transition is very low (see \vpageref{sec: ReAbsorption}). Thus, the measured optical densities are much higher. Another physical interpretation of this phenomenon is that the process of re-absorption within the cloud are offset by the process of stimulated emission, since the population $ \PopuE $ of the excited state is almost identical to the population of $ \PopuG $ the ground state.
+
+The technique described in the référence\cite{DLH00} is accurate, robust and allowed the group to measure D.Weiss \do the order of 100.
+
+
+==Limitations low saturation absorption imaging ==
+
+When capturing image data are recorded and processed by a computer system. This involves scanning the signals delivered by the CCD sensor.
+In this sub-section, we show how this measure prohibits high optical densities by absorption imaging technique weakly saturated.
+
+
+===Scan signal provided by the CCD ===
+
+The signal $ \Signal\xy $ the CCD sensor outputs the result of an analog-digital conversion on a number of bits $ \Nbit $. This implies a discretization of the signal amplitude $ \Signal\xy $ since it can take that $ 2^{\Nbit} $ possible values: $$
+000 ... 01.000 ... 10.000 ... 11, \ldots\ldots\ldots, 111 ... 11 ... 10\text{et}111
+\pointformule
+$$
+$$
+\SignalPas = \frac{\SignalMax}{2^{\Nbit}-1} \virguleformule
+$$
+$ \SignalPas $ where is the limit of accuracy on the signal provided by the sensor.
+
+
+\Remarque{
+This should be also taken into account the electronic noise of the camera. It plays an important role in interpreting signals. Note however, that even in the total absence of noise, the discretization of the amplitude is the ultimate limit of accuracy. In the following we neglect the effects of noise to focus on the impact of digitization.
+}
+
+
+\ApplicationNumerique
+{
+The CCD used in our experimental model is a Basler A102 f monochrome.
+The signal is digitized on $ \Nbit = 8 $ $ or 12 bits $ choice. The sensitivity of the sensor has been calibrated by us.
+ For the wavelength we use ($ \nm{780} $) and in the absence of electronic gain, the discretization thus measured corresponds to an energy-de$ 9.3E 17{J} $ or $ $ 365 photons.
+}
+
+===Limitations \do measurable absorption imaging ===
+
+
+Now emphasize the limits of the imaging protocol described by absorption saturation in low la\autoref{sec: ipafas}.
+The use of images taken by this method is due to the expression\nref{eq: DensColAbsorption} that we recall here:
+$$
+\seceff \, \denscolxy
+=
+\Ln{
+\frac{\Iinxy}{\Ioutxy}
+}
+\equiv \OptDens\xy
+\text{ (recall the équation\nref{eq: DensColAbsorption} \pageref{eq page: DensColAbsorption}) }
+\pointformule
+$$
+However, if the cloud \do is important, then the value of the intensity $ \Iout $ after crossing the cloud can become extremely low
+ relative to the incident intensity $ \Iin $. In other words, the cloud can absorb almost all incident light.
+
+We will show that this is a real problem with measuring the CCD.
+To make best use of the full range of possible values ??for the signal $ \Signal\xy $,
+we set the optical system so that the value $ \SignalMax $ corresponds to the maximum intensity of the laser imager when it is not absorbed, that is to say:
+$$
+\SignalMax \, \longleftrightarrow \, \Iinmax \equiv \sup (\Iinxy)
+\pointformule
+$$
+The discretization $ \SignalPas $ corresponds to:
+$$
+\SignalPas = \frac{\SignalMax}{2^\Nbit-1}
+\quad \longleftrightarrow \quad
+\IPas = \frac{\Iinmax}{2^\Nbit-1}
+\pointformule
+$$
+This requires a discretization of the values ??obtained with the expression\nref{eq: DensColAbsorption} which involves the ratio of the two intensities $ \Iin $ and $ \Iout $.
+It is particularly important to examine the accuracy obtained when using this expression with $ \Iin $ and $ \Iout $ taking discrete values ??by not $ \IPas $. A simple differentiation of expression\nref{eq: DensColAbsorption} allows us to estimate the accuracy of the measurement:
+\begin{align}
+\Delta \left( \seceff \, \denscol \right) & = + \frac{\IPas}{\Iout} \frac{\IPas}{\Iin} \nonumber \\
+\approx & \frac{\IPas}{\Iout} \qquad \text{puisqu'on guess $ \Iout\ll\Iin $} \nonumber
+\pointformule
+\end{align}
+ 
+\ApplicationNumerique{
+Estimate the maximum optical densities which we have access, taking into account the discretization of the signal from the CCD in the following two cases:
+* For coding $ \Nbit $ = 8 bits, expression\nref{eq: DensColAbsorption} may give a value that is at most
+$$
+\OptDens
+=
+\Ln{
+\frac{\SignalMax}{\SignalPas}
+}
+=
+\Ln{ 2^\Nbit-1 }
+\approx 5.5
+\pointformule
+$$
+However, if we want to have a relative accuracy of $ 10\% $ the calculated \do not exceed $ \OptDens = 4.5 $.
+* In the case $ \Nbit $ = 12, the calculated \do is at most $ \OptDens = 8.3 $, but in order to have a relative accuracy of $ 10\% $ the \do must be less than $ \OptDens = 7.5 $
+
+}
+
+
+We understand why the imaging protocol by low absorption saturation is limited to optical depth measurements in the range of 4-5.
+We will show in la\autoref{sec: ipafos} how this problem can be circumvented by using the non-linear response of atoms.
+
+==Absorption of a laser beam detuned ==
+
+One way around this limitation is to reduce the absorption of laser imager playing the odds $ \desac $ laser. Indeed, the expression \vref{eq: Pdif} shows that we can reduce the absorption by detuning the laser imager. We then show that the expression\nref{eq: DensColAbsorption} becomes:
+
+
+
+$$
+\OptDens\xy
+\equiv \Ln{ \frac{\Iinxy}{\Ioutxy} }
++ = \frac{\seceff \, \denscolxy}{1 \left( \dfrac{2 \, \desac}{\pulsSpont} \right) ^2}
+\virguleformule
+
+$$
+
+
+
+
+\ApplicationNumerique{
+Just for example, to resolve the disagreement $ \delta = \pulsSpont $ for a \do of $ 7 $ resonance becomes close to unity.
+}
+
+
+However, for a non-resonant laser, the atom cloud is as a dispersive medium. For a two-level atom, the refractive index is given $ \nrefracImaginaire $ par\cite{KDS99}:
+$$
+\nrefracImaginaire\xyz
+= 1 + \dens\xyz \, \frac{\seceff \, \lambda}{4 \, \pi}
+ \, \left(
+\frac{ \im }{1 + \left( \dfrac{2 \, \desac}{\pulsSpont} \right) ^2}
+-
+\frac{ \dfrac{2 \, \desac}{\pulsSpont} }{1 + \left( \dfrac{2 \, \desac}{\pulsSpont} \right) ^2}
+ \right)
+\virguleformule
+$$
+where $ \lambda $ is the wavelength of the laser, and $ \dens\xyz $ is the atomic density of the cloud. The imaginary part of $ \nrefracImaginaire $ matches the character absorbing medium. The real part of $ \nrefracImaginaire $:
+
+
+
+$$
+{\nrefracxyz}
+= 1 - \dens\xyz \, \frac{\seceff \, \lambda}{4 \, \pi}
+ \, \frac{ \dfrac{2 \, \desac}{\pulsSpont} }{1 + \left( \dfrac{2 \, \desac}{\pulsSpont} \right) ^2}
+\virguleformule
+
+$$
+
+
+
+corresponds to the character which induces the dispersive phase of the wave and hence its refraction.
+ 
+
+ 
+[[Image: AbsImaging-LentilleGradientIndice.png | right | 700px]] This phenomenon of refraction that the atomic ensemble acts as a lens gradient index of the laser imager. The light rays are deflected so that the resulting image on the CCD, which corresponds to the light intensity from the object plane is distorted: it is an effect of \sotosay{mirage optique}. In the illustration below cons, we represent some rays and their extensions (dotted line) in the object plane. The deflection of rays towards the center of the cloud (where the atomic density is high) reflects the fact that $ {\nrefrac} $ is higher here
+to 1.
+
+The figure\nref{fig: ImageNuageDesaccorde} provides an example of images made on a dense atomic cloud, with no disagreement, and disagreement with $ \desac = -2 \, \pulsSpont $.
+It shows clearly the effect of lens on the second image.
+\subfloat [$ \desac $ = 0]
+{ [[Image: AbsImaging-Det0Gamma_000Absor.png | right | 700px]] }\qquad
+\subfloat [$ \desac = -2 \, \pulsSpont $]
+{ [[Image: 2-Det AbsImaging Gamma_000Absor.png | right | 700px]] }
+\CaptionFigs{Exemples images carried on an atomic cloud dense product by a magneto-optical two-dimensional compressed (due to the elongated shape of the cloud, it is distinguished in that a part of the images).
+Image (a) is taken by the imaging technique described in saturated absorption weakly la\autoref{sec: ipafas} with a resonant laser ($ \desac $ = 0).
+The image (b) is taken in the same experimental conditions, but by detuning the laser imager $ \desac = -2 \, \pulsSpont $.
+Clearly observed lensing on the second image: the central area is dark because of the refraction of rays of the beam imager.
+}
+
+
+
+Disclaim a test that can determine whether the image of a cloud with a detuned beam is exploitable.
+\newline
+The equation that describes the propagation of light rays in the cloud is derived from the eikonal equation and can be put in the form:
+$$
+{
+\Derive{}{s} \left( \nrefrac \, \Vecteur{u} \right) }
+ =
+{\Gradient{\nrefrac} }
+\virguleformule
+$$
+where $ \Vecteur{u} $ is the unit vector carried by the path of the light beam and $ $ s is the curvilinear abscissa along the path.
+An order of magnitude calculation to estimate the standard deviation $ \deviR $ a radius in the transverse plane after propagation through the cloud on a length $ \LZnuage $:
+$$
+{
+\nrefrac \, \frac{\deviR}{\LZnuage^2} \approx \frac{\deviR}{\LZnuage^2} }
+ \approx
+ {\frac{\nrefrac-1}{\Rnuage} }
+ \pointformule
+$$
+
+
+
+
+
+Resultats{
+Using expressions\nref{eq: ODhorsReso} et\nref{eq: nrefraction} we can extract the following criterion to estimate the effect of refraction is negligible:
+$$
+\frac{\deviR}{\Rnuage} \approx
+\OptDens \, \frac{\lambda \, \LZnuage}{\Rnuage^2}
+ \, \frac{\desac}{\pulsSpont}
+\ll 1
+\virguleformule
+$$
+This expression involves the \do off resonance, which remember, must be of the order of unity in order to obtain a quality image.
+}
+
+
+
+\ApplicationNumerique
+{
+Calculate this criterion in both cases considered above usual (page \pageref{an: ProfondeurOptiques})
+* Optical depth $ \OptProfExpr \approx 30 $ a cloud of magneto-optical trap, encourages us to use a disagreement $ \desac \approx 1.5 \, \pulsSpont $. Cloud with a typical size \mbox{$ \LZnuage\approx2 \, \Rnuage\approx5 mm $}, we obtain:
+$$
+\AvecTexte{\frac{\deviR}{\Rnuage} }{\tiny PMO} \approx \frac{\lambda \, \LZnuage}{\Rnuage^2}
+ \, \frac{\desac}{\pulsSpont}
+ \approx 3E{-3 }
+\pointformule
+$$
+* In a Bose-Einstein condensate atom $ ^{87} $Rb, the optical depth is typically $ \OptProfExpr \approx 300 $ and dimensions \mbox{$ \LZnuage\approx2 \, \Rnuage\approx\micron{10} $}. Using a disagreement $ \desac \approx \, \pulsSpont $ 5, we obtain:
+$$
+\AvecTexte{\frac{\deviR}{\Rnuage} }{\tiny BEC} \approx \frac{\lambda \, \LZnuage}{\Rnuage^2}
+ \, \frac{\desac}{\pulsSpont}
+ \approx 5
+\pointformule
+$$
+
+We can therefore use a priori detuned laser in the first case, but not in the second.
+}
+
+\RemarqueTitre{Imagerie by contrast phase}{
+An imaging technique called by contrast phase\cite{KDS99} is precisely to exploit the phase shift of the laser by the cloud to measure the real part of the refractive index by an interferometric method.
+An experimental demonstration of this very effective method is the subject of the référence\cite{TWP04}.
+}
+
+
+
+
+
+==On an open transition Absorption ==
+
+
+Another method that can be used to obtain an image by absorbing optically thick cloud is to use laser imager not on cyclante transition, but an open transition.
+
+===For each atom Two photons ===
+
+When an atom is excited about the open transition, then there is a probability
+$$
+p = \frac{1}{2}
+$$
+that it falls in the state \EtatSF{1}, becoming again a candidate for the absorption of a photon. If the atom falls
+ in \EtatSF{2}, it can no longer absorb the laser photons.
+
+In order to make such a quantitative measurement of absorption, we need to calculate the number of photons that are absorbed by each atom on average. $ probability P (n) has $ atom absorb $ exactly n photons $ corresponds to the probability of falling $ n-1 times $ \EtatSF{1}, then falling into \EtatSF{2}:
+$$
+P (n) =-p^{n 1} \, (1-p)
+\pointformule
+$$
+
+
+
+
+Results
+{
+We infer the average number $ \Moyenne{n} $ of photons absorbed by an atom before it falls in the state \EtatSF{2}:
+$$
+\Moyenne{n}
+N = \sum_{n 1}^{\infty} \, = P (n)
+N = \sum_{n = 1}^{\infty} \, p^{n 1} \,-(1-p)
+= \frac{1}{1-p}
+= 2
+\pointformule
+$$
+So each atom absorbs an average $ 2 $ photons.
+}
+
+
+===Interests and cons ===
+
+This imaging technique on an open transition has two major advantages:
+* It is quantitative in the sense that the number of photons absorbed accurately reflects the number of atoms in the cloud.
+* It is more robustness. Indeed, the presence of magnetic field gradient, or any other source of widening the transition cyclante not modify in any way the quantitative nature of this technique.
+
+
+
+The main disadvantage of this method lies in the weakness of the signals to be measured as the number of photons absorbed per unit area of ??the imaging beam is only twice the density of the cloud column.
+\ApplicationNumerique{
+Consider a practical example to show that the absorption signal on an open transition is very low. A cloud of atoms can absorb typically E9 2E9 photons. If we consider that the transverse size
+2 is $ \, \Rnuage\approx10 mm $, the absorption per unit area of ??the imaging beam is typically:
+$$
+2 \, \denscol\approx \frac{2E9 }{\Rnuage^2} \approx E10{photon/\square{cm} }
+\pointformule
+$$
+The surface shown in the object plane by a pixel of the CCD sensor is typically $ \Lpix = \micron{5} $, it will be very sensitive to variations below 2500 photons. This performance is achievable with CCD cooled.
+}
+
+
+\Remarque{Notons that the use of an open transition was also studied in the context of the fluorescence imaging. We can see référence\cite{MOR07}.}
+
+
+=Imaging absorption in the regime of strong saturation =
+
+In this section, we describe the absorption imaging protocol that we have developed in order to acquire and exploit quantitatively, images of dense atomic ensembles.
+We begin by giving some arguments that challenge the quantitative imaging low absorption saturation described in la\autoref{sec: ipafas}. It is indeed quite sensitive to experimental imperfections.
+
+==Position of the problem ==
+
+Let us define an important point about the quantitative nature of the low saturation absorption imaging. We specified a definite advantage of this method is that the sensitivity of the CCD, and the characteristics of the transition ($ \Isat $ and $ \seceff $) does not need to be known to give quantitative measures of \do (see expression \vref{eq: DensColAbsorption}). However, it is necessary to know precisely the cross section $ \seceff $ transition to calculate the column density $ \denscol\xy $, size of interest.
+
+
+
+
+$$
+\seceff = \frac{3 \, \lambda^2}{2 \, \pi}
+\virguleformule
+
+$$
+
+
+ 
+practice must take into account the energy structure of the atom.
+
+
+[[Image: AbsImaging-Rb2niveaux.png | right | 700px]] Thus, the selectivity of transition rules between sub-niveau{x} mean that in the case of $ ^{87} $Rb, we can consider the two-tier structure $ \{\EtatG $, $ \EtatE\} $ described above if, for example:
+
+
+
+$$
+\begin{cases}
+\EtatG & = \EtatSFmF{2}{-\\ 2}
+\EtatE & = \EtatPFmF{3}{-3}
+\end{cases}
+\virguleformule
+
+$$
+
+
+
+but this is true only in the case where the laser light is perfectly circularly polarized $ \sigma^{-} $.
+
+
+In addition, other experimental imperfections can alter the character of the absorbing atomic medium. One can for example concern:
+* The laser pulse imager is not exactly at resonance ($ \desac \neq $ 0)
+* That the spectral width of the laser is non-negligible compared to the natural width $ \pulsSpont $ transition,
+* A residual magnetic field moves the sub-niveau{x} Zeeman, implying that the imaging laser becomes non-resonant.
+
+In addition, if the laser pulse is very short, and the number of photons absorbed per atom is of the order of ten, one must consider the transient optical Bloch equations. The initial distribution of the populations of Zeeman sub-niveau{x} plays an important role in absorption.
+
+\Remarque{
+Note that the effect of experimental imperfections is always to decrease the absorption of light.
+}
+
+
+
+We propose in the remainder of this chapter to answer this question. We describe the experimental imperfections by a correction parameter, then we present our imaging protocol to measure this parameter and interpret quantitative images of dense atomic clouds.
+
+
+==Intensity saturation \emph{effective ==
+ and cross section effective}
+
+In the sequel, we denote by $ \seceff $ and $ \Isat $, the cross section and the saturation intensity of the transition closed:
+$$
+\EtatSFmF{2}{-2}\longleftrightarrow\EtatPFmF{3}{-3}
+\pointformule
+$$
+However, we must account for the experimental inevitable imperfections that make this ideal case closed transition is only theoretical.
+
+
+
+
+Resultats{
+We assume that it is always possible to model the interaction of atoms with the laser wave cloud by effective cross section $ \seceffeff $ and effective saturation intensity $ \Isateff $:
+\begin{align}
+\seceffeff & \equiv \frac{\seceff}{\Imperf} \nonumber \\
+\Isateff & \equiv \Imperf \, \seceff
+\virguleformule
+
+\end{align}
+where $ \Imperf $ a correction parameter is greater than 1 $ $ must be determined experimentally.
+}
+
+
+
+\nomeRemonte{\seceffeff}{Section effective}{3.3cm}\nomeRemonte{\Isateff}{Intensité effective saturation correction effective}{2.4cm}\nomeRemonte{\Imperf}{Paramètre realizing imperfections expérimentales}{1.7cm}
+The équation\nref{eq: DensColAbsorption} can be rewritten in the form
+$$
+\seceffeff \, \denscolxy = \frac{\seceff}{\Imperf} \, \denscolxy
+= \Ln{ \frac{\Iinxy}{\Ioutxy} }
+\virguleformule
+$$
+which calculates $ \denscolxy $ from knowledge $ \Iinxy $, $ \Ioutxy $ and $ \Imperf $.
+Note that $ \Imperf $ is a priori situation-specific experimental data, that is to say, it must be determined in a systematic way to exploit the images taken by absorption.
+
+
+
+The problem is the following:
+We will show in the following that the answer to this question \ldots is non-linear.
+
+==Reply nonlinear atoms ==
+
+We saw in la\autoref{sec: LimiteIpafas} the limit of imaging protocol weakly saturated absorption lies in the fact that the laser light can be extremely attenuated when passing through the cloud. This is mainly due to the exponential nature of the Beer-Lambert law (see equation linear differential \vref{eq: EqDiffAbsBasseInt}).
+
+One can overcome this limitation by using the non-linear response of the atoms to a laser excitation, that is to say, by saturating the transition. For this, we use higher laser intensities. This is called imaging absorption in the regime of strong saturation.
+
+Recall that in the general case, the evolution of the laser intensity during the propagation in the cloud is given by the differential equation non-linéaire\nref{eq: EqDiffAbsGenerale}. Thereof, in the case of a resonant laser ($ \desac $ = 0), and taking into account the correction parameter $ \Imperf $, is written:
+
+
+
+$$
+\Derive{\Ixyz}{z}
+= - \densxyz
+\, \frac{\seceff}{\Imperf}
+\, \frac{\Ixyz}{1 + \dfrac{\Ixyz}{\Imperf \, \Isat} }
+\pointformule
+
+$$
+
+
+
+This expression is valid for any value of the intensity $ \Ixyz $, unlike the expression\nref{eq: EqDiffAbsBasseInt}, which is valid only in the limit of low intensities.
+
+
+
+
+
+Resultats{
+The équation\nref{eq: EqDiffAbsResonance} fits by separation of variables and to calculate the column density $ \denscolxy $ from measuring $ \Iinxy $, $ \Ioutxy $ and $ \Imperf $, without assuming that the intensity is low to $ \Isat $:
+
+
+
+$$
+\OptProfExpr\xy \equiv \OptProf\xyImperf
+= \Imperf \, \Ln{ \frac{\Iinxy}{\Ioutxy} }
++ \frac{\Iinxy - \Ioutxy}{\Isat}
+\virguleformule
+
+$$
+
+
+
+and where $ \Iinxy $ $ \Ioutxy $ have the same definition as in la\autoref{sec: ipafas}:
+\begin{align}
+\begin{cases}
+\Iinxy \equiv & \IccdxySansNuage - \Ibackxy \nonumber
+ \\
+\Ioutxy \equiv & \IccdxyAvecNuage - \Ibackxy \nonumber
+\end{cases}
+\end{align}
+Note that expression\nref{eq: DensColAbsHighIntResonance} taken within $ \Iin, \Iout\ll\Isat $, restores well expression\nref{eq: DensColAbsorption}, with one difference, however: the correction parameter $ \Imperf $ in the calculation of the density colonne.}
+
+
+
+We must emphasize two important points related to the use of expression\nref{eq: DensColAbsHighIntResonance} to operate the imaging absorption in the regime of strong saturation:
+* It is necessary to calibrate the sensitivity of the CCD sensor to measure absolute
+Unlike $ \Iinxy - \Ioutxy $. Each pixel of the CCD then serves power meter. This requires perfectly calibrate losses and attenuations $ \AttenOptique $ involved in the path of the laser beam in the optical system between the cloud and the sensor (see la\autoref{sec: SystOptique}).
+* Expression of the column density relation\nref{eq: DensColAbsHighIntResonance} is noteworthy because it contains two terms, one of which involves only the correction parameter $ \Imperf $. It is this property that allows us to determine the latter.
+
+
+
+
+
+Resultats{
+Optical depth $ \OptProf\xyImperf $ seems to depend correction parameter. There is nothing, as we outlined in la\autoref{sec: ipafas}, the optical depth = $ \OptProf \OptProfExpr $ is a characteristic of the cloud, independent of the measurement. Parameter $ \Imperf $ is the value for which the expression\nref{eq: DensColAbsHighIntResonance} gives the optical depth. This is an experimental parameter, as well as $ \Iinxy $ and $ \Ioutxy $.
+}
+
+
+
+
+\subsection [Protocol measurement and determination of the correction parameter] {Protocole measurement and determination of the correction parameter $ \Imperf $}
+
+Now describe the protocol that we have developed to carry out the measurement of density of an atomic cloud column density. To make this statement more concrete, we will support our reasoning with experimental data.
+\Remarque{
+The atomic cloud that will be discussed in the following is obtained by loading the magneto-optical trap described in la\autoref{sec: PaquetsPmo}. Column density of the cloud is voluntarily taken low ($ \simeq $ 3) in order to compare our technique to its counterpart low intensity. An example image of dense atomic cloud is given in la\autoref{sec: ImageNuageDense}.
+}
+
+
+
+The image of the cloud is done, as in la\autoref{sec: ipafas}, using 3 images (an image with the cloud, one without the cloud, and an image of the background light). We take a whole series of images of clouds prepared under identical conditions, but using different incident laser intensities $ \Iin $. The range of values ??used to $ \Iin $ typically lasts about 1 $ $ or $ $ two orders of magnitude. For our experimental example (see Figure \vref{fig: PleinImagesNuage}), we use eight values ??ranging from $ \Iin \approx \tfrac{\Isat}{20} \approx \mWpcmc{0.09} $ and $ \Iin = 10 \Isat \times \approx \mWpcmc{18} $.
+\subfloat [$ \Iin \approx \tfrac{\Isat}{20} $]
+{ [[Image: AbsImaging-Sig_M_200_00000_With.png | right | 700px]] } \,
+\subfloat [$ \Iin \approx \tfrac{\Isat}{2} $]
+{ [[Image: AbsImaging-Sig_M_016_00000_With.png | right | 700px]] } \,
+\subfloat [$ \Iin \approx \, \Isat $ 3]
+{ [[Image: AbsImaging-Sig_M_004_00000_With.png | right | 700px]] } \,
+\subfloat [$ \Iin \approx 10 \, \Isat $]
+{ [[Image: AbsImaging-Sig_M_001_00000_With.png | right | 700px]] }
+\CaptionFigs{Représentation the absorption of the laser beam incident to different intensities. These correspond to (a) = $ \Iin \mWpcmc{0.09} $, (b) = $ \Iin \mWpcmc{1.1} $, (c) = $ \Iin \mWpcmc{4.5} $, (d) = $ \Iin \mWpcmc{18} $.
+The exposure times of the CCD are varied respectively \micros{50} to \nanos{250}. We do not represent in each case that the image in the presence of the atomic cloud (see la\autoref{sec: ipafas}).
+It was found that the cloud absorbs a large fraction of the light when it is very intense (a). Over the incident intensity $ \Iin $, the higher the fraction of light passing through the cloud is high. The image (d), the cloud absorbs less than half of the incident light.
+}
+
+
+
+$$
+\Imperf \, \Ln{ \frac{\Iin}{\Iout} }
+\text{et}
+\frac{\Iin - \Iout}{\Isat}
+\virguleformule
+$$
+ involved with different weights. In fact we can show that:
+* The first term (log) is a decreasing function of the incident intensity $ \Iin $,
+* The other end (differential) is an increasing function of the incident intensity $ \Iin $.
+
+
+
+
+
+Resultats{
+The idea is as follows:
+* For a single cloud, we have different frames, which must, however, possible to calculate all the same optical depth by expression\nref{eq: DensColAbsHighIntResonance} since it makes no assumption about the incident intensity of the laser,
+* Or the two terms of this expression are involved with different weights, and the first one involves the correction parameter $ \Imperf $.
+
+We deduce that there is only one possible value for $ \Imperf $ that reconciles all images.
+}
+
+
+
+To illustrate this, suppose the space of a moment that $ \Imperf $ = 1, that is to say, the experimental situation corresponds exactly to the theoretical case of a two-level atom subject to a laser wave resonator.
+[[Image: AbsImaging-AllureAlphaEgal1.png | right | 700px]]
+In this case, the images that are subject to the figure\nref{fig: PleinImagesNuage} do not all have the same value of the optical depth. The figure represents the optical depth against $ \OptProfMax $ cloud
+depending $ \Iin $, average value of the laser intensity. The saturation intensity is indicated by a dotted line. The error bars are obtained by performing each action a dozen times.
+The growth curve shows that, assuming $ \Imperf $ = 1, we underestimate the decreasing term (log) of expression\nref{eq: DensColAbsHighIntResonance}. This therefore means que$ \Imperf> 1 $.
+
+
+===Adjust the correction parameter ===
+
+To determine $ \Imperf $, we consider it as a variable, which we denote adjustable $ \ImperfVarie $.
+
+\Remarque{
+We use this notation in order not to confuse the adjustable variable $ \ImperfVarie $ with \sotosay{vraie} value $ \Imperf $. In other words, $ \Imperf $ is the particular value of the correction parameter which should be adjusted on $ \ImperfVarie $.
+}
+
+
+
+As in the previous example (we considered the ideal case $ \ImperfVarie $ = 1), we calculate the optical depth $ \OptProf\xyImperfVarie $ by expression\nref{eq: DensColAbsHighIntResonance} for each intensity $ \Iin $ used.
+Recall that $ \OptProf $ is a physical characteristic of the cloud and does not depend on how we practice the measurement. In other words, for all incident intensities used, we expect to obtain the same optical depth by expression\nref{eq: DensColAbsHighIntResonance}.
+The figure\nref{fig: PleinAlphaCourbe} represents some of the curves obtained by using different values ??for the parameters $ \ImperfVarie $.
+[[Image: AbsImaging-PleinAlphaCourbe.png | right | 700px]]
+\CaptionFigss{Représentation optical depth of the cloud $ \OptProfMax $ calculated with the expression\nref{eq: DensColAbsHighIntResonance}, depending $ \Iin $ (mean value of the intensity of the imaging beam on the cloud). To improve the readability of the figure, the error bars have not been shown here.
+Each curve corresponds to a different value of the correction parameter $ \ImperfVarie $ used when calculating the expression\nref{eq: DensColAbsHighIntResonance}.
+We use the following values ??for $ \ImperfVarie $ (bottom to top): $ \ImperfVarie = 1 $ (see figure\nref{fig: AllureAlphaEgal1}), then $ \ImperfVarie = 2 $; $ 2.2 $; $ 2.4 $ .. . $ 3.8 $; $ 4 $.
+}
+
+\Cahier{7, 140}
+
+* Some curves are decreasing, suggesting that the $ \ImperfVarie $ used is too large,
+* Some are increasing, indicating that the $ \ImperfVarie $ used is too low,
+* One of these curves ($ \ImperfVarie $ = 3) varies less than the other, approaching the expected behavior of total independence against the incident intensity $ \Iin $.
+
+
+
+% Hs
+[[Image: AbsImaging-PleinAlphaSTD.png | right | 700px]]
+\CaptionFigs{Écarts kinds $ \DeltaOP $ each curve figure\nref{fig: PleinAlphaCourbe} depending on the value of $ \ImperfVarie $ used. The presence of a minimum value $ \ImperfVarie \equiv \Imperf = 2.95 $ is derived by fitting a hyperbolic function (red line). }
+
+
+We deduce as in the case of our example, $ \Imperf = 2.95 $, and we can, with this value, use the quantitative information contained in the images of absorption. In the case of our example, we measure an optical depth = $ \OptProfMax 8.4 $ and a total number of atoms N = $ 3.4E{8 } $.
+We also verified that the parameter $ \Imperf $ depends on the polarization of the beam imager.
+
+
+==Conclusion ==
+
+We conclude this chapter by presenting examples of images taken and interpreted using our imaging protocol absorption in the regime of strong saturation. We also recapitulate three major qualities of this technique.
+
+===Examples of images used by our protocol ===
+
+The figures\nref{fig: ImageNuageTresDense} et\nref{fig: PhotosArticleImagerie} present two examples of dense atomic clouds produced by a two-dimensional magneto-optical trap tablet. In these test cases, the correction parameter has been adjusted by the method described in la\autoref{sec: ProtocoleMesureImperf} a value $ \Imperf = 2.12 $. We measure and optical depths up 20 (for figure\nref{fig: ImageNuageTresDense}).
+On figure\nref{fig: PhotosArticleImagerie}, we find that the bimodal structure resulting from compression is not apparent when using the low saturating regime. In addition, the use of a detuned laser does not exploit the resulting image.
+[[Image: AbsImaging-A_00015AbsorCoupe.png | right | 700px]]
+\CaptionFigss{Image representative optical depth $ \OptProf\xy = \seceff \, \denscolxy $ a dense atom cloud produced by a magneto-optical two-dimensional compressed (due to the elongated shape of the cloud, it is distinguished in that a part of the image) . The graph represents the value of the optical depth along the dotted line. The optical depths rule out the use of high imaging low absorption saturation. To interpret the image, we fit a sum of two Gaussian function that characterizes the bimodal structure of the cloud (the function is shown in red on the graph). }
+
+
+[[Image: AbsImaging-PhotosArticleImagerie_opt.png | right | 700px]]
+\CaptionFigs{Trois optical depth measurements made on a single atom cloud tablet. On the right, there is the $ \OptProf $ profile along the dashed line in the image. The measurement is performed in three different ways: \\
+(A) applying the protocol of low absorption imaging saturante.\\
+(B) a laser to tune $ \desac \, \pulsSpont $ = -3 is used. The effect of lens makes the image inexploitable.\\
+(C) is obtained using our absorption imaging technique strongly saturante.\\
+Only this last image shows the bimodal structure resulting from compression. The measure on (a) may give higher values ??to $ \approx3 $ (dotted line drawn on the graph). }
+
+
+
+===Summary of the advantages of our protocol ===
+
+Finally summarize the main advantages of our imaging protocol absorption in the regime of strong saturation:
+* Optical system needed to apply this method is quite standard and does not require heavy equipment. It is likely that any device for making images taken by absorption in the low saturation regime can be immediately adapted to carry our protocol.
+* The use of laser intensities above the saturation intensity overcomes the problems associated with almost complete absorption of the laser light by an optically thick cloud ($ \OptProf> 5 $). We can observe very high optical depths where low intensity imaging is ineffective (see la\autoref{sec: LimiteIpafas}). To properly observe an optical depth $ \OptProf $, the laser intensity is typically required:
+$$
+\Ilaser = \frac{\OptProf}{\Imperf} \, \Isat
+\pointformule
+$$
+* Determination of the correction parameter $ \Imperf $ can use the images quantitatively by absorption. It should also be noted that the measurements on optically less dense atomic clouds (which can be imaged by the usual technique in weakly saturating regime) should always take into account the value of the correction parameter $ \Imperf $. Let us recall that it intervenes in the calculation of column density (see expression\nref{eq: DensColAbsHighIntResonance}).

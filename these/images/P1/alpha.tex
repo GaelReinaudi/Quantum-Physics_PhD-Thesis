@@ -1,0 +1,108 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}
+\def\Hfig{7.5cm}
+\def\Hun{5}
+\def\Hde{10}
+\def\Bias{0.5}
+
+\useasboundingbox (-2.3,-1.8) rectangle ++(\FigWidth,\Hfig);
+
+\put(0,0){
+\tkzInit[xmin=-2,xmax=2,ymin=0,ymax=4]
+%\tkzX[orig, noticks, lw=1.2pt]
+%\tkzY[label=$\Uhyp$, noticks, lw=1.2pt]
+\tkzFct[samples = 200,color = red](-2..2)
+{(3*x*x+\Bias*\Bias)**(0.5)}
+}
+
+\put(\Hun,2){
+\tkzInit[xmin=-2,xmax=2,ymin=0,ymax=4]
+%\tkzX[orig, noticks, lw=1.2pt]
+%\tkzY[label=$\Uhyp$, noticks, lw=1.2pt]
+\tkzFct[samples = 200,color = white](-2..2)
+{3}
+\tkzFct[samples = 200,color = red](-2..2)
+{(3*x*x+\Bias*\Bias)**(0.5)}
+\tkzAerafg[style={top color=red!00,bottom color=red!80}](-2..2){\tkzFctgnua}{\tkzFctgnub}
+\draw[latex'-latex', color=black]
+(-0,\Bias) -- +(0,3-\Bias)
+node[right,pos=0.5]{$\kb\,T$};
+\draw[latex'-latex', color=black]
+(-1.2*\Bias,\Bias) -- +(0,\Bias*0.8)
+node[left,pos=0.5]{$\mu\,\Bpara$};
+}
+
+\put(\Hun,-2){
+\tkzInit[xmin=-2,xmax=2,ymin=0,ymax=4]
+%\tkzX[orig, noticks, lw=1.2pt]
+%\tkzY[label=$\Uhyp$, noticks, lw=1.2pt]
+\tkzFct[samples = 200,color = white](-2..2)
+{\Bias+0.1}
+\tkzFct[samples = 200,color = red](-2+0.3..2-0.3)
+{(3*x*x+\Bias*\Bias)**(0.5)}
+\tkzAerafg[style={top color=blue!00,bottom color=blue!80}](-2..2){\tkzFctgnua}{\tkzFctgnub}
+\draw[latex' reversed-latex' reversed, color=black]
+(-0,\Bias-0.14) -- +(0,0.35);
+\draw[color=black]
+(-0,\Bias-0.3) -- +(0,0.7)
+node[above]{$\kb\,T$};
+\draw[latex'-latex', color=black]
+(-1.2*\Bias,\Bias) -- +(0,\Bias*0.8)
+node[left,pos=0.5]{$\mu\,\Bpara$};
+}
+
+\put(\Hde,2){
+\tkzInit[xmin=-2,xmax=2,ymin=0,ymax=4]
+%\tkzX[orig, noticks, lw=1.2pt]
+%\tkzY[label=$\Uhyp$, noticks, lw=1.2pt]
+\tkzFct[samples = 200,color = white](-2..2)
+{3}
+\tkzFct[samples = 200,color = red](-2+0.17..2-0.17)
+{(3*x*x+0)**(0.5)+.3}
+\tkzAerafg[style={top color=red!00,bottom color=red!80}](-2..2){\tkzFctgnua}{\tkzFctgnub}
+\node[above] at (0,3){$U(r)=\mu\,\gradB\,r $};
+}
+
+\put(\Hde,-2){
+\tkzInit[xmin=-2,xmax=2,ymin=0,ymax=4]
+%\tkzX[orig, noticks, lw=1.2pt]
+%\tkzY[label=$\Uhyp$, noticks, lw=1.2pt]
+\tkzFct[samples = 200,color = white](-2..2)
+{2}
+\tkzFct[samples = 200,color = red](-2..2)
+{(0.6*x*x)+.5}
+\tkzAerafg[style={top color=blue!00,bottom color=blue!80}](-2..2){\tkzFctgnua}{\tkzFctgnub}
+\node[above] at (0,2){$U(r)=\tfrac{1}{2} \, m \, \omega^2\,r^2$};
+}
+
+
+\draw[-latex', color=black, very thick]
+(1.5,2.2) -- +(1.8,1) node[above = 0.2cm,pos=0.5]{$\alpha \ll 1$};
+
+\draw[-latex', color=black, very thick]
+(1.5,1.8) -- +(1.8,-1) node[below = 0.2cm,pos=0.5]{$\alpha \gg 1$};
+
+\draw[color=black, opacity=0.4]
+(\Hun-0.3,-1.55) rectangle +(0.6,0.3);
+\draw[color=black, opacity=0.4]
+(\Hde-2,-1.7) rectangle +(4,2.5);
+\draw[color=black, opacity=0.4]
+(\Hun-0.3,-1.55) ++(0.6,0.3) -- (\Hde-2,-1.7+2.5);
+\draw[color=black, opacity=0.4]
+(\Hun+0.3,-1.55) -- (\Hde-2,-1.7);
+
+\node at (\Hun/2 + \Hde/2, 4){\huge$\Longleftrightarrow$};
+\node at (\Hun/2 + \Hde/2, -0.5){\huge$\Longleftrightarrow$};
+\end{tikzpicture}
+
+\end{document}

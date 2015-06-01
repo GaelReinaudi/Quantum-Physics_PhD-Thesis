@@ -1,0 +1,33 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{frame}
+
+  \begin{animateinline}[
+  begin={\begin{tikzpicture}[xscale=0.33, yscale=1.2]}
+  , end={\end{tikzpicture}}]{10}
+
+    \ConvQPDessinBpara{0.0}\newframe
+    \ConvQPDessinBpara{0.1}\newframe
+    \ConvQPDessinBpara{0.2}\newframe
+    \ConvQPDessinBpara{0.3}\newframe
+    \ConvQPDessinBpara{0.4}\newframe
+    \ConvQPDessinBpara{0.5}\newframe
+    \ConvQPDessinBpara{0.6}\newframe
+    \ConvQPDessinBpara{0.7}\newframe
+    \ConvQPDessinBpara{0.8}\newframe
+    \ConvQPDessinBpara{0.9}
+  \end{animateinline}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\end{document}

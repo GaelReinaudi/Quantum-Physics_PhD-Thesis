@@ -1,0 +1,126 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\scale{0.075}
+\begin{tikzpicture}[scale=\scale]
+
+%\large
+
+\tkzInit[xmin=0,xmax=180,ymin=0,ymax=5]
+%\useasboundingbox (-4,-3) rectangle (4,3);
+\tkzX[orig, noticks, label=$z$]
+\tkzY[noticks, label=$x$]
+\node[fill=white, inner sep=0.0cm] (O) at (0,0) {$\odot$};
+\node[below left] at (O) {$y$};
+
+
+\def\Xmot{0}
+\def\Ymot{-20}
+\def\posmot{\Xmot,\Ymot}
+\def\rconv{4}
+\def\Xconv{30}
+\def\Yconv{-10}
+\def\posconv{\Xconv,\Yconv}
+\def\posmir{10,0}
+\def\tailleaimant{4}
+\def\rchamber{13}
+\def\spaceAim{8}
+
+\shade[ball color =red] (\posmot) ellipse (3cm and 0.7cm) node[below, red]{PMO};
+	
+\draw[fill= orange!50, opacity=1] (\posmot)++(7,0.7) rectangle +(170,0.7);
+\draw[fill= orange!50, opacity=1] (\posmot)++(7,-0.7) rectangle +(170,-0.7);
+%\draw[opacity=1] (\posmot)++(5,0.7)++(50,0.5)
+%-- +(1.5,3) node[above right]	{\gm};
+
+\draw[fill= black, opacity=0.4] (\posmot)++(\rchamber,3) rectangle ++(177-\rchamber,0.5);
+\draw[fill= black, opacity=0.4] (\posmot)++(\rchamber,-3) rectangle ++(177-\rchamber,-0.5);
+%\draw[opacity=1] (\posmot)++(5,3)++(100,0.5)
+%-- +(2.5,5) node[color = black, opacity=1, above right]	{tube de verre};
+
+\draw[fill= blue!30] (\posmot)++(\posconv) rectangle ++(110, -2*\rconv)
+node[pos=0.5]{\large \conv \qquad $\vconv\,_{\longleftarrow}^{\longrightarrow}$};	
+\draw[fill= blue!30] (\posmot)++(\posconv) ++(0,-\rconv) circle (\rconv) ++(110,0)
+circle (\rconv);
+
+\def\nSpir{100}
+\pgfmathparse{110/\nSpir}
+\let\dSpir\pgfmathresult
+\foreach \spire in {1,...,\nSpir}{
+		\draw[](\posmot)++(\posconv*0-5) rectangle ++(\spire*\dSpir, 15);
+}
+\draw(\posmot)++(5,3)++(80,4)-- +(2.5,5) node[above right]	{solénoïde};
+
+
+\def\decdess{2}
+\def\aimantD{{
+	\draw[fill=red!50, opacity=1] ++(-\tailleaimant/4,0)
+	rectangle ++(\tailleaimant/2,\tailleaimant);
+	\draw[->, very thick]	++(-\tailleaimant/2,\tailleaimant/2)--++(1.3*\tailleaimant,0);	}}
+\foreach \aim in {0,...,13}{
+		\draw[fill=red!50, opacity=1] (\posmot)++(\posconv)++(\spaceAim*\aim,0)
+		rectangle ++(\tailleaimant/2,\tailleaimant);
+		\draw[fill=red!50, opacity=1] (\posmot)++(\posconv)++(\spaceAim*\aim+\decdess,-2*\rconv)
+		rectangle ++(\tailleaimant/2,-\tailleaimant);}
+\foreach \aim in {0,2,...,13}{
+		\draw[->, very thick](\posmot)++(\posconv)++(\spaceAim*\aim,0)
+		++(-\tailleaimant*1/4,\tailleaimant/2)--++(1.3*\tailleaimant,0);
+		\draw[->, very thick](\posmot)++(\posconv)++(\spaceAim*\aim+\decdess,-2*\rconv)
+		++(-\tailleaimant*1/4,-\tailleaimant/2)--++(1.3*\tailleaimant,0);}
+\foreach \aim in {1,3,...,13}{
+		\draw[->, very thick](\posmot)++(\posconv)++(\spaceAim*\aim,0)
+		++(\tailleaimant*3/4,\tailleaimant/2)--++(-1.3*\tailleaimant,0);
+		\draw[->, very thick](\posmot)++(\posconv)++(\spaceAim*\aim+\decdess,-2*\rconv)
+		++(\tailleaimant*3/4,-\tailleaimant/2)--++(-1.3*\tailleaimant,0);}
+\begin{scope}[xshift=142 cm, yshift=-30.5 cm, rotate=-25]\aimantD\end{scope}
+\begin{scope}[xshift=146.5 cm, yshift=-38.5 cm, rotate=55]\aimantD\end{scope}
+\begin{scope}[xshift=27 cm, yshift=-37 cm, rotate=137]\aimantD\end{scope}
+\begin{scope}[xshift=23.5 cm, yshift=-29.5 cm, rotate=-125]\aimantD\end{scope}
+
+\draw(\posmot)++(\posconv)++(\decdess+\tailleaimant/4,-2*\rconv-\tailleaimant*3/4)
+--++(-5,-5)node[left]{aimant};
+
+	
+\draw[dotted, opacity=0.7] (\posmot)++(7,0) -- (7+\posmot*0+2) 
+node[above]{\cm{5}};
+\draw[dotted, opacity=0.7] (\posmot)++(26,-10) -- (26+\posmot*0+2) 
+node[above]{\cm{25}};
+\draw[dotted, opacity=0.7] (\posmot)++(26,-10)++(118,0) -- (144+\posmot*0+2) 
+node[above]{\cm{155}};
+\draw[dotted, opacity=0.7] (\posmot)++(170,0) -- (170+\posmot*0+2) 
+node[above]{$\zsonde$};
+
+\draw[latex'-, very thick, red] (\posmot)++(170,-7) -- ++(0,15) 
+node[pos=1, above]{laser sonde};
+\draw[dotted] (\posmot)++(30,-10+\tailleaimant/2) -- ++(120,0);
+\draw[latex'-latex'] (\posmot)++(150,0) -- ++(0,-10+\tailleaimant/2) 
+node[pos=0.5, below right]{$\ConvDaimant$};
+
+\draw[dotted]
+(\posmot)++(\posconv)++(\spaceAim+\decdess+\tailleaimant/4,-2*\rconv-\tailleaimant)
+--++(0,-5);
+\draw[dotted] 
+(\posmot)++(\posconv)++(\decdess+\tailleaimant/4,-2*\rconv-\tailleaimant)
+--++(0,-5);
+\draw[latex'-latex']
+(\posmot)++(\posconv)++(\decdess+\tailleaimant/4,-2*\rconv-\tailleaimant)
+++(0,-5)
+--++(\spaceAim,0)	node[pos=0.5, below]{$\cm{5}$};
+
+\draw[very thick] (\posmot)++(\rchamber,3) arc (5:40:\rchamber);
+\draw[very thick, dotted] (\posmot)++(\rchamber,3) arc (5:65:\rchamber);
+\draw[very thick] (\posmot)++(\rchamber,-3) arc (-5:-40:\rchamber);
+\draw[very thick, dotted] (\posmot)++(\rchamber,-3) arc (-5:-65:\rchamber);
+%\path  (\posmot)++(\rchamber-2.5,7) node[above right]{chambre};
+
+\end{tikzpicture}
+
+\end{document}

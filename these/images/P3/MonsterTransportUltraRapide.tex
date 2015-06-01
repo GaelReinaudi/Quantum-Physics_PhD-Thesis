@@ -1,0 +1,100 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\abstmin{0.05}
+\def\tmin{-\abstmin}
+\def\tmax{1.1}
+\def\tf{6.325}
+\def\aa{3.5}
+\def\vmax{15}
+\def\zmax{4.3}
+\def\xPi{3.14159}
+\def\xt{\x}
+\def\xHeaviside{\HH}
+\def\xHH{\HH}
+\def\eps{0.15}
+\def\epsZc{0.1}
+
+\begin{tikzpicture}[xscale=0.55, yscale=0.4]
+
+\tkzInit[xmin=\tmin,xmax=\tmax,ymin=-\zmax,ymax=\zmax, xstep=0.16]
+\tkzX[label=$t$, orig, noticks]
+\tkzY[label=$\ddzcn$, noticks]%, poslabel=-0.6cm]
+%\tkzFct[samples = 500,color = blue](\tmin..\tmax){
+%(
+%2.869760000*(\xHeaviside{0.5-\xt}-.5)*\xHeaviside{\xt}*\xHeaviside{1-\xt}
+%)
+%}
+\tkzFct[samples = 500,color = red, lw=1.5pt](\tmin..\tmax){
+\aa*(
+\xHH{(\xt)}+(-2.+\eps)*\xHH{(\xt-.125)}+\xHH{(\xt-.375)}*(2.-1.*\eps)-2.*\xHH{(\xt-.500)}+\xHH{(\xt-.625)}*(2.-1.*\eps)+\xHH{(\xt-1.)}+(-2.+\eps)*\xHH{(\xt-.875)}
+)
+}
+\draw[dotted](\tf,-0.5)--(\tf,0.5)node[above, pos=1]{$\tfin$};
+\draw[dotted](3,\aa)--(6,\aa)++(0,-1.5*\eps)node[right]{$\epsilon$};
+\draw[dotted](4,\aa-\eps*3.2)--(6,\aa-\eps*3.2);
+\draw[dotted](2.5,-\aa)--(0.7,-\aa)++(0,1.5*\eps)node[left]{$\epsilon$};
+\draw[dotted](2.5,-\aa+\eps*3.2)--(0.7,-\aa+\eps*3.2);
+\draw[dotted](0.5*\tf,-\aa-0.2)--++(0,\aa+0.2)node[below, pos=0]{$\tfrac{\tfin}{2}$};
+\draw[dotted](0.25*\tf,-\aa-0.2)--++(0,\aa+0.2)node[below, pos=0]{$\tfrac{\tfin}{4}$};
+\draw[dotted](0.75*\tf,-\aa-0.2)--++(0,\aa+0.2)node[below, pos=0]{$\tfrac{3\,\tfin}{4}$};
+
+\begin{scope}[xshift=\tf cm]
+\begin{scope}[xshift=\abstmin cm]
+\begin{scope}[xshift=2 cm]
+\tkzInit[xmin=\tmin,xmax=\tmax,ymin=-\zmax,ymax=\zmax, xstep=0.16]
+\tkzX[label=$t$, orig, noticks]
+\tkzY[label=$\dzc$, noticks]%, poslabel=-0.6cm]
+%\tkzFct[samples = 500,color = blue](\tmin..\tmax){
+%\vmax*\vmax*(
+%(-2.869760000*\xt+1.434880000)*\xHeaviside{\xt-.5000000000}+(1.434880000*\xt-1.434880000)*\xHeaviside{\xt-1.}+1.434880000*\xHeaviside{\xt}*\xt
+%)
+%}
+\tkzFct[samples = 200,color = red, lw=1.5pt](\tmin..\tmax){
+1.7*\vmax*(
+((-2.+\eps)*\xt+.250-.125*\eps)*\xHH{(\xt-.125)}+((-2.+\eps)*\xt+1.75-.875*\eps)*\xHH{(\xt-.875)}+((2.-1.*\eps)*\xt-1.25+.625*\eps)*\xHH{(\xt-.625)}+((2.-1.*\eps)*\xt-.750+.375*\eps)*\xHH{(\xt-.375)}+\xHH{(\xt)}*\xt-1.*\xHH{(\xt-1.)}+\xHH{(\xt-.500)}+\xHH{(\xt-1.)}*\xt-2.*\xHH{(\xt-.500)}*\xt
+)
+}
+%\draw[dotted](\tf,-0.2)--(\tf,0.2)node[below, pos=0]{$\tfin$};
+%\draw[dotted](0.5*\tf,-0.2)--(0.5*\tf,\zmax)node[below, pos=0]{$\tfrac{\tfin}{2}$};
+%\draw[dotted](-0.1,\vmax)--(0.5*\tf,\vmax)node[left, pos=0]{$\VitZc$};
+
+\begin{scope}[xshift=\tf cm]
+\begin{scope}[xshift=\abstmin cm]
+\begin{scope}[xshift=2 cm]
+\tkzInit[xmin=\tmin,xmax=\tmax,ymin=-\zmax,ymax=\zmax, xstep=0.16]
+\tkzX[label=$t$, orig, noticks]
+\tkzY[label=$\zc$, noticks]%, poslabel=-0.6cm]
+%\tkzFct[samples = 500,color = blue](\tmin..\tmax){
+%1.4*\vmax*\vmax*\vmax*(
+%-1.434880000*(\xt-.5000000000)**2*\xHeaviside{\xt-.5000000000}+.7174400000*(\xt-1.)**2*\xHeaviside{\xt-1.}+.7174400000*\xHeaviside{\xt}*\xt**2
+%)
+%}
+\tkzFct[samples = 200,color = red, lw=1.5pt](\tmin..\tmax){
+0.93*\vmax*\vmax*(
+((.5000*\epsZc-1.)*\xt**2+(-.1250*\epsZc+.2500)*\xt+0.7812e-2*\epsZc-0.1562e-1)*\xHH{(\xt-.1250)}+((1.-.5000*\epsZc)*\xt**2+(-.7500+.3750*\epsZc)*\xt+.1406-0.7031e-1*\epsZc)*\xHH{(\xt-.3750)}+((1.-.5000*\epsZc)*\xt**2+(-1.250+.6250*\epsZc)*\xt-.1953*\epsZc+.3906)*\xHH{(\xt-.6250)}+((.5000*\epsZc-1.)*\xt**2+(1.750-.8750*\epsZc)*\xt-.7656+.3828*\epsZc)*\xHH{(\xt-.8750)}-1.*(\xt-.5000)**2*\xHH{(\xt-.5000)}+.5000*(\xt-1.)**2*\xHH{(\xt-1.)}+.5000*\xHH{(\xt)}*\xt**2
+)
+}
+\draw[dotted](-0.2,4.0*\epsZc/\eps)--(6.5,4.0*\epsZc/\eps)node[left, pos=0.0]{$\DistZc$};
+%\draw[dotted](\tf,-0.2)--(\tf,\zmax)node[below, pos=0]{$\tfin$};
+%\draw[dotted](-0.1,\vmax)--(\tf,\vmax)node[left, pos=0]{$\DistZc$};
+\end{scope}
+\end{scope}
+\end{scope}
+
+\end{scope}
+\end{scope}
+\end{scope}
+
+
+\end{tikzpicture}
+
+\end{document}

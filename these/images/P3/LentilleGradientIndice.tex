@@ -1,0 +1,83 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=0.8, auto]
+\def\XYmax{3}
+\def\Zmin{-7}
+\def\Zmax{7}
+\def\Znuage{-4}
+\def\Taillenuage{2}
+\def\Lnuage{1.6}
+\def\Zccd{5}
+\def\Tailleccd{3}
+\def\Taillelentille{3}
+\def\Zlentille{1}
+\def\LongPhoton{1}
+
+\tikzstyle{photon}=
+[snake=snake, -latex', line after snake=1mm, segment amplitude=1mm,segment length=2mm]
+
+\useasboundingbox (-7,-\Taillelentille*1.05) rectangle (\Zlentille+0.3,\Taillelentille*1.2);
+\tkzInit[xmin=-7,xmax=\Zlentille,ymin=-3,ymax=3]
+%\tkzX[label=$z$, orig, noticks, lw=1.2pt]
+%\tkzY[label=$y$, noticks, lw=1.2pt]
+%\tkzFct[samples = 200,color = red](-2+0.17..2-0.17){(3*x*x+0)**(0.5)+.3}
+
+\shade[inner color=black!40,outer color=black!00] (\Znuage,0) ellipse(\Lnuage cm and \Taillenuage cm);
+\draw[latex'-latex']
+(\Znuage-1.0*\Lnuage,-1.1*\Taillenuage)--(\Znuage+1.0*\Lnuage,-1.1*\Taillenuage)node[pos=0.5,below]{$\LZnuage$};
+\draw[latex'-latex'](\Znuage-1.05*\Lnuage,-1.0*\Taillenuage)--(\Znuage-1.05*\Lnuage,0)node[pos=0.5,left]{$\Rnuage$};
+
+\draw[angle 90-angle 90, very thick]
+(\Zlentille,-\Taillelentille)--(\Zlentille,\Taillelentille)node[above left]{lentille};
+%\draw[very thick](2,-\Tailleccd)--(2,\Tailleccd)node[above left]{CCD};
+\draw[very thick, dotted](\Znuage,-\Taillenuage)--(\Znuage,\Tailleccd)node[above]{plan objet};
+\draw[very thick](2.1,-\Tailleccd)(2,\Tailleccd);
+
+\foreach \yy in {1,...,5}{
+\pgfmathparse{\yy/5*\Taillenuage*1.03}
+\let\posY\pgfmathresult
+\def\aa{0.5}
+\def\bb{0.3}
+\pgfmathparse{\bb/exp((\posY-\Taillenuage/2)^2/\Taillenuage^2*5)}
+\let\cc\pgfmathresult
+
+\tkzFct[samples = 20,color = blue, style=dotted](-7..\Zlentille){
+\posY+
+(-\x+(\Znuage))*(\cc)*
+(2)
++(-\Zlentille+(\Znuage))*(\cc)*(atan((\aa)*(-\Zlentille+(\Znuage)))/atan(-1111)+1-2)
+}
+%\tkzFct[samples = 20,color = blue, style=dotted](-7..\Zlentille){-(
+%\posY+
+%(-\x+(\Znuage))*(\cc)*
+%(2)
+%+(-\Zlentille+(\Znuage))*(\cc)*(atan((\aa)*(-\Zlentille+(\Znuage)))/atan(-1111)+1-2)
+%)}
+
+\tkzFct[samples = 200,color = red](-7..\Zlentille){
+\posY+
+(-\x+(\Znuage))*(\cc)*
+(atan((\aa)*(-\x+(\Znuage)))/atan(-1111)+1)
+}
+%\tkzFct[samples = 200,color = red](-7..\Zlentille){-(
+%\posY+
+%(-\x+(\Znuage))*(\cc)*
+%(atan((\aa)*(-\x+(\Znuage)))/atan(-1111)+1)
+%)}
+}
+\tkzFct[samples = 20,color = red](-7..\Zlentille){0}
+\tkzFct[samples = 20,color = red](-7..\Zlentille){\Taillenuage*1.1}
+%\tkzFct[samples = 20,color = red](-7..\Zlentille){-\Taillenuage*1.1}
+
+\end{tikzpicture}
+
+\end{document}

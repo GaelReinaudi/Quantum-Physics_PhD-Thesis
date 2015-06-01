@@ -1,0 +1,23 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\sc{1.7}
+\begin{tikzpicture}
+
+\useasboundingbox (-\sc*.45,-\sc*.2) rectangle (\sc*5.1,\sc*4.3);
+\put(0,0){\includegraphics[scale=\sc]{OriginPleinAlphaSTD}}
+\draw (\sc*2.7,\sc*0) node[below=-1mm]{$\ImperfVarie$};
+\draw[latex'-, thick, red] (\sc*2.6,\sc*1.7) --++(\sc*0.0,\sc*1.5) node[above, pos=1, black]{$\Imperf = 2,95$};
+\draw (\sc*0,\sc*2.1) node[rotate=90, above]{$\DeltaOP$};
+
+\end{tikzpicture}
+
+\end{document}

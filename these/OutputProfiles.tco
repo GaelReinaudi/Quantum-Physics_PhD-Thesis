@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<txcop:outputProfiles version="1" xmlns:txcop="http://schemas.ToolsCenter.org/TeXnicCenter/OutputProfiles.xsd">
+	<outputProfileList>
+		<outputProfile name="LaTeX =&gt; DVI" stopOnLatexError="false">
+			<texCommand execute="true" path="E:\Program Files\MiKTeX 2.7\miktex\bin\latex.exe" arguments="--src -interaction=nonstopmode &quot;%Wm&quot;"/>
+			<bibTexCommand execute="true" path="E:\Program Files\MiKTeX 2.7\miktex\bin\bibtex.exe" arguments="&quot;%bm&quot;"/>
+			<makeIndexCommand execute="true" path="E:\Program Files\MiKTeX 2.7\miktex\bin\makeindex.exe" arguments="&quot;%bm&quot;"/>
+			<postProcessors/>
+			<viewer path="E:\PROGRA~1\MIKTEX~1.7\MIKTEX\BIN\YAP.EXE" closeBeforeCompilation="false">
+				<viewProjectCommand type="commandLine">
+					<commandLineCommand path="E:\PROGRA~1\MIKTEX~1.7\MIKTEX\BIN\YAP.EXE" arguments="-1 &quot;%bm.dvi&quot;"/>
+					<ddeCommand path="" server="" topic="System" command=""/>
+				</viewProjectCommand>
+				<viewCurrentFileCommand type="commandLine">
+					<commandLineCommand path="E:\PROGRA~1\MIKTEX~1.7\MIKTEX\BIN\YAP.EXE" arguments="-1 -s %l&quot;%Wc&quot; &quot;%bm.dvi&quot;"/>
+					<ddeCommand path="" server="" topic="System" command=""/>
+				</viewCurrentFileCommand>
+				<viewCloseCommand type="commandLine">
+					<commandLineCommand path="" arguments=""/>
+					<ddeCommand path="" server="" topic="System" command=""/>
+				</viewCloseCommand>
+			</viewer>
+		</outputProfile>
+		<outputProfile name="LaTeX =&gt; PS" stopOnLatexError="false">
+			<texCommand execute="true" path="E:\Program Files\MiKTeX 2.7\miktex\bin\latex.exe" arguments="--src -interaction=nonstopmode &quot;%Wm&quot;"/>
+			<bibTexCommand execute="true" path="E:\Program Files\MiKTeX 2.7\miktex\bin\bibtex.exe" arguments="&quot;%bm&quot;"/>
+			<makeIndexCommand execute="true" path="E:\Program Files\MiKTeX 2.7\miktex\bin\makeindex.exe" arguments="&quot;%bm&quot;"/>
+			<postProcessors>
+				<processor name="DviPs" path="E:\Program Files\MiKTeX 2.7\miktex\bin\dvips.exe" arguments="&quot;%Bm.dvi&quot;" inputFile="" outputFile=""/>
+			</postProcessors>
+			<viewer path="" closeBeforeCompilation="false">
+				<viewProjectCommand type="commandLine">
+					<commandLineCommand path="" arguments=""/>
+					<ddeCommand path="" server="" topic="System" command=""/>
+				</viewProjectCommand>
+				<viewCurrentFileCommand type="commandLine">
+					<commandLineCommand path="" arguments=""/>
+					<ddeCommand path="" server="" topic="System" command=""/>
+				</viewCurrentFileCommand>
+				<viewCloseCommand type="commandLine">
+					<commandLineCommand path="" arguments=""/>
+					<ddeCommand path="" server="" topic="System" command=""/>
+				</viewCloseCommand>
+			</viewer>
+		</outputProfile>
+		<outputProfile name="LaTeX =&gt; PDF_GoBack" stopOnLatexError="false">
+			<texCommand execute="true" path="E:\Program Files\MiKTeX 2.7\miktex\bin\pdflatex.exe" arguments="-interaction=nonstopmode -shell-escape &quot;%pm&quot;"/>
+			<bibTexCommand execute="true" path="E:\Program Files\MiKTeX 2.7\miktex\bin\bibtex.exe" arguments="&quot;%bm&quot;"/>
+			<makeIndexCommand execute="true" path="E:\Program Files\MiKTeX 2.7\miktex\bin\makeindex.exe" arguments="&quot;%bm&quot;"/>
+			<postProcessors/>
+			<viewer path="E:\Program Files\Adobe\Acrobat 7.0\Acrobat\Acrobat.exe" closeBeforeCompilation="true">
+				<viewProjectCommand type="dde">
+					<commandLineCommand path="E:\Program Files\Adobe\Acrobat 7.0\Acrobat\Acrobat.exe" arguments=""/>
+					<ddeCommand path="E:\Program Files\Adobe\Acrobat 7.0\Acrobat\Acrobat.exe" server="acroview" topic="control" command="[DocOpen(&quot;%bm.pdf&quot;)][FileOpen(&quot;%bm.pdf&quot;)][MenuitemExecute(&quot;GoBack&quot;)]"/>
+				</viewProjectCommand>
+				<viewCurrentFileCommand type="commandLine">
+					<commandLineCommand path="E:\Program Files\Adobe\Acrobat 7.0\Acrobat\Acrobat.exe" arguments=""/>
+					<ddeCommand path="E:\Program Files\Adobe\Acrobat 7.0\Acrobat\Acrobat.exe" server="acroview" topic="control" command="[DocOpen(&quot;%bm.pdf&quot;)][FileOpen(&quot;%bm.pdf&quot;)]"/>
+				</viewCurrentFileCommand>
+				<viewCloseCommand type="dde">
+					<commandLineCommand path="" arguments=""/>
+					<ddeCommand path="" server="acroview" topic="control" command="[DocClose(&quot;%bm.pdf&quot;)]"/>
+				</viewCloseCommand>
+			</viewer>
+		</outputProfile>
+		<outputProfile name="LaTeX =&gt; PDF" stopOnLatexError="false">
+			<texCommand execute="true" path="E:\Program Files\MiKTeX 2.7\miktex\bin\pdflatex.exe" arguments="-interaction=nonstopmode -shell-escape &quot;%pm&quot;"/>
+			<bibTexCommand execute="true" path="E:\Program Files\MiKTeX 2.7\miktex\bin\bibtex.exe" arguments="&quot;%bm&quot;"/>
+			<makeIndexCommand execute="true" path="E:\Program Files\MiKTeX 2.7\miktex\bin\makeindex.exe" arguments="&quot;%bm&quot;"/>
+			<postProcessors/>
+			<viewer path="E:\Program Files\Adobe\Acrobat 7.0\Acrobat\Acrobat.exe" closeBeforeCompilation="true">
+				<viewProjectCommand type="dde">
+					<commandLineCommand path="E:\Program Files\Adobe\Acrobat 7.0\Acrobat\Acrobat.exe" arguments=""/>
+					<ddeCommand path="E:\Program Files\Adobe\Acrobat 7.0\Acrobat\Acrobat.exe" server="acroview" topic="control" command="[DocOpen(&quot;%bm.pdf&quot;)][FileOpen(&quot;%bm.pdf&quot;)]"/>
+				</viewProjectCommand>
+				<viewCurrentFileCommand type="dde">
+					<commandLineCommand path="E:\Program Files\Adobe\Acrobat 7.0\Acrobat\Acrobat.exe" arguments=""/>
+					<ddeCommand path="E:\Program Files\Adobe\Acrobat 7.0\Acrobat\Acrobat.exe" server="acroview" topic="control" command="[DocOpen(&quot;%bm.pdf&quot;)][FileOpen(&quot;%bm.pdf&quot;)]"/>
+				</viewCurrentFileCommand>
+				<viewCloseCommand type="dde">
+					<commandLineCommand path="" arguments=""/>
+					<ddeCommand path="" server="acroview" topic="control" command="[DocClose(&quot;%bm.pdf&quot;)]"/>
+				</viewCloseCommand>
+			</viewer>
+		</outputProfile>
+	</outputProfileList>
+</txcop:outputProfiles>

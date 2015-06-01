@@ -1,0 +1,81 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[xscale=1,yscale=0.91]
+
+
+\def\xmax{2.3}
+\def\zmax{2.6}
+\def\numFlecheZ{10}
+\def\numFlecheX{5}
+
+\tkzInit[xmin=-5,xmax=5.7,ymin=-2.7,ymax=2.3]
+%\useasboundingbox (-6.5,-3.0) rectangle (6.5,2.65);
+\tkzX[label=$z$, orig, noticks]
+%\tkzY[label=$x$, noticks]
+
+\tkzInit[xmin=-3.3,xmax=3.,ymin=-2.7,ymax=2.3]
+\tkzFct(-6..6){\xmax-0.6}
+\tkzAera[color=black, opacity=1](-3.3..3)
+\tkzInit[xmin=-3.3,xmax=3.,ymin=-2.7,ymax=2.3]
+\tkzFct[samples = 200](-6..6)
+{2.5/(\x+4.78)}
+\tkzAera[color=white, opacity=1](-3.4..3.1)
+
+\tkzInit[xmin=-3.3,xmax=3.,ymin=-2.7,ymax=2.3]
+\tkzFct(-6..6){-\xmax+0.6}
+\tkzAera[color=black, opacity=1](-3.3..3)
+\tkzInit[xmin=-3.3,xmax=3.,ymin=-2.7,ymax=2.3]
+\tkzFct[samples = 200](-6..6)
+{-2.5/(\x+4.78)}
+\tkzAera[color=white, opacity=1](-3.4..3.1)
+
+\fill[opacity=0.3](-2*\zmax,\xmax-0.6)rectangle++(4*\zmax,0.5);
+%\draw[very thick, latex'-](\zmax-1,\xmax+0.2)--++(1,0) node[right, pos=1, black]{$I$};
+\fill[opacity=0.3](-2*\zmax,-\xmax+0.6)rectangle++(4*\zmax,-0.5);
+%\draw[very thick, -latex'](\zmax-1,-\xmax-0.2)--++(1,0) node[right, pos=1, black]{$I$};
+\tkzInit[xmin=-3.3,xmax=3.,ymin=-2.7,ymax=2.3]
+
+\def\numcer{4}
+\def\Rayy{1.2}
+\def\abscer{2*4.2*\ncer/\numcer-4.2+0.5}
+\pgfmathsetseed{27}
+
+\foreach \dfs in{0,1}{
+\foreach \ncer/\rcer in{0/1.4,1/1,2/0.4,3/0.2}{
+\pgfmathparse{1*(7)}
+\let\numAt\pgfmathresult
+%\def\numAt{11}
+\def\sizeCloud{0.1}
+\foreach \xx in {1,...,\numAt}{
+\foreach \yy in {1,...,\numAt}{
+\pgfmathparse{\abscer-((rnd))*(\abscer+6)}
+\let\XX\pgfmathresult
+\pgfmathparse{abs(\XX)}
+\let\absXX\pgfmathresult
+\pgfmathparse{1*((rand))*\rcer*\Rayy*1.0}
+\let\YY\pgfmathresult
+
+\shade[ball color=blue!0!red] (\XX-1,\YY*1.0) circle (0.05cm);
+\shade[ball color=blue!40!red] (\XX-0,\YY*0.8) circle (0.05cm);
+\shade[ball color=blue!70!red] (\XX+1,\YY*0.6) circle (0.05cm);
+\shade[ball color=blue!100!red, opacity=0.16] (5-\absXX,-\YY*0.051) circle (0.08cm);
+}}
+}
+}
+
+\draw[latex'-](0,-\xmax+0.56)--++(.5,-0.7)node[below]{\pdec à symétrie de révolution};
+
+\draw[latex'-](\zmax,\xmax-0.3)--++(-0.4,0.45)node[left]{\gm};
+
+\end{tikzpicture}
+
+\end{document}

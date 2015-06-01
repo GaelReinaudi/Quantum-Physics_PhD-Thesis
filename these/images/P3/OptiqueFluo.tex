@@ -1,0 +1,115 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[yscale=0.8, xscale=1.025, auto]
+\def\XYmax{3}
+\def\Zmin{-7}
+\def\Zmax{7}
+\def\Znuage{-7}
+
+\def\Taillenuage{2}
+\def\Lnuage{1.6}
+\def\Zccd{2}
+\def\Zlentille{1}
+\def\LongPhoton{2}
+\def\Taillenuage{0.7}
+\def\Lnuage{0.6}
+\def\Zccd{4}
+\def\Tailleccd{2}
+\def\Taillelentille{3}
+\def\Zlentille{0}
+\def\LongPhoton{5}
+
+\tikzstyle{photon}=
+[snake=snake, -latex', line after snake=1mm, segment amplitude=1mm,segment length=2mm]
+
+\useasboundingbox (-9.5,-3) rectangle (\Zccd+0.7,4);
+\tkzInit[xmin=-7,xmax=\Zccd,ymin=-3,ymax=3]
+%\tkzY[label=$y$, noticks, lw=1.2pt]
+%\tkzFct[samples = 200,color = red](-2+0.17..2-0.17){(3*x*x+0)**(0.5)+.3}
+
+\def\NbrPh{15}
+\def\LargeBeam{2}
+
+\draw[latex'-latex'](\Znuage,-1.95*\Taillenuage)--(\Zlentille,-1.95*\Taillenuage)node[pos=0.5,below]{$\NuageLentille$};
+\draw[latex'-latex'](\Zlentille,-\Tailleccd/2)--(\Zccd,-\Tailleccd/2)node[pos=0.5,below]{$\LentilleCCD$};
+\draw[latex'-latex'](\Zlentille+0.5,0)--++(0,\Taillelentille)node[pos=0.5,right]{$\RLentille$};
+
+
+\begin{scope}[xshift=\Znuage cm]
+\pgftransformrotate{-75}
+\begin{scope}[xshift=7 cm]
+\path(-10,\LargeBeam+0.2) rectangle (\Znuage,-\LargeBeam-0.2)
+node[right, pos=0]{laser imageur};
+\foreach \nph in {0,...,\NbrPh}{
+\draw[photon](-14,{\LargeBeam*(2*\nph/(\NbrPh)-1)})--++(\LongPhoton,0);
+}
+\end{scope}
+\end{scope}
+
+
+\draw[angle 90-angle 90, very thick]
+(\Zlentille,-\Taillelentille)--(\Zlentille,\Taillelentille)node[above, left]{lentille $\Lentille$};
+\draw[line width = 2mm]
+(\Zccd,-\Tailleccd)--(\Zccd,\Tailleccd)node[above]{CCD};
+
+\shade[inner color=black!80,outer color=black!30] 
+(\Znuage,0) ellipse(\Lnuage cm and \Taillenuage cm)
+++(0,\Taillenuage);%node[above right]{nuage};
+\draw[very thick, dotted](\Znuage,-\Tailleccd)--(\Znuage,\Tailleccd)node[below,pos=0]{plan objet};
+
+\draw[red](\Znuage,\Taillenuage)--(\Zlentille,0)--(\Zccd, \Taillenuage*\Zccd/\Znuage);
+\draw[red](\Znuage,\Taillenuage)--(\Zlentille,2*\Taillenuage)--(\Zccd, \Taillenuage*\Zccd/\Znuage);
+\draw[red](\Znuage,\Taillenuage)--(\Zlentille,\Taillenuage)--(\Zccd, \Taillenuage*\Zccd/\Znuage);
+
+\tkzX[label=$z$, orig, noticks, lw=1.2pt]
+%\draw[line width=1pt] ({(\Zlentille+\Zccd)/2   },-0.3) .. controls +(0,.3) and +(0,-.3) .. 
+%                    ++(.2, 0.6);
+%\draw[line width=1pt, white](-1pt,0)++
+%                      ({(\Zlentille+\Zccd)/2   },-0.3) .. controls +(0,.3) and +(0,-.3) .. 
+%                    ++(.2, 0.6);
+%\draw[line width=1pt](-2pt,0)++
+%                      ({(\Zlentille+\Zccd)/2   },-0.3) .. controls +(0,.3) and +(0,-.3) .. 
+%                    ++(.2, 0.6);
+\def\nbrphdiff{12}
+\def\nbrphdiffmun{11}
+\def\angleph{30}
+\foreach \nph in {0,...,\nbrphdiffmun}{
+%\draw[photon, red]
+%(\Znuage,0)++(360/\nbrphdiff*\nph:0.5)--++(360/\nbrphdiff*\nph:1);
+\draw[photon, red]
+(\Znuage,0)++(360/\nbrphdiff*\nph:\Lnuage)--++(360/\nbrphdiff*\nph:1);
+%\draw[photon, red]
+%(\Znuage,0)++(360/\nbrphdiff*\nph-5:\Lnuage)--++(360/\nbrphdiff*\nph-\angleph:1);
+%\draw[photon, red]
+%(\Znuage,0)++(360/\nbrphdiff*\nph+5:\Lnuage)--++(360/\nbrphdiff*\nph+\angleph:1);
+}
+\foreach \nph in {0}{
+%	\draw[photon, red]
+%	(\Znuage,0)++(360/\nbrphdiff*\nph:\Lnuage)++(360/\nbrphdiff*\nph:1.5)
+%	--++(360/\nbrphdiff*\nph:1);
+}
+\foreach \nph in {0,...,1}{
+%	\draw[photon, red]
+%	(\Znuage,0)++(360/\nbrphdiff*\nph-5:\Lnuage)++(360/\nbrphdiff*\nph-\angleph:1.5)
+%	--++(360/\nbrphdiff*\nph-\angleph:1);
+}
+\foreach \nph in {0,...,-1}{
+%	\draw[photon, red]
+%	(\Znuage,0)++(360/\nbrphdiff*\nph+5:\Lnuage)++(360/\nbrphdiff*\nph+\angleph:1.5)
+%	--++(360/\nbrphdiff*\nph+\angleph:1);
+}
+\path[red](\Znuage,\Taillenuage)node[above right=0.5cm]{photons diffusés};
+
+
+\end{tikzpicture}
+
+\end{document}

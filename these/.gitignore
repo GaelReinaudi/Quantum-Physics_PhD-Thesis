@@ -1,0 +1,19 @@
+/buchblock - Copy - v2 sent to EuE.pdf
+*.synctex
+/Soutenance/
+/paperasse/
+*.nlo
+*/*.nlo
+*/*/*.nlo
+*.nls
+*/*.nls
+*/*/*.nls
+*.flg
+*/*.flg
+*/*/*.flg
+*.synctex
+*/*.synctex
+*/*/*.synctex
+*.mtc*
+*/*.mtc*
+*/*/*.mtc*

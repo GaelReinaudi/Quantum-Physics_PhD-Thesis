@@ -1,0 +1,85 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\newcommand{\PictureWidth}{12.0}
+\pgfmathparse{-5}
+\let\zminPicture\pgfmathresult
+\pgfmathparse{175}
+\let\zmaxPicture\pgfmathresult
+\pgfmathparse{-50}
+\let\vminPicture\pgfmathresult
+\pgfmathparse{150}
+\let\vmaxPicture\pgfmathresult
+
+\pgfmathparse{\zminPicture}		\let\zminGraph\pgfmathresult
+\pgfmathparse{\zmaxPicture}		\let\zmaxGraph\pgfmathresult
+\pgfmathparse{-7}		\let\vminGraph\pgfmathresult
+\pgfmathparse{\vmaxPicture}		\let\vmaxGraph\pgfmathresult
+
+\begin{tikzpicture}
+\pgfmathparse{-1*\zminPicture/(\zmaxPicture-\zminPicture)*\PictureWidth}
+\let\OriginX\pgfmathresult
+\pgfmathparse{-1*\vminPicture/(\vmaxPicture-\vminPicture)*0.5*\PictureWidth}
+\let\OriginY\pgfmathresult
+\pgfmathparse{1*(-\OriginX)}
+\let\Xmin\pgfmathresult
+\pgfmathparse{1*(\PictureWidth-\OriginX)}
+\let\Xmax\pgfmathresult
+\pgfmathparse{1*(-\OriginY)}
+\let\Ymin\pgfmathresult
+\pgfmathparse{1*(0.5*\PictureWidth-\OriginY)}
+\let\Ymax\pgfmathresult
+
+\pgfmathparse{1*((\zmaxPicture-\zminPicture)/\PictureWidth)}
+\let\XscaleGraph\pgfmathresult
+\pgfmathparse{1/\XscaleGraph}
+\let\invXscaleGraph\pgfmathresult
+\pgfmathparse{1*((\vmaxPicture-\vminPicture)/(0.5*\PictureWidth))}
+\let\YscaleGraph\pgfmathresult
+\pgfmathparse{1/\YscaleGraph}
+\let\invYscaleGraph\pgfmathresult
+
+\useasboundingbox (\Xmin-1.4,\Ymin+0.7) rectangle (\Xmax+1.4, \Ymax+1.1);
+
+\put(\Xmin,\Ymin){\includegraphics[width=\PictureWidth cm]{Simus/Vinj88Vconv88_50G0000}}
+%\put(\Xmin,\Ymin){\includegraphics[width=\PictureWidth cm]{Simus/Vinj88Vconv88_50G0007}}
+\put(\Xmin,\Ymin){\includegraphics[width=\PictureWidth cm]{Simus/Vinj88Vconv88_50G0027}}
+
+\draw[dotted](\Xmin,88*\invYscaleGraph)--(\Xmax,88*\invYscaleGraph)
+node[above left, pos=1]{$\vinj=\vconv=\cmps{88}$};
+
+\draw[latex'-](72*\invXscaleGraph,80*\invYscaleGraph)--++(-5*\invXscaleGraph,50*\invYscaleGraph)
+node[above, pos=1]{atomes ralentis};
+\draw[latex'-](108*\invXscaleGraph,145*\invYscaleGraph)--++(0,10*\invYscaleGraph)
+node[above, pos=1]{atomes piégés};
+
+\pgfmathparse{25}\let\XTicksEvery\pgfmathresult
+\pgfmathparse{50}\let\YTicksEvery\pgfmathresult
+
+\begin{scope}[xscale=\XTicksEvery*\invXscaleGraph, yscale=\YTicksEvery*\invYscaleGraph]
+\tkzInit[xmin=0,xmax=\zmaxGraph,xstep=\XTicksEvery%\XscaleGraph
+        ,ymin=\vminGraph,ymax=\vmaxGraph,ystep=\YTicksEvery]
+\tkzY[orig, label={$\vz\left[\rm cm/s\right]$}]%, poslabel=-11ex]
+\tkzX[label={$z\left[\rm cm\right]$}]%, poslabel=-4ex]
+\end{scope}
+
+\begin{scope}[join=bevel]
+\tkzInit[xmin=\zminGraph,xmax=\zmaxGraph,xstep=\XscaleGraph
+        ,ymin=\vminGraph,ymax=\vmaxGraph,ystep=\YscaleGraph]
+\tkzFct[color=red, samples=1000](0..\zmaxPicture){10*
+\ConvFonctionChampIPModule{\x}{0.08}}
+\end{scope}
+
+\draw(155*\invXscaleGraph,30*\invYscaleGraph)node{$2\,\ConvBamplit=\gauss{50}$};
+
+\end{tikzpicture}
+
+\end{document}

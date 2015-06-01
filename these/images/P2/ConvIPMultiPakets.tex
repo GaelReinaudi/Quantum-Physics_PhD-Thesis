@@ -1,0 +1,31 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\sc{2.5}
+\def\ysc{1.9}
+\begin{tikzpicture}
+
+\useasboundingbox (-\sc*.35,-\ysc*.2) rectangle (\sc*5.0,\ysc*3.9);
+\put(0,0){\includegraphics[scale=\sc]{OriginConvIPMultiPakets}}
+
+\draw (\sc*2.5,\ysc*0) node[below=-2mm]{$t \left[\seconde{}\right]$};
+\draw (\sc*0-0.4,\ysc*1.9) node[rotate=90]{$n(\zsonde,t) \left[ \ua \right]$};
+
+\draw(\sc*2.,\ysc*3.3)
+node[right, text width=4cm]{$\vinj=\cmps{88}$, ~~~~~~sans \conv};
+\draw(\sc*2.9,\ysc*1.9)
+node[right, text width=5cm]{$\vconv=\vinj = \cmps{88}$};
+\draw(\sc*0.45,\ysc*0.9)--(\sc*0.67,\ysc*1.84)
+node[right, text width=5cm]{\chm};%\\$2\,\ConvBamplit=\gauss{32}$};
+
+\end{tikzpicture}
+
+\end{document}

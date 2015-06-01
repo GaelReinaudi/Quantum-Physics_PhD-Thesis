@@ -1,0 +1,23 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[xscale=0.5,yscale=1.6]
+\tkzInit[xmax=10.5,ymax=2]
+\tkzX[label={$\sat$}]%, poslabel=-3ex]
+\tkzY[label={$\PopuE$}, noticks]%, poslabel=-4ex]
+\tkzFct[samples = 200,color = red](0..10){\x/(1+\x)*2}
+\draw[dashed](0,2)--+(10,0) node[pos=0.5,above]{$\PopuEmax$};
+\draw[dashed](0,2)--+(0.01,0) node[pos=0,left]{$\tfrac{1}{2}$};
+\draw[opacity=0](0,-.5)--+(0.01,0);
+%\tkzFct[samples = 20, dotted](0..10){2}
+\end{tikzpicture}
+
+\end{document}

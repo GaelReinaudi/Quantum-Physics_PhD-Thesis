@@ -1,0 +1,43 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\renewcommand{\ConvIPDessinBpara}[1]{\begin{scope}[join=bevel]
+\tkzInit[xmin=0,xmax=180,xstep=5,ymin=-0.5,ymax=2.3,ystep=1]
+%\useasboundingbox(-6.1,-0.55)rectangle(37,3.0);
+%\tkzX[orig, noticks, label={$z$}, poslabel=0ex]
+%\tkzY[label={$\ConvBparaAim + \ConvBparaSol$}, noticks, poslabel=-0.5ex]
+%\draw[dashed](30/5,2.2)--(155/5,2.2);
+%\draw[dashed](30/5,0.2)--(155/5,0.2);
+%\draw[latex'-latex'](155/5,0.2)--(155/5,2.2)node[right]{$2\,\ConvBamplit$};
+%\draw[-latex'](151/5,-0.3)--(151/5,0)node[left, pos=0]{$\ConvBparaMin$};
+%\draw[-latex'](151/5,0.5)--(151/5,0.2);
+%\draw(151/5,0.4)--(151/5,0.0);
+\tkzFct[color=red, samples=250](0..180){
+(\ConvFonctionChampIP{\x}{#1})}
+\end{scope}}
+
+
+\begin{frame}
+
+  \begin{animateinline}[
+  begin={\begin{tikzpicture}[xscale=0.33, yscale=1.2]}
+  , end={\end{tikzpicture}}]{10}
+    \ConvIPDessinBpara{0.0}\newframe
+    \ConvIPDessinBpara{0.2}\newframe
+    \ConvIPDessinBpara{0.4}\newframe
+    \ConvIPDessinBpara{0.6}\newframe
+    \ConvIPDessinBpara{0.8}
+  \end{animateinline}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\end{document}

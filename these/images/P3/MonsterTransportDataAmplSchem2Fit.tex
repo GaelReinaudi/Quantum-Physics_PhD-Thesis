@@ -1,0 +1,22 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=1.3]
+
+\put(0,0){\includegraphics[scale=1.3]{OriginTransportShem2Fit}}
+\path(5,4);
+
+\draw (2.5,0) node[below=-2mm]{$\tfin[\seconde{}]$};
+\draw (0,2) node[rotate=90, above=-1mm]{$\Aosc[\mm{}]$};
+
+\end{tikzpicture}
+
+\end{document}

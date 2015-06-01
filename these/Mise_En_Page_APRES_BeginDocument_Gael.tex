@@ -1,0 +1,118 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+      \OddHead={{\leftmark\rightmark}{\hfil\slshape\rightmark}}
+      \EvenHead={{\leftmark}{{\slshape\leftmark}\hfil}}
+      \OddFoot={\hfil\thepage}
+      \EvenFoot={\thepage\hfil}
+      \pagestyle{ThesisHeadingsII}
+
+%-------------------------------------------------------------------
+%                          Encadrements
+%-------------------------------------------------------------------
+
+% encadre les chapitres dans la table des matieres:
+% (ces commandes doivent figurer apres \begin{document}
+\FrameChaptersInToc  
+%\FramePartsInToc
+\DontFramePartsInToc
+
+
+%-------------------------------------------------------------------
+%            Reinitialisation de la numerotation des chapitres
+%-------------------------------------------------------------------
+% Si la commande suivante est presente,
+% elle doit figurer APRES \begin{document}
+% et avant la premiere commande \part
+%\ResetChaptersAtParts 
+
+%-------------------------------------------------------------------
+%               mini-tables des matieres par chapitre
+%-------------------------------------------------------------------
+% preparer les mini-tables des matieres par chapitre.
+% (commande de minitoc.sty)
+\dominitoc
+
+%-------------------------------------------------------------------
+%                  ecriture de `Chapitre' et `Partie' 
+%                      dans la table des matieres
+%-------------------------------------------------------------------
+\WritePartLabelInToc
+\WriteChapterLabelInToc
+
+
+% ************************************************************************
+% Pour la liste des notations
+\ifthenelse{\FaitNomenclature > 0}{
+    %Titre de la page
+    \renewcommand{\nomname}{%\fontfamily{ppl}\selectfont %
+    Principales notations utilisées} 
+    \ifthenelse{\FaitNomEnMarge > 0}{	
+       \renewcommand{\nompreamble}{Nous définissons ici les principales notations utilisées dans ce manuscrit, en précisant le numéro de page sur laquelle chacune d'entre elles apparaît pour la première fois. De plus, afin de faciliter la lecture, chaque première occurrence sera repérée dans le manuscrit par une mise en marge de la notation. Un exemple de mise en marge est présenté ici pour la notation $\flux(\Devi)$.\\
+       ~\vspace{-1ex}\todo{\ensuremath{\flux(\Devi)}}%
+       }       }{}%
+    %pour avoir des lignes de ... entre la description et le #page
+    \renewcommand{\pagedeclaration}[1]{~\dotfill\hyperpage{#1}}  
+    %La commande \nomgroup permet de regrouper les symboles par groupe.
+    \renewcommand{\nomgroup}[1]{%
+      \ifthenelse{\equal{#1}{A}}{\medskip\item[]\hspace*{-\leftmargin}%
+      \textbf{Ch.1 - \TitreChapitreUn}}{%
+       \ifthenelse{\equal{#1}{B}}{\medskip\item[]\hspace*{-\leftmargin}%
+       \textbf{Ch.2 - \TitreChapitreDeux}}{%
+        \ifthenelse{\equal{#1}{C}}{\medskip\item[]\hspace*{-\leftmargin}%
+        \textbf{Ch.3 - \TitreChapitreTrois}}{%
+         \ifthenelse{\equal{#1}{D}}{\medskip\item[]\hspace*{-\leftmargin}%
+         \textbf{Ch.4 - \TitreChapitreQuatre\AjouteLigne}}{%
+          \ifthenelse{\equal{#1}{E}}{\medskip\item[]\hspace*{-\leftmargin}%
+          \textbf{Ch.5 - \TitreChapitreCinq}}{%
+           \ifthenelse{\equal{#1}{F}}{\medskip\item[]\hspace*{-\leftmargin}%
+           \textbf{Ch.6 - \TitreChapitreSix}}{%
+            }}}}}}%
+%\medskip\item[]\hspace*{-\leftmargin}%
+%\rule[2pt]{0.45\linewidth}{1pt}%
+%\hfill #1\hfill
+%\rule[2pt]{0.45\linewidth}{1pt}
+        }
+    %Définit \Titre... comme une lettre qui correspond au numéro du chapitre courant.
+    \def\ChCourantTitre{\ifcase\value{chapter}\or A\or B\or C\or D\or E\or F\fi}  
+    %La commande
+\newcounter{nomereee}[chapter]
+\stepcounter{nomereee}
+\newcommand{\nome}[2]{\stepcounter{nomereee}\nomenclature[\ChCourantTitre\alph{nomereee}]{\ensuremath{#1}}{#2}%
+    \ifthenelse{\FaitNomEnMarge > 0}{	\todo{\ensuremath{#1}}}{}%
+    }
+    \newcommand{\nomeRemonte}[3]{%
+    \vspace{-#3}%
+    	\nome{#1}{#2}%
+    \vspace{#3}%
+    }
+    \makenomenclature
+    %si FaitNomenclature=0, je redéfinis la command \nome pour éviter les erreurs lors de la compilation
+    }
+    {\newcommand{\nome}[2]{}    \newcommand{\nomeRemonte}[3]{}} 
+
+
+
+% ************************************************************************
+% Pour fair une note dans la marge !
+% Command for inserting a todo item
+\definecolor{orange}{rgb}{1,1,0}
+\tikzstyle{notestyleright} = [right, draw=black, fill=yellow]%, text width = 1cm]
+\tikzstyle{notestyleleft} = [notestyleright, left]
+\tikzstyle{connectstyle} = [draw = orange, thick]
+\newcommand{\todo}[1]{%
+% Add to todo list
+%\addcontentsline{tdo}{todo}{\protect{#1}}%
+%
+\begin{tikzpicture}[remember picture]%, baseline=7.5ex]%
+    \node [coordinate] (inText) {};
+\end{tikzpicture}%
+%
+% Make the margin par
+\marginpar[%
+{% Draw note in left margin
+    \tikz[remember picture] \path (0,0)++(1.8,0)++(-0.1,0)node[notestyleleft] (inNote) {#1};}%
+]{% Draw note in right margin
+    \tikz[remember picture] \path (0,0)++(0.1,0)node[notestyleright] (inNote) {#1};%
+}}

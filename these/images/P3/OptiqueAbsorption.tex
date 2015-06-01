@@ -1,0 +1,83 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[yscale=0.8, xscale=1, auto]
+\def\XYmax{3}
+\def\Zmin{-7}
+\def\Zmax{7}
+\def\Znuage{-6.5}
+\def\Taillenuage{0.7}
+\def\Lnuage{0.6}
+\def\Zccd{4}
+\def\Tailleccd{2}
+\def\Taillelentille{3}
+\def\Zlentille{0}
+\def\LongPhoton{2}
+
+\tikzstyle{photon}=
+[snake=snake, -latex', line after snake=1mm, segment amplitude=1mm,segment length=2mm]
+
+%\useasboundingbox (-2.3,-2.1) rectangle ++(\FigWidth,\Hfig);
+\tkzInit[xmin=-9.5,xmax=\Zccd,ymin=-3,ymax=3]
+%\tkzY[label=$y$, noticks, lw=1.2pt]
+%\tkzFct[samples = 200,color = red](-2+0.17..2-0.17){(3*x*x+0)**(0.5)+.3}
+
+\def\NbrPh{15}
+\def\LargeBeam{1.5}
+
+%\draw[latex'-latex'](\Znuage-1.05*\Taillenuage,-1.1*\Taillenuage)--(\Znuage+1.05*\Taillenuage,-1.1*\Taillenuage)node[pos=0.5,below]{$\LZnuage$};
+
+\fill[fill=red!50](-9.5,\LargeBeam+0.2) rectangle (\Zlentille,-\LargeBeam-0.2)
+node[above right, pos=0]{laser imageur};
+\shade[top color=red!50, bottom color=red!10](\Znuage,0) rectangle (\Zlentille,\Taillenuage);
+\shade[top color=red!10, bottom color=red!50](\Znuage,0) rectangle (\Zlentille,-\Taillenuage);
+%
+\fill[color=red!50](\Zlentille,0) --+(0,\LargeBeam+0.2)--+(2.5,0)--cycle;
+\fill[color=red!50](\Zlentille,0) --+(0,-\LargeBeam-0.2)--+(2.5,0)--cycle;
+\fill[color=red!50](\Zccd,0) --+(0,\LargeBeam+0.2)--+(-2.5,0)--cycle;
+\fill[color=red!50](\Zccd,0) --+(0,-\LargeBeam-0.2)--+(-2.5,0)--cycle;
+\shade[top color=red!50, bottom color=red!10](\Zlentille,0) --+(0,\Taillenuage)--+(2.5,0)--cycle;
+\shade[top color=red!10, bottom color=red!50](\Zlentille,0) --+(0,-\Taillenuage)--+(2.5,0)--cycle;
+\shade[top color=red!50, bottom color=red!10](\Zccd,0) --+(0,\Taillenuage)--+(-2.5,0)--cycle;
+\shade[top color=red!10, bottom color=red!50](\Zccd,0) --+(0,-\Taillenuage)--+(-2.5,0)--cycle;
+
+\foreach \nph in {0,...,\NbrPh}{
+\draw[photon](-9.5,{\LargeBeam*(2*\nph/(\NbrPh)-1)})--++(\LongPhoton,0);
+}
+
+\draw[angle 90-angle 90, very thick]
+(\Zlentille,-\Taillelentille)--(\Zlentille,\Taillelentille)node[above, left]{lentille $\Lentille$};
+\draw[line width = 2mm]
+(\Zccd,-\Tailleccd)--(\Zccd,\Tailleccd)node[above]{CCD};
+
+\shade[inner color=black!80,outer color=black!30] 
+(\Znuage,0) ellipse(\Lnuage cm and \Taillenuage cm)
+++(0,\Taillenuage)node[above right]{nuage};
+\draw[very thick, dotted](\Znuage,-\Tailleccd)--(\Znuage,\Tailleccd)node[below,pos=0]{plan objet};
+
+
+\draw[](\Znuage,\Taillenuage)--(\Zlentille,0)--(\Zccd, \Taillenuage*\Zccd/\Znuage);
+\draw[](\Znuage,\Taillenuage)--(\Zlentille,2*\Taillenuage)--(\Zccd, \Taillenuage*\Zccd/\Znuage);
+\draw[](\Znuage,\Taillenuage)--(\Zlentille,\Taillenuage)--(\Zccd, \Taillenuage*\Zccd/\Znuage);
+
+\tkzX[label=$z$, orig, noticks, lw=1.2pt]
+%\draw[line width=1pt] ({(\Zlentille+\Zccd)/2   },-0.3) .. controls +(0,.3) and +(0,-.3) .. 
+%                    ++(.2, 0.6);
+%\draw[line width=1pt, white](-1pt,0)++
+%                      ({(\Zlentille+\Zccd)/2   },-0.3) .. controls +(0,.3) and +(0,-.3) .. 
+%                    ++(.2, 0.6);
+%\draw[line width=1pt](-2pt,0)++
+%                      ({(\Zlentille+\Zccd)/2   },-0.3) .. controls +(0,.3) and +(0,-.3) .. 
+%                    ++(.2, 0.6);
+
+\end{tikzpicture}
+
+\end{document}

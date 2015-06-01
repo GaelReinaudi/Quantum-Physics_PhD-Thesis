@@ -1,0 +1,61 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}
+
+
+\tkzInit[xmin=-2.3,xmax=2.3,ymin=-2.3,ymax=2.3]
+\useasboundingbox (-3,-3) rectangle (3,3);
+%\put(-3,-3){\includegraphics{TubesQuadrupole_a_nu}}
+\def\aa{1.2}
+\def\offsetfleche{0.4}
+
+\def\opac{1}
+\def\lFlech{0.07}
+	\foreach \fnn in {1,2,3,4,5,6}{
+	\foreach \fn in {1,...,4}{
+        \draw[scale=3, color=red, opacity=\opac] plot file{ChampGuide/ChampGuide\fn\fnn.txt};
+	}	
+	\draw[-latex', color=red, opacity=\opac]
+	(.15*\fnn,.15*\fnn)++(\lFlech/2,-\lFlech/2)--+(-\lFlech,\lFlech);
+	\draw[-latex', color=red, opacity=\opac]
+	(.15*\fnn,-.15*\fnn)++(\lFlech/2,\lFlech/2)--+(-\lFlech,-\lFlech);
+	\draw[-latex', color=red, opacity=\opac]
+	(-.15*\fnn,.15*\fnn)++(-\lFlech/2,-\lFlech/2)--+(\lFlech,\lFlech);
+	\draw[-latex', color=red, opacity=\opac]
+	(-.15*\fnn,-.15*\fnn)++(-\lFlech/2,\lFlech/2)--+(\lFlech,-\lFlech);
+	}
+
+\tkzX[orig, noticks, lw=.8pt]
+\tkzY[noticks, lw=.8pt]
+\node (A) at (\aa,\aa){\LARGE{$\otimes$}};
+\node (B) at (-\aa,-\aa){\LARGE{$\otimes$}};
+\node (C) at (-\aa,\aa){\LARGE{$\odot$}};
+\node (D) at (\aa,-\aa){\LARGE{$\odot$}};
+\node[above right] at (A) {$+I$};
+\node[below left] at (B) {$+I$};
+\node[above left] at (C) {$-I$};
+\node[below right] at (D) {$-I$};
+\draw[latex'-latex', color=black]
+(-\aa,\aa+\offsetfleche) -- (\aa,\aa+\offsetfleche)
+node[above right,pos=0.5]{$\espTubes$};
+\draw[latex'-latex', color=black]
+(\aa+\offsetfleche,-\aa) -- (\aa+\offsetfleche,\aa)
+node[above right,pos=0.5]{$\espTubes$};
+\draw[color=gray, dotted](\aa,-\aa-\offsetfleche) -- (\aa,\aa+\offsetfleche);
+\draw[color=gray, dotted](-\aa,-\aa-\offsetfleche) -- (-\aa,\aa+\offsetfleche);
+\draw[color=gray, dotted](-\aa-\offsetfleche,\aa) -- (\aa+\offsetfleche,\aa);
+\draw[color=gray, dotted](-\aa-\offsetfleche,-\aa) -- (\aa+\offsetfleche,-\aa);
+
+
+\end{tikzpicture}
+
+\end{document}

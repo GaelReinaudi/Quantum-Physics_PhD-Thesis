@@ -1,0 +1,36 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}
+
+\tkzInit[xmin=-3,xmax=3,ymin=-3,ymax=3]
+\useasboundingbox (-2.7,-3) rectangle (2.7,3);
+
+\fill[blue](-1.2,-1.2)rectangle(1.2,1.2);
+\fill[white](-1.2,-1.2)circle(0.93);
+\fill[white](-1.2, 1.2)circle(0.93);
+\fill[white]( 1.2,-1.2)circle(0.93);
+\fill[white]( 1.2, 1.2)circle(0.93);
+
+\fill[white](0,0)circle(0.31*1.5);
+\node at (0,0){$\odot$}node[right]{$z$};
+
+\put(-2.6,-2.6){\includegraphics[width=5.2cm]{TubesQuadrupole_b_Model}}
+
+%\node at (1.2,1.2){$+I$};
+%\node at (-1.2,-1.2){$+I$};
+%\node at (-1.2,1.2){$-I$};
+%\node at (1.2,-1.2){$-I$};
+
+
+\end{tikzpicture}
+
+\end{document}

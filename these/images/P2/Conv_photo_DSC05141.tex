@@ -1,0 +1,34 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+\begin{tikzpicture}
+
+\useasboundingbox (0,0) rectangle (12,5.4);
+\put(0,0){\includegraphics[width=12cm]{photo_DSC05141}}
+
+\draw[latex'-, yellow, very thick](6.5,2.15)--(7,1.65)
+node[below right, fill=black]{aimants};
+\draw[latex'-, yellow, very thick](6.5,2.15)++(0.35,0.24)--(7,1.65);
+\draw[latex'-, yellow, very thick](6.5,2.15)++(-0.37,-0.24)--(7,1.65);
+
+\draw[latex'-, yellow, very thick](5,0.9)--++(0.5,-0.2)
+node[below right, fill=black]{\gm};
+
+\draw[yellow, very thick](11.9,5.2)
+node[below left, fill=black]{PMO};
+
+\draw[-latex', yellow, ultra thick](8,3.5)--++(-1.8,-0.96)
+node[above=0.1cm, pos=0.5]{$\vconv$};
+\draw[latex'-, yellow, ultra thick](8,3.5)++(-1,0.3)--++(-1.8,-0.90);
+
+
+\end{tikzpicture}
+
+\end{document}

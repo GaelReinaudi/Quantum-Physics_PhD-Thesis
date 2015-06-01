@@ -1,0 +1,21 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=1.5]
+\tkzInit[xmin=0,xmax=4,ymin=0,ymax=3]
+\tkzX[label=$\tfin$, orig, noticks%, poslabel=-0.6cm
+]
+\tkzY[label=$\Aosc$, noticks%, poslabel=-0.6cm
+]
+\tkzFct[samples = 100,color = red, lw=1.5pt](0.1..5){1/sqrt(\x)}
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,98 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+
+\newcommand{\ConvIPDessinBparaModuleDebut}[1]{
+\begin{scope}[join=bevel]
+\tkzInit[xmin=-1,xmax=50,xstep=5,ymin=-0.1,ymax=2.3,ystep=1]
+\tkzX[orig, noticks, label={$z$}]%, poslabel=0ex]
+\tkzY[label={$\ConvUaxe$}, noticks]%, poslabel=-4ex]
+%\draw[dashed](30/5,2.2)--(155/5,2.2);
+%\draw[dashed](30/5,0.2)--(155/5,0.2);
+%\draw[latex'-latex'](155/5,0.2)--(155/5,2.2)node[right]{$2\,\ConvBamplit$};
+\draw[red, -latex', line width=0.05cm](40/5,10/5)--++(5/5,0)node[above]{$\vconv$};
+
+\tkzFct[color=red, samples=1000](0..170){
+\ConvFonctionChampIPModule{\x}{#1}}
+\end{scope}}
+
+\def\time{0.6}
+
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=0.5]
+
+\footnotesize
+
+\ConvIPDessinBparaModuleDebut{\time}
+
+\begin{scope}[xscale=0.2, yscale=0.2]    
+\def\numAt{10}
+\def\sizeCloud{4}
+\pgfmathsetseed{241}
+\foreach \xx in {1,...,\numAt}{
+	\pgfmathparse{1*(rand)*(\sizeCloud/2*\xx/\numAt)+5}
+	\let\XX\pgfmathresult
+	\pgfmathparse{5*\ConvFonctionChampIPModulePourPGFparser{\XX}{\time}}
+	\let\YY\pgfmathresult
+	\pgfmathparse{\XX+13.5}
+	\let\XXp\pgfmathresult
+	\pgfmathparse{5*\ConvFonctionChampIPModulePourPGFparser{\XXp}{\time}}
+	\let\YYp\pgfmathresult
+	\pgfmathparse{\XX+23.5}
+	\let\XXpp\pgfmathresult
+	\pgfmathparse{5*\ConvFonctionChampIPModulePourPGFparser{\XXpp}{\time}}
+	\let\YYpp\pgfmathresult
+
+	\shade[ball color=blue] (\XX,\YY) circle (0.50cm);
+	\shade[ball color=blue] (\XXp,\YYp) circle (0.50cm);
+	\shade[ball color=blue] (\XXpp,\YYpp) circle (0.50cm);
+}
+\draw[latex'-latex'](29,6.4*5)--++(10,0)node[above, pos=0.]{$\ConvDip=\cm{10}$};
+
+\draw[blue, -latex'](30.7,8)--++(2,-4);
+\draw[blue, -latex'](27,8)--++(-2,-4);
+
+\draw[blue, -latex', line width=0.05cm](5,2)--++(5,0)node[above]{$\vinj$};
+\end{scope}
+
+\begin{scope}[yshift=4cm]    
+\ConvIPDessinBparaModuleDebut{\time}
+
+\begin{scope}[xscale=0.2, yscale=0.2]    
+\def\numAt{20}
+\def\sizeCloud{4}
+\pgfmathsetseed{241}
+\foreach \xx in {1,...,\numAt}{
+	\pgfmathparse{1*(rand)*(\sizeCloud/2*\xx/\numAt)+10}
+	\let\XX\pgfmathresult
+	\pgfmathparse{5*\ConvFonctionChampIPModulePourPGFparser{\XX}{\time}}
+	\let\YY\pgfmathresult
+	\pgfmathparse{\XX+13.5}
+	\let\XXp\pgfmathresult
+	\pgfmathparse{5*\ConvFonctionChampIPModulePourPGFparser{\XXp}{\time}}
+	\let\YYp\pgfmathresult
+	\pgfmathparse{\XX+23.5}
+	\let\XXpp\pgfmathresult
+	\pgfmathparse{5*\ConvFonctionChampIPModulePourPGFparser{\XXpp}{\time}}
+	\let\YYpp\pgfmathresult
+
+	\shade[ball color=blue] (\XX,\YY) circle (0.50cm);
+	\shade[ball color=blue] (\XXp,\YYp) circle (0.50cm);
+	\shade[ball color=blue] (\XXpp,\YYpp) circle (0.50cm);
+}
+\draw[blue, -latex', line width=0.05cm](10,2)--++(5,0)node[above]{$\vinj$};
+\end{scope}
+\end{scope}
+    
+\end{tikzpicture}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\end{document}

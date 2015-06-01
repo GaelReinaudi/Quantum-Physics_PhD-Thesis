@@ -1,0 +1,24 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+\begin{tikzpicture}
+
+\useasboundingbox (0,0.01) rectangle (14,5.3);
+\put(0,0){\includegraphics[width=6.4cm]{3dsmax285_1}}
+\draw[-latex'](6.5,2.2)--++(1,0);
+\path(3.2,4.8)node[above]{AVANT};
+\path(7.6,0)++(3.2,4.8)node[above]{APRES};
+\put(7.6,0){\includegraphics[width=6.4cm]{3dsmax285_2}}
+
+
+
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,72 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}%[scale=0.8]
+
+
+\def\scale{2.5}
+\def\Revap{\scale*0.7}
+\def\AxeCourt{(0.1*\scale)}
+\def\AxeLong{(.5*\scale)}
+\def\tours{5}
+\def\anglepartour{(15*3.14/180)}
+\def\angleini{(70*3.14/180)}
+\def\angleenplus{2.9}
+
+\def\distSurf{2.7}  
+\def\epCer{0.5}
+\useasboundingbox (-\distSurf-\epCer,-\distSurf-\epCer) rectangle(\distSurf+\epCer,\distSurf+\epCer);
+\fill[color=black!70] (-\distSurf-\epCer,-\distSurf-\epCer) rectangle(\distSurf+\epCer,\distSurf+\epCer);
+\fill[white] (0,0) circle(\distSurf);
+\path(0,0)node{$\otimes$}node[above right]{$z$};
+%\draw(-\distSurf+1,\distSurf)--+(\distSurf/3,-\distSurf/3)node[right]{céramique};
+\draw[thick,latex'-latex'](0,-2)--++(-1.5,0)node[pos=0.5, below]
+{$\Devi$};
+\draw[dashed](0,-2)++(-1.5,0)--++(0,2);
+
+
+\pgfmathparse{{1*
+\AxeCourt*sin(\angleenplus*57)*cos(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)+\AxeLong*cos(\angleenplus*57)*sin(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)
+}}
+\let\Xini\pgfmathresult
+
+\pgfmathparse{{1*
+\AxeLong*cos(\angleenplus*57)*cos(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)-\AxeCourt*sin(\angleenplus*57)*sin(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)
+}}
+\let\Yini\pgfmathresult
+
+\tkzInit[xmin=-2.4,xmax=2,ymin=-2.4,ymax=2]
+\tkzX[noticks]
+\tkzY[noticks]
+
+\put(-1.5,0){
+\tkzFctPar[samples=400, color=blue, lw=0.6](\angleenplus..-2*3.14*4){
+\AxeCourt*sin(\t)*cos(\t*\anglepartour/2/3.14+\angleini)
++\AxeLong*cos(\t)*sin(\t*\anglepartour/2/3.14+\angleini)
+}{
+\AxeLong*cos(\t)*cos(\t*\anglepartour/2/3.14+\angleini)
+-\AxeCourt*sin(\t)*sin(\t*\anglepartour/2/3.14+\angleini)
+}
+
+\tkzFctPar[samples=200, color=red, style=dashed, lw=1](-2*3.14*3.95..-2*3.14*5){
+\AxeCourt*sin(\t)*cos(\t*\anglepartour/2/3.14+\angleini)
++\AxeLong*cos(\t)*sin(\t*\anglepartour/2/3.14+\angleini)
+}{
+\AxeLong*cos(\t)*cos(\t*\anglepartour/2/3.14+\angleini)
+-\AxeCourt*sin(\t)*sin(\t*\anglepartour/2/3.14+\angleini)
+}
+
+\shade[ball color=blue] (\Xini,\Yini) circle (0.1cm);
+}
+
+\end{tikzpicture}
+
+\end{document}

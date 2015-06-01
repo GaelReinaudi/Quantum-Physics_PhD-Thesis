@@ -1,0 +1,24 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\sc{2}
+\begin{tikzpicture}
+
+\useasboundingbox (-\sc*.35,-\sc*.3) rectangle (\sc*5.1,\sc*4.3);
+\put(0,0){\includegraphics[scale=\sc]{OriginWithoutEvap}}
+
+\draw (\sc*2.6,\sc*0) node[below=-2mm]{$\nurf \left[ {\rm MHz} \right]$};
+
+\draw (\sc*0,\sc*2.2) node[rotate=90, above=-1mm]{$\rapflux(\nurf)$};
+
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,81 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=1, auto, inner sep=2mm, thick, z={(0.6,0.5)}, join = round]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+
+% grid
+%\draw[step=1cm, color=black!5!] (-1,-2) grid (13,4);
+
+% LHP de l'aimant
+\def\Multiple{1}
+\def\L{1*\Multiple}
+\def\H{2*\Multiple}
+\def\P{0.5*\Multiple}
+
+\tikzstyle{facaim}=[fill = gray, fill opacity = 0.5]
+
+\newcommand{\aimant}[1]{%
+%\filldraw[facaim](#1)++(0,0,0)--++(\L,0,0)--++(0,\H,0)--++(-\L,0,0)--cycle;
+%\filldraw[facaim](#1)++(\L,0,0)--++(0,0,\P)--++(-\L,0,0)--++(0,0,-\P)--cycle;
+%\filldraw[facaim](#1)++(0,\H,0)--++(0,0,\P)--++(\L,0,0)--++(0,0,-\P)--cycle;
+\filldraw[facaim](#1)++(0,0,0)--++(0,0,\P)--++(0,\H,0)--++(0,0,-\P)--cycle;
+\filldraw[facaim](#1)++(0,0,0)--++(0,0,\P)--++(\L,0,0)--++(0,0,-\P)--cycle;
+\filldraw[facaim](#1)++(0,0,\P)--++(\L,0,0)--++(0,\H,0)--++(-\L,0,0)--cycle;
+}
+
+\def\PosAimantA{0,0,0}
+\def\PosAimantB{5,0,0}
+\def\PosAimantC{10,0,0}
+\foreach \x in{0.2,0.4,0.6,0.8}{%
+\foreach \y in{0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8}{%
+\draw[-latex', thin](\PosAimantA)++(\x,\y,0)--++(0,0,0.5);
+}}
+\aimant{\PosAimantA}
+
+\draw[thin] (\PosAimantA)++(\L/2,\H,0)--++(50:1cm)
+node[above]{volume d'aimantation $\Vecteur{{M_{\rm V}}}$};
+
+\path (\PosAimantA)--(1+\PosAimantB) node[midway, above=0.5cm]
+{\Huge{$\Longleftrightarrow$}};
+
+\aimant{\PosAimantB}
+\foreach \z in {0.125,0.25,0.375}{%
+\draw[very thin, -latex'](\PosAimantB)++(0,0,\z)--++(0,\H/2,0);
+\draw[very thin](\PosAimantB)++(0,\H/2,\z)--++(0,\H/2,0);
+\draw[very thin, -latex'](\PosAimantB)++(\L,0,\z)--++(-\L/2,0,0);
+\draw[very thin](\PosAimantB)++(\L/2,0,\z)--++(-\L/2,0,0);
+}
+\draw[thin] (\PosAimantB)++(0,\H/3*2,\P/2)--++(120:0.9cm)
+node[above]{courants surfaciques $\Vecteur{J_s}$};
+
+\path (\PosAimantB)--(1+\PosAimantC) node[midway, above=0.5cm]
+{\Huge{$\approx$}};
+
+\draw[-latex'](\PosAimantC) ++(0,0,0*\P/2) rectangle ++(\L,\H,0);
+\draw[-latex'](\PosAimantC) ++(0,0,0*\P/2) --++(0,\H/2,0);
+\draw[-latex'](\PosAimantC) ++(0,\H,0*\P/2) --++(\L/2,0,0);
+\draw[-latex'](\PosAimantC) ++(\L,\H,0*\P/2) --++(0,-\H/2,0);
+\draw[-latex'](\PosAimantC) ++(\L,0,0*\P/2) --++(-\L/2,0,0);
+
+\draw[thin] (\PosAimantC)++(\L/2,\H,0)--++(130:0.5cm)
+node[above]{boucle de courant $I$};
+
+\path (\PosAimantA)--(1+\PosAimantB) node[midway, below]
+{$\Module{\Vecteur{{M_{\rm V}}}}=\SI{840}{\kilo\ampere\per\meter}$};
+\path (\PosAimantC)--(1+\PosAimantC-1) node[midway, below]
+{$I=\SI{4200}{\ampere}$};
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\end{tikzpicture}
+\end{document}

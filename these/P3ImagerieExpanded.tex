@@ -1,0 +1,1283 @@
+[[Image:AbsImaging-ChapitreImagerie.png|right|700px]]
+Lorsque l'on manipule des atomes froids, il est primordial de pouvoir caractériser les ensembles atomiques mis en jeu.
+Les quantités physiques auxquelles nous voulons avoir accès sont le plus souvent:
+	* le nombre d'atomes,
+	* la distribution spatiale des atomes dans le nuage,
+	* la distribution de vitesse,
+	* la densité dans l'espace des phases à une particule.
+
+Les techniques qui permettent d'acquérir ces informations sont quasi-exclusivement de nature optique, c'est-à-dire se basant sur des processus d'absorption, de diffusion, ou de déphasage d'une onde lumineuse.
+
+Dans ce chapitre, nous allons décrire les deux principales méthodes couramment utilisées pour produire des images d'ensembles atomiques ultra-froids : l'imagerie par fluorescence et l'imagerie par absorption dans le régime de faible saturation. Les limites de ces méthodes, quand il s'agit de produire des images de nuages denses, nous amèneront à nous pencher sur des techniques plus élaborées, mais plus complexes à mettre en oeuvre. 
+Enfin, nous présenterons le nouveau protocole d'imagerie que nous avons développé lors de ma deuxième année de thèse. Celui-ci permet de résoudre les structures de nuages atomiques denses et donne accès à des mesures quantitatives et précises.
+
+
+//// Imagerie d'un ensemble atomique froid ////
+
+Dans cette section, nous allons décrire un dispositif optique minimal, qui nous permettra d'introduire les notions nécessaires à l'étude de l'imagerie d'un ensemble atomique. Nous porterons notre attention sur la nature numérisée de l'information obtenue lors d'une prise d'image. Les interactions atome-laser seront aussi décrites, puisque les équations qui en découlent permettent d'exploiter de manière quantitative les données contenues dans une image.
+
+
+//////// Système optique ////////
+
+Afin de concentrer notre attention sur le principe des méthodes d'imagerie, nous considèrerons le dispositif le plus simple possible en négligeant les imperfections des composants optiques. Nous supposerons être dans le cadre de l'approximation de Gauss. 
+L'axe optique sera pris comme étant l'axe aaaaq z bbbbq. 
+La figureCCCnrefBrrrrofig:SytemeOptiqueBrrrrc représente un système optique simple permettant de produire l'image du nuage atomique sur un capteur CCD composé d'une matrice de pixels. Nous pouvons ainsi mesurer la répartition d'intensité lumineuse aaaaq CCCIxy bbbbq provenant du plan objet.
+[[Image:AbsImaging-SytemeOptique.png|right|700px]]
+CCCCaptionFigssssBrrrroSchéma représentant un système optique simple. Le plan objet, conjugué du capteur CCD se situe au niveau du nuage. Un point aaaaq (x',y') bbbbq du capteur correspond à un point aaaaq (x,y) = (CCCtfracBrrrrox'BrrrrcBrrrroCCCGrandisBrrrrc,CCCtfracBrrrroy'BrrrrcBrrrroCCCGrandisBrrrrc) bbbbq du plan objet, où aaaaq CCCGrandis=CCCtfracBrrrroCCCLentilleCCDBrrrrcBrrrroCCCNuageLentilleBrrrrc bbbbq est le grandissement du système optique.Brrrrc
+
+
+
+
+Dans toute la suite, nous considèrerons un nuage atomique dont la densité atomique sera notée aaaaq CCCdensxyz bbbbq. Ce nuage est situé au niveau du plan objet de système optique, et nous supposerons que chaque point aaaaq CCCxyz bbbbq du nuage possède un point image en aaaaq (x',y') bbbbq sur le capteur CCD. 
+Ceci implique que le système n'est pas sensible à la position aaaaq z bbbbq des atomes, mais uniquement à leur position aaaaq CCCxy bbbbq, projetée sur le plan objet.
+
+
+
+
+
+
+Resultats
+Brrrro
+L'existence de cet axe privilégié d'observation, nous conduira par la suite à considérer la densité colonne aaaaq CCCdenscolxy bbbbq définie par:
+
+
+aaaaqbbbbq
+	CCCdenscolxy CCCequiv CCCIntegraleBrrrroCCCdensxyzBrrrrcBrrrroCCCdzBrrrrc
+	CCCpointformule
+	
+aaaaqbbbbq
+
+
+
+Celle-ci correspond à la densité surfacique d'atomes si le nuage était projeté sur le plan aaaaq CCCxy bbbbq. Obtenir une image du nuage consistera à mesurer cette grandeur.
+Brrrrc
+Il est clair que la connaissance de la densité colonne aaaaq CCCdenscolxy bbbbq ne suffit pas à déterminer la densité atomique aaaaq CCCdensxyz bbbbq du nuage. Cette ambigüité de la mesure peut être levée en supposant que le nuage possède certaines symétries.
+
+//////////// Échantillonnage spatial ////////////
+
+	Le nombre fini de pixels sur le capteur fixe une limite quant à la précision spatiale du signal fourni par le CCD. C'est ce qu'on appelle l'échantillonnage spatial (aussi désigné par le terme pixelisation). Pour les capteurs CCD usuels, la taille d'un pixel est typiquement de l'ordre de aaaaq CCCLpix=CCCmicronBrrrro5Brrrrc bbbbq. Cette limitation est à prendre en compte quand on désire faire des images d'ensembles atomiques dont l'extension spatiale est très faible (typiquement inférieure à CCCmicronBrrrro100Brrrrc). Le système optique devra alors être conçu de manière à fournir une image agrandie du nuage sur le capteur. 
+	
+
+
+
+//////////// Système laser ////////////
+Sauf mention contraire, le système laser que nous considèrerons dans la suite est schématisé sur la figureCCCnrefBrrrrofig:SystemeLaserBrrrrc.
+Nous pouvons produire des impulsions lumineuses dont la durée aaaaq CCCTPulse bbbbq, et la puissance aaaaq CCCPLaser bbbbq sont contrôlées précisément. Les impulsions les plus courtes que nous utilisons avec notre système ont une durée aaaaq CCCTPulse = CCCnanosBrrrro250Brrrrc bbbbq.
+[[Image:AbsImaging-SystemeLaser.png|right|700px]]
+CCCCaptionFigsBrrrroSchématisation d'un système laser simple. Une diode laser est verrouillée en fréquence grâce à un circuit d'asservissement. Les fluctuations de fréquence ainsi obtenues doivent être très faibles devant la largeur spectrale naturelle aaaaq CCCpulsSpont bbbbq du aaaaq POOOOOBrrrro87Brrrrc bbbbqRb. On peut typiquement espérer une puissance utilisable de quelques milliwatts. Pour disposer de plus de puissance, une seconde diode laser (esclave), plus puissante, peut être injectée par le premier faisceau et délivrer alors quelques dizaines de milliwatts. Un modulateur acousto-optique permet de produire des impulsion lumineuses de durée et de puissance contrôlées. 
+Afin de s'affranchir des inévitables fuites de lumière à travers le modulateur, un obturateur mécanique est utilisé pour couper le faisceau durant les périodes d'inutilisation.Brrrrc
+
+
+
+
+//////////// Utilisation du capteur CCD comme puissance-mètre ////////////
+
+Mentionnons un dernier point quant à l'interprétation du signal fourni par le capteur CCD. Dans les conditions de fonctionnement normal, chaque pixel fournit un signal aaaaq CCCSignal bbbbq proportionnel à l'énergie lumineuse aaaaq CCCEpix bbbbq accumulée pendant le temps d'exposition aaaaq CCCTPulse bbbbq. Or, nous verrons dans la suite que l'information que nous exploitons en pratique est la répartition d'intensité aaaaq CCCIxy bbbbq dans le plan objet du système optique (là où se trouve le nuage). Le capteur CCD peut tout à fait fournir cette information si l'on connait les paramètres suivants :
+	* la sensibilité du capteur,
+	* le grandissement aaaaq CCCGrandis bbbbq 		du système optique qui détermine la surface que représente un pixel dans le plan objet,
+	* la durée aaaaq CCCTPulse bbbbq 		d'exposition qui détermine la puissance lumineuse reçue,
+	* les pertes et atténuations aaaaq CCCAttenOptique bbbbq sur le trajet du faisceau dans le système optique, entre le plan objet et le capteur.
+
+Nous désignerons par aaaaq I'CCCxpyp bbbbq la répartition d'intensité mesurée sur le capteur. L'intensité aaaaq CCCIxy bbbbq dans le plan objet se déduit alors par l'expression:
+
+
+aaaaqbbbbq
+	CCCIxy = CCCAttenOptique  SPACEFG  CCCGrandisPOOOOO2  SPACEFG  I'(CCCGrandis SPACEFG x,CCCGrandis SPACEFG y)
+	
+aaaaqbbbbq
+
+
+
+Dans toute la suite de ce chapitre, les signaux provenant du capteur CCD seront systématiquement interprétés en terme d'intensité aaaaq CCCIxy bbbbq dans le plan objet.
+
+
+
+
+ResultatsBrrrro
+Cependant, afin de souligner le caractère expérimental de cette grandeur mesurée par le capteur CCD, nous utiliserons la notation aaaaq CCCIccdxy bbbbq pour désigner l'intensité aaaaq CCCIxy bbbbq observée dans le plan objet où se situe le nuage atomique.
+Brrrrc
+
+
+//////// Interaction atome-laser ////////
+
+Afin d'interpréter les données acquises par des méthodes optiques, il est primordial de connaître les processus d'interaction entre les atomes et le champ électromagnétique.
+La description détaillée de ces processus sort du cadre de ce manuscrit. Cependant, nous allons rappeler quelques notions élémentaires dans le cas simple d'un atome à deux niveaux en interaction avec une onde lumineuse monochromatique cohérente.
+Le cas, expérimentalement pertinent, d'un atome ayant une structure énergétique complexe est abordé dans laCCCautorefBrrrrosec:ipafosBrrrrc.
+
+
+
+//////////// Modélisation par atome à deux niveaux d'énergie ////////////
+
+[[Image:AbsImaging-EnergieAtome2Niveaux.png|right|700px]]
+Nous examinons ainsi l'interaction entre les atomes du nuage et la lumière monochromatique d'un laser de pulsation aaaaq CCCpulsLaser bbbbq. Nous considérons le cas simple d'un atome à deux niveaux d'énergie: l'état fondamental par aaaaq CCCEtatG bbbbq et l'état excité aaaaq CCCEtatE bbbbq. L'énergie aaaaq CCCenergieGE bbbbq qui sépare ces deux niveaux correspond à une pulsation de résonance
+aaaaq CCCpulsReso = CCCtfracBrrrroCCCenergieGEBrrrrcBrrrroCCChbarBrrrrc
+ bbbbq.
+
+
+Cette transition possède une largeur spectrale naturelle aaaaq CCCpulsSpont bbbbq liée à la durée de vie aaaaq CCCtSpont bbbbq du niveau excité. Le désaccord entre la pulsation laser aaaaq CCCpulsLaser bbbbq et la pulsation aaaaq CCCpulsReso bbbbq de résonance sera noté aaaaq CCCdesac bbbbq aaaaqbbbbq
+CCCdesac CCCequiv CCCpulsLaser - CCCpulsReso
+CCCpointformule
+aaaaqbbbbq
+
+
+
+
+CCCRemarqueTitreBrrrroÉlargissement inhomogèneBrrrrcBrrrro
+Nous négligerons dans toute la suite les sources d'élargissement inhomogène, c'est-à-dire que nous considèrerons que les atomes du nuage réagissent tous de la même manière vis à vis de la lumière. La pulsation de résonance aaaaq CCCpulsReso bbbbq est ainsi la même pour tous les atomes. Ceci suppose en particulier que:
+	* la température du nuage soit faible devant la température Doppler afin de s'affranchir de l'effet Doppler.	Pour le aaaaq POOOOOBrrrro87Brrrrc bbbbqRb, aaaaq CCCTDoppler CCCapprox CCCmicroKBrrrro146Brrrrc bbbbq.
+	* il n'y ait pas de gradient de champ magnétique notable sur l'extension spatiale du nuage.
+
+De manière plus générale, tout type de confinement (magnétique, dipolaire, etc) déplaçant les niveaux énergétiques des atomes, devra être coupé lors de la prise d'images. Ceci signifie que le nuage est alors en expansion balistique.
+Brrrrc
+
+
+
+//////////// Équations de Bloch optiques ////////////
+
+Rappelons simplement que, dans le cas considéré ici d'une onde lumineuse cohérente agissant sur un système à deux niveaux, il est possible de décrire l'évolution des populations et des cohérences atomiques grâce aux équations de Bloch optiques. Celles-ci s'obtiennent en effectuant plusieurs approximations que nous rappelons ici:
+	* l'approximation du champ tournant
+		,
+	* l'approximation de mémoire courte
+		,
+	* il faut aussi supposer que toutes les fréquences typiques de couplage entre atome et champ sont négligeables devant la fréquence optique
+	.
+
+Dans toute la suite, nous considèrerons le régime stationnaire
+ atteint par un atome soumis à une onde laser d'intensité aaaaq CCCIlaser bbbbq, désaccordée de aaaaq CCCdesac bbbbq.  
+
+
+
+aaaaqbbbbq
+	CCCPopuE = CCCfracBrrrro1BrrrrcBrrrro2Brrrrc SPACEFG CCCfracBrrrroCCCsatBrrrrcBrrrro1+CCCsatBrrrrc
+	CCCvirguleformule
+	
+aaaaqbbbbq
+
+
+
+où aaaaq CCCsat bbbbq est le paramètre de saturation de la transition. Il est proportionnel à l'intensité laser aaaaq CCCIlaser bbbbq, et dépend du désaccord aaaaq CCCdesac bbbbq suivant une loi lorentzienne :
+
+
+
+aaaaqbbbbq
+	CCCsat CCCequiv CCCIsurIsat  
+	 SPACEFG   LLLPO  CCCfracBrrrro1BrrrrcBrrrro 1 +  LLLPA CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc RRRPA POOOOO2 Brrrrc  RRRPO  
+	CCCpointformule
+	
+aaaaqbbbbq
+
+
+
+
+
+aaaaq CCCIsat bbbbq désigne l'intensité de saturation à résonance, qui correspond à la valeur de l'intensité du laser à résonance, pour avoir aaaaq CCCPopuE = CCCtfracBrrrroCCCPopuEmaxBrrrrcBrrrro2Brrrrc = CCCtfracBrrrro1BrrrrcBrrrro4Brrrrc bbbbq. 
+Elle s'exprime simplement en fonction du taux d'émission spontanée dans le cas d'un atome à deux niveaux :
+
+
+
+aaaaqbbbbq
+	CCCIsat = CCCfracBrrrro2 SPACEFG CCCpiPOOOOO2 SPACEFG CCChbar SPACEFG c SPACEFG CCCpulsSpontBrrrrcBrrrro3 SPACEFG CCClambdaPOOOOO3Brrrrc
+	CCCpointformule
+	
+aaaaqbbbbq
+
+
+
+CCCRemarqueTitreBrrrroEffet de saturationBrrrrcBrrrro
+[[Image:AbsImaging-CourbeSat.png|right|700px]]
+Notons que la population dans l'état excité est une fonction non-linéaire de l'intensité aaaaq CCCIlaser bbbbq (voir la figure ci-contre):
+aaaaqbbbbq
+CCCPopuECCCxrightarrow[CCCIlaser CCCrightarrow CCCinfty]BrrrroBrrrrcCCCPopuEmax = CCCtfracBrrrro1BrrrrcBrrrro2Brrrrc
+aaaaqbbbbq
+Cet effet de saturation est de nature purement quantique. Il est lié au fait qu'un atome peut émettre un photon de manière stimulée depuis son état excité aaaaq CCCEtatE bbbbq, et ce avec la même probabilité qu'il a d'en absorber un depuis son état fondamental aaaaq CCCEtatG bbbbq.
+Brrrrc
+
+
+
+Dans la suite de ce chapitre, et sauf mention contraire, nous considèrerons implicitement une onde laser ayant un désaccord nul : aaaaq CCCdesac=0 bbbbq. Nous préciserons les raisons de ce choix dans laCCCautorefBrrrrosec:ImagerieDesaccordeeBrrrrc.
+
+
+//////// Absorption et diffusion de la lumière au sein d'un nuage atomique ////////
+ 
+Nous allons maintenant considérer un ensemble atomique de densité atomique aaaaq CCCdensxyz bbbbq soumis à une onde laser dont la répartition d'intensité est aaaaq CCCIxyz bbbbq. 
+Nous allons exprimer la puissance lumineuse absorbée et diffusée au sein du nuage. Les relations qui seront obtenues dans cette sous-section seront utilisées dans la suite de ce chapitre.
+CCCRemarqueBrrrro
+Le paramètre aaaaq CCCsat bbbbq est proportionnel à l'intensité laser aaaaq CCCIxyz bbbbq et dépend donc des coordonnées aaaaq CCCxyz bbbbq. Cependant, pour alléger les expressions, nous conserverons la notation aaaaq CCCsat bbbbq pour exprimer aaaaq CCCsatCCCxyz bbbbq.
+Brrrrc
+
+
+
+Chaque atome absorbe et diffuse,
+ un nombre moyen aaaaq CCCpulsSpont SPACEFG CCCPopuE bbbbq de photons par unité de temps. En chaque point CCCxyz du nuage (dont la densité atomique est aaaaq CCCdensxyz bbbbq), la puissance aaaaq CCCDiffBrrrroCCCPdifBrrrrc bbbbq absorbée et diffusée dans un volume élémentaire aaaaq CCCdxyz bbbbq est donc donnée par   :
+CCCnResultatBrrrroCCCbeginBrrrroalignBrrrrc
+	CCCDiffBrrrroCCCPdifBrrrrc & = CCChbar SPACEFG CCCpulsReso SPACEFG CCCpulsSpont SPACEFG CCCPopuE  SPACEFG  CCCdens SPACEFG CCCdxyz CCCnonumber CCCCCC
+	& = CCChbar SPACEFG CCCpulsReso SPACEFG  CCCpulsSpont  SPACEFG  CCCfracBrrrro1BrrrrcBrrrro2Brrrrc 
+%	 SPACEFG  CCCfracBrrrro1BrrrrcBrrrro1 + CCCIsurIsatxyz +  LLLPA CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc RRRPA POOOOO2Brrrrc
+	 SPACEFG  CCCfracBrrrroCCCsatBrrrrcBrrrro1+CCCsatBrrrrc
+	 SPACEFG  CCCdensxyz SPACEFG CCCdxyz 
+	CCCvirguleformule
+	
+CCCendBrrrroalignBrrrrc
+Brrrrc
+CCCnRemarqueBrrrroNotons que l'expressionCCCnrefBrrrroeq:PdifBrrrrc ne fait intervenir aucune hypothèse sur la répartition spatiale de l'intensité laser aaaaq CCCIxyz bbbbq au sein du nuage. Cette expression est par exemple valable, que ce soit pour une onde progressive traversant le nuage, ou encore pour une onde stationnaire produite par un ensemble de faisceaux lasers.
+Brrrrc
+
+
+
+
+//// Fiabilité d'une prise d'image ////
+
+
+Les protocoles de mesures décrits dans la section suivante correspondent le plus souvent à des mesures destructives, c'est-à-dire modifiant les propriétés du nuage dont l'image est faite. En effet, l'absorption et la diffusion de photons, fait évoluer les propriétés du nuage atomique (taille, température,CCCldots).
+Pour cette raison, il est souvent impossible de pratiquer deux mesures successives sur un même nuage. 
+CCCRemarqueBrrrro
+Dans la suite (notamment dans laCCCautorefBrrrrosec:ipafosBrrrrc), quand nous proposerons de faire plusieurs fois l'image d'un même nuage, il faudra garder à l'esprit que chaque mesure est en fait effectuée sur un nuage atomique différent, mais préparé rigoureusement dans les mêmes conditions expérimentales. Une bonne reproductibilité de l'expérience est alors une condition CCCtextitBrrrrosine qua nonBrrrrc, afin d'assurer la production répétée de nuages identiques.
+Brrrrc
+
+
+Il est de plus primordial que les propriétés du nuage atomique ne changent pas de manière significative pendant la prise d'une image, sans quoi l'image n'est plus exploitable. Sur ce point, nous nous proposons dans cette section de discuter la fiabilité d'une prise d'image, dans le cas simple d'une impulsion laser de durée aaaaq CCCTPulse bbbbq éclairant un nuage. Nous supposerons pour simplifier que le paramètre de saturation aaaaq CCCsat bbbbq est le même pour chaque atome du nuage.
+
+//////// Diffusion due à l'agitation thermique ////////
+
+Avant de considérer l'effet de la lumière sur les degrés de liberté externes des atomes, rappelons que, dans la plupart des cas rencontrés, le confinement du nuage est coupé au moment de la prise d'image. L'expansion balistique du nuage pendant la prise d'image doit être considérée. En effet, si on considère un nuage à l'équilibre 	hdy défini par la température aaaaq T bbbbq, la vitesse quadratique moyenne des atomes au sein du nuage est aaaaq CCCDv=CCCsqrtBrrrroCCCtfracBrrrroCCCkb SPACEFG TBrrrrcBrrrromBrrrrcBrrrrc bbbbq. Chaque atome se déplace en moyenne
+ de aaaaq d=CCCTPulse SPACEFG CCCDv bbbbq pendant la durée aaaaq CCCTPulse bbbbq de l'impulsion. La distance aaaaq d bbbbq est donc une borne supérieure quant à la résolution spatiale que l'on peut espérer lors de la prise d'image.
+CCCApplicationNumeriqueBrrrro
+Considérons un nuage dont la température d'équilibre 	hdy est aaaaq T=CCCmicroKBrrrro100Brrrrc bbbbq. Calculons la durée maximale aaaaq CCCTPulse bbbbq qui soit compatible avec une diffusion des positions atomiques inférieure à aaaaq d=CCCmicronBrrrro10Brrrrc bbbbq (ceci correspond à la taille typique aaaaq CCCLpix bbbbq représenté par un pixel du capteur CCD dans le plan objet):
+
+
+
+aaaaqbbbbq
+CCCTPulse CCCleqslant d SPACEFG CCCsqrtBrrrroCCCfracBrrrromBrrrrcBrrrroCCCkb SPACEFG TBrrrrcBrrrrc CCCapprox CCCmicrosBrrrro100Brrrrc
+CCCpointformule
+	
+aaaaqbbbbq
+
+
+
+Si cette condition est vérifiée, chaque atome contribue, en moyenne, au plus à un pixel sur le capteur CCD.
+Brrrrc
+
+
+//////// Accélération due à la pression de radiation ////////
+
+Le premier effet du laser sur la position et la vitesse des atomes est la pression de radiation. Celle-ci pousse les atomes dans le sens de propagation de l'onde laser. D'après l'expressionCCCnrefBrrrroeq:PdifBrrrrc, chaque atome absorbe (puis diffuse dans une direction aléatoire) en moyenne  un nombre 
+aaaaq CCCtfracBrrrroCCCpulsSpontBrrrrcBrrrro2Brrrrc SPACEFG CCCtfracBrrrroCCCsatBrrrrcBrrrro1+CCCsatBrrrrc bbbbq
+de photons par unité de temps. Ceci correspond à une accélération moyenne aaaaq a bbbbq, une vitesse moyenne aaaaq v_CCCTPulse bbbbq et un déplacement spatial moyen aaaaq d_CCCTPulse bbbbq à la fin de l'impulsion de durée aaaaq CCCTPulse bbbbq:
+aaaaqbbbbq
+	a = CCCvrecul  SPACEFG  CCCfracBrrrroCCCpulsSpontBrrrrcBrrrro2Brrrrc SPACEFG CCCfracBrrrroCCCsatBrrrrcBrrrro1+CCCsatBrrrrc
+CCCvirguleformule
+CCCqquad
+	v_CCCTPulse = CCCTPulse  SPACEFG  CCCvrecul  SPACEFG  CCCfracBrrrroCCCpulsSpontBrrrrcBrrrro2Brrrrc SPACEFG CCCfracBrrrroCCCsatBrrrrcBrrrro1+CCCsatBrrrrc 
+CCCvirguleformule
+CCCqquad
+	d_CCCTPulse = CCCTPulsePOOOOO2  SPACEFG  CCCvrecul  SPACEFG  CCCfracBrrrroCCCpulsSpontBrrrrcBrrrro4Brrrrc SPACEFG CCCfracBrrrroCCCsatBrrrrcBrrrro1+CCCsatBrrrrc 
+CCCvirguleformule
+aaaaqbbbbq
+où aaaaq CCCvrecul = CCCtfracBrrrroCCChbar SPACEFG kBrrrrcBrrrromBrrrrc = CCCtfracBrrrroCCChbar SPACEFG CCCpulsResoBrrrrcBrrrrom SPACEFG cBrrrrc bbbbq est la vitesse de recul de l'atome (aaaaq CCCapproxCCCmmpsBrrrro6Brrrrc bbbbq pour le aaaaq POOOOOBrrrro87Brrrrc bbbbqRb).
+
+CCCApplicationNumeriqueBrrrro
+Quelle condition doit-on remplir pour avoir un déplacement par effet Doppler négligeable devant la largeur naturelle aaaaq CCCpulsSpont bbbbq de la transition? Nous pouvons écrire:
+
+aaaaqbbbbq
+v_CCCTPulse SPACEFG CCCfracBrrrro2 SPACEFG CCCpiBrrrrcBrrrroCCClambdaBrrrrc CCCll CCCpulsSpont
+CCCvirguleformule
+
+aaaaqbbbbq
+où aaaaq CCClambda bbbbq est la longueur d'onde du laser. Nous obtenons donc la condition sur la durée aaaaq CCCTPulse bbbbq de l'impulsion lumineuse et le paramètre de saturation aaaaq CCCsat bbbbq:
+
+aaaaqbbbbq
+CCCTPulse  SPACEFG CCCfracBrrrroCCCsatBrrrrcBrrrro1+CCCsatBrrrrc CCCll CCCfracBrrrroCCClambdaBrrrrcBrrrroCCCpi SPACEFG CCCvreculBrrrrc CCCapprox CCCmicrosBrrrro40Brrrrc
+CCCpointformule
+
+aaaaqbbbbq
+On pourra donc s'autoriser des impulsions lumineuses très intenses (aaaaq CCCsat CCCgtrsim 1 bbbbq) dont la durée est de l'ordre de la microseconde. Pour une impulsion dont l'intensité est faible (aaaaq CCCsat CCCll 1 bbbbq), la durée aaaaq CCCTPulse bbbbq peut être plus grande (quelques dizaines de micro-secondes pour une intensité aaaaq CCCIlaser = CCCtfracBrrrroCCCIsatBrrrrcBrrrro10Brrrrc bbbbq).
+Brrrrc
+
+
+//////// Chauffage dû à l'émission spontanée ////////
+
+Le deuxième effet est lié aux ré-émissions des photons dans des directions aléatoires et tend à faire diffuser les vecteurs vitesses de chaque atome. Ceci se traduit par un échauffement du nuage. En reprenant les notations précédemment utilisées, nous exprimons le taux de chauffage du nuage pendant l'impulsion lumineuse:
+aaaaqbbbbq
+CCCDeriveBrrrroTBrrrrcBrrrrotBrrrrc = CCCfracBrrrroCCCpulsSpontBrrrrcBrrrro2Brrrrc SPACEFG CCCfracBrrrrom SPACEFG CCCvreculPOOOOO2BrrrrcBrrrroCCCkbBrrrrc  SPACEFG  CCCfracBrrrroCCCsatBrrrrcBrrrro1+CCCsatBrrrrc
+CCCpointformule
+aaaaqbbbbq
+
+CCCApplicationNumeriqueBrrrro
+Dans le cas du rubidium, l'échauffement peut s'exprimer numériquement, en fonction du paramètre de saturation aaaaq CCCsat bbbbq:
+aaaaqbbbbq
+CCCDeriveBrrrroTBrrrrcBrrrrotBrrrrc CCCapprox CCCfracBrrrroCCCsatBrrrrcBrrrro1+CCCsatBrrrrc CCCtimes CCCmicroKpmicrosBrrrro7Brrrrc 
+CCCpointformule
+aaaaqbbbbq
+Cet échauffement n'est pas problématique tant qu'il n'affecte pas significativement la distribution des atomes durant la prise d'image (voir la CCCautorefBrrrrosec:FiabilitéImageThiqBrrrrc).
+Brrrrc
+
+
+
+//// Techniques d'imagerie usuelles ////
+
+Différentes techniques peuvent être utilisées afin d'obtenir une image représentative de la densité atomique du nuage. Dans cette section, nous présentons les deux principales méthodes couramment utilisées, puis nous soulignerons les limites de celles-ci quand il s'agit de produire des images de nuages très denses.
+
+
+//////// Imagerie par fluorescence ////////
+
+La technique qui semble la plus simple à mettre en oeuvre consiste simplement à CCCsotosayBrrrroéclairerBrrrrc le nuage atomique et à recueillir la lumière diffusée par celui-ci à travers le système optique. On parle d'imagerie par fluorescence.
+Comme le montre la figureCCCnrefBrrrrofig:OptiqueFluoBrrrrc, le faisceau laser incident n'arrive pas suivant l'axe optique aaaaq z bbbbq de manière à ne pas gêner la détection de la lumière diffusée par le nuage.
+[[Image:AbsImaging-OptiqueFluo.png|right|700px]]
+CCCCaptionFigssssBrrrroSchéma illustrant un système optique simple pour faire une image par fluorescence. Le faisceau laser incident n'arrive pas suivant l'axe optique aaaaq z bbbbq de manière à ne pas gêner la détection de la lumière diffusée par le nuage. Nous avons représenté symboliquement l'émission spontanée de quelques photons. Seule une fraction de ceux-ci est émise en direction du système optique.Brrrrc
+
+
+L'émission spontanée de photons est isotrope et seule une fraction de la lumière diffusée est recueillie par le système optique. Si aaaaq CCCRLentille bbbbq est le rayon de la lentille et aaaaq CCCNuageLentille bbbbq la distance nuage-lentille, celle-ci est CCCsotosayBrrrrovueBrrrrc par le nuage sous un angle solide :
+aaaaqbbbbq
+CCCAngleSolide = 2 SPACEFG CCCpi SPACEFG  LLLPA  1-CCCfracBrrrroCCCNuageLentilleBrrrrcBrrrroCCCsqrtBrrrroCCCRLentillePOOOOO2+CCCNuageLentillePOOOOO2BrrrrcBrrrrc  RRRPA 
+CCCpointformule
+aaaaqbbbbq
+En supposant que tous les photons qui atteignent la lentille sont envoyés vers le capteur CCD, celui-ci mesure une fraction aaaaq CCCtfracBrrrroCCCAngleSolideBrrrrcBrrrro4 SPACEFG CCCpiBrrrrc bbbbq de la lumière diffusée par le nuage.
+Le signal mesuré par le capteur CCD est donc :
+
+
+
+
+aaaaqbbbbq
+	CCCIccdxy 
+	= CCCIbackxy + CCCFractionAngleSolide  SPACEFG  CCCIntegraleBrrrroBrrrroCCCPdifCCCxyzBrrrrcBrrrrcBrrrroCCCdzBrrrrc 
+	CCCvirguleformule
+	
+aaaaqbbbbq
+
+
+ 
+où aaaaq CCCIbackxy bbbbq désigne l'intensité de la lumière de fond
+qui est mesurée par le capteur CCD même en l'absence du nuage et aaaaq BrrrroCCCPdifBrrrrc bbbbq est la puissance lumineuse diffusée par le nuage (voir laCCCautorefBrrrrosec:PuissanceDiffuseeBrrrrc).
+Notons que l'intégrale qui intervient dans l'expressionCCCnrefBrrrroeq:IccdFluoPdifBrrrrc traduit le fait que chaque point aaaaq CCCxyz bbbbq du nuage possède une image en aaaaq CCCxy bbbbq sur le capteur CCD. 
+
+
+//////////// Signaux mesurés par le capteur CCD ////////////
+
+D'après l'expressionCCCnrefBrrrroeq:PdifBrrrrc de la puissance diffusée au sein du nuage atomique on peut écrire :
+
+
+
+aaaaqbbbbq
+	CCCIccdxy 
+	=  CCCIbackxy
+	  + CCCFractionAngleSolide
+	 SPACEFG  CCCfracBrrrroCCChbar SPACEFG CCCpulsReso SPACEFG CCCpulsSpontBrrrrcBrrrro2Brrrrc
+	 SPACEFG  CCCIntegraleBrrrroCCCfracBrrrroCCCsatBrrrrcBrrrro1+CCCsatBrrrrc  SPACEFG  CCCdensxyzBrrrrcBrrrroCCCdzBrrrrc
+	CCCpointformule
+	
+aaaaqbbbbq
+
+
+ 
+Cette relation fait intervenir l'intensité lumineuse locale aaaaq CCCIxyz bbbbq à travers le paramètre de saturation aaaaq CCCsat bbbbq. Or en pratique, cette intensité n'est pas uniforme dans l'espace pour deux raisons:
+	* le profil transverse d'intensité du laser n'est jamais totalement uniforme,
+	* l'intensité du laser diminue au cours de sa propagation à travers le nuage.
+
+Il est donc difficile, à partir du signal aaaaq CCCIccdxy bbbbq, d'extraire une information quantitative sur la densité atomique aaaaq CCCdensxyz bbbbq.
+
+
+
+
+ResultatsBrrrro
+En pratique, la technique usuelle d'imagerie par fluorescence consiste à considérer que le nuage entier est soumis à la même intensité lumineuse. On peut alors écrire la relation:
+
+
+
+aaaaqbbbbq
+	CCCIccdxy 
+	CCCapprox  CCCIbackxy
+	  + CCCFractionAngleSolide
+	 SPACEFG  CCCfracBrrrroCCChbar SPACEFG CCCpulsReso SPACEFG CCCpulsSpontBrrrrcBrrrro2Brrrrc SPACEFG CCCfracBrrrroCCCsat_0BrrrrcBrrrro1+CCCsat_0Brrrrc SPACEFG 
+	 SPACEFG  CCCdenscolxy
+	CCCvirguleformule
+	
+aaaaqbbbbq
+
+
+ 
+où aaaaq CCCsat_0 bbbbq est un paramètre de saturation CCCsotosayBrrrroglobalBrrrrc qu'il faut estimer en tenant compte du désaccord et de l'intensité lumineuse moyenne au niveau du nuage atomique.
+Le second membre de l'expressionCCCnrefBrrrroeq:IccdFluoApproxBrrrrc possède un terme proportionnel à la densité colonne aaaaq CCCdenscolxy bbbbq.
+Brrrrc
+
+
+La figureCCCnrefBrrrrofig:ImagesFluoBrrrrc représente une image d'un nuage dans le piège magnéto-optique décrit au chapitreCCCnrefBrrrrochap:JetAtomiqueBrrrrc. 
+[[Image:AbsImaging-FluoMotLoad_treslent0142.png|right|700px]]
+CCCCaptionFigsBrrrroImagerie par fluorescence prise lors du chargement du piège magnéto-optique décrit dans le chapitreCCCnrefBrrrrochap:JetAtomiqueBrrrrc. Typiquement CCCvalBrrrroE9Brrrrc atomes sont éclairés par les 6 faisceaux lasers du piège magnéto-optique dont le désaccord est aaaaq CCCdesacCCCapprox-3 SPACEFG CCCpulsSpont bbbbq.Brrrrc
+
+
+
+Pour estimer le paramètre de saturation aaaaq CCCsat_0 bbbbq qui correspond à la figureCCCnrefBrrrrofig:ImagesFluoBrrrrc, nous tenons compte des paramètres suivants:
+	* 6 faisceaux lasers interviennent,	* leur intensité est d'environ aaaaq ICCCapprox2 SPACEFG CCCIsat bbbbq,
+	* le désaccord des faisceaux est aaaaq CCCdesacCCCapprox-3 SPACEFG CCCpulsSpont bbbbq,
+	* nous négligeons l'inhomogénéité du champ magnétique.
+
+D'après l'expressionCCCnrefBrrrroeq:ParamSatBrrrrc, nous déduisons aaaaq CCCsat_0 CCCapprox CCCvalBrrrro0.3Brrrrc bbbbq.
+
+
+//////////// Protocole de mesure pour l'imagerie par fluorescence ////////////
+
+
+L'expressionCCCnrefBrrrroeq:IccdFluoApproxBrrrrc contient donc un signal de fond aaaaq CCCIbackxy bbbbq, et un signal utile, proportionnel à la densité colonne. En pratique, on s'affranchit du premier terme en capturant non pas une, mais deux images sur le capteur CCD.
+	* la première est une image du nuage atomique, en présence de la lumière laser excitatrice; le signal recueilli correspond à l'expressionCCCnrefBrrrroeq:IccdFluoBrrrrc
+	* la deuxième est une image prise dans les mêmes conditions, mais en l'absence du nuage; le signal mesuré est alors composé uniquement du terme aaaaq CCCIccdxy = CCCIbackxy bbbbq.
+
+
+
+
+
+ResultatsBrrrro
+Une simple soustraction des deux images permet d'obtenir un signal utile donnant la densité colonne 
+aaaaqbbbbq
+CCCdenscolxy = CCCfracBrrrro4 SPACEFG CCCpiBrrrrcBrrrroCCCAngleSolideBrrrrc SPACEFG CCCfracBrrrro2BrrrrcBrrrroCCChbar SPACEFG CCCpulsReso SPACEFG CCCpulsSpontBrrrrc SPACEFG 
+ LLLPA  
+CCCIccdxyAvecNuage - CCCIccdxySansNuage
+ RRRPA  
+CCCpointformule
+aaaaqbbbbq
+Brrrrc
+
+
+
+//////// Imagerie par absorption dans le régime de faible saturation ////////
+
+L'autre méthode usuelle est l'imagerie par absorption. Celle-ci consiste à éclairer le nuage atomique avec une onde laser progressive et à faire l'image de son ombre (voir la figureCCCnrefBrrrrofig:OptiqueAbsorptionBrrrrc).
+[[Image:AbsImaging-OptiqueAbsorption.png|right|700px]]
+CCCCaptionFigssBrrrroSchéma illustrant un système optique simple pour faire une image par absorption. Le nuage absorbe une partie de la lumière laser incidente. L'image de cette ombre est recueillie par le capteur CCD.Brrrrc
+
+
+
+Tout au long de sa propagation à travers le nuage, le faisceau laser est absorbé, et diffusé. Nous considèrerons un faisceau laser se propageant selon la direction aaaaq z bbbbq. L'expressionCCCnrefBrrrroeq:PdifBrrrrc permet de déterminer la variation élémentaire aaaaq CCCDiffBrrrroCCCIlaserBrrrrc bbbbq d'intensité du laser lors de la propagation dans le nuage sur une longueur aaaaq CCCdz bbbbq:
+CCCbeginBrrrroalignBrrrrc
+	CCCDiffBrrrroCCCIxyzBrrrrc
+	& = CCCfracBrrrroCCCDiffBrrrroCCCPdifBrrrrcBrrrrcBrrrroCCCdx SPACEFG CCCdyBrrrrc 
+	CCCnonumberCCCCCC
+	& = CCChbar SPACEFG CCCpulsReso SPACEFG  CCCpulsSpont  SPACEFG  CCCfracBrrrro1BrrrrcBrrrro2Brrrrc 
+	 SPACEFG  CCCfracBrrrroCCCsatBrrrrcBrrrro1+CCCsatBrrrrc
+	 SPACEFG  CCCdensxyz SPACEFG CCCdz 
+	CCCpointformule
+	
+CCCendBrrrroalignBrrrrc
+En faisant apparaître explicitement la dépendance en intensité dans le paramètre de saturation(expressionCCCnrefBrrrroeq:ParamSatBrrrrc), nous obtenons une équation différentielle non-linéaire du premier ordre vérifiée par aaaaq CCCIxyz bbbbq au cours de la traversée du nuage:
+CCCbeginBrrrroalignBrrrrc
+	CCCDeriveBrrrroCCCIxyzBrrrrcBrrrrozBrrrrc
+	& = - CCCfracBrrrroCCChbar SPACEFG CCCpulsReso SPACEFG  CCCpulsSpontBrrrrcBrrrro2Brrrrc 
+	 SPACEFG  CCCIsurIsatxyz 
+	 SPACEFG  CCCfracBrrrro1BrrrrcBrrrro1 + CCCIsurIsatxyz +  LLLPA CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc RRRPA POOOOO2Brrrrc
+	 SPACEFG  CCCdensxyz 
+	CCCpointformule
+	
+CCCendBrrrroalignBrrrrc
+
+//////////// Absorption dans le régime de saturation faible ////////////
+
+La technique usuelle d'imagerie par absorption consiste à utiliser un faisceau laser résonant (aaaaq CCCdesac=0 bbbbq), et dont l'intensité est faible devant l'intensité de saturation. On parlera alors d'imagerie par absorption dans le régime de saturation faible. Dans cette limite, on peut considérer que les atomes ont une réponse linéaire à l'intensité laser.
+L'expressionCCCnrefBrrrroeq:dIabsGeneraleBrrrrc, avec aaaaq CCCsatCCCll 1 bbbbq permet ainsi d'obtenir l'équation différentielle linéaire du premier ordre :
+CCCbeginBrrrroalignBrrrrc
+	CCCDeriveBrrrroCCCIxyzBrrrrcBrrrrozBrrrrc
+	& =
+	- CCCseceff
+	 SPACEFG  CCCIxyz
+	 SPACEFG  CCCdensxyz
+	CCCvirguleformule
+	
+CCCendBrrrroalignBrrrrc
+où aaaaq CCCseceff = CCCfracBrrrroCCChbar SPACEFG CCCpulsReso SPACEFG  CCCpulsSpontBrrrrcBrrrro2 SPACEFG CCCIsatBrrrrc bbbbq est la section efficace à résonance de la transition excitée par le laser. Pour un système à deux niveaux, et d'après l'expressionCCCnrefBrrrroeq:IsatExprBrrrrc, elle s'exprime très simplement en fonction de la longueur d'onde aaaaq CCClambda bbbbq du laser :
+aaaaqbbbbq
+CCCseceff = CCCfracBrrrro3 SPACEFG CCClambdaPOOOOO2BrrrrcBrrrro2 SPACEFG CCCpiBrrrrc
+CCCpointformule
+aaaaqbbbbq
+
+
+L'équation différentielleCCCnrefBrrrroeq:EqDiffAbsBasseIntBrrrrc est remarquablement simple et se résout exactement :
+
+
+
+
+ResultatsBrrrro
+Si nous désignons par aaaaq CCCIinxy bbbbq l'intensité du laser lorsque celui-ci atteint le nuage, nous pouvons exprimer l'intensité aaaaq CCCIoutxy bbbbq du laser après la traversée du nuage par la relation:
+
+
+
+aaaaqbbbbq
+CCCIoutxy = CCCIinxy  SPACEFG  CCCexpoBrrrro-CCCseceff SPACEFG CCCdenscolxyBrrrrc
+CCCvirguleformule	
+	
+aaaaqbbbbq
+
+
+
+qui n'est rien d'autre que la loi de Beer-Lambert, c'est-à-dire la loi régissant l'absorption dans un milieu ayant une réponse linéaire à l'intensité. La quantité sans dimension aaaaq CCCseceff SPACEFG CCCdenscolxy bbbbq est appelée profondeur optique et pourra être notée aaaaq CCCOptProfCCCxy bbbbq.
+Brrrrc
+
+
+
+CCCnomeRemonteBrrrroCCCIinBrrrrcBrrrroIntensité incidente du laser imageur sur le nuageBrrrrcBrrrro4cmBrrrrcCCCnomeRemonteBrrrroCCCIoutBrrrrcBrrrroIntensité du laser imageur après la traversée du nuageBrrrrcBrrrro3cmBrrrrc
+
+Pour la suite de ce chapitre, il sera utile de différentier les deux quantités physiques suivantes:
+	* la profondeur optique :
+
+
+
+aaaaqbbbbq
+	CCCOptProfCCCxy CCCequiv CCCseceff SPACEFG CCCdenscolxy
+	
+	CCCvirguleformule
+aaaaqbbbbq
+
+
+
+	qui est une caractéristique propre du nuage atomique, et dont la valeur est par définition indépendante de la méthode employée pour la mesure,
+	* et la CCCdo que nous définissons par :
+
+
+
+aaaaqbbbbq
+	CCCOptDensCCCxy 
+	CCCequiv CCCLnBrrrro	CCCfracBrrrroCCCIinxyBrrrrcBrrrroCCCIoutxyBrrrrc	Brrrrc
+	CCCvirguleformule
+aaaaqbbbbq
+
+
+
+et qui décrit l'atténuation relative de la lumière laser traversant le nuage. 
+
+
+
+
+
+ResultatsBrrrro
+Dans le protocole d'imagerie par absorption faiblement saturante ces deux grandeurs sont égales : aaaaq CCCOptProf=CCCOptDens bbbbq. Dans lesCCCautorefBrrrrosec:LimitesNuageDenseBrrrrc etCCCnrefBrrrrosec:ipafosBrrrrc nous seront amenés à considérer le fait que aaaaq CCCOptProf bbbbq et aaaaq CCCOptDens bbbbq ne sont pas égales en général. La CCCdo dépend, entre autres choses, de l'intensité et du désaccord du laser imageur.
+Brrrrc
+
+
+
+//////////// Protocole de mesure ////////////
+
+En pratique, comme dans le cas de l'imagerie par fluorescence, le capteur CCD mesure une lumière de fond aaaaq CCCIbackxy bbbbq. Le protocole d'extraction de la densité colonne aaaaq CCCdenscolxy bbbbq consiste à capturer trois images:
+	* la première est une image du nuage atomique, en présence de la lumière laser excitatrice; le signal recueilli correspond à aaaaq CCCIccdxy = CCCIbackxy + CCCIoutxy bbbbq.
+	* la deuxième est une image prise dans les mêmes conditions, mais en l'absence du nuage; le signal mesuré est alors aaaaq CCCIccdxy = CCCIbackxy + CCCIinxy bbbbq puisque le laser n'est pas absorbé.
+	* la troisième est une image prise dans les mêmes conditions, mais en l'absence du nuage et du laser imageur; le signal mesuré est alors composé uniquement du terme aaaaq CCCIbackxy bbbbq.
+
+
+
+
+
+ResultatsBrrrro
+Une opération mathématique effectuée pour chaque pixel aaaaq CCCxy bbbbq du capteur CCD permet alors de calculer la densité colonne:
+CCCbeginBrrrroalignBrrrrc
+	CCCseceff  SPACEFG  CCCdenscolxy 
+	& = 
+	CCCLnBrrrro
+	CCCfracBrrrro
+	CCCIccdxySansNuage - CCCIbackxy
+	BrrrrcBrrrro
+	CCCIccdxyAvecNuage - CCCIbackxy
+	Brrrrc
+	Brrrrc CCCnonumber CCCCCC
+	& = 
+	CCCLnBrrrro
+	CCCfracBrrrroCCCIinxyBrrrrcBrrrroCCCIoutxyBrrrrc
+	Brrrrc
+	CCCequiv CCCOptDensCCCxy
+	
+CCCendBrrrroalignBrrrrc
+CCCff
+Brrrrc
+
+
+
+Ce protocole d'imagerie par absorption dans le régime de saturation faible possède une qualité majeure : la sensibilité du capteur CCD, ainsi que les caractéristiques de la transition (aaaaq CCCIsat bbbbq, aaaaq CCCseceff bbbbq) n'ont pas besoin d'être connues pour donner des mesures quantitatives de CCCdo. En effet, seul le rapport des deux intensités aaaaq CCCIin bbbbq et aaaaq CCCIout bbbbq intervient. 
+
+
+
+La figureCCCnrefBrrrrofig:ImagesAbsorBrrrrc représente un exemple d'images prises pour le protocole d'imagerie par absorption.
+CCCsubfloat[sans nuage]Brrrro[[Image:AbsImaging-2005_12_16_A_movie_2_00060_NoAt.png|right|700px]]Brrrrc SPACEFG 
+CCCsubfloat[avec nuage]Brrrro[[Image:AbsImaging-2005_12_16_A_movie_2_00060_With.png|right|700px]]Brrrrc SPACEFG 
+CCCsubfloat[densité colonne]Brrrro[[Image:AbsImaging-2005_12_16_A_movie_2_00060Absor.png|right|700px]]Brrrrc
+CCCCaptionFigsBrrrroExemple d'images prises pour le protocole d'imagerie par absorption. L'image (a) correspond à la lumière laser seule, c'est-à-dire en l'absence du nuage atomique. L'image (b) est prise dans les mêmes condion que l'image (a), mais en présence du nuage. L'image CCCsotosayBrrrrode fondBrrrrc n'est pas représentée car elle est essentiellement toute noire. En appliquant la formuleCCCnrefBrrrroeq:DensColAbsorptionBrrrrc à chaque pixel aaaaq CCCxy bbbbq, on obtient l'image (c) qui représente la CCCdo aaaaq CCCOptDensCCCxy bbbbq du nuage.Brrrrc
+
+
+
+//// Fiabilité d'une mesure sur un nuage très dense ////
+
+Les deux techniques précédemment décrites dans laCCCautorefBrrrrosec:ImagerieUsuellesBrrrrc sont assez simples à mettre en oeuvre et sont largement utilisées. Cependant, nous allons voir, dans cette section, que le traitement de nuages très denses rend ces techniques peu adaptéesCCCciteBrrrroKDS99,KSN01Brrrrc. Nous allons ici souligner les limites de ces protocoles.
+
+
+//////// Limites du protocole d'imagerie par fluorescence ////////
+
+Lors de l'étude théorique du protocole d'imagerie par fluorescence(CCCautorefBrrrrosec:ipfBrrrrc), nous avons implicitement fait une hypothèse simplificatrice importante. Celle-ci consiste à considérer que tous les photons émis spontanément au sein du nuage peuvent atteindre le capteur CCD avec la même probabilité. 
+En réalité, il se peut qu'un photon diffusé par un atome soit immédiatement ré-absorbé dans le nuage par un autre atome.
+[[Image:AbsImaging-EmissionRéabsorption.png|right|700px]]
+
+Ceci revient à dire que le système optique ne peut observer que la surface apparente du nuage.
+
+
+
+
+aaaaqbbbbq
+	CCCDlibre  SPACEFG  CCCseceffsat  SPACEFG  CCCoverlineBrrrroCCCdensBrrrrc CCCequiv 1
+	CCCvirguleformule
+	
+aaaaqbbbbq
+
+
+
+où aaaaq CCCseceffsat bbbbq est la section efficace de la transition en tenant compte de la saturation:
+
+
+
+aaaaqbbbbq
+	CCCseceffsat CCCequiv CCCseceff  SPACEFG  CCCfracBrrrro1BrrrrcBrrrro1+CCCsatBrrrrc
+	CCCpointformule
+	
+aaaaqbbbbq
+
+
+
+On peut dégager deux comportements limites en fonction de la taille caractéristique aaaaq CCCLZnuage bbbbq du nuage suivant l'axe optique: 
+	* si aaaaq CCCDlibreCCCggCCCLZnuage bbbbq, alors un photon aura peu de chance d'être ré-absorbé dans le nuage, 
+	* en revanche, si aaaaq CCCDlibre CCCll CCCLZnuage bbbbq, chaque photon diffusé sera très probablement ré-absorbé, puis ré-émis, puis ré-absorbé,... un grand nombre de fois avant de quitter le nuage.
+
+
+
+
+
+ResultatsBrrrro
+En considérant que la densité colonne aaaaq CCCdenscol bbbbq du nuage est de l'ordre de aaaaq CCCoverlineBrrrroCCCdensBrrrrc  SPACEFG  CCCLZnuage bbbbq, et d'après les expressionsCCCnrefBrrrroeq:SecEffSatBrrrrc etCCCnrefBrrrroeq:LibreParcoursBrrrrc, nous pouvons dégager un critère sur la profondeur optique du nuage.
+Ainsi, les processus de ré-absorption peuvent être négligés si
+
+
+
+aaaaqbbbbq
+	CCCseceff  SPACEFG  CCCdenscol CCCll  1+CCCsat
+	CCCpointformule
+	
+aaaaqbbbbq
+
+
+
+CCCfinformule
+Brrrrc
+
+
+
+CCCApplicationNumerique
+Brrrro
+Estimons l'intensité nécessaire pour obtenir une image exploitable dans deux cas usuels:
+	* dans le piège magnéto-optique décrit dans laCCCautorefBrrrrosec:PaquetsPmoBrrrrc,  la densité atomique d'un nuage est typiquement CCCatpccBrrrro2EBrrrro10BrrrrcBrrrrc. Avec une taille transverse (suivant l'axe du système optique) aaaaq CCCLZnuageCCCapproxCCCmmBrrrro5Brrrrc bbbbq, la profondeur optique atteint  
+aaaaqbbbbq
+CCCAvecTexteBrrrroCCCseceff  SPACEFG  CCCdenscolBrrrrcBrrrroCCCtiny PMOBrrrrc CCCapprox 30
+CCCpointformule
+aaaaqbbbbq
+* dans un condensat de Bose-Einstein de rubidium, la densité atomique atteint typiquement CCCatpccBrrrroEBrrrro14BrrrrcBrrrrc. Considérons une taille typique aaaaq CCCLZnuageCCCapproxCCCmicronBrrrro10Brrrrc bbbbq. Dans ces conditions la profondeur optique atteint  
+aaaaqbbbbq
+CCCAvecTexteBrrrroCCCseceff  SPACEFG  CCCdenscolBrrrrcBrrrroCCCtiny BECBrrrrc CCCapprox 300
+CCCpointformule
+aaaaqbbbbq
+
+On constate donc qu'il faut disposer d'intensités très importantes. En effet l'expressionCCCnrefBrrrroeq:NegligeReAbsorptionBrrrrc qui donne le critère de validité d'une mesure, impose l'utilisation d'intensités des centaines voire des milliers de fois supérieures à l'intensité de saturation.
+Brrrrc
+
+
+//////////// Imagerie par fluorescence dans un régime extrêmement saturant ////////////
+
+L'équipe de D.Weiss (Berkeley, Californie) a mis en oeuvre un protocole d'imagerie par fluorescence dans un régime de saturation extrême  afin d'étudier un piège magnéto-optique comprimé d'atomes de CésiumCCCciteBrrrroDLH00Brrrrc. Il utilise un laser Titane-Saphir délivrant CCCSIBrrrro500BrrrrcBrrrroCCCmilliCCCwattBrrrrc de lumière résonante. Le laser imageur est rétro-réfléchi de manière à équilibrer les forces radiatives induites par l'absorption répétée de photons. Avec un faisceau imageur dont le rayon à aaaaq CCCtfracBrrrro1BrrrrcBrrrroCCCexpoBrrrro2BrrrrcBrrrrc bbbbq de CCCmmBrrrro4Brrrrc, il est possible d'obtenir des intensités allant jusqu'à aaaaq CCCvalBrrrro2000Brrrrc  SPACEFG  CCCIsat bbbbq. 
+
+Le fait d'utiliser de telles intensités est très intéressant à plusieurs égards sur le plan physique :
+	* la population aaaaq CCCPopuE bbbbq de l'état excité est très proche	 
+	de sa valeur limite aaaaq CCCPopuEmax=CCCtfracBrrrro1BrrrrcBrrrro2Brrrrc bbbbq. Ainsi, chaque atome émet en moyenne aaaaq CCCtfracBrrrroCCCpulsSpontBrrrrcBrrrro2Brrrrc bbbbq photons par seconde, indépendamment des fluctuations locales d'intensité dans le faisceau laser. Les mesures sont donc quantitatives.
+	* le paramètre de saturation aaaaq CCCsat bbbbq est grand devant l'unité, et ce, même si le laser n'est pas parfaitement à résonance. Cette méthode est ainsi insensible au désaccord du laser ou à la présence de gradient de champ magnétique. Elle est en particulier utilisable pour effectuer une image d'un piège magnéto-optique.
+	* la section efficace aaaaq CCCseceffsat bbbbq de la transition saturée est très faible (voir CCCvpagerefBrrrrosec:ReAbsorptionBrrrrc). Ainsi, les densités optiques mesurables sont beaucoup plus élevées. Une autre interprétation physique de ce phénomène est que les processus de ré-absorption au sein du nuage sont compensés par les processus d'émission stimulée, puisque la population aaaaq CCCPopuE bbbbq de l'état excité est presque identique à la population aaaaq CCCPopuG bbbbq de l'état fondamental.
+
+La technique décrite dans la référenceCCCciteBrrrroDLH00Brrrrc est donc précise, robuste et a permis au groupe de D.Weiss de mesurer des CCCdo de l'ordre de CCCvalBrrrro100Brrrrc.
+
+
+//////// Limites de l'imagerie par absorption faiblement saturante ////////
+
+Lors d'une capture d'image, les données sont enregistrées, puis traitées par un système informatique. Ceci implique une numérisation des signaux fournis par le capteur CCD. 
+Dans cette sous-section nous montrons en quoi cela interdit de mesurer des densités optiques élevées par la technique d'imagerie par absorption faiblement saturante. 
+
+
+//////////// Numérisation du signal fourni par le capteur CCD ////////////
+
+	Le signal aaaaq CCCSignalCCCxy bbbbq que le capteur CCD délivre est le résultat d'une conversion analogique-numérique sur un nombre aaaaq CCCNbit bbbbq de bits. Ceci implique une discrétisation de l'amplitude du signal aaaaq CCCSignalCCCxy bbbbq puisqu'il ne peut prendre que aaaaq 2POOOOOBrrrroCCCNbitBrrrrc bbbbq valeurs possibles:aaaaqbbbbq
+000...01,000...10,000...11,CCCldotsCCCldotsCCCldots,111...10CCCtextBrrrroetBrrrrc111...11
+CCCpointformule
+aaaaqbbbbq 
+	aaaaqbbbbq
+	CCCSignalPas = CCCfracBrrrroCCCSignalMaxBrrrrcBrrrro2POOOOOBrrrroCCCNbitBrrrrc-1Brrrrc 	CCCvirguleformule
+	aaaaqbbbbq
+où aaaaq CCCSignalPas bbbbq est la limite de précision sur le signal fournit par le capteur.
+
+
+CCCRemarqueBrrrro
+Il faudrait en fait aussi tenir compte du bruit électronique de la caméra. Celui-ci joue un rôle important dans l'interprétation des signaux. Notons cependant que, même en l'absence totale de bruit, la discrétisation de l'amplitude reste la limite ultime de précision. Nous négligerons dans la suite les effets du bruit pour nous concentrer sur l'effet de la numérisation.
+Brrrrc
+
+
+CCCApplicationNumerique
+Brrrro
+Le capteur CCD utilisé sur notre dispositif expérimental est un modèle Basler A102 f monochrome. 
+Le signal est numérisé sur aaaaq CCCNbit=8 bbbbq ou aaaaq 12 bbbbq bits au choix. La sensibilité du capteur a été calibrée par nos soins. 
+ Pour la longueur d'onde que nous utilisons (aaaaq CCCnmBrrrro780Brrrrc bbbbq) et en l'absence de gain électronique, le pas de discrétisation ainsi mesuré correspond à une énergie deaaaaq CCCSIBrrrro9.3E-17BrrrrcBrrrroCCCjouleBrrrrc bbbbq, soit aaaaq 365 bbbbq photons.
+Brrrrc
+
+//////////// Limites de CCCdo mesurable avec l'imagerie par absorption ////////////
+
+
+Soulignons maintenant les limites du protocole d'imagerie par absorption faiblement saturante décrit dans laCCCautorefBrrrrosec:ipafasBrrrrc. 
+L'exploitation des images prises par cette méthode se fait grâce à l'expressionCCCnrefBrrrroeq:DensColAbsorptionBrrrrc que nous rappelons ici:
+aaaaqbbbbq
+	CCCseceff  SPACEFG  CCCdenscolxy 
+	= 
+	CCCLnBrrrro
+	CCCfracBrrrroCCCIinxyBrrrrcBrrrroCCCIoutxyBrrrrc
+	Brrrrc
+	CCCequiv CCCOptDensCCCxy
+	CCCtextBrrrro(rappel de l'équationCCCnrefBrrrroeq:DensColAbsorptionBrrrrc page  CCCpagerefBrrrroeq:DensColAbsorptionBrrrrc)Brrrrc
+CCCpointformule
+aaaaqbbbbq
+Or, si la CCCdo du nuage est importante, alors la valeur de l'intensité aaaaq CCCIout bbbbq après la traversée du nuage peut devenir extrêmement faible
+ par rapport à l'intensité incidente aaaaq CCCIin bbbbq. En d'autres termes, le nuage peut absorber la quasi-totalité de la lumière incidente.
+
+Nous allons montrer que ceci pose un réel problème de mesure avec le capteur CCD. 
+Afin d'utiliser au mieux toute la plage des valeurs possibles pour le signal aaaaq CCCSignalCCCxy bbbbq,
+nous réglons le système optique de manière à ce que la valeur aaaaq CCCSignalMax bbbbq corresponde à l'intensité maximale du laser imageur quand celui-ci n'est pas absorbé, c'est-à-dire:
+aaaaqbbbbq
+CCCSignalMax  SPACEFG  CCClongleftrightarrow  SPACEFG  CCCIinmax CCCequiv CCCsup(CCCIinxy)
+CCCpointformule
+aaaaqbbbbq 
+Le pas de discrétisation aaaaq CCCSignalPas bbbbq correspond alors à :
+aaaaqbbbbq
+CCCSignalPas = CCCfracBrrrroCCCSignalMaxBrrrrcBrrrro2POOOOOCCCNbit-1Brrrrc 
+CCCquad CCClongleftrightarrow CCCquad 
+CCCIPas = CCCfracBrrrroCCCIinmaxBrrrrcBrrrro2POOOOOCCCNbit-1Brrrrc
+CCCpointformule
+aaaaqbbbbq
+Ceci impose une discrétisation des valeurs obtenues grâce à l'expressionCCCnrefBrrrroeq:DensColAbsorptionBrrrrc qui fait intervenir le rapport des deux intensités aaaaq CCCIin bbbbq et aaaaq CCCIout bbbbq. 
+Il est en particulier important de s'interroger sur la précision obtenue lorsqu'on utilise cette expression avec aaaaq CCCIin bbbbq et aaaaq CCCIout bbbbq prenant des valeurs discrètes par pas de aaaaq CCCIPas bbbbq. Une simple différentiation de l'expressionCCCnrefBrrrroeq:DensColAbsorptionBrrrrc nous permet d'estimer la précision de la mesure:
+CCCbeginBrrrroalignBrrrrc
+CCCDelta  LLLPA  CCCseceff  SPACEFG  CCCdenscol  RRRPA  & = CCCfracBrrrroCCCIPasBrrrrcBrrrroCCCIoutBrrrrc+CCCfracBrrrroCCCIPasBrrrrcBrrrroCCCIinBrrrrc CCCnonumber CCCCCC
+& CCCapprox CCCfracBrrrroCCCIPasBrrrrcBrrrroCCCIoutBrrrrc CCCqquad CCCtextBrrrropuisqu'on suppose que aaaaq CCCIoutCCCllCCCIin bbbbqBrrrrc CCCnonumber
+CCCpointformule
+CCCendBrrrroalignBrrrrc
+ 
+CCCApplicationNumeriqueBrrrro
+Estimons les densités optiques maximales auxquelles nous pouvons avoir accès, en tenant compte de la discrétisation du signal provenant du capteur CCD, dans les deux cas suivants:
+	* pour un codage sur aaaaq CCCNbit=8 bbbbq bits, l'expressionCCCnrefBrrrroeq:DensColAbsorptionBrrrrc peut donner une valeur qui vaut au plus
+aaaaqbbbbq
+	CCCOptDens
+	=  
+	CCCLnBrrrro
+	CCCfracBrrrroCCCSignalMaxBrrrrcBrrrroCCCSignalPasBrrrrc 
+	Brrrrc
+	= 
+	CCCLnBrrrro 2POOOOOCCCNbit-1 Brrrrc 
+	CCCapprox CCCvalBrrrro5.5Brrrrc
+	CCCpointformule
+aaaaqbbbbq
+Cependant, si nous voulons disposer d'une précision relative de aaaaq 10CCCpercent bbbbq, la CCCdo calculée ne doit pas excéder aaaaq CCCOptDens=CCCvalBrrrro4.5Brrrrc bbbbq.
+* dans le cas aaaaq CCCNbit=12 bbbbq, la CCCdo calculée vaut au plus aaaaq CCCOptDens=CCCvalBrrrro8.3Brrrrc bbbbq, mais pour pouvoir disposer d'une précision relative de aaaaq 10CCCpercent bbbbq, la CCCdo devra être inférieures à aaaaq CCCOptDens=CCCvalBrrrro7.5Brrrrc bbbbq 
+
+Brrrrc
+
+
+Nous comprenons donc pourquoi le protocole d'imagerie par absorption faiblement saturante est limité à des mesures de profondeur optique de l'ordre de CCCvalBrrrro4Brrrrc-CCCvalBrrrro5Brrrrc.
+Nous montrerons dans laCCCautorefBrrrrosec:ipafosBrrrrc comment ce problème peut être contourné en utilisant la réponse non-linéaire des atomes.
+
+//////// Absorption d'un faisceau laser désaccordé ////////
+
+Une manière de contourner cette limite est de diminuer l'absorption du laser imageur en jouant sur le désaccord aaaaq CCCdesac bbbbq du laser. En effet, l'expression CCCvrefBrrrroeq:PdifBrrrrc montre que l'on peut réduire l'absorption en désaccordant le laser imageur. On montre alors que l'expressionCCCnrefBrrrroeq:DensColAbsorptionBrrrrc devient :
+
+
+
+aaaaqbbbbq
+	CCCOptDensCCCxy 
+	CCCequiv 	CCCLnBrrrro	CCCfracBrrrroCCCIinxyBrrrrcBrrrroCCCIoutxyBrrrrc	Brrrrc
+	= CCCfracBrrrroCCCseceff SPACEFG CCCdenscolxyBrrrrcBrrrro1+ LLLPA CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc RRRPA POOOOO2Brrrrc 
+CCCvirguleformule
+	
+aaaaqbbbbq
+
+
+
+
+CCCApplicationNumeriqueBrrrro
+Il suffit par exemple de régler le désaccord à aaaaq CCCdelta=CCCpulsSpont bbbbq pour qu'une CCCdo de aaaaq 7 bbbbq à résonance devienne proche de l'unité. 
+Brrrrc
+
+
+Cependant, pour un laser non-résonant, le nuage atomique se présente comme un milieu dispersif. Pour un atome à deux niveaux, l'indice de réfraction aaaaq CCCnrefracImaginaire bbbbq est donné parCCCciteBrrrroKDS99Brrrrc:
+aaaaqbbbbq
+	CCCnrefracImaginaireCCCxyz 
+= 1 + CCCdensCCCxyz  SPACEFG  CCCfracBrrrroCCCseceff SPACEFG CCClambdaBrrrrcBrrrro4 SPACEFG CCCpiBrrrrc 
+ SPACEFG   LLLPA 
+CCCfracBrrrro CCCim BrrrrcBrrrro1+ LLLPA CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc RRRPA POOOOO2Brrrrc
+-
+CCCfracBrrrro CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc BrrrrcBrrrro1+ LLLPA CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc RRRPA POOOOO2Brrrrc
+ RRRPA 
+CCCvirguleformule
+aaaaqbbbbq
+où aaaaq CCClambda bbbbq est la longueur d'onde du laser, et aaaaq CCCdensCCCxyz bbbbq est la densité atomique du nuage. La partie imaginaire de aaaaq CCCnrefracImaginaire bbbbq correspond au caractère absorbant du milieu. La partie réelle de aaaaq CCCnrefracImaginaire bbbbq :
+
+
+
+aaaaqbbbbq
+	BrrrroCCCnrefracxyzBrrrrc
+= 1 - CCCdensCCCxyz  SPACEFG  CCCfracBrrrroCCCseceff SPACEFG CCClambdaBrrrrcBrrrro4 SPACEFG CCCpiBrrrrc 
+ SPACEFG  CCCfracBrrrro CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc BrrrrcBrrrro1+ LLLPA CCCdfracBrrrro2 SPACEFG CCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc RRRPA POOOOO2Brrrrc
+CCCvirguleformule
+	
+aaaaqbbbbq
+
+
+
+correspond au caractère dispersif qui induit le déphasage de l'onde et par suite sa réfraction.
+ 
+
+ 
+[[Image:AbsImaging-LentilleGradientIndice.png|right|700px]]Ce phénomène de réfraction fait que l'ensemble atomique agit comme une lentille à gradient d'indice sur le faisceau laser imageur. Les rayons lumineux sont déviés, si bien que l'image obtenue sur le capteur CCD, qui correspond à l'intensité lumineuse provenant du plan objet, sera déformée : c'est un effet de CCCsotosayBrrrromirage optiqueBrrrrc. Sur l'illustration ci-contre, nous représentons quelques rayons lumineux, ainsi que leurs prolongations (en pointillé) dans le plan objet. La déviation des rayons vers le centre du nuage (où la densité atomique est élevée) traduit le fait que aaaaq BrrrroCCCnrefracBrrrrc bbbbq est ici supérieur
+à CCCvalBrrrro1Brrrrc.
+
+La figureCCCnrefBrrrrofig:ImageNuageDesaccordeBrrrrc donne un exemple d'images effectuées sur un nuage atomique dense, avec un désaccord nul, puis avec un désaccord aaaaq CCCdesac=-2 SPACEFG CCCpulsSpont bbbbq.
+On y constate clairement l'effet de lentille sur la deuxième image.
+CCCsubfloat[aaaaq CCCdesac = 0 bbbbq]
+Brrrro[[Image:AbsImaging-Det0Gamma_000Absor.png|right|700px]]BrrrrcCCCqquad
+CCCsubfloat[aaaaq CCCdesac=-2 SPACEFG CCCpulsSpont bbbbq]
+Brrrro[[Image:AbsImaging-Det+2Gamma_000Absor.png|right|700px]]Brrrrc
+CCCCaptionFigsBrrrroExemples d'images effectuées sur un nuage atomique dense produit par un piège magnéto-optique bidimensionnel comprimé (du fait de la forme longiligne du nuage, on n'en distingue qu'une partie sur ces images). 
+L'image (a) est prise par la technique d'imagerie par absorption faiblement saturante décrite dans laCCCautorefBrrrrosec:ipafasBrrrrc, avec un laser résonant (aaaaq CCCdesac=0 bbbbq). 
+L'image (b) est prise dans les mêmes conditions expérimentales, mais en désaccordant le laser imageur de aaaaq CCCdesac=-2 SPACEFG CCCpulsSpont bbbbq.
+On observe clairement l'effet de lentille sur la deuxième image : la zone centrale y est sombre du fait de la réfraction des rayons du faisceau imageur.
+Brrrrc
+
+
+
+Dégageons un critère qui permette de déterminer si l'image d'un nuage avec un faisceau désaccordé sera exploitable.
+CCCnewline
+L'équation qui décrit la propagation des rayons lumineux dans le nuage est tirée de l'équation iconale et peut se mettre sous la forme :
+aaaaqbbbbq
+Brrrro
+CCCDeriveBrrrroBrrrrcBrrrrosBrrrrc LLLPA CCCnrefrac SPACEFG CCCVecteurBrrrrouBrrrrc  RRRPA Brrrrc
+ = 
+BrrrroCCCGradientBrrrroCCCnrefracBrrrrcBrrrrc
+CCCvirguleformule
+aaaaqbbbbq
+où aaaaq CCCVecteurBrrrrouBrrrrc bbbbq est le vecteur unitaire porté par la trajectoire du rayon lumineux et aaaaq s bbbbq est l'abscisse curviligne le long de la trajectoire.
+Un calcul d'ordre de grandeur permet d'estimer la déviation typique aaaaq CCCdeviR bbbbq d'un rayon dans le plan transverse après la propagation au travers du nuage sur une longueur aaaaq CCCLZnuage bbbbq :
+aaaaqbbbbq
+Brrrro
+CCCnrefrac SPACEFG CCCfracBrrrroCCCdeviRBrrrrcBrrrroCCCLZnuagePOOOOO2Brrrrc CCCapprox CCCfracBrrrroCCCdeviRBrrrrcBrrrroCCCLZnuagePOOOOO2Brrrrc Brrrrc
+ CCCapprox 
+ BrrrroCCCfracBrrrroCCCnrefrac-1BrrrrcBrrrroCCCRnuageBrrrrcBrrrrc
+ CCCpointformule
+aaaaqbbbbq
+
+
+
+
+
+ResultatsBrrrro
+En utilisant les expressionsCCCnrefBrrrroeq:ODhorsResoBrrrrc etCCCnrefBrrrroeq:nrefractionBrrrrc nous pouvons extraire le critère suivant qui permet d'estimer que l'effet de la réfraction est négligeable:
+aaaaqbbbbq
+CCCfracBrrrroCCCdeviRBrrrrcBrrrroCCCRnuageBrrrrc CCCapprox 
+CCCOptDens SPACEFG CCCfracBrrrroCCClambda SPACEFG CCCLZnuageBrrrrcBrrrroCCCRnuagePOOOOO2Brrrrc 
+ SPACEFG  CCCfracBrrrroCCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc
+CCCll 1
+CCCvirguleformule
+aaaaqbbbbq
+Cette expression fait intervenir la CCCdo hors résonance, qui rappelons le, doit être de l'ordre de l'unité afin d'obtenir une image de qualité. 
+Brrrrc
+
+
+
+CCCApplicationNumerique
+Brrrro
+Calculons ce critère dans les deux cas usuels considérés précédemment (page CCCpagerefBrrrroan:ProfondeurOptiquesBrrrrc):
+	* la profondeur optique aaaaq CCCOptProfExpr CCCapprox 30 bbbbq d'un nuage du piège magnéto-optique, nous incite à utiliser un désaccord aaaaq CCCdesac CCCapprox 1.5 SPACEFG CCCpulsSpont bbbbq. Le nuage ayant une taille typique CCCmboxBrrrroaaaaq CCCLZnuageCCCapprox2 SPACEFG CCCRnuageCCCapproxCCCmmBrrrro5Brrrrc bbbbqBrrrrc, nous obtenons:
+aaaaqbbbbq
+CCCAvecTexteBrrrroCCCfracBrrrroCCCdeviRBrrrrcBrrrroCCCRnuageBrrrrcBrrrrcBrrrroCCCtiny PMOBrrrrc CCCapprox  CCCfracBrrrroCCClambda SPACEFG CCCLZnuageBrrrrcBrrrroCCCRnuagePOOOOO2Brrrrc 
+ SPACEFG  CCCfracBrrrroCCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc 
+ CCCapprox  CCCvalBrrrro3EBrrrro-3BrrrrcBrrrrc
+CCCpointformule
+aaaaqbbbbq
+* dans un condensat de Bose-Einstein d'atome de aaaaq POOOOOBrrrro87Brrrrc bbbbqRb, la profondeur optique est typiquement aaaaq CCCOptProfExpr CCCapprox 300 bbbbq et les dimensions CCCmboxBrrrroaaaaq CCCLZnuageCCCapprox2 SPACEFG CCCRnuageCCCapproxCCCmicronBrrrro10Brrrrc bbbbqBrrrrc. En utilisant un désaccord de aaaaq CCCdesac CCCapprox 5 SPACEFG CCCpulsSpont bbbbq, nous obtenons:
+aaaaqbbbbq
+CCCAvecTexteBrrrroCCCfracBrrrroCCCdeviRBrrrrcBrrrroCCCRnuageBrrrrcBrrrrcBrrrroCCCtiny BECBrrrrc CCCapprox   CCCfracBrrrroCCClambda SPACEFG CCCLZnuageBrrrrcBrrrroCCCRnuagePOOOOO2Brrrrc 
+ SPACEFG  CCCfracBrrrroCCCdesacBrrrrcBrrrroCCCpulsSpontBrrrrc 
+ CCCapprox  CCCvalBrrrro5Brrrrc
+CCCpointformule
+aaaaqbbbbq
+
+On peut donc a priori utiliser un laser désaccordé dans le premier cas, mais pas dans le second.
+Brrrrc
+
+CCCRemarqueTitreBrrrroImagerie par contraste de phaseBrrrrcBrrrro
+Une technique d'imagerie dite par contraste de phaseCCCciteBrrrroKDS99Brrrrc consiste précisément à exploiter le déphasage de l'onde laser par le nuage afin de mesurer la partie réelle de l'indice de réfraction par une méthode interférométrique. 
+Une démonstration expérimentale de cette méthode très efficace fait l'objet de la référenceCCCciteBrrrroTWP04Brrrrc.
+Brrrrc
+
+
+
+
+
+//////// Absorption sur une transition ouverte ////////
+
+
+Une autre méthode pouvant être utilisée pour obtenir une image par absorption d'un nuage optiquement épais consiste à utiliser le laser imageur non pas sur la transition cyclante, mais sur une transition ouverte. 
+
+//////////// Deux photons pour chaque atome ////////////
+
+Quand un atome est excité sur cette transition ouverte, il y a alors une probabilité 
+aaaaqbbbbq
+p = CCCfracBrrrro1BrrrrcBrrrro2Brrrrc
+aaaaqbbbbq
+pour que celui-ci retombe dans l'état CCCEtatSFBrrrro1Brrrrc, devenant une nouvelle fois candidat à l'absorption d'un photon. Si l'atome retombe
+ dans CCCEtatSFBrrrro2Brrrrc, il ne pourra plus absorber les photons du laser. 
+
+De manière à rendre une telle mesure d'absorption quantitative, nous devons calculer le nombre de photons qui seront absorbés par chaque atome, en moyenne. La probabilité aaaaq P(n) bbbbq qu'a un atome d'absorber exactement aaaaq n bbbbq photons correspond à la probabilité de retomber aaaaq n-1 bbbbq fois dans CCCEtatSFBrrrro1Brrrrc, puis, de tomber dans CCCEtatSFBrrrro2Brrrrc:
+aaaaqbbbbq
+P(n) = pPOOOOOBrrrron-1Brrrrc SPACEFG (1-p)
+CCCpointformule
+aaaaqbbbbq
+
+
+
+
+Resultats
+Brrrro
+Nous déduisons donc le nombre moyen aaaaq CCCMoyenneBrrrronBrrrrc bbbbq de photons absorbés par un atome avant qu'il ne tombe dans l'état CCCEtatSFBrrrro2Brrrrc:
+aaaaqbbbbq
+CCCMoyenneBrrrronBrrrrc 
+= CCCsum_Brrrron=1BrrrrcPOOOOOBrrrroCCCinftyBrrrrc n SPACEFG P(n) 
+= CCCsum_Brrrron=1BrrrrcPOOOOOBrrrroCCCinftyBrrrrc n SPACEFG pPOOOOOBrrrron-1Brrrrc SPACEFG (1-p) 
+= CCCfracBrrrro1BrrrrcBrrrro1-pBrrrrc 
+= 2
+CCCpointformule
+aaaaqbbbbq
+Chaque atome absorbe donc en moyenne aaaaq 2 bbbbq photons.
+Brrrrc	
+
+
+//////////// Intérêts et inconvénients ////////////
+
+Cette technique d'imagerie sur une transition ouverte présente deux avantages majeurs:
+	* elle est quantitative dans la mesure où le nombre de photons absorbés reflète exactement le nombre d'atomes du nuage.
+	* elle est de plus d'une grande robustesse. En effet, la présence de gradient de champ magnétique, ou de toute autre source d'élargissement de la transition cyclante, ne modifie en aucun cas le caractère quantitatif de cette technique. 
+
+
+
+L'inconvénient principal de cette méthode réside dans la faiblesse des signaux à mesurer, puisque le nombre de photons absorbés par unité de surface du faisceau imageur est de seulement deux fois la densité colonne du nuage.
+CCCApplicationNumeriqueBrrrro
+Considérons un exemple pratique afin de montrer que le signal d'absorption sur une transition ouverte est très faible. Un nuage de typiquement CCCvalBrrrroE9Brrrrc atomes pourra absorber CCCvalBrrrro2E9Brrrrc photons. Si on considère que sa taille transverse
+est aaaaq 2 SPACEFG CCCRnuageCCCapproxCCCmmBrrrro10Brrrrc bbbbq, l'absorption par unité de surface du faisceau imageur est typiquement :
+aaaaqbbbbq
+2 SPACEFG CCCdenscolCCCapprox CCCfracBrrrroCCCvalBrrrro2E9BrrrrcBrrrrcBrrrroCCCRnuagePOOOOO2Brrrrc CCCapprox CCCSIBrrrroE10BrrrrcBrrrrophotonCCCperCCCsquareBrrrroCCCcentiCCCmeterBrrrrcBrrrrc
+CCCpointformule
+aaaaqbbbbq
+La surface représentée dans le plan objet par un pixel du capteur CCD étant typiquement de aaaaq CCCLpix=CCCmicronBrrrro5Brrrrc bbbbq, celui-ci devra être sensible à des variations très inférieures à CCCvalBrrrro2500Brrrrc photons. Cette performance est atteignable avec des capteurs CCD refroidis. 
+Brrrrc
+
+
+CCCRemarqueBrrrroNotons que l'utilisation d'une transition ouverte a aussi été étudiée dans le cadre de l'imagerie par fluorescence. On pourra consulter la référenceCCCciteBrrrroMOR07Brrrrc.Brrrrc
+
+
+//// Imagerie par absorption dans le régime de forte saturation ////
+
+Dans cette section, nous allons décrire le protocole d'imagerie par absorption que nous avons mis au point afin de pouvoir acquérir, puis exploiter de manière quantitative, des images d'ensembles atomiques denses. 
+Nous commencerons par donner quelques arguments qui remettent en cause le caractère quantitatif de l'imagerie par absorption faiblement saturante décrite dans laCCCautorefBrrrrosec:ipafasBrrrrc. Celle-ci est en effet assez sensible aux imperfections expérimentales.
+
+//////// Position du problème ////////
+
+Précisons tout d'abord un point important quant au caractère quantitatif de l'imagerie par absorption faiblement saturante. Nous avons précisé qu'un avantage certain de cette méthode est que la sensibilité du capteur CCD, ainsi que les caractéristiques de la transition (aaaaq CCCIsat bbbbq et aaaaq CCCseceff bbbbq) n'ont pas besoin d'être connues pour donner des mesures quantitatives de CCCdo (voir l'expression CCCvrefBrrrroeq:DensColAbsorptionBrrrrc). En revanche, il est nécessaire de connaître avec précision la section efficace aaaaq CCCseceff bbbbq de la transition pour pouvoir calculer la densité colonne aaaaq CCCdenscolCCCxy bbbbq, grandeur qui nous intéresse.
+
+
+
+
+aaaaqbbbbq
+	CCCseceff = CCCfracBrrrro3 SPACEFG CCClambdaPOOOOO2BrrrrcBrrrro2 SPACEFG CCCpiBrrrrc
+CCCvirguleformule
+	
+aaaaqbbbbq
+
+
+ 
+il faut en pratique tenir compte de la structure énergétique de l'atome.
+
+
+[[Image:AbsImaging-Rb2niveaux.png|right|700px]]Ainsi, la sélectivité des règles de transitions entre sous-niveauBrrrroxBrrrrc font que, dans le cas du aaaaq POOOOOBrrrro87Brrrrc bbbbqRb, nous pouvons considérer la structure à deux niveaux aaaaq CCCBrrrroCCCEtatG bbbbq, aaaaq CCCEtatECCCBrrrrc bbbbq décrite précédemment si, par exemple:
+
+
+
+aaaaqbbbbq
+CCCbeginBrrrrocasesBrrrrc
+	CCCEtatG & = CCCEtatSFmFBrrrro2BrrrrcBrrrro-2Brrrrc CCCCCC
+	CCCEtatE & = CCCEtatPFmFBrrrro3BrrrrcBrrrro-3Brrrrc 
+CCCendBrrrrocasesBrrrrc
+	CCCvirguleformule
+	
+aaaaqbbbbq
+
+
+
+mais cela est valable uniquement dans le cas où la lumière laser est parfaitement polarisée circulairement aaaaq CCCsigmaPOOOOOBrrrro-Brrrrc bbbbq. 
+
+
+De plus, d'autres imperfections expérimentales peuvent modifier le caractère absorbant du milieu atomique. On peut par exemple craindre : 
+	* que la pulsation du laser imageur ne soit pas exactement à la résonance (aaaaq CCCdesac CCCneq 0 bbbbq),
+	* que la largeur spectrale du laser soit non-négligeable devant la largeur naturelle aaaaq CCCpulsSpont bbbbq de la transition,
+	* qu'un champ magnétique résiduel déplace les sous-niveauBrrrroxBrrrrc Zeeman, impliquant que le laser imageur devienne non-résonant.
+
+	De plus, si l'impulsion laser est très courte, et que le nombre de photons absorbés par atome est de l'ordre de la dizaine, on doit considérer le régime transitoire des équations de Bloch optiques. La répartition initiale des populations des sous-niveauBrrrroxBrrrrc Zeeman joue alors un rôle important dans l'absorption.
+
+CCCRemarqueBrrrro
+Notons que l'effet des imperfections expérimentales est toujours de diminuer l'absorption de la lumière.
+Brrrrc
+
+
+
+Nous nous proposons dans la suite de ce chapitre de répondre à cette question. Nous décrirons les imperfections expérimentales par un paramètre de correction, puis nous présenterons notre protocole d'imagerie qui permet de mesurer ce paramètre et d'interpréter quantitativement des images de nuages atomiques denses.
+
+
+//////// Intensité de saturation CCCemphBrrrroeffective ////////
+ et section efficace effectiveBrrrrc
+
+Dans toute la suite, nous désignerons par aaaaq CCCseceff bbbbq et aaaaq CCCIsat bbbbq, la section efficace et l'intensité de saturation de la transition fermée :
+aaaaqbbbbq
+CCCEtatSFmFBrrrro2BrrrrcBrrrro-2BrrrrcCCClongleftrightarrowCCCEtatPFmFBrrrro3BrrrrcBrrrro-3Brrrrc
+CCCpointformule
+aaaaqbbbbq
+Il nous faut cependant rendre compte des inévitables imperfections expérimentales qui font que ce cas idéal de transition fermée n'est que théorique. 
+
+
+
+
+ResultatsBrrrro
+Nous supposerons qu'il est toujours possible de modéliser l'interaction des atomes du nuage avec l'onde laser par une section efficace effective aaaaq CCCseceffeff bbbbq et une intensité de saturation effective aaaaq CCCIsateff bbbbq:
+CCCbeginBrrrroalignBrrrrc
+	CCCseceffeff & CCCequiv CCCfracBrrrroCCCseceffBrrrrcBrrrroCCCImperfBrrrrc CCCnonumber CCCCCC
+	CCCIsateff & CCCequiv CCCImperf SPACEFG CCCseceff 
+	CCCvirguleformule
+	
+CCCendBrrrroalignBrrrrc
+où aaaaq CCCImperf bbbbq est un paramètre de correction supérieur à aaaaq 1 bbbbq qu'il faut déterminer expérimentalement. 
+Brrrrc
+
+
+
+CCCnomeRemonteBrrrroCCCseceffeffBrrrrcBrrrroSection efficace effectiveBrrrrcBrrrro3.3cmBrrrrcCCCnomeRemonteBrrrroCCCIsateffBrrrrcBrrrroIntensité de saturation effectiveBrrrrcBrrrro2.4cmBrrrrcCCCnomeRemonteBrrrroCCCImperfBrrrrcBrrrroParamètre de correction rendant compte des imperfections expérimentalesBrrrrcBrrrro1.7cmBrrrrc
+L'équationCCCnrefBrrrroeq:DensColAbsorptionBrrrrc peut alors se réécrire sous la forme
+aaaaqbbbbq
+	CCCseceffeff  SPACEFG  CCCdenscolxy = CCCfracBrrrroCCCseceffBrrrrcBrrrroCCCImperfBrrrrc  SPACEFG  CCCdenscolxy 
+	= 	CCCLnBrrrro	CCCfracBrrrroCCCIinxyBrrrrcBrrrroCCCIoutxyBrrrrc	Brrrrc
+CCCvirguleformule
+aaaaqbbbbq
+qui permet de calculer aaaaq CCCdenscolxy bbbbq à partir de la connaissance de aaaaq CCCIinxy bbbbq, aaaaq CCCIoutxy bbbbq et aaaaq CCCImperf bbbbq.
+Notons que aaaaq CCCImperf bbbbq est a priori spécifique à chaque situation expérimentale donnée, c'est-à-dire qu'il doit être déterminé de manière systématique pour pouvoir exploiter des images prises par absorption.
+
+
+
+Le problème est alors le suivant : 
+Nous allons montrer dans la suite que la réponse à cette question CCCldots est non-linéaire.
+
+//////// Réponse non-linéaire des atomes ////////
+
+Nous avons vu dans laCCCautorefBrrrrosec:LimiteIpafasBrrrrc que la limite du protocole d'imagerie par absorption faiblement saturante réside dans le fait que la lumière laser peut être extrêmement atténuée lors de la traversée du nuage. Ce phénomène est principalement dû au caractère exponentiel de la loi de Beer-Lambert (voir l'équation différentielle linéaire CCCvrefBrrrroeq:EqDiffAbsBasseIntBrrrrc). 
+
+On peut contourner cette limite en utilisant la réponse non-linéaire des atomes à une excitation laser, c'est-à-dire en saturant la transition. Pour cela, nous utilisons des intensités laser plus élevées. On parle alors d'imagerie par absorption dans le régime de forte saturation. 
+
+Rappelons que, dans le cas général, l'évolution de l'intensité laser lors de la propagation dans le nuage est donnée par l'équation différentielle non-linéaireCCCnrefBrrrroeq:EqDiffAbsGeneraleBrrrrc. Celle-ci, dans le cas d'un laser résonnant (aaaaq CCCdesac=0 bbbbq), et en tenant compte du paramètre de correction aaaaq CCCImperf bbbbq, s'écrit:
+
+
+
+aaaaqbbbbq
+	CCCDeriveBrrrroCCCIxyzBrrrrcBrrrrozBrrrrc
+	= - CCCdensxyz
+	 SPACEFG  CCCfracBrrrroCCCseceffBrrrrcBrrrroCCCImperfBrrrrc 
+	 SPACEFG  CCCfracBrrrroCCCIxyzBrrrrcBrrrro1 + CCCdfracBrrrroCCCIxyzBrrrrcBrrrroCCCImperf SPACEFG CCCIsatBrrrrcBrrrrc
+	CCCpointformule
+	
+aaaaqbbbbq
+
+
+
+Cette expression est valable pour toute valeur de l'intensité aaaaq CCCIxyz bbbbq, à la différence de l'expressionCCCnrefBrrrroeq:EqDiffAbsBasseIntBrrrrc, qui n'est valide que dans la limite des faibles intensités .
+
+
+
+
+
+ResultatsBrrrro
+L'équationCCCnrefBrrrroeq:EqDiffAbsResonanceBrrrrc s'intègre par séparation de variables et permet de calculer la densité colonne aaaaq CCCdenscolxy bbbbq à partir de la mesure de aaaaq CCCIinxy bbbbq, aaaaq CCCIoutxy bbbbq et aaaaq CCCImperf bbbbq, sans supposer que l'intensité est faible devant aaaaq CCCIsat bbbbq:
+
+
+
+aaaaqbbbbq
+	CCCOptProfExprCCCxy CCCequiv CCCOptProfCCCxyImperf 
+	= CCCImperf  SPACEFG  CCCLnBrrrro	CCCfracBrrrroCCCIinxyBrrrrcBrrrroCCCIoutxyBrrrrc	Brrrrc
+	+ CCCfracBrrrroCCCIinxy - CCCIoutxyBrrrrcBrrrroCCCIsatBrrrrc
+	CCCvirguleformule
+	
+aaaaqbbbbq
+
+
+
+où aaaaq CCCIinxy bbbbq et aaaaq CCCIoutxy bbbbq ont la même définition que dans laCCCautorefBrrrrosec:ipafasBrrrrc:
+CCCbeginBrrrroalignBrrrrc
+CCCbeginBrrrrocasesBrrrrc
+CCCIinxy  CCCequiv & CCCIccdxySansNuage - CCCIbackxy CCCnonumber 
+ CCCCCC
+CCCIoutxy CCCequiv & CCCIccdxyAvecNuage - CCCIbackxy CCCnonumber 
+CCCendBrrrrocasesBrrrrc
+CCCendBrrrroalignBrrrrc
+Notons que l'expressionCCCnrefBrrrroeq:DensColAbsHighIntResonanceBrrrrc, prise dans la limite aaaaq CCCIin,CCCIoutCCCllCCCIsat bbbbq, redonne bien l'expressionCCCnrefBrrrroeq:DensColAbsorptionBrrrrc, à une différence près cependant : le paramètre de correction aaaaq CCCImperf bbbbq intervient dans le calcul de la densité colonne.Brrrrc
+
+
+
+Nous devons souligner deux points importants relatifs à l'utilisation de l'expressionCCCnrefBrrrroeq:DensColAbsHighIntResonanceBrrrrc afin d'exploiter l'imagerie par absorption dans le régime de forte saturation:
+	* il est indispensable de calibrer la sensibilité du capteur CCD, afin de mesurer de manière absolue	
+	 la différence aaaaq CCCIinxy - CCCIoutxy bbbbq. Chaque pixel du capteur CCD fait alors office de puissance-mètre. Il faut pour cela parfaitement calibrer les pertes et atténuations aaaaq CCCAttenOptique bbbbq intervenant sur le trajet du faisceau laser dans le système optique, entre le nuage et le capteur (voir laCCCautorefBrrrrosec:SystOptiqueBrrrrc).
+	* l'expression de la densité colonne par la relationCCCnrefBrrrroeq:DensColAbsHighIntResonanceBrrrrc est remarquable car elle contient deux termes, dont l'un seulement fait intervenir le paramètre de correction aaaaq CCCImperf bbbbq. C'est cette propriété qui nous permettra de déterminer ce dernier.
+
+
+
+
+
+ResultatsBrrrro
+La profondeur optique aaaaq CCCOptProfCCCxyImperf bbbbq semble dépendre du paramètre de correction. Il n'en est rien; comme nous l'avons souligné dans laCCCautorefBrrrrosec:ipafasBrrrrc, la profondeur optique aaaaq CCCOptProf=CCCOptProfExpr bbbbq est une caractéristique propre au nuage, indépendante de la mesure. Le paramètre aaaaq CCCImperf bbbbq n'est que la valeur pour laquelle l'expressionCCCnrefBrrrroeq:DensColAbsHighIntResonanceBrrrrc donne la profondeur optique. C'est un paramètre expérimental, au même titre que aaaaq CCCIinxy bbbbq et aaaaq CCCIoutxy bbbbq. 
+Brrrrc
+
+
+
+
+CCCsubsection[Protocole de mesure et détermination du paramètre de correction]BrrrroProtocole de mesure et détermination du paramètre de correction aaaaq CCCImperf bbbbqBrrrrc
+
+Décrivons maintenant le protocole que nous avons mis au point pour mener à bien la mesure de densité colonne d'un nuage atomique dense. Afin de rendre cette exposé plus concret, nous allons appuyer notre raisonnement grâce à des données expérimentales.
+CCCRemarqueBrrrro
+Le nuage atomique dont il sera question dans la suite est obtenu grâce au chargement du piège magnéto-optique décrit dans laCCCautorefBrrrrosec:PaquetsPmoBrrrrc. La densité colonne de ce nuage est volontairement prise assez faible (aaaaq CCCsimeq 3 bbbbq) afin de pouvoir comparer notre technique à son homologue basse intensité. Un exemple d'image de nuage atomique très dense est donné dans laCCCautorefBrrrrosec:ImageNuageDenseBrrrrc.
+Brrrrc
+
+
+
+L'image du nuage est faite, comme dans laCCCautorefBrrrrosec:ipafasBrrrrc, en prenant 3 images (une image avec le nuage, une sans le nuage, et une image de la lumière de fond). Nous prenons en fait toute une série d'images de nuages préparés dans des conditions identiques, mais en utilisant différentes intensités lasers incidentes aaaaq CCCIin bbbbq. La plage de valeurs utilisées pour aaaaq CCCIin bbbbq s'étale typiquement sur aaaaq 1 bbbbq ou aaaaq 2 bbbbq ordres de grandeur. Pour notre exemple expérimental (voir la figure CCCvrefBrrrrofig:PleinImagesNuageBrrrrc), nous utilisons huit valeurs s'échelonnant entre aaaaq CCCIin CCCapprox CCCtfracBrrrroCCCIsatBrrrrcBrrrro20Brrrrc CCCapprox CCCmWpcmcBrrrro0.09Brrrrc bbbbq et  aaaaq CCCIin = CCCIsat CCCtimes 10 CCCapprox CCCmWpcmcBrrrro18Brrrrc bbbbq.
+CCCsubfloat[aaaaq CCCIin CCCapprox CCCtfracBrrrroCCCIsatBrrrrcBrrrro20Brrrrc bbbbq]
+Brrrro[[Image:AbsImaging-Sig_M_200_00000_With.png|right|700px]]Brrrrc SPACEFG 
+CCCsubfloat[aaaaq CCCIin CCCapprox CCCtfracBrrrroCCCIsatBrrrrcBrrrro2Brrrrc bbbbq]
+Brrrro[[Image:AbsImaging-Sig_M_016_00000_With.png|right|700px]]Brrrrc SPACEFG 
+CCCsubfloat[aaaaq CCCIin CCCapprox 3 SPACEFG CCCIsat bbbbq]
+Brrrro[[Image:AbsImaging-Sig_M_004_00000_With.png|right|700px]]Brrrrc SPACEFG 
+CCCsubfloat[aaaaq CCCIin CCCapprox 10 SPACEFG CCCIsat bbbbq]
+Brrrro[[Image:AbsImaging-Sig_M_001_00000_With.png|right|700px]]Brrrrc
+CCCCaptionFigsBrrrroReprésentation de l'absorption du faisceau laser pour différentes intensités incidentes. Celles-ci correspondent à (a) aaaaq CCCIin = CCCmWpcmcBrrrro0.09Brrrrc bbbbq, (b)aaaaq CCCIin = CCCmWpcmcBrrrro1.1Brrrrc bbbbq, (c) aaaaq CCCIin = CCCmWpcmcBrrrro4.5Brrrrc bbbbq, (d) aaaaq CCCIin = CCCmWpcmcBrrrro18Brrrrc bbbbq.
+Les temps d'expositions du capteur CCD sont variés respectivement de CCCmicrosBrrrro50Brrrrc à CCCnanosBrrrro250Brrrrc. Nous ne représentons dans chaque cas que l'image en présence du nuage atomique (voir laCCCautorefBrrrrosec:ipafasBrrrrc). 
+On constate que le nuage absorbe une grande fraction de la lumière quand celle-ci est peu intense (a). Plus l'intensité incidente aaaaq CCCIin bbbbq est élevée, plus la fraction de lumière traversant le nuage est élevée. Sur l'image (d), le nuage absorbe moins de la moitié de la lumière incidente.
+Brrrrc
+
+
+
+aaaaqbbbbq
+CCCImperf  SPACEFG  CCCLnBrrrro	CCCfracBrrrroCCCIinBrrrrcBrrrroCCCIoutBrrrrc	Brrrrc
+CCCtextBrrrroetBrrrrc
+CCCfracBrrrroCCCIin - CCCIoutBrrrrcBrrrroCCCIsatBrrrrc
+CCCvirguleformule
+aaaaqbbbbq 
+ interviennent avec des poids différents. En effet on peut montrer que:
+	* le premier terme (en logarithme) est une fonction décroissante		 de l'intensité incidente aaaaq CCCIin bbbbq,
+	* l'autre terme (différentiel) est une fonction croissante de l'intensité incidente aaaaq CCCIin bbbbq.
+
+
+
+
+
+ResultatsBrrrro
+L'idée est alors la suivante : 
+	* pour un même nuage, nous aurons différentes images, qui doivent cependant toutes permettre de calculer la même profondeur optique par l'expressionCCCnrefBrrrroeq:DensColAbsHighIntResonanceBrrrrc, puisqu'elle ne fait aucune hypothèse quant à l'intensité incidente du laser,
+	* or les deux termes de cette expression interviennent avec des poids différents, et seul le premier fait intervenir le paramètre de correction aaaaq CCCImperf bbbbq.
+
+On en déduit qu'il n'y a qu'une valeur possible pour aaaaq CCCImperf bbbbq qui permette de concilier toutes les images.
+Brrrrc
+
+
+
+Pour illustrer ce propos, supposons, l'espace d'un instant, que aaaaq CCCImperf=1 bbbbq, c'est-à-dire que la situation expérimentale corresponde précisément au cas théorique d'un atome à deux niveaux soumis à une onde laser résonnante. 
+[[Image:AbsImaging-AllureAlphaEgal1.png|right|700px]]
+Dans ce cas, les images qui font l'objet de la figureCCCnrefBrrrrofig:PleinImagesNuageBrrrrc ne donnent pas toutes la même valeur de la profondeur optique. La figure ci-contre représente la profondeur optique aaaaq CCCOptProfMax bbbbq du nuage 
+en fonction de aaaaq CCCIin bbbbq, valeur moyenne de l'intensité laser. L'intensité de saturation est repérée par une ligne pointillée. Les barres d'erreur sont obtenues en effectuant chaque mesure une dizaine de fois.
+La croissance de la courbe montre que, en supposant aaaaq CCCImperf = 1 bbbbq, nous sous-estimons le terme décroissant (en logarithme) de l'expressionCCCnrefBrrrroeq:DensColAbsHighIntResonanceBrrrrc. Ceci signifie donc queaaaaq CCCImperf > 1 bbbbq.
+
+
+//////////// Ajustement du paramètre de correction ////////////
+
+Afin de déterminer aaaaq CCCImperf bbbbq, nous allons le considérer comme une variable ajustable que nous noterons aaaaq CCCImperfVarie bbbbq.  
+
+CCCRemarqueBrrrro
+Nous utilisons cette notation afin de ne pas confondre la variable ajustable aaaaq CCCImperfVarie bbbbq avec la CCCsotosayBrrrrovraieBrrrrc valeur aaaaq CCCImperf bbbbq. En d'autres termes, aaaaq CCCImperf bbbbq est la valeur particulière du paramètre de correction sur laquelle doit être ajustée aaaaq CCCImperfVarie bbbbq.
+Brrrrc
+
+
+
+Comme dans l'exemple précédent (nous avions considéré le cas idéal aaaaq CCCImperfVarie=1 bbbbq), nous calculons la profondeur optique aaaaq CCCOptProfCCCxyImperfVarie bbbbq par l'expressionCCCnrefBrrrroeq:DensColAbsHighIntResonanceBrrrrc pour chaque intensité aaaaq CCCIin bbbbq utilisée.
+Rappelons que aaaaq CCCOptProf bbbbq est une caractéristique physique du nuage et ne dépend donc pas de la manière dont on pratique la mesure. En d'autres termes, pour toutes les intensités incidentes utilisées, on doit normalement obtenir la même profondeur optique par l'expressionCCCnrefBrrrroeq:DensColAbsHighIntResonanceBrrrrc.
+La figureCCCnrefBrrrrofig:PleinAlphaCourbeBrrrrc représente quelques-unes des courbes ainsi obtenues, en utilisant différentes valeurs pour le paramètres aaaaq CCCImperfVarie bbbbq.
+[[Image:AbsImaging-PleinAlphaCourbe.png|right|700px]]
+CCCCaptionFigssBrrrroReprésentation de la profondeur optique aaaaq CCCOptProfMax bbbbq du nuage calculée grâce à l'expressionCCCnrefBrrrroeq:DensColAbsHighIntResonanceBrrrrc, en fonction de aaaaq CCCIin bbbbq (valeur moyenne de l'intensité du faisceau imageur sur le nuage). Afin d'améliorer la lisibilité de la figure, les barres d'erreurs n'ont pas été représentées ici.
+Chaque courbe correspond à une valeur différente du paramètre de correction aaaaq CCCImperfVarie bbbbq utilisé lors du calcul par l'expressionCCCnrefBrrrroeq:DensColAbsHighIntResonanceBrrrrc. 
+Nous utilisons ici les valeurs suivantes pour aaaaq CCCImperfVarie bbbbq (de bas en haut):  aaaaq CCCImperfVarie=CCCvalBrrrro1Brrrrc bbbbq (voir la figureCCCnrefBrrrrofig:AllureAlphaEgal1Brrrrc), puis aaaaq CCCImperfVarie=CCCvalBrrrro2Brrrrc bbbbq ; aaaaq CCCvalBrrrro2.2Brrrrc bbbbq ; aaaaq CCCvalBrrrro2.4Brrrrc bbbbq ... aaaaq CCCvalBrrrro3.8Brrrrc bbbbq ; aaaaq CCCvalBrrrro4Brrrrc bbbbq.
+Brrrrc
+
+CCCCahierBrrrro7,140Brrrrc
+
+	* certaines courbes sont décroissantes, laissant supposer que le aaaaq CCCImperfVarie bbbbq utilisé est trop grand, 
+	* certaines sont croissantes, indiquant que le aaaaq CCCImperfVarie bbbbq utilisé est trop faible,
+	* l'une de ces courbes (aaaaq CCCImperfVarie = 3 bbbbq) varie moins que les autres, approchant le comportement attendu d'une indépendance totale face à l'intensité incidente aaaaq CCCIin bbbbq.
+
+
+
+%hs
+[[Image:AbsImaging-PleinAlphaSTD.png|right|700px]]
+CCCCaptionFigsBrrrroÉcarts types aaaaq CCCDeltaOP bbbbq de chaque courbe de la figureCCCnrefBrrrrofig:PleinAlphaCourbeBrrrrc en fonction de la valeur de aaaaq CCCImperfVarie bbbbq utilisée. La présence d'un minimum pour une valeur aaaaq CCCImperfVarie CCCequiv CCCImperf = CCCvalBrrrro2.95Brrrrc bbbbq est déduite par ajustement d'une fonction hyperbolique (ligne rouge).Brrrrc
+
+
+Nous déduisons ainsi, dans le cas de notre exemple, aaaaq CCCImperf = CCCvalBrrrro2.95Brrrrc bbbbq, et nous pouvons, grâce à cette valeur, exploiter quantitativement les informations contenues dans les images d'absorption. Dans le cas de notre exemple, nous mesurons une profondeur optique aaaaq CCCOptProfMax = CCCvalBrrrro8.4Brrrrc bbbbq et un nombre d'atomes total aaaaq N=CCCvalBrrrro3.4EBrrrro8BrrrrcBrrrrc bbbbq.
+Nous avons par ailleurs vérifié que le paramètre aaaaq CCCImperf bbbbq dépend de la polarisation du faisceau imageur.
+
+
+//////// Conclusion ////////
+
+Nous concluons ce chapitre en présentant des exemples d'images prises et interprétées en utilisant notre protocole d'imagerie par absorption dans le régime de forte saturation. Nous récapitulerons aussi les trois qualités majeures de cette technique.
+
+//////////// Exemples d'images exploitées par notre protocole ////////////
+
+Les figuresCCCnrefBrrrrofig:ImageNuageTresDenseBrrrrc etCCCnrefBrrrrofig:PhotosArticleImagerieBrrrrc présentent deux exemples de nuages atomiques denses produits par un piège magnéto-optique bidimensionnel comprimé. Dans ces cas expérimentaux, le paramètre de correction a été ajusté par la méthode exposée dans laCCCautorefBrrrrosec:ProtocoleMesureImperfBrrrrc à une valeur aaaaq CCCImperf=CCCvalBrrrro2.12Brrrrc bbbbq. Nous mesurons ainsi des profondeurs optiques allant jusqu'à CCCvalBrrrro20Brrrrc (pour la figureCCCnrefBrrrrofig:ImageNuageTresDenseBrrrrc). 
+Sur la figureCCCnrefBrrrrofig:PhotosArticleImagerieBrrrrc, on constate que la structure bimodale résultant de la compression n'est pas apparente lorsqu'on utilise le régime faiblement saturant. Par ailleurs, l'utilisation d'un laser désaccordé ne permet pas d'exploiter l'image obtenue.
+[[Image:AbsImaging-A_00015AbsorCoupe.png|right|700px]]
+CCCCaptionFigssBrrrroImage représentant la profondeur optique aaaaq CCCOptProfCCCxy=CCCseceff SPACEFG CCCdenscolxy bbbbq d'un nuage atomique dense produit par un piège magnéto-optique bidimensionnel comprimé (du fait de la forme longiligne du nuage, on n'en distingue qu'une partie sur cette image). Le graphe représente le valeur de la profondeur optique le long de la ligne pointillée. Les profondeurs optiques élevées excluent l'utilisation de l'imagerie par absorption faiblement saturante. Afin d'interpréter l'image, nous ajustons une fonction somme de deux gaussiennes qui permet de caractériser la structure bimodale du nuage (la fonction est représentée en rouge sur le graphe).Brrrrc
+
+
+[[Image:AbsImaging-PhotosArticleImagerie_opt.png|right|700px]]
+CCCCaptionFigsBrrrroTrois mesures de profondeur optique effectuées sur un même nuage atomique comprimé. Sur la droite, on représente le profil de aaaaq CCCOptProf bbbbq le long de la ligne tireté sur l'image. La mesure est effectuée de trois manières différentes: CCCCCC
+(a) en appliquent le protocole d'imagerie par absorption faiblement saturante.CCCCCC
+(b) un laser désaccordé de aaaaq CCCdesac=-3 SPACEFG CCCpulsSpont bbbbq est utilisé. L'effet de lentille rend l'image inexploitable.CCCCCC
+(c) est obtenu en utilisant notre technique d'imagerie par absorption fortement saturante.CCCCCC
+Seule cette dernière image met en évidence la structure bimodale résultant de la compression. La mesure sur (a) ne peut donner de valeurs supérieures à aaaaq CCCapprox3 bbbbq (ligne pointillée dessinée sur les graphes).Brrrrc
+
+
+
+//////////// Récapitulatif des avantages de notre protocole ////////////
+
+Récapitulons enfin les principaux atouts de notre protocole d'imagerie par absorption dans le régime de forte saturation:
+	* le système optique nécessaire pour pouvoir appliquer cette méthode est tout à fait standard et ne nécessite pas de matériel lourd. Il est fort probable qu'un quelconque dispositif permettant d'effectuer des prises d'images par absorption dans le régime de faible saturation puisse être immédiatement adaptable pour mener à bien notre protocole. 
+	* l'utilisation d'intensités laser supérieures à l'intensité de saturation permet de contourner les problèmes liés à l'absorption quasi-totale de la lumière laser par un nuage optiquement épais (aaaaq CCCOptProf > 5 bbbbq). Nous pouvons ainsi observer des profondeurs optiques très élevées là où l'imagerie basse intensité est inefficace (voir laCCCautorefBrrrrosec:LimiteIpafasBrrrrc). Pour pouvoir observer convenablement une profondeur optique aaaaq CCCOptProf bbbbq, l'intensité laser nécessaire est typiquement : 
+aaaaqbbbbq
+CCCIlaser = CCCfracBrrrroCCCOptProfBrrrrcBrrrroCCCImperfBrrrrc  SPACEFG  CCCIsat
+CCCpointformule
+aaaaqbbbbq
+	* La détermination du paramètre de correction aaaaq CCCImperf bbbbq permet d'exploiter de manière quantitative les images par absorption. Il faut d'ailleurs noter que les mesures effectuées sur des nuages atomiques optiquement peu denses (qui peuvent donc être imagés par la technique usuelle dans le régime faiblement saturant) devraient toujours tenir compte de la valeur du paramètre de correction aaaaq CCCImperf bbbbq. Rappelons en effet que celui-ci intervient dans le calcul de la densité colonne (voir l'expressionCCCnrefBrrrroeq:DensColAbsHighIntResonanceBrrrrc).
+
+
+
+
+
+
+
+

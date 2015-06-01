@@ -1,0 +1,24 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\sc{1.6}
+\begin{tikzpicture}
+
+\useasboundingbox (-\sc*.35,-\sc*.3) rectangle (\sc*5.1,\sc*3.8);
+\put(0,0){\includegraphics[scale=\sc]{OriginCeramFatFit}}
+
+\draw (\sc*2.6,\sc*0) node[below=-2mm]{$\Devi \left[ {\rm mm} \right]$};
+
+\draw (\sc*0-0.3,\sc*1.95) node[rotate=00]{$\rapflux$};
+
+\end{tikzpicture}
+
+\end{document}

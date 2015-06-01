@@ -1,0 +1,49 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\ww{1.43}
+\def\zz{1}
+\def\rmax{2.4}
+\def\zmax{7.}
+\def\eps{0.2}
+\def\temzz{((1+\x*\x/\zz/\zz)**(0.5))}
+\def\gaussi{(exp(-2*\x*\x/\ww/\ww))}
+
+\begin{tikzpicture}[xscale=0.7, yscale=0.75]
+
+\tkzInit[xmin=-\zmax,xmax=\zmax,ymin=-5.1,ymax=0]
+\tkzX[label=$z$, orig, noticks]
+\tkzY[label=$\Udip$, noticks]
+\tkzFct[samples = 200,color = red](-\zmax..\zmax){-5/(\temzz)**2}
+
+\draw[dashed, color=blue](\zz,0.1) -- (\zz,-4)node[above=-0.1cm,pos=0]{$\zR$};
+\draw[dashed, color=blue](-\zz,0.1) -- (-\zz,-4);%node[above,pos=0]{$\zR$};
+\draw[dashed, color=blue](-0.2,-5) -- (0.2,-5)node[left,pos=0]{$-\Uprof$};
+
+\begin{scope}[xshift=\zmax cm]
+\begin{scope}[xshift=\rmax cm]
+\begin{scope}[xshift=1 cm]
+\tkzInit[xmin=-\rmax,xmax=\rmax,ymin=-5,ymax=0]
+\tkzX[label=$r$, orig, noticks]
+\tkzY[label=$\Udip$, noticks]
+\tkzFct[samples = 200,color = red](-\rmax..\rmax){-5*\gaussi}
+
+\draw[dashed, color=blue](\ww,0.1) -- (\ww,-4)node[above=-0.1cm,pos=0]{$\wzero$};
+\draw[dashed, color=blue](-\ww,0.1) -- (-\ww,-4);%node[above,pos=0]{$\zR$};
+
+\end{scope}
+\end{scope}
+\end{scope}
+
+
+\end{tikzpicture}
+
+\end{document}

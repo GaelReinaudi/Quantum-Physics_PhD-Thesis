@@ -1,0 +1,78 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[xscale=0.8,yscale=1]
+
+\def\xmax{2.3}
+\def\zmax{2.6}
+\def\numFlecheZ{10}
+\def\numFlecheX{5}
+
+\tkzInit[xmin=-5,xmax=3.7,ymin=-2.7,ymax=2.3]
+\useasboundingbox (-4.5,-3.0) rectangle (4.35,2.6);
+\tkzX[label=$z$, orig, noticks]
+%\tkzY[label=$x$, noticks]
+
+\fill[opacity=0.3](-2*\zmax,\xmax-0.6)rectangle++(4*\zmax,0.5);
+%\draw[very thick, latex'-](\zmax-1,\xmax+0.2)--++(1,0) node[right, pos=1, black]{$I$};
+\fill[opacity=0.3](-2*\zmax,-\xmax+0.6)rectangle++(4*\zmax,-0.5);
+%\draw[very thick, -latex'](\zmax-1,-\xmax-0.2)--++(1,0) node[right, pos=1, black]{$I$};
+\tkzInit[xmin=-4.3,xmax=4.,ymin=-2.7,ymax=2.3]
+\tkzFct[samples = 200](-6..6)
+{0
+*(1*(atan((\zmax+\x)/(2*\zmax/\numFlecheZ)-\numFlecheZ/5)+3.14/2)/3.14)
+*(1*(atan((\zmax-\x)/(2*\zmax/\numFlecheZ)-\numFlecheZ/5)+3.14/2)/3.14)
+}
+
+\def\numcer{4}
+\def\Rayy{1.2}
+\def\abscer{2*4.2*\ncer/\numcer-4.2+0.5}
+\pgfmathsetseed{243}
+
+\foreach \ncer/\rcer in{0/1,1/0.7,2/0.4,3/0.2}{
+\pgfmathparse{1*(\ncer+8)}
+\let\numAt\pgfmathresult
+
+\def\sizeCloud{0.1}
+\foreach \xx in {1,...,\numAt}{
+\foreach \yy in {1,...,\numAt}{
+\pgfmathparse{\abscer-((rnd))*(\abscer+6)}
+\let\XX\pgfmathresult
+\pgfmathparse{1*((rand))*\rcer*\Rayy*1.0}
+\let\YY\pgfmathresult
+
+\shade[ball color=blue!0!red] (\XX-0.6,\YY*1.4) circle (0.05cm);
+\shade[ball color=blue!40!red] (\XX,\YY*1.2) circle (0.05cm);
+\shade[ball color=blue!70!red] (\XX+1.5,\YY*0.8) circle (0.05cm);
+\shade[ball color=blue!100!red] (\XX+1.5,-\YY*0.3) circle (0.05cm);
+}}
+
+\fill[black](\abscer,\xmax-0.6)rectangle++(0.5,\Rayy*\rcer-\xmax+0.6);
+\fill[black](\abscer,-\xmax+0.6)rectangle++(0.5,-\Rayy*\rcer+\xmax-0.6);
+
+\draw[latex'-](\abscer+0.25,-\xmax+0.56)--++(1.5-\ncer,-0.7);
+}
+
+\node at (0,-2.7){\pdecs};
+
+\draw[latex'-](\zmax,\xmax-0.3)--++(-0.4,0.4)node[left]{\gm};
+
+%\draw[latex'-latex'](-0.5,-\Rayy+0.2)--++(1,0)node[pos=0.5, above left]{$\CeramLong=\mm{5}$};
+%\draw[latex'-latex'](0.7,-\Rayy)--(0.7,0)node[pos=0.5, right]{$\CeramRay=\mm{1,5}$};
+%
+%\draw[latex'-latex'](0,0)--(0,\Devv)node[pos=0.5, left]{$\Devi$};
+%
+%\draw[dotted](0,\Rayy)--++(2,0) (0,\Devv)--++(2,0);
+%\draw[latex'-latex'](2,0.8)--(2,\xmax-0.6-0.6)node[pos=0.5, right]{$\CeramDist \equiv \CeramRay-\Devi$};
+
+\end{tikzpicture}
+
+\end{document}

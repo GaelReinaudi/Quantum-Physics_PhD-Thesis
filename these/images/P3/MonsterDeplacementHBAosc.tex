@@ -1,0 +1,46 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\abstmin{0.05}
+%\def\tmin{5}
+%\def\tmax{56.5}
+\def\tmin{1}
+\def\tmax{8.9}
+\def\vmax{2.5}
+\def\zmax{0.5}
+\def\zmaxstep{0.15}
+\def\xPi{3.14159}
+\def\xt{(\x*6.2832)}
+\def\xHeaviside{\HH}
+
+\begin{tikzpicture}[xscale=1.2, yscale=0.7]
+
+\tkzInit[xmin=0,xmax=\tmax,ymin=-0.002,ymax=\zmax, xstep=1, ystep=\zmaxstep]
+\tkzX[label=$\frac{\PulsUh\,\tfin}{2\,\pi}$, orig]%, poslabel=-1.1cm]%, noticks
+\tkzY[label=$\Aosc$, noticks]
+\tkzFct[samples = 500,color = blue](\tmin..\tmax){
+-(5.73952*(-1.0+cos(0.2500000000*\xt)**2))/abs(\xt)
+/\x
+/0.36
+}
+\tkzFct[samples = 500,color = red, lw=2pt](\tmin..\tmax){
+(
+((0.6000000000E-4 + 0.6000000000E-4 / (0.1884955592E2 + \xt) / (0.6283185308E1 + \xt) / (0.1884955592E2 - 0.1E1 * \xt) / (0.1256637062E2 + \xt) / (0.1256637062E2 - 0.1E1 * \xt) / (0.628318508E1 - 0.1E1 * \xt) * (cos(0.1E1 * \xt) * \xt ** 6 + 0.3182316042E8 * cos(0.1E1 * \xt) * \xt ** 2 - 0.1916677175E5 * cos(0.1E1 * \xt) * \xt ** 4 - 0.1324409754E11 * cos(0.1E1 * \xt) + 0.1324188250E11 * cos(0.1E1 * \xt) ** 2 + 0.1324188250E11 * sin(0.1E1 * \xt) ** 2 - 0.3174679169E8 * \xt ** 2 * cos(0.1E1 * \xt) ** 2 - 0.3174679169E8 * \xt ** 2 * sin(0.1E1 * \xt) ** 2 + 0.1861407391E5 * \xt ** 4 * cos(0.1E1 * \xt) ** 2 + 0.1861407391E5 * \xt ** 4 * sin(0.1E1 * \xt) ** 2)) ** 2 + 0.3600000000E-8 / (0.1884955592E2 + \xt) ** 2 / (0.6283185308E1 + \xt) ** 2 / (0.1884955592E2 - 0.1E1 * \xt) ** 2 / (0.1256637062E2 + \xt) ** 2 / (0.1256637062E2 - 0.1E1 * \xt) ** 2 / (0.6283185308E1 - 0.1E1 * \xt) ** 2 * (\xt ** 6 + 0.3182316042E8 * \xt ** 2 - 0.1916677175E5 * \xt ** 4 - 0.1324409754E11) ** 2 * sin(0.1E1 * \xt) ** 2)**(0.5)
+)
+/\x
+}
+
+%\draw[dotted](-0.1,\zmax/\zmaxstep)--(0.1,\zmax/\zmaxstep)node[left=-0.1cm, pos=0]{$\val{\zmax}$};
+
+
+\end{tikzpicture}
+
+\end{document}

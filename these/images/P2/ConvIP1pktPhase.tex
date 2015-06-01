@@ -1,0 +1,32 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\sc{2.5}
+\def\ysc{1.7}
+\begin{tikzpicture}
+
+
+\useasboundingbox (-\sc*.35,-\ysc*.2) rectangle (\sc*5.0,\ysc*3.9);
+\put(0,0){\includegraphics[scale=\sc]{OriginConvIP1pktPhase}}
+
+\draw (\sc*2.5,\ysc*0.1) node[below=-2mm]{$t \left[ {\rm s} \right]$};
+\draw (\sc*0-0.4,\ysc*2) node[rotate=90]{$n(\zsonde,t) \left[ \ua \right]$};
+
+\normalsize
+\draw(\sc*1.5,\ysc*3.3)
+node[right, text width=5cm]{$\vinj=\vconv = \cmps{88}$};
+\draw(\sc*2.87,\ysc*2.45)--++(0.7,1)
+node[right, text width=5cm]{\chm\\$2\,\ConvBamplit=\gauss{32}$}
+--(\sc*2.58,\ysc*0.79);
+
+\end{tikzpicture}
+
+\end{document}

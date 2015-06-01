@@ -1,0 +1,31 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\sc{1.2}
+\def\ysc{1.2}
+\begin{tikzpicture}%[scale=0.8]
+
+
+\useasboundingbox (-\sc*.5,-\ysc*.3) rectangle (\sc*5.1,\ysc*3.9);
+\put(0,0){\includegraphics[scale=\sc]{OriginConvIP1pktVitesseNumat}}
+
+\draw (\sc*2.5,\ysc*0) node[below=-2mm]{$\vconv \left[ {\rm m/s} \right]$};
+\draw (\sc*0-0.4,\ysc*2.0) node[rotate=90]{fraction piégée};
+
+\draw[dashed] (\sc*3.01,\ysc*.35)--++(\sc*0,\ysc*3.4) node[left, pos=0.1]{$\vinj$};
+
+\normalsize
+%\draw(\sc*0.15,\ysc*3.59)
+%node[right, text width=5cm]{$\vconv$ = \cmps{33}};
+
+\end{tikzpicture}
+
+\end{document}

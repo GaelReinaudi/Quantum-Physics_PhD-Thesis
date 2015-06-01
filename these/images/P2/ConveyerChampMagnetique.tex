@@ -1,0 +1,73 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[xscale=0.875,yscale=1.0]
+
+\large
+\def\ShiftAimant{4.667}
+\pgfmathparse{\ShiftAimant/9.25}
+\let\YScale\pgfmathresult
+
+\tkzInit[xmin=-7,xmax=7,ymin=-3,ymax=.6]
+\useasboundingbox (-7,-3) rectangle (9,1.2);
+
+\def\opac{1}
+\def\lFlech{0.007}
+	\foreach \fnn in {0,...,12}{
+	\foreach \fn in {-2,...,2}{
+	
+		\pgfmathparse{1*(0.5+\fn)*\ShiftAimant}
+		\let\Shift\pgfmathresult
+		\pgfmathparse{\fn*\ShiftAimant}
+		\let\ShiftP\pgfmathresult
+		
+		\begin{scope}[shift={(\Shift,0)}]
+        \draw[rotate=-90, yscale=\YScale, color=red, opacity=\opac] 
+        plot file{ChampConv/ChampGuideConv1\fnn.txt};
+        
+ 				\begin{scope}[shift={(0,-2.8)}, rotate=-90, scale=3]
+ 				\begin{scope}[shift={(0,0.85)}]
+				\draw[fill= black!20] (-0.07,-0.8) rectangle (0.07,-0.9);
+				\draw[-latex'] (0.0,-0.9) -- +(0.0,0.1);
+				\draw[-latex'] (-0.04,-0.9) -- +(0.0,0.1);
+				\draw[-latex'] (0.04,-0.9) -- +(0.0,0.1);
+%				\node[left=0.1cm] at (-0.07,-0.85) {aimant};
+				\end{scope}
+				\end{scope}
+  	\end{scope}
+		\begin{scope}[shift={(\ShiftP,0)}]
+        \draw[rotate=-90, yscale=\YScale, color=red, opacity=\opac] 
+        plot file{ChampConv/ChampGuideConv2\fnn.txt};
+        
+ 				\begin{scope}[shift={(0,-2.8)}, rotate=90, scale=3]
+ 				\begin{scope}[shift={(0,0.85)}]
+				\draw[fill= black!20] (-0.07,-0.8) rectangle (0.07,-0.9);
+				\draw[-latex'] (0.0,-0.9) -- +(0.0,0.1);
+				\draw[-latex'] (-0.04,-0.9) -- +(0.0,0.1);
+				\draw[-latex'] (0.04,-0.9) -- +(0.0,0.1);
+%				\node[left=0.1cm] at (-0.07,-0.85) {aimant};
+				\end{scope}
+				\end{scope}
+ 	\end{scope}
+	}
+	}
+	
+\fill[opacity=0.3](-20,-1)rectangle++(40,0.4);
+\fill[opacity=0.3](-20,1)rectangle++(40,-0.4);
+
+\fill[color=white](7.2,-8)rectangle(20,8);
+
+\tkzX[label=$z$, orig, noticks]
+\tkzY[label=$x$, orig, noticks]
+	
+\end{tikzpicture}
+
+\end{document}

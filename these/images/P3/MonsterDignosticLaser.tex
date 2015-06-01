@@ -1,0 +1,68 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\pgfmathparse{1}
+\let\ymax\pgfmathresult
+
+\begin{tikzpicture}[scale=1]
+
+\def\largeFais{0.3}
+\def\largeimage{4}
+\def\posmun{3.5}
+
+\draw[-latex', color=red!90, line width=\largeFais cm] 
+(0,0)++(-0.3,0)--++(2,0)node[below=1mm, black, pos=0.6]{\W{300}};
+\draw[-latex', color=red!90, line width=\largeFais cm] 
+(0,0)++(-0.3,0)--++(\posmun,0)--++(0,4);
+
+\draw[-latex', color=red!50, line width=\largeFais cm] 
+(0,0)++(\posmun,0)--++(2,0)node[below=1mm, black, pos=0.6]{\W{1.2}};
+\draw[-latex', color=red!50, line width=\largeFais cm] 
+(0,0)++(\posmun,0)--++(\posmun,0)++(-0.3,0)--++(0,4);
+
+\draw[-latex', color=red!20, line width=\largeFais cm] 
+(0,0)++(\posmun,0)++(\posmun,0)--++(2,0)
+node[below=1mm, black, pos=0.6]{\mW{5}};
+
+\begin{scope}[xshift=0.0cm]
+\foreach \mirpos in {\posmun,2*\posmun}{
+\draw[xshift=\mirpos cm, rotate=45, fill=blue!30](0,0)++(-1,-0.25)rectangle++(2,0.5);
+\draw[xshift=\mirpos cm, rotate=45](0,0)++(-1,-0.25)rectangle++(2,0.55);
+}
+\end{scope}
+
+\path(10,0)++(\largeimage,0);
+\put( 10,0){%
+\includegraphics[width=\largeimage cm, height=\largeimage cm]{2007_10_31_cleaned_close_7cm_00000_Conv_8bit}
+}
+\path(10,-1.5)++(\largeimage,0);
+\put( 10,-1.5){%
+\includegraphics[width=\largeimage cm]{OriginProfilLaser}
+}
+\path(10+0.5*\largeimage,-1.5)++(0,0.1)node[below, scale=1]{\mm{}};
+\draw[yellow](10,1.98)--++(\largeimage,0);
+
+\fill(\posmun+\posmun+2+0.2,-1)rectangle++(-0.2,2)node[above]{CCD};
+
+\begin{scope}[xshift=10cm,yshift=-3cm]
+%\tkzInit[xmin=-\zmax,xmax=\zmax,ymin=-\ymax,ymax=\ymax]
+%\tkzX[label=$z$, orig, noticks]
+%\tkzY[label=$r$, noticks]
+%\tkzFct[samples = 200,color = red](-\zmax..\zmax)
+%{\yscale*\temzz}
+%\tkzFct[samples = 200,color = red](-\zmax..\zmax)
+%{-\yscale*\temzz}
+%\node[] at (\zmax-1.4,\ymax) {$\wz$};
+\end{scope}
+
+\end{tikzpicture}
+
+\end{document}

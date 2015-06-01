@@ -1,0 +1,79 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[xscale=1, yscale=1]
+
+\def\dimP{2}
+\def\distAB{9}
+\def\Rball{0.3}
+
+\tkzInit[xmin=-\dimP,xmax=\dimP,ymin=-0.1,ymax=3]
+\tkzFct[samples = 300,color = red, lw=1.5pt](-\dimP..\dimP){\x**2}
+\node[] at (0,-0.19){+};
+\node[below] at (0,-0.19) {$A$};
+\shade[ball color=blue](0,\Rball)circle(\Rball);
+
+\draw[-latex', very thick](\dimP,\dimP)--(\distAB-\dimP,\dimP)
+node[below, midway]{};
+\draw[-latex', very thick](\dimP,-\dimP)--(\distAB-\dimP,-\dimP)
+node[below, midway]{};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{scope}[xshift=2 cm]
+%\tkzInit[xmin=-\dimP,xmax=\dimP,ymin=-0.1,ymax=4]
+%\tkzFct[samples = 300,color = red, lw=1.5pt](-\dimP..\dimP){\x**2}
+%\node[] at (0,-0.19){+};
+%\node[below] at (0,-0.19) {$B$};
+%
+%\shade[ball color=blue, opacity=0.2](0.75*\dimP-\Rball,\dimP+\Rball)++(\Rball/3,\Rball)circle(\Rball);
+%\shade[ball color=blue, opacity=0.2](0.75*\dimP-\Rball,\dimP+\Rball)++(0.5*\Rball/3,0.5*\Rball)circle(\Rball);
+%\shade[ball color=blue](0.75*\dimP-\Rball,\dimP+\Rball)circle(\Rball);
+%
+%\draw[latex'-latex']
+%(-0.75*\dimP+\Rball,\dimP+\Rball)++(\Rball,-1.5*\Rball)
+%.. controls (0,\Rball/2)  ..
+%++(1.5*\dimP-4*\Rball,0);
+%\end{scope}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{scope}[xshift=\distAB cm]
+\tkzInit[xmin=-\dimP,xmax=\dimP,ymin=-0.1,ymax=3]
+\tkzFct[samples = 300,color = red, lw=1.5pt](-\dimP..\dimP){\x**2}
+\node[] at (0,-0.19){+};
+\node[below] at (0,-0.19) {$B$};
+
+\shade[ball color=blue, opacity=0.2](0.75*\dimP-\Rball,\dimP+\Rball)++(\Rball/3,\Rball)circle(\Rball);
+\shade[ball color=blue, opacity=0.2](0.75*\dimP-\Rball,\dimP+\Rball)++(0.5*\Rball/3,0.5*\Rball)circle(\Rball);
+\shade[ball color=blue](0.75*\dimP-\Rball,\dimP+\Rball)circle(\Rball);
+
+\draw[latex'-latex']
+(-0.75*\dimP+\Rball,\dimP+\Rball)++(\Rball,-1.5*\Rball)
+.. controls (0,\Rball/2)  ..
+++(1.5*\dimP-4*\Rball,0);
+\end{scope}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{scope}[yshift=-0.19cm]
+\tkzInit[xmin=-\dimP,xmax=9.3,ymin=-0,ymax=4]
+\tkzX[label=$z$,noticks]%, poslabel = -2.5ex]
+\end{scope}
+
+\path(-1,-2.6);
+\put(-1.4,-2.6){
+	\put(\distAB,0){\includegraphics[width=3.4cm]{watersplash}}
+	\includegraphics[width=3.4cm]{waterNOsplash}
+}
+
+\end{tikzpicture}
+
+\end{document}

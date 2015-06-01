@@ -1,0 +1,51 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[yscale=0.6, auto]
+\def\XYmax{3}
+\def\Zmin{-7}
+\def\Zmax{7}
+\def\Znuage{-5}
+\def\Taillenuage{0.5}
+\def\Lnuage{0.3}
+\def\Zccd{7.5}
+\def\Tailleccd{2}
+\def\Taillelentille{3}
+\def\Zlentille{0}
+\def\LongPhoton{1}
+
+\tkzInit[xmin=-6,xmax=\Zccd,ymin=-3,ymax=3]
+
+\shade[inner color=black!80,outer color=black!00] 
+(\Znuage,0) ellipse(\Lnuage cm and \Taillenuage cm)
+++(0,\Taillenuage)node[above, left]{nuage};
+
+\draw[very thick, dotted](\Znuage,-\Tailleccd)--(\Znuage,\Tailleccd)node[above]{plan objet};
+
+\draw[angle 90-angle 90, very thick]
+(\Zlentille,-\Taillelentille)--(\Zlentille,\Taillelentille)node[above left]{lentille $\Lentille$};
+\draw[line width = 2mm]
+(\Zccd,-\Tailleccd)--(\Zccd,\Tailleccd)node[above left]{CCD};
+
+
+\draw[latex'-latex'](\Znuage,-1.1*\Taillenuage)--(\Zlentille,-1.1*\Taillenuage)node[pos=0.5,below]{$\NuageLentille$};
+\draw[latex'-latex'](\Zlentille,-\Tailleccd/2)--(\Zccd,-\Tailleccd/2)node[pos=0.5,below]{$\LentilleCCD$};
+\draw[latex'-latex'](\Zlentille+0.5,0)--++(0,\Taillelentille)node[pos=0.5,right]{$\RLentille$};
+
+\draw[red](\Znuage,\Taillenuage)--(\Zlentille,0)--(\Zccd, \Taillenuage*\Zccd/\Znuage);
+\draw[red](\Znuage,\Taillenuage)--(\Zlentille,2*\Taillenuage)--(\Zccd, \Taillenuage*\Zccd/\Znuage);
+\draw[red](\Znuage,\Taillenuage)--(\Zlentille,\Taillenuage)--(\Zccd, \Taillenuage*\Zccd/\Znuage);
+
+\tkzX[label=$z$, orig, noticks, lw=1.2pt]
+
+\end{tikzpicture}
+
+\end{document}

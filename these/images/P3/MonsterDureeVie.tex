@@ -1,0 +1,24 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=1.2]
+%\footnotesize 
+
+\put(0,0){\includegraphics[scale=1.2]{OriginDureeVie}}
+\path(5,3.8);
+
+\draw (2.5,0) node[below=-1.5mm]{$\tfin[\seconde{}]$};
+\draw (0,2) node[rotate=90, above=-1mm]{nombre d'atomes};
+\draw (3,1.75)--++(0.5,1) node[above, text width=2.2cm]{décroissance exponentielle};
+
+\end{tikzpicture}
+
+\end{document}

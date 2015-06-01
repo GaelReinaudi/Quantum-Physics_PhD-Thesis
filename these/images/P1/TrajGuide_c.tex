@@ -1,0 +1,53 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}
+
+
+\def\scale{1.8}
+\def\Revap{\scale*0.7}
+\def\AxeCourt{(0.5*\scale)}
+\def\AxeLong{(0.8*\scale)}
+\def\tours{3}
+\def\anglepartour{(15*3.14/180)}
+\def\angleini{(30*3.14/180)}
+\def\angleenplus{0.4}
+
+\pgfmathparse{{1*
+\AxeCourt*sin(\angleenplus*57)*cos(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)+\AxeLong*cos(\angleenplus*57)*sin(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)
+}}
+\let\Xini\pgfmathresult
+
+\pgfmathparse{{1*
+\AxeLong*cos(\angleenplus*57)*cos(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)-\AxeCourt*sin(\angleenplus*57)*sin(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)
+}}
+\let\Yini\pgfmathresult
+
+\tkzInit[xmin=-\scale,xmax=\scale,ymin=-\scale,ymax=\scale]
+\tkzX[noticks]
+\tkzY[noticks]
+
+\tkzFctPar[samples=200, color=blue, lw=0.6](\angleenplus..-2*3.14*\tours){
+\AxeCourt*sin(\t)*cos(\t*\anglepartour/2/3.14+\angleini)
++\AxeLong*cos(\t)*sin(\t*\anglepartour/2/3.14+\angleini)
+}{
+\AxeLong*cos(\t)*cos(\t*\anglepartour/2/3.14+\angleini)
+-\AxeCourt*sin(\t)*sin(\t*\anglepartour/2/3.14+\angleini)
+}
+
+
+\shade[ball color=blue] (\Xini,\Yini) circle (0.15cm);
+
+\draw[red, opacity=0.5, line width=2pt, dashed] (0,0) circle (\Revap);
+
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,54 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[xscale=0.88, yscale=0.6]
+
+\def\amplgraphe{2.1}
+\def\taillnuage{0.25}
+\def\amplB{1.75}
+\def\amplA{(\amplB-\taillnuage)}
+\def\amplAA{(\amplB-\taillnuage/2)}
+\def\amplC{(\amplB+\taillnuage/2)}
+\def\amplCC{(\amplB+\taillnuage)}
+\def\coeffpulse{0}
+\newcommand{\ppulse}[1]{(4 
+/ (1+\coeffpulse*(#1/\amplB)**2)
+* (1+\coeffpulse*(\amplB/\amplB)**2))}
+
+\tkzInit[xmin=0,xmax=13,ymin=-\amplgraphe,ymax=\amplgraphe]
+\tkzFct[samples = 500,color = green](0..13){        \amplA*cos(  \ppulse{\amplA}* \x   ) }
+\tkzFct[samples = 500,color = green!50!blue](0..13){\amplAA*cos( \ppulse{\amplAA}  * \x) }
+\tkzFct[samples = 500,color = blue ](0..13){        \amplB*cos(  \ppulse{\amplB}* \x   ) }
+\tkzFct[samples = 500,color = blue!50!red ](0..13){\amplC*cos(   \ppulse{\amplC} * \x  ) }
+\tkzFct[samples = 500,color = red  ](0..13){      \amplCC*cos(   \ppulse{\amplCC} * \x ) }
+
+\tkzX[label=$t$,noticks]%, poslabel = -2.5ex]
+\tkzY[label=$z$,noticks]%, poslabel = -2.5ex]
+
+\begin{scope}[xshift=-1.5cm, yshift=-1.5 cm]
+\tkzInit[xmin=-1,xmax=0.7,ymin=-0.1,ymax=3.5]
+\tkzX[label=$z$,noticks]%, poslabel = -0.5ex]
+\tkzY[label=$\Uh$,noticks]%, poslabel = -0.2ex]
+
+\tkzInit[xmin=-1.2,xmax=1.2,ymin=-0.1,ymax=3.5]
+\tkzFct[samples = 100,color = black](-2..2){6*\x**2}
+%\tkzFct[samples = 100,color = black](-2..2){6*\x**2/(1+\x**2)}
+
+%\begin{scope}[]
+\shade[ball color=red](0.7,2.7)
+circle(7pt and 10pt);
+%\end{scope}
+
+\end{scope}
+
+\end{tikzpicture}
+
+\end{document}

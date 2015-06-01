@@ -1,0 +1,41 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\sc{2.3}
+\begin{tikzpicture}
+
+\useasboundingbox (-\sc*0.1,-\sc*.13) rectangle (\sc*5.7,\sc*2.0);
+\put(0,0){\includegraphics[scale=\sc]{OriginEvolutionNC}}
+
+\draw (\sc*2.6,\sc*0) node[below=-2mm]{$\Ncol$};
+
+\draw (\sc*0.8,\sc*1.0) node[rotate=30, right]{Jet non collisionnel};
+\draw (\sc*2.27,\sc*1.0) node[rotate=30, right, text width=2cm]{Thermalisation partielle};
+\draw (\sc*3.3,\sc*1.0) node[rotate=30, right, text width=4cm]{Jet collisionnel};
+\draw (\sc*4.6,\sc*1.0) node[rotate=30, right, text width=2.9cm]{Dégénérescence accessible};
+
+\draw[dotted]  (\sc*2.27,\sc*0.28)--++(0,4);
+\draw[dotted]  (\sc*3.07,\sc*0.28)--++(0,4);
+\draw[dotted]  (\sc*4.36,\sc*0.28)--++(0,4);
+
+\node at (\sc*0.5,\sc*0.6){(1)};
+\node at (\sc*2.0,\sc*0.6){(2)};
+\node at (\sc*3.375,\sc*0.6){(3)};
+\node at (\sc*3.775,\sc*0.6){(4)};
+
+%\draw[snake=brace, thick, raise snake=0.0mm, segment amplitude=0.3cm]
+%(\sc*2.5,\sc*1.8)--(\sc*5,\sc*1.8) node[above=3mm, pos=0.5]{qdz};
+%\fill[color = red!30]
+%(\sc*2.5,\sc*1.8)rectangle(\sc*5,\sc*2.2);
+
+\end{tikzpicture}
+
+\end{document}

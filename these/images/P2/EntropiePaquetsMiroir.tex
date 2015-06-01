@@ -1,0 +1,70 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\eps{0.1}
+\def\zmax{5}
+\def\vmax{1.6}
+\def\oldvzero{1.5}
+\def\vzero{0.8}
+\def\deltav{0.3}
+\def\deltaz{0.1}
+\def\Dpat{0.5}
+\def\Npat{5}
+\pgfmathparse{2*\deltaz/\Dpat}
+\let\ratio\pgfmathresult
+
+\footnotesize
+
+\begin{tikzpicture}[scale=1]
+
+\tkzInit[xmin=0,xmax=\zmax,ymin=0,ymax=\vmax]
+\tkzX[label=$z$, orig, noticks]%, poslabel=-2.5ex]
+\tkzY[label=$\vz$, noticks]
+
+\foreach \dd in {0,\Dpat,...,\zmax}
+{
+\path[fill=blue] 
+(\dd+\Dpat,\vzero)
+++(-\deltaz,-\deltav)
+--++(0,2*\deltav)
+--++(2*\deltaz,0) 
+--++(0,-2*\deltav)
+--cycle;
+}
+\foreach \dd in {0}
+{
+\path[fill=blue] 
+(\dd,\oldvzero)
+++(-\deltaz,-\deltav)
+--++(0,2*\deltav)
+--++(2*\deltaz,0) 
+--++(0,-2*\deltav)
+--cycle;
+}
+\draw[red, -latex', line width=1pt]
+(\deltaz, \oldvzero)
+..controls+(.3,0)and+(0,.3)
+..(\Dpat,\vzero+\deltav);
+
+\draw[latex'-latex'](\Dpat, \vzero-\deltav-\eps)--++(\Dpat,0)node[below, pos=0.5]{$\distpat$};
+
+
+\draw[snake=brace, segment amplitude=0.051cm]%] 
+(-\deltaz-\eps,\oldvzero-\deltav) -- (-\deltaz-\eps,\oldvzero+\deltav)
+node[left, pos=0.5]{ $\DeltaVPaquet$};
+
+\draw[snake=brace, segment amplitude=0.051cm]%] 
+(+\deltaz,\oldvzero-\deltav-\eps) -- (-\deltaz,\oldvzero-\deltav-\eps)
+node[below left, pos=0.5]{ $\DeltaZPaquet$};
+
+\end{tikzpicture}
+
+\end{document}

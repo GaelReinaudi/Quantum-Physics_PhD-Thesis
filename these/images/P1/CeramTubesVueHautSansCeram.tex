@@ -1,0 +1,71 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[xscale=1.2,yscale=1]
+
+
+\def\xmax{2.3}
+\def\zmax{2.6}
+\def\numFlecheZ{10}
+\def\numFlecheX{5}
+
+\tkzInit[xmin=-5,xmax=3.9,ymin=-2.7,ymax=2.3]
+\useasboundingbox (-4.5,-2.4) rectangle (4.5,2.4);
+\tkzX[label=$z$, orig, noticks]
+%\tkzY[label=$x$, noticks]
+
+\fill[opacity=0.3](-2*\zmax,\xmax-0.6)rectangle++(4*\zmax,0.5);
+%\draw[very thick, latex'-](\zmax-1,\xmax+0.2)--++(1,0) node[right, pos=1, black]{$I$};
+\fill[opacity=0.3](-2*\zmax,-\xmax+0.6)rectangle++(4*\zmax,-0.5);
+%\draw[very thick, -latex'](\zmax-1,-\xmax-0.2)--++(1,0) node[right, pos=1, black]{$I$};
+\tkzInit[xmin=-4.3,xmax=4.2,ymin=-2.7,ymax=2.3]
+\tkzFct[samples = 200,color = red](-6..6)
+{1
+*(1*(atan((\zmax+\x)/(2*\zmax/\numFlecheZ)-\numFlecheZ/5)+3.14/2)/3.14)
+*(1*(atan((\zmax-\x)/(2*\zmax/\numFlecheZ)-\numFlecheZ/5)+3.14/2)/3.14)
+}
+
+
+\pgfmathsetseed{15}
+\def\numAt{13}
+\def\sizeCloud{0.1}
+\foreach \xx in {1,...,\numAt}{
+\foreach \yy in {1,...,\numAt}{
+\pgfmathparse{1*(rand)*4.2}
+\let\XX\pgfmathresult
+\pgfmathparse{1*(rand)*\sizeCloud}
+\let\YY\pgfmathresult
+\pgfmathparse{1
+*(1*(atan((\zmax+\XX)/(2*\zmax/\numFlecheZ)-\numFlecheZ/5)+180/2)/180)
+*(1*(atan((\zmax-\XX)/(2*\zmax/\numFlecheZ)-\numFlecheZ/5)+180/2)/180)
+}
+\let\Dev\pgfmathresult
+
+\shade[ball color=blue] (\XX,\YY+\Dev) circle (0.05cm);
+}}
+
+\def\Rayy{1.1}
+\def\Devv{0.8}
+
+%\fill[blue](-0.5,\xmax-0.6)rectangle(0.5,\Rayy);
+%\fill[blue](-0.5,-\xmax+0.6)rectangle(0.5,-\Rayy);
+%
+%\draw[latex'-latex'](-0.5,-\Rayy+0.2)--++(1,0)node[pos=0.5, above left]{$\CeramLong=\mm{5}$};
+%\draw[latex'-latex'](0.7,-\Rayy)--(0.7,0)node[pos=0.5, right]{$\CeramRay=\mm{1,5}$};
+
+\draw[latex'-latex'](0,0)--(0,\Devv)node[pos=0.5, left]{$\Devi$};
+
+%\draw[dotted](0,\Rayy)--++(2,0) (0,\Devv)--++(2,0);
+%\draw[latex'-latex'](2,0.8)--(2,\xmax-0.6-0.6)node[pos=0.5, right]{$\CeramDist \equiv \CeramRay-\Devi$};
+
+\end{tikzpicture}
+
+\end{document}

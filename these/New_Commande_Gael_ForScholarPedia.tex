@@ -1,0 +1,452 @@
+\newcommand{\LO}{{\lambda}}%_{\rm 0}}}
+\newcommand{\Irz}{I(r,z)}
+\newcommand{\temzz}{{TEM$_{00}$}\xspace}
+\newcommand{\wzero}{{w_0}}
+\newcommand{\zR}{{z_{\rm R}}}
+\newcommand{\wz}{{w(z)}}
+\newcommand{\wzexpr}{\wzero\,\sqrt{1+ \left( \frac{z}{\zR} \right)^2 }}
+\newcommand{\zRexpr}{{\pi\,\frac{\wzero^2}{\LO}}}
+
+\newcommand{\Udip}{{U_{\rm dip}}}
+\newcommand{\Udiph}{{U_{\rm h}}}
+\newcommand{\Udiphxyz}{{U_{\rm h}\xyz}}
+\newcommand{\Udipxyz}{{U_{\rm dip}\xyz}}
+\newcommand{\Uprof}{{{U_0}}}
+\newcommand{\Pmin}{{P_{\rm min}}}
+\newcommand{\Ptrans}{{P_{\rm f}}}
+\newcommand{\desacU}{{\Delta_{_{1}}}}
+\newcommand{\desacD}{{\Delta_{_{2}}}}
+\newcommand{\deseffcarre}{{\Delta_{_{12}}^{\hphantom{1}2}}}
+\newcommand{\Gammadif}{{\Gamma_{\rm dif}}}
+\newcommand{\dT}{{\Derive{T}{t}}}
+\newcommand{\tdT}{{\tDerive{T}{t}}}
+
+\newcommand{\PulsTrans}{{\omega_{r}}}
+\newcommand{\PulsLong}{{\omega_{z}}}
+\newcommand{\Uh}{{U_{\rm h}}}
+\newcommand{\zc}{{z_{\rm c}}}
+%\newcommand{\dzc}{{\stackrel{\centerdot}{\zc}}}
+\newcommand{\dzc}{{\dot{\zc}}}
+%\newcommand{\ddzc}{{\stackrel{\centerdot\centerdot}{\zc}}}
+\newcommand{\ddzc}{{\ddot{\zc}}}
+\newcommand{\dzct}{{\dzc(t)}}
+\newcommand{\ddzct}{{\ddzc(t)}}
+\newcommand{\ddzcn}{{\widehat{a}}}
+\newcommand{\tadim}{{u}}
+\newcommand{\ddzcnv}{{\ddzcn(\tadim)}}
+\newcommand{\zct}{{\zc(t)}}
+\newcommand{\tfin}{{T_{\rm f}}}
+\newcommand{\Fe}{{F_{\rm e}}}
+\newcommand{\zp}{{\tilde{z}}}
+\newcommand{\vp}{{\tilde{v}}}
+\newcommand{\zpt}{{\zp(t)}}
+\newcommand{\vpt}{{\vp(t)}}
+\newcommand{\PulsUh}{{\omega}}
+\newcommand{\Aosc}{{\mathcal{A}}}
+\newcommand{\AccZc}{A_{\rm m}}
+\newcommand{\VitZc}{{V_{\rm m}}}
+\newcommand{\DistZc}{{D}}
+\newcommand{\PulsLongLor}{{\omega_{z}^{\rm lor}}}
+\newcommand{\zmaxTraj}{{z_{\rm m}}}
+
+\newcommand{\OperR}{{\mathbf{\widehat{R}}}}
+\newcommand{\OperE}{{\mathbf{\widehat{E}}}}
+\newcommand{\OperP}{{\mathbf{\widehat{d}}}}
+\newcommand{\Evect}{{\Vecteur{E}}}
+\newcommand{\Pvect}{{\Vecteur{d}}}
+\newcommand{\Eampl}{{\widetilde{E}}}
+\newcommand{\Pampl}{{\widetilde{d}}}
+\newcommand{\Polarisation}{{\Vecteur{\epsilon_{_{\rm L}}}}}
+\newcommand{\Vcav}{{V_{\rm c}}}
+\newcommand{\Nph}{N}%{{N_{\rm ph}}}
+
+\newcommand{\Ener}{{\mathcal{E}}}
+\newcommand{\VAL}{{\mathbf{\widehat{V}_{\rm AL}}}}
+\newcommand{\EAL}{{\mathcal{\Ener}_{\rm AL}}}
+\newcommand{\omegaHF}{{\omega_{\rm hf}}}
+\newcommand{\AiN}{{{A_i, \Nph}}}
+\newcommand{\AjN}{{{A_j, \Nph'}}}
+%\newcommand{\AjNpm}{{{A_j, \Nph\pm1}}}
+\newcommand{\EcartMini}{{\Delta\Ener_{ij}}}
+\newcommand{\Eneri}{{\Ener_{i}}}
+\newcommand{\Enerj}{{\Ener_{j}}}
+\newcommand{\Deltaij}{{\omega_{ij}}}
+\newcommand{\EneriN}{{\Ener_{i\Nph}}}
+\newcommand{\EnerjN}{{\Ener_{j\Nph'}}}
+\newcommand{\PropUI}{\zeta}
+\newcommand{\polarindice}{{q}}
+
+
+
+\renewcommand{\unit}[1]{\ERREUR}
+\newcommand{\val}[1]{{\num{#1}}}
+\newcommand{\valpm}[2]{{\val{#1}\pm\val{#2}}}
+\newcommand{\SiPlusOuMoins}[3]{{\val{#1}\pm\SI{#2}{#3}}}
+\newcommand{\atparsec}[1]{\SI{#1}{{\rm at}\per\second}\xspace}
+\newcommand{\seconde}[1]{\SI{#1}{\second}}
+\newcommand{\rps}[1]{\SI{#1}{\radian\per\second}}
+\newcommand{\smun}[1]{\SI{#1}{\reciprocal\second}}
+\newcommand{\Hz}[1]{\SI{#1}{\hertz}}
+\newcommand{\Hzpm}[2]{\SiPlusOuMoins{#1}{#2}{\hertz}}
+\newcommand{\kHz}[1]{\SI{#1}{\kilo\hertz}}
+\newcommand{\atps}[1]{\SI{#1}{{\rm at}\per\second}\xspace}
+\newcommand{\atpcc}[1]{\SI{#1}{{\rm at}/{\rm cm}^3}\xspace}
+\newcommand{\m}[1]{\SI{#1}{\meter}\xspace}
+\newcommand{\mps}[1]{\SI{#1}{\meter\per\second}\xspace}
+\newcommand{\mpsc}[1]{\SI{#1}{\meter\per\square\second}\xspace}
+\newcommand{\cm}[1]{\SI{#1}{\centi\meter}\xspace}
+\newcommand{\mm}[1]{\SI{#1}{\milli\meter}\xspace}
+\newcommand{\micron}[1]{\SI{#1}{\micro\meter}\xspace}
+\newcommand{\nm}[1]{\SI{#1}{\nano\meter}\xspace}
+\newcommand{\ms}[1]{\SI{#1}{\milli\second}\xspace}
+\newcommand{\micros}[1]{\SI{#1}{\micro\second}\xspace}
+\newcommand{\nanos}[1]{\SI{#1}{\nano\second}\xspace}
+\newcommand{\cmps}[1]{\SI{#1}{\centi\meter\per\second}\xspace}
+\newcommand{\cmpspm}[2]{\SiPlusOuMoins{#1}{#2}{\centi\meter\per\second}\xspace}
+\newcommand{\mmps}[1]{\SI{#1}{\milli\meter\per\second}\xspace}
+\newcommand{\microK}[1]{\SI{#1}{\micro\kelvin}\xspace}
+\newcommand{\microKps}[1]{\SI{#1}{\micro\kelvin\per\second}\xspace}
+\newcommand{\microKpm}[2]{\SiPlusOuMoins{#1}{#2}{\micro\kelvin}\xspace}
+\newcommand{\microKpmicros}[1]{\SI{#1}{\micro\kelvin\per{\micro\second}}\xspace}
+\newcommand{\milliK}[1]{\SI{#1}{\milli\kelvin}\xspace}
+\newcommand{\gausspcm}[1]{\SI{#1}{{\rm G}/{\rm cm}}\xspace}
+\newcommand{\gauss}[1]{\SI{#1}{{\rm G}}\xspace}
+\newcommand{\eV}[1]{\SI{#1}{\electronvolt}\xspace}
+\newcommand{\W}[1]{\SI{#1}{\watt}\xspace}
+\newcommand{\mW}[1]{\SI{#1}{\milli\watt}\xspace}
+\newcommand{\Wpcmc}[1]{\SI{#1}{\watt\per\square{\centi\meter}}\xspace}
+\newcommand{\mWpcmc}[1]{\SI{#1}{\milli\watt\per\square{\centi\meter}}\xspace}
+
+\newcommand{\HH}[1]{(((#1) + abs(#1))/(2*(#1)))}
+\newcommand{\HHsmooth}[1]{((#1)/(sqrt(((#1*2)*(#1*2)+1)))+0.5)}
+
+
+\newcommand{\pointformule}{\, .}
+\newcommand{\virguleformule}{\, ,}
+\newcommand{\ua}{{\rm u.a.}}
+
+\newcommand{\xy}{\ensuremath{(x,y)} }
+\newcommand{\xyz}{\ensuremath{(x,y,z)} }
+\newcommand{\xpyp}{\ensuremath{(x',y')} }
+\newcommand{\xpypzp}{\ensuremath{(x',y',z')} }
+
+\newcommand{\OrbitalS}{{\ensuremath{5^2 {\rm S}_{{1}/{2}}}}}
+\newcommand{\OrbitalP}{{\ensuremath{5^2 {\rm P}_{{3}/{2}}}}}
+\newcommand{\OrbitalPJun}{{\ensuremath{5^2 {\rm P}_{{1}/{2}}}}}
+\newcommand{\OrbitalPJdeux}{{\ensuremath{5^2 {\rm P}_{{3}/{2}}}}}
+\newcommand{\OrbitalSJ}{{\ensuremath{{\rm S}_{{1}/{2}}}}}
+\newcommand{\Ket}[1]{{\left| {#1} \right\rangle}}
+\newcommand{\Bra}[1]{{\left\langle  {#1} \right|}}
+\newcommand{\BraOpKet}[3]{{\left\langle #1\vphantom{#1#3} \right| #2 \left| #3\vphantom{#1#3} \right\rangle}}
+\newcommand{\BraAbsKet}[3]{{\left\langle #1\vphantom{#1#3} \right\| #2 \left\| #3\vphantom{#1#3} \right\rangle}}
+\newcommand{\BraKet}[2]{{\left\langle #1\vphantom{#1#2} \right| \left. #2 \vphantom{#1#2} \right\rangle}}
+\newcommand{\Etat}[1]{{\Ket{#1}}}
+\newcommand{\mF}{{m_{_F}}}
+\newcommand{\gF}{{g_{_F}}}
+\newcommand{\FmF}[2]{{F=#1 , \mF=#2}}
+\newcommand{\EtatFmF}[2]{\ensuremath{\Etat{ \FmF{#1}{#2} }}}
+\newcommand{\EtatF}[1]{\ensuremath{\Etat{ F=#1 }}}
+\newcommand{\EtatSFmF}[2]{\ensuremath{\Etat{\OrbitalS, \FmF{#1}{#2} }}}
+\newcommand{\EtatSF}[1]{\ensuremath{\Etat{\OrbitalS, F=#1 }}}
+\newcommand{\EtatPFmF}[2]{\ensuremath{\Etat{\OrbitalP, \FmF{#1}{#2} }}}
+\newcommand{\EtatPF}[1]{\ensuremath{\Etat{\OrbitalP, F=#1 }}}
+
+\newcommand{\lambdaDB}{{\lambda_{\rm dB}}}
+\newcommand{\vrecul}{{v_{\rm rec}}}
+\newcommand{\Trecul}{{T_{\rm rec}}}
+\newcommand{\TDoppler}{{T_{\rm Dop}}}
+
+\newcommand{\TransCycle}{{\ensuremath{\EtatSF{2} \longrightarrow \EtatPF{3}}}}
+\newcommand{\TransOpen}{{\ensuremath{\EtatSF{1} \longrightarrow \EtatPF{2}}}}
+
+\newcommand{\nurf}{{\nu_{\rm rf}}}
+\newcommand{\numo}{{\nu_{\rm mo}}}
+\newcommand{\Rrf}{{R_{\rm rf}}}
+\newcommand{\Rnurf}{{R\left( \nurf \right)}}
+\newcommand{\etaexpr}{{\frac{h\,\nurf - \mu\,\Bpara}{\kb\,\Ttrans}}}
+\newcommand{\alphaexpr}{{\frac{\mu\,\Bpara}{\kb\,T}}}
+\newcommand{\Lantenne}{{{\Delta Z}_{\rm ant}}}
+\newcommand{\Ncol}{{N_{\hspace{-1pt}\rm c}}}
+\newcommand{\Lguide}{{L}}%_{\rm g}}}
+\newcommand{\Hpente}{{H}}
+
+\newcommand{\Ham}{{\mathcal{H}}}
+\newcommand{\mRb}{{m_{_{\rm Rb}}}}
+
+\newcommand{\vectr}{\vec{r}}
+\newcommand{\vectu}{\vec{u}}
+\newcommand{\vectB}   {{\Vecteur{B}}}
+\newcommand{\vectBr}  {{\Vecteur{B}\left( \vectr \right)}}
+\newcommand{\vectBxyz}{{\Vecteur{B}\xyz}}
+\newcommand{\modB}{{\Module{\vectB}}}
+\newcommand{\modBr}{{\Module{\vectBr}}}
+
+\newcommand{\kb}{{k_{_{\rm B}}}}
+\newcommand{\muB}{\mu_{\rm B}}
+\newcommand{\const}{{\mbox{const}}}
+\newcommand{\cc}{{\mbox{\textit{c.c.}}}}
+
+\newcommand{\Nlong}{n}
+\newcommand{\Nlongini}{\Nlong_{\rm i}}
+\newcommand{\Tlong}{T_{z}}
+\newcommand{\Ttrans}{T_{\bot}}
+\newcommand{\Tlongini}{\Tlong^{\rm i}}
+\newcommand{\Tlongfin}{\Tlong^{\rm f}}
+\newcommand{\Tini}{T_{\rm i}}
+\newcommand{\Tfin}{T_{\rm f}}
+\newcommand{\Ti}{T_{\rm i}}
+\newcommand{\Tf}{T_{\rm f}}
+\newcommand{\Teq}{T_{\rm eq}}
+\newcommand{\Teqini}{\Ti}
+\newcommand{\Teqfin}{\Tf}
+
+\newcommand{\expoNue}[1]{\mathrm{e}^{\left.#1\right.}}
+\newcommand{\expo}[1]{\expoNue{#1}}
+\newcommand{\Expo}[1]{\exp \hspace{-2pt} \left(#1\right)}
+\newcommand{\Ln}[1]{{\ln\left(#1\right)}}
+\newcommand{\Dirac}[1]{\DIRAC{#1}}
+\newcommand{\DIRAC}[1]{\delta \hspace{-3pt} \left[ #1\larger{#1} \right]}
+\newcommand{\Heaviside}[1]{\Theta \hspace{-3pt} \left[ #1\larger{#1} \right]}
+
+\newcommand{\MoyenneBraKet}[1]{\left\langle #1 \right\rangle}
+\newcommand{\Moyenne}[1]{\overline{#1}}
+
+\newcommand{\im}{{i}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ddint}{\, \dd}
+\newcommand{\Diff}[1]{{\dd #1}}
+\newcommand{\dx}{{\Diff{x}}}
+\newcommand{\dy}{{\Diff{y}}}
+\newcommand{\dz}{{\Diff{z}}}
+\newcommand{\dxy}{{\dx\,\dy}}
+\newcommand{\dxyz}{{\dx\,\dy\,\dz}}
+\newcommand{\Derive}[2]{{\frac{\dd #1}{\dd #2}}}
+\newcommand{\tDerive}[2]{{\tfrac{\dd #1}{\dd #2}}}
+\newcommand{\ttDerive}[2]{{\ttfrac{\dd #1}{\dd #2}}}
+\newcommand{\Integrale}[2]{{\int{#1} \, #2}}
+
+\newcommand{\Reelle}[1]{{\mathop{\mathrm{Re}}\left[#1\right]}}
+\newcommand{\Imaginaire}[1]{{\mathop{\mathrm{Im}}\left[#1\right]}}
+
+\newcommand{\larger}[1]{\vphantom{{#1}_A^A}}
+
+\newcommand{\Avec}[2]{{{\left.#1 \larger{\larger{#1}}\right\rvert }_{#2}}}
+\newcommand{\AvecTexte}[2]{{\Avec{#1}{\mbox{\scriptsize{#2}}}}}
+
+\newcommand{\IntegraleBornes}[4]{\int_{#3}^{#4}#1 \, #2}
+
+\newcommand{\Operateur}[1]{\widehat{#1}}
+\newcommand{\Vecteur}[1]{\overrightarrow{#1}}
+\newcommand{\vVecteur}[3]{\begin{pmatrix} {#1}\\{#2}\\{#3} \end{pmatrix}}
+\newcommand{\vVecteurXYZ}[1]{\begin{pmatrix} {#1}_{x}\\{#1}_{y}\\{#1}_{z} \end{pmatrix}}
+%\newcommand{\Module}[1]{{\left\lvert #1 \right\rvert}}
+\newcommand{\Module}[1]{{\left\lvert{#1}{\vphantom{{#1}^2}}\right\rvert}}
+\newcommand{\Fourier}[1]{{\vphantom{\Bigl[\Bigr.}}{\mathcal{F}\bigl[{#1}\bigr]}}
+
+\newcommand{\Gradient}[1]{\Vecteur{\nabla} \left( #1 \right) }
+\newcommand{\Divergence}[1]{\Vecteur{\nabla} \cdot #1 }
+
+\newcommand{\Npat}{N_{\rm p}}
+
+\newcommand{\tcol}{t_{\mathrm {col}}}
+
+%\newcommand{\taucol}{\tau_{\mathrm {col}}}
+
+\newcommand{\Eat}{\Ener}
+\newcommand{\Eatini}{\Eat_{\rm i}}
+\newcommand{\Eatfin}{\Eat_{\rm f}}
+
+\newcommand{\zsonde}{{z_{\rm s}}}
+
+\newcommand{\Lcol}{\mathcal{L}_{\rm c}}
+\newcommand{\Tcol}{\mathcal{T}_{\rm c}}
+%\newcommand{\Trep}{{\tau_{\rm rep}}}
+\newcommand{\Trep}{\tau}
+\newcommand{\Trepmin}{{\Trep_{_{\hspace{-2pt} \rm min}}}}
+
+\newcommand{\vinj}{v_{{\rm {inj}}}}
+\newcommand{\vmoy}{{\Moyenne{v}}}
+\newcommand{\distpat}{{D_{\rm p}}}
+\newcommand{\distpatapres}{{\distpat'}}
+\newcommand{\nmoyz}{{\Moyenne{n_z}}}
+\newcommand{\rhomoyz}{{\Moyenne{\rho_z}}}
+\newcommand{\vat}{v_{\mathrm {at}}}
+\newcommand{\vini}{v_{0}}
+\newcommand{\vinicol}{\vini^{\rm col}}
+
+\newcommand{\vmax}{{v_{\mathrm {max}}}}
+\newcommand{\vatini}{{v_{\mathrm {at}}^{\rm i}}}
+\newcommand{\vatfin}{{v_{\mathrm {at}}^{\rm f}}}
+\newcommand{\vjet}{{\overline{v_z}}}
+\newcommand{\deltavjet}{{\Delta v_z}}
+\newcommand{\vjetini}{{\overline{v_{\rm i}}}}
+\newcommand{\vjetfin}{{\overline{v_{\rm f}}}}
+\newcommand{\sinalpha}{{\sin(\alpha)}}
+
+\newcommand{\DeltaZPaquet}{{2\,\Delta {z}}}
+\newcommand{\DeltaVPaquet}{{2\,\Delta {v}}}
+
+\newcommand{\flux}{{\Phi}}
+\newcommand{\fluxapres}{{\flux'}}
+\newcommand{\rapflux}{{\varphi}}
+\newcommand{\gammacol}{{\gamma_{\rm c}}}
+\newcommand{\gammacolapres}{{\gammacol'}}
+\newcommand{\njet}{{n}}
+\newcommand{\njetaxe}{{n_{0}}}
+\newcommand{\rhojetaxe}{{\rho_{0}}}
+\newcommand{\rhojetaxeapres}{{\rhojetaxe'}}
+\newcommand{\Emoy}{\Moyenne{\Ener}}
+\newcommand{\Emoyapres}{\Moyenne{\Ener'}}
+\newcommand{\etalim}{{\eta_{\rm lim}}}
+
+\newcommand{\Distrib}{\mathcal{D}}
+\newcommand{\Distribini}{\Distrib_0}
+\newcommand{\fjet}{{f}}
+\newcommand{\fjetPara}{{\fjet_{z}}}
+\newcommand{\fjetTrans}{{\fjet_{\bot}}}
+\newcommand{\vx}{{v_{ x}}}
+\newcommand{\vy}{{v_{ y}}}
+\newcommand{\vz}{{v_{ z}}}
+\newcommand{\vtrans}{{v_{\rm \bot}}}
+\newcommand{\Lz}{{L_{ z}}}
+\newcommand{\Etrans}{{E_{\rm \bot}}}
+\newcommand{\Bx}{{B_{ x}}}
+\newcommand{\By}{{B_{ y}}}
+\newcommand{\Bz}{{B_{ z}}}
+\newcommand{\Btrans}{{B_{\rm \bot}}}
+\newcommand{\Btransmax}{{B_{\rm \bot}^{\rm max}}}
+\newcommand{\Btransguide}{{B_{\rm \bot}^{\rm g}}}
+
+\newcommand{\Bpara}{{B_0}}
+\newcommand{\Bparamir}{{B_0^{\rm mir}}}
+
+\newcommand{\espTubes}{a}
+\newcommand{\gradB}{{b'}}
+\newcommand{\Ulin}{{U_{\rm lin}}}
+\newcommand{\Uhyp}{{U_{\rm hyp}}}
+\newcommand{\Upar}{{U_{\rm par}}}
+
+\newcommand{\Rdef}{{{R_0}}}
+\newcommand{\Udef}{{{U_0}}}
+
+\newcommand{\zat}{z_{\mathrm {at}}}
+
+\newcommand{\Vmir}{V_{\rm {m}}}
+\newcommand{\Vmiropt}{{\Vmir^\ast}}
+\newcommand{\Zmir}{Z_{\mathrm {m}}}
+\newcommand{\Zmirini}{\Zmir^{\mathrm i}}
+\newcommand{\EpMir}{{\delta_{\rm m}}}
+\newcommand{\vrel}{{v_{\rm r}}}
+\newcommand{\vfin}{{v_{\rm f}}}
+\newcommand{\Rmax}{R}%_{\rm max}}
+
+\newcommand{\Dz}{{\Delta z}}
+\newcommand{\Dzini}{{\Delta {z}}}
+\newcommand{\Dv}{{\Delta v}}
+
+\newcommand{\omegaL}{{\omega_{_{\rm L}}}}
+
+\newcommand{\rhomoypat}{\AvecTexte{\rhomoyz}{\p}}
+\newcommand{\rhomoypente}{\AvecTexte{\rhomoyz}{pente}}
+\newcommand{\rhomoylibre}{\AvecTexte{\rhomoyz}{libre}}
+\newcommand{\rhomoymiroir}{\AvecTexte{\rhomoyz}{miroir}}
+\newcommand{\rhomoyp}{\rho_{\rm p}}
+\newcommand{\rhomoym}{\rho'}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% Imagerie
+
+\newcommand{\Nbit}{{N_{\rm b}}}
+\newcommand{\Signal}{{\mathcal{S}}}
+\newcommand{\SignalMax}{{\mathcal{S}_{\rm max}}}
+\newcommand{\SignalMin}{{\mathcal{S}_{\rm min}}}
+\newcommand{\SignalPas}{{\delta \mathcal{S}}}
+
+\newcommand{\Epix}{{E_{\rm pix}}}
+\newcommand{\Lpix}{{L_{\rm pix}}}
+
+\newcommand{\Grandis}{{\gamma}}
+\newcommand{\TPulse}{{\tau}}
+\newcommand{\PLaser}{{P_{_{\rm L}}}}
+\newcommand{\AttenOptique}{{\eta}}
+
+\newcommand{\Iccd}{{I_{_{\hspace{-1pt}{\rm CCD}}}}}
+\newcommand{\Iccdxy}{{\Iccd(x,y)}}
+\newcommand{\IccdxySansNuage}{{\AvecTexte{\Iccdxy}{sans nuage}}}
+\newcommand{\IccdxyAvecNuage}{{\AvecTexte{\Iccdxy}{avec nuage}}}
+\newcommand{\Ilaser}{{I}}
+\newcommand{\Ixy}{{\Ilaser\xy}}
+\newcommand{\Ixyz}{{\Ilaser\xyz}}
+\newcommand{\Iback}{{\Ilaser_{\rm bkg}}}
+\newcommand{\Ibackxy}{{\Iback\xy}}
+
+\newcommand{\Iin}{{\Ilaser_{\rm in}}}
+\newcommand{\Iinmax}{{\Ilaser_{\rm in}^{\rm max}}}
+\newcommand{\IPas}{{\delta \Ilaser}}
+\newcommand{\Iinxy}{{\Iin\xy}}
+\newcommand{\Iout}{{\Ilaser_{\rm out}}}
+\newcommand{\IoutPas}{{\delta \Iout}}
+\newcommand{\Ioutxy}{{\Iout\xy}}
+
+\newcommand{\dens}{{n}}
+\newcommand{\densxyz}{{\dens\xyz}}
+\newcommand{\denscol}{{{\rho_{\rm{c}}}}}
+\newcommand{\denscolxy}{{\denscol\xy}}
+
+\newcommand{\sat}{{s}}
+
+\newcommand{\seceff}{{\sigma_{_{\hspace{-1pt}{0}}}}}
+\newcommand{\seceffsat}{{\sigma_{\hspace{-1pt}{\sat}}}}
+\newcommand{\Isat}{{I^{\rm sat}_{0}}}
+\newcommand{\IsurIsat}{{\dfrac{\Ilaser}{\Isat}}}
+\newcommand{\IsurIsatxyz}{{\dfrac{\Ixyz}{\Isat}}}
+\newcommand{\Idif}{{I_{\rm dif}}}
+\newcommand{\Idifxyz}{{\Idif\xyz}}
+\newcommand{\Pdif}{{\mathcal{P}_{\rm dif}}}
+\newcommand{\Pdifxyz}{{\mathcal{P}_{\rm dif}\xyz}}
+
+\newcommand{\seceffeff}{{\sigma_{_{\hspace{-2pt}{\rm eff}}}}}
+\newcommand{\Isateff}{{I^{\rm sat}_{_{\hspace{-2pt}{\rm eff}}}}}
+
+\newcommand{\Dlibre}{{\ell}}
+\newcommand{\LZnuage}{{L_{\rm z}}}
+\newcommand{\Rnuage}{{R}}
+
+\newcommand{\texpo}{{\tau}}
+\newcommand{\PopuG}{{P_{\rm g}}}
+\newcommand{\PopuE}{{P_{\rm e}}}
+\newcommand{\PopuEmax}{{P_{\rm e}^{\rm max}}}
+\newcommand{\EtatG}{\ensuremath{\Etat{\rm g}}}
+\newcommand{\EtatE}{\ensuremath{\Etat{\rm e}}}
+\newcommand{\TransGE}{\ensuremath{\EtatG \longleftrightarrow \EtatE}}
+\newcommand{\energieGE}{{E_{\rm ge}}}
+
+\newcommand{\tSpont}{{\tau_{{\rm s}}}}
+\newcommand{\pulsSpont}{{\Gamma}}
+\newcommand{\pulsReso}{{\omega_{_{\hspace{-1pt}{\rm A}}}}}
+\newcommand{\pulsLaser}{{\omega_{_{\rm L}}}}
+\newcommand{\desac}{{\delta}}
+
+\newcommand{\Lentille}{{\mathcal{L}}}
+\newcommand{\RLentille}{{R_\mathcal{L}}}
+\newcommand{\NuageLentille}{{D_\Lentille}}
+\newcommand{\LentilleCCD}{{D_{_{\rm \hspace{-1pt} CCD}}}}
+\newcommand{\AngleSolide}{{\Omega}}
+\newcommand{\FractionAngleSolide}{{\frac{\AngleSolide}{4\,\pi}}}
+
+\newcommand{\nrefracImaginaire}{{n_{\rm ref}}}
+\newcommand{\nrefrac}{{\Reelle{\nrefracImaginaire}}}
+\newcommand{\nrefracxyz}{{\Reelle{\nrefracImaginaire\xyz}}}
+
+\newcommand{\deviR}{{\Delta R}}
+\newcommand{\ImperfVarie}{{\alpha}}
+\newcommand{\Imperf}{{\ImperfVarie^{*}}}
+\newcommand{\xyImperf}{{(x,y;\Imperf)}}
+\newcommand{\xyImperfVarie}{{(x,y;\ImperfVarie)}}
+\newcommand{\OptDens}{{ O\hspace{-2pt}D}}
+\newcommand{\OptProf}{{ po}}
+\newcommand{\OptDensMax}{{\OptDens}}
+\newcommand{\OptProfMax}{{\OptProf}}
+\newcommand{\OptProfExpr}{{\seceff\,\denscol}}
+\newcommand{\DeltaOP}{{\Delta \OptProf}}

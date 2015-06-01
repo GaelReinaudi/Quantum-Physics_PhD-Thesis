@@ -1,0 +1,27 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\sc{1.2}
+\begin{tikzpicture}
+
+\useasboundingbox (-\sc*.4,-\sc*.3) rectangle (\sc*5,\sc*3.8);
+\put(0,0){\includegraphics[scale=\sc]{OriginCeramAimantChampZ}}
+
+\draw (\sc*2.6,\sc*0) node[below=-2mm]{$z \left[ {\rm mm} \right]$};
+\draw (-0.2,\sc*1.95) node[rotate=90]{$\Btrans \left[\rm G\right]$};
+
+\draw(\sc*2.8,\sc*1.15)--(\sc*2.4,\sc*2)node[left]{\footnotesize$\Daimants=\mm{90}$};
+\draw(\sc*2.8,\sc*1.95)--(\sc*2.4,\sc*2.5)node[left]{\footnotesize $\Daimants=\mm{70}$};
+\draw(\sc*2.8,\sc*2.5)--(\sc*2.4,\sc*3)node[left]{\footnotesize $\Daimants=\mm{60}$};
+
+\end{tikzpicture}
+
+\end{document}

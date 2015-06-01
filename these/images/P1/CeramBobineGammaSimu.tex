@@ -1,0 +1,29 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\sc{1.6}
+\begin{tikzpicture}
+
+\useasboundingbox (-\sc*.4,-\sc*.3) rectangle (\sc*5,\sc*3.8);
+\put(0,0){\includegraphics[scale=\sc]{OriginCeramGammaSimu}}
+
+\draw (\sc*2.6,\sc*0) node[below=-2mm]{$\Devi \left[ {\rm mm} \right]$};
+
+\draw (\sc*0-0.3,\sc*1.95) node[rotate=00]{$\frac{\gammacolapres}{\gammacol}$};
+
+\draw(\sc*3.56,\sc*2)--++(\sc*0.2,\sc*0.15)node[right]{\small$\CeramLong=\micron{10}$};
+\draw(\sc*1.35,\sc*3.25)--(\sc*1.8,\sc*1.6)node[right]{\small$\CeramLong=\mm{5}$};
+\draw(\sc*1.45,\sc*3.31)--(\sc*1.8,\sc*2)node[right]{\small$\CeramLong=\mm{10}$};
+\draw(\sc*1.55,\sc*3.37)--(\sc*1.8,\sc*2.4)node[right]{\small$\CeramLong=\cm{10}$};
+
+\end{tikzpicture}
+
+\end{document}

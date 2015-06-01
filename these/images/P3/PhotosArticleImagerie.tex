@@ -1,0 +1,39 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\sc{1.5}
+\def\scphoto{1.4}
+\begin{tikzpicture}
+
+\useasboundingbox (-\sc*.45,-\sc*.2) rectangle (\sc*5.1,\sc*5.4);
+\put(0.15,0){\includegraphics[scale=\scphoto]{Originaux/OriginPhotosArticle3}}
+%\draw (\sc*2.7,\sc*0) node[below=-1mm]{$\ImperfVarie$};
+%\draw[latex'-, thick, red] (\sc*2.6,\sc*1.7) --++(\sc*0.0,\sc*1.5) node[above, pos=1, black]{$\Imperf = 2,95$};
+\begin{scope}[xshift=-0.3cm]
+\draw (\sc*4.0,-\sc*0.1) node[rotate=90, above]{$5$};
+\draw (\sc*4.228,-\sc*0.1) node[rotate=90, above]{$4$};
+\draw (\sc*4.456,-\sc*0.1) node[rotate=90, above]{$3$};
+\draw (\sc*4.684,-\sc*0.1) node[rotate=90, above]{$2$};
+\draw (\sc*4.912,-\sc*0.1) node[rotate=90, above]{$1$};
+\draw (\sc*5.14,-\sc*0.1) node[rotate=90, above]{$0$};
+\end{scope}
+
+\path(\sc*0.57,\sc*5.05)node[white]{(a)};
+\path(\sc*0.57,\sc*3.28)node[white]{(b)};
+\path(\sc*0.57,\sc*1.52)node[white]{(c)};
+
+\fill[color=white](-5,15)rectangle(\sc*.37,-\sc*.2);
+\draw[latex'-latex'](\sc*.3,\sc*.01)--++(0,\sc*1.70)node[left, midway]{\mm{3}};
+%\draw[latex'-latex'](0,\sc*1.77)++(\sc*.3,\sc*.05)--++(0,\sc*1.7)node[left, midway]{\mm{3}};
+
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,29 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\ww{1}
+\def\zz{5}
+\def\zmax{6.8}
+\def\ymax{1.36}
+
+\begin{tikzpicture}[scale=1]
+
+\tkzInit[xmin=-\zmax,xmax=\zmax,ymin=-\ymax,ymax=\ymax]
+
+\put(-6.8,-1.36){\includegraphics[width=13.6 cm, height=2.72 cm]{MonsterTEMzzMapleDensityPlot}}
+
+\tkzX[label=$z$, orig, noticks]
+\tkzY[label=$r$, noticks]
+
+
+\end{tikzpicture}
+
+\end{document}

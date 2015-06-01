@@ -1,0 +1,56 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=1]
+
+
+\tkzInit[xmin=-0.,xmax=0.15,ymin=-0.,ymax=0.15]
+%\useasboundingbox (-3,-3) rectangle (3,3);
+%\put(-3,-3){\includegraphics{TubesQuadrupole_a_nu}}
+
+\def\aa{0.8}
+
+\tkzX[orig, noticks]
+\tkzY[noticks]
+\node[fill=white, inner sep=0.0cm] (O) at (0,0) {$\odot$};
+\node[below left] at (O) {$z$};
+
+\node (A) at (\aa,\aa){\LARGE{$\otimes$}};
+\node (B) at (-\aa,-\aa){\LARGE{$\otimes$}};
+\node (C) at (-\aa,\aa){\LARGE{$\odot$}};
+\node (D) at (\aa,-\aa){\LARGE{$\odot$}};
+
+\draw[very thick, opacity=0.5] (0,0) circle (2cm) node[above=1.27cm]{tube de verre};
+
+\path[fill=green!50] (-3.2,-2.2) rectangle +(1,4.4);
+\path[fill=green!50] (-3.2,2.19) rectangle +(4,1);
+\path[fill=green!50] (-3.2,-2.19) rectangle +(4,-1);
+
+\newcommand{\aimant}[1]{\draw[fill=black!30] (#1) ++(-0.5,0) rectangle ++(1,0.3);}
+\aimant{0,2.2}
+\aimant{0,2.5}
+\aimant{0,2.8}
+\aimant{0,3.1}
+\path (0,3) ++(1/2,0.4/2) node[above=0.2cm]{aimants};
+\path (-3,0) ++(0.5,3) node[above=0.2cm]{support};
+
+\aimant{0,-2.5}
+\aimant{0,-2.8}
+\aimant{0,-3.1}
+\aimant{0,-3.4}
+
+\draw[-latex', line width=0.2cm, color=white] (0,3.35) -- (0,2.2);
+\draw[-latex', line width=0.2cm, color=white] (0,-3.35) -- (0,-2.2);
+
+
+\end{tikzpicture}
+
+\end{document}

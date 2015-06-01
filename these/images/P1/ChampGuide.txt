@@ -1,0 +1,38 @@
+restart;
+simp:=proc(asimplifier)
+simplify(sort(simplify(simplify(factor(expand(numer(asimplifier))),size),size))
+/
+	sort(simplify(simplify(factor(expand(denom(asimplifier))),size),size)),size) ;
+map(simplify,%,size);  map(xx->map(simplify,xx,size), %); map(xx->map(xxx->map(simplify,xxx,size),xx) , %);	end:
+with(plottools):with(plots):
+#with(LinearAlgebra):with(linalg):
+with(VectorCalculus):
+#with(student):
+SetCoordinates( 'cartesian'[x,y,z] );
+Digits := 5;
+Quelques valeurs numériques:
+Val := [a=8E-3, I_guide=400, B0=1E-4, mu=9.27e-24/2];
+Const := [mu0=4*Pi*1e-7];
+Val := [op(Val), op(Const)]:
+r := sqrt(x^2+y^2);
+Champ du guide
+Définissons le champ dû à chacun des tubes du guide, chacun suposé infiniment fin, et séparés de a:
+D'abord le champ d'un tube sur l'axe.
+Champ_Tube := convert( mu0 * I_guide * CrossProduct( <0,0,1> , <x,y,z> ) /2/Pi/r^2 , Vector);
+Puis pour chaque tube on déplace ce champ de +-a/2 suivant x et y:
+Champ_Tube_1 := map(simp,subs( [xxx=x+a/2,yyy=y+a/2], subs([x=xxx,y=yyy], Champ_Tube))):
+Champ_Tube_2 := map(simp,subs( [xxx=x-a/2,yyy=y+a/2], subs([x=xxx,y=yyy], Champ_Tube))):
+Champ_Tube_3 := map(simp,subs( [xxx=x-a/2,yyy=y-a/2], subs([x=xxx,y=yyy], Champ_Tube))):
+Champ_Tube_4 := map(simp,subs( [xxx=x+a/2,yyy=y-a/2], subs([x=xxx,y=yyy], Champ_Tube))):
+'Champ_Tube_1','Champ_Tube_2','Champ_Tube_3','Champ_Tube_4';
+%;
+D'où le champ du guide, qu'on trace dans le plan z=0 
+map(simp,simplify( - Champ_Tube_1 + Champ_Tube_2 - Champ_Tube_3 + Champ_Tube_4 )):
+Champ_guide := convert(%, Vector):
+Champ_guide_x_y := subs(z=0,subs(Val,  Champ_guide[1..2]  ));
+fieldplot(Champ_guide_x_y, x = VectorCalculus[`-`](0.10e-1) .. 0.10e-1, y = VectorCalculus[`-`](0.10e-1) .. 0.10e-1, title = "Lignes de champ magnétiques du guide seul", arrows = SLIM, fieldstrength=fixed);
+En résumé, on a le champd du guide seul:
+Champ_guide := Champ_guide;
+
+Potentiel := simp(simplify(Norm(Champ_guide)));
+simp(mtaylor(%,[x,y], 3));

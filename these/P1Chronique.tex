@@ -1,0 +1,244 @@
+\NumberThisInToc
+\chapter*{Introduction : une thèse dans les atomes froids}
+
+\minitoc
+
+Ultracold and slow beams have a huge potential in metrology, matter wave interferometry and nanolithography~\cite{Ber97}.
+
+
+Un tel faisceau est d'importance cruciale  pour réaliser un laser à atome continu générer par un processus d'évaporation forcée appliquée à un jet continu guidé magnétiquement, comme proposé dans~\cite{MMD00} et étudié expérimentalement dans~\cite{LWR05}
+
+\section{La physique des atomes-froids}
+
+L'étude des phénomène physiques fondamentaux à l'echelle microscopqiue. 
+
+\subsection{Les différentes étape du refroidissement d'un ensemble atomique}\label{sec:EtapesRefroidissement}
+
+Température ambiante : \SI{300}{\kelvin}.
+
+\subsection{Laser cooling}\label{sec:Laser cooling}
+PAGE 2 Cornelussen
+
+\subsection{Bose-Einstein condensation}\label{sec:BoseEinsteinCondensation}
+PAGE 4 Cornelussen
+
+
+	\subsection{Potentiel magnétique de piégeage}\label{sec:PiegeageMagnetique}
+
+Nous allons rappeler ici le principe de la manipulation et de piégeage magnétique d'atomes neutres paramagnétiques\footnote{C'est à dire, possédant un moment magnétique permanent.}. 
+Cette technique de piégeage non dissipatif qui a été mise en \oe uvre pour la première fois en 1985~\cite{MPP85} à conduit, dix en plus tard à la possibilité de refroidir un \nat jusqu'au seuil de \condbe~\cite{AEM95,DMA95,CoW02,Ket02}.
+
+	 \subsubsection{L'effet Zeeman sur le niveau fondamental du \Rb}
+
+L'effet Zeeman sur les \snhfs du fondamental permet la manipulation des atomes de \Rb grâce à des gradients de \chm. La formule de Breit-Rabi\cite{BrR31} donne l'énergie d'un atome plongé dans un \chm d'intensité $\modB$ en fonction de son état interne (cette formule est ici appliquée au cas d'un atome de \Rb dans son état fondamental \OrbitalS):
+\begin{align}
+	E_{F,\mF}(\modB) = &
+	(-1)^F \, \frac{\hbar\,\omegaHF}{2}
+	\, \sqrt{1+ {\mF} \, x + x^2} + \const ,	\label{eq:BreitRabi} \\ 
+	\mbox{avec  } x = & \frac{(g_I + g_S) \, \muB}{\hbar\,\omegaHF}\,\modB , \nonumber
+\end{align}
+et où $\hbar\,\omegaHF$ désigne la séparation en énergie des deux \snhfs en l'absence  de \chm, $g_I$ et $g_S$ sont les facteurs gyromagnétiques du noyaux et de l'électron respectivement (ces valeurs sont rappelées dans le tableau \vref{tab:ChiffresRb}). $\mF$ est le nombre quantique magnétique de l'électron. l'énergie $E_{F,\mF}(\modB)$ est donnée à une constante près, qui rend compte de l'énergie des \snx en l'absence de \chm.
+
+	 \subsubsection{Piégeage magnétique}
+Le piégeage magnéto-statique de particules paramagnétiques repose sur l'utilisation d'un gradient de potentiel magnétique. En pratique, la séparation des \snx due à l'effet Zeeman est faible devant l'écart énergétique entre les deux états \hfs du fondamental\footnote{Les \chm utilisés dans la pratique sont en effet de quelques centaines de Gauss au maximum. Pour accéder à des valeurs de $x$ proches de 1 il faut appliquer des champs de quelques $\val{E4}$ Gauss} ($x \ll 1$). L'expression~\nref{eq:BreitRabi} peut donc être développée au premier ordre en $\modB$:
+\begin{equation}
+	E_{F,\mF}(\modB) \approx \mF\,g_F\,\muB\,\modB ,
+	\label{eq:EZeeman}
+\end{equation}
+où nous définissons le facteur de Landé\footnote{$\Module{g_F} = \tfrac{1}{4}\,(g_I + g_S)$ n'est pas tout à fait égal $\tfrac{1}{2}$, mais sa valeur en est proche à moins de $\val{E-3}$ près. On utilise généralement cette valeur, de la même manière qu'on utilise la valeur  $2$ pour le facteur gyromagnétique de l'électron.} $g_F \equiv (-1)^F\,\tfrac{1}{4}\,(g_I + g_S) \approx (-1)^F\,\tfrac{1}{2}$. Dans toute la suite, nous aurons pour convention de noter \[ \mu \equiv \mF\,g_F\,\muB, \] le moment magnétique de l'atome dans l'état $\Etat{F,\mF}$ considéré. 
+Un atome de \Rb plongé dans un \chm inhomogène $\vectBr$ sera soumis au potentiel $U(\Vecteur{r}) = \mu\,\modBr$. La force qui dérive de ce potentiel tend à pousser les atomes vers les zones de champs faibles s'ils sont préparés dans l'un des états
+\footnote{Gardons néanmoins à l'esprit que l'expression~\nref{eq:EZeeman} n'est qu'un développement limité à l'ordre 1 en \chm. En utilisant la formule~\nref{eq:BreitRabi}, on constate que l'état $\EtatFmF{2}{0}$ est aussi poussé vers les zones de champ faible. C'est l'effet Zeeman quadratique. En pratique cependant, cet effet est suffisamment faible pour ne pas être exploitable.}  
+\[ \EtatFmF{1}{-1} \mbox{, } \EtatFmF{2}{1} \mbox{, ou } \EtatFmF{2}{2} , \] 
+et vers les zones de champs forts s'ils sont préparés dans 
+\[ \EtatFmF{1}{1} \mbox{, } \EtatFmF{2}{-1} \mbox{, ou }  \EtatFmF{2}{-2} . \] 
+Il est donc logiquement possible de piéger magnétiquement des atomes grâce à un extrémum local de la norme du champ magnétique. Les équations de Maxwell interdisent cependant l'existence d'un maximum local de \chm dans le vide.
+\Remarque{
+\subsubsection{Impossibilité d'avoir un maximum de \chm dans le vide} 
+Celle-ci vient du fait que le laplacien du module du champ ne peut être négatif dans le vide. 
+
+\noindent Pour mieux comprendre, considérons plutôt le module carré du champ qui varie bien sûr dans le même sens que le module, mais qui a l'avantage de s'exprimer grâce à un produit scalaire. Après quelques lignes d'algèbres élémentaire, on montre que le laplacien de cette grandeur: 
+\[ \Delta \left( \modB^2 \right)
+  \equiv \Delta\left( {B_x}^2 + {B_y}^2 + {B_z}^2 \right) , \] 
+ne peut être négatif (c'est une conséquence directe du fait que, dans le vide, $\Delta( \vectB )$ est nul). Or, un laplacien négatif est une condition nécessaire (bien que non suffisante) pour avoir un maximum de la norme au carré, et donc de la norme du \chm.}
+Si l'on désire piéger des atomes grâce à un champ magnéto-statique, il faudra donc les préparer dans un état \sotosay{attiré par les champs faibles}. C'est de ces états dont il sera question dans toute la suite, et nous ne considèrerons donc plus les états non-piégeables. De plus, pour des raisons pratiques liées à la détections des atomes dans le guide (voir \autoref{sec:MesureJat}), la totalité des expériences dont il sera question ici fait intervenir des atomes préparés dans l'état \EtatSFmF{1}{-1}.
+
+\Remarque{
+\subsubsection{Perte Majorana}\label{Rq:Majorana}
+Piéger les atomes en utilisant un \chm inhomogène suppose une chose en particulier: 
+\begin{itemize}
+	\item le moment magnétique de l'atome doit rester en permanence aligné avec le vecteur \chm local.
+\end{itemize}
+Or, s'il est possible de réaliser un minimum de la norme du champ, celui-ci ne peut alors pas avoir une direction constante (l'équation de Maxwell $\Divergence{\vectBr} = 0$ l'interdit). 
+
+\noindent Ainsi, un atome, dans son mouvement autour du minimum de potentiel, va en permanence \sotosay{voir} le vecteur \chm changer de direction. Ceci implique que les états propres de l'hamiltonien varient le long de la trajectoire de l'atome, et il existe une probabilité non-nulle pour que ce dernier change d'état de spin. Ce mécanisme de transition d'un état piégé, à un état non-piégé porte le nom de pertes Majorana\cite{SuB97}.
+		
+Afin que la probabilité de d'effectuer ce type de transition  reste faible, il faut que les variations du \chm $\vectBr$ \sotosay{vu par l'atome} soient lentes devant l'échelle de temps définie par la pulsation $\omegaL$ de la précession de Larmor:
+\begin{equation}
+	{\left. \frac{\mathrm{d}\,\vectB}{\mathrm{d} t} \right.} \ll \omegaL \equiv \gamma\,\modB
+	\label{eq:PasMajorana}
+\end{equation}  
+où $\gamma$ est le rapport gyromagnétique de l'électron et vaut $\gamma \approx \SI{1,4}{\mega\hertz\per G}$. Pour se mettre dans de bonnes conditions, il faut éviter d'avoir des zones dans lesquelles le \chm est trop faible, et ce pour 2 raisons: \begin{itemize}
+	\item Un faible \chm correspond à une faible fréquence de Larmor, ce qui ne va pas dans le sens de l'équation \vref{eq:PasMajorana}.
+	\item Au voisinage d'un minimum local de \chm, les variations de direction du vecteur champ sont d'autant plus violentes que la valeur du champ est faible.
+\end{itemize}
+}
+
+Top Trap~\cite{PAE95}
+
+Magnetic trapping of neutral particles: Classical and quantum-mechanical study of a Ioffe-Pritchard type trap~\cite{GST00}
+	
+	\subsection{Le \rpef}\label{sec:RefEvap}
+
+
+\section{Situation du sujet}
+\subsection{La condensation de Bose-Einstein}\label{sec:condensation}
+\subsubsection{La \ddedpup}
+\subsection{Manipulation d'ondes de matière cohérentes}
+\subsection{Le \lat}
+\subsection{Ce qu'il reste à faire}
+
+\section{But principal de l'expérience : le \emph{laser à atome continu}}
+\subsection{Réalisation d'un \jatuf et intense}
+définir température transverse quelque part
+\subsection{Évaporation forcée}\label{sec:EvapForcee}
+\subsection{Vers une source cohérente et intense d'onde de matière}
+
+\section{Les chiffres à connaître}\label{sec:Chiffres}
+
+azeaze
+
+\begin{tabular}{|l|c|c|}
+   \hline
+   définition & 
+   symbole & 
+   valeur \\
+   \hline
+   Vitesse de la lumière dans le vide & 
+   $c$ & 
+   $\mps{299792458}$ (valeur exacte)\\
+   \hline
+   Perméabilité du vide & 
+   $\mu_0$ & 
+   $4\,\pi\,\SI{E-7}{\newton\per\ampere\squared}$ (valeur exacte)\\
+   \hline
+   Permitivité du vide & 
+   $\epsilon_0$ & 
+   $\left(\mu_0\,c^2\right)^{-1} = \SI{8,8542E{-12}}{\farad\per\meter}$\\
+   \hline
+    & & \\
+   \hline
+    & & \\
+   \hline
+   Charge électrique élémentaire & $e$ & \SI{1,602E{-19}}{\coulomb} \\
+   \hline
+   Magnéton de Bohr & $\muB$ & \SI{9,274E{-24}}{\joule\per\tesla} \\
+   %\hline
+   Constante de Plank & $h$ & \SI{6,626E{-34}}{\joule\second} \\
+   \hline
+   Constante de Plank & $\hbar$ & \SI{1,055E{-34}}{\joule\second} \\
+   \hline
+   \label{tab:Chiffres}
+\end{tabular}
+
+\begin{tabular}{|l|c|c|}
+   \hline
+   définition & symbole & valeur \\
+   \hline
+   Numéro atomique & $Z$ & $ 37 $\\
+   \hline
+   Nombre de nucléons & $Z+N$ & $ 87 $\\
+   \hline
+   Masse atomique & $ \mRb $ & $\SI{1,44E-25}{\kilogram}$\\
+   \hline
+   Spin nucléaire & $ I $ & $ \tfrac{3}{2} $\\
+   \hline
+   Longueur de diffusion dans l'onde $s$ & $ a $ & $ \SI{5,3E{-9}}{\meter} $ \\
+   \hline
+   Section efficace de collision dans l'onde $s$ & $ \sigma $ & $ \SI{7,1E{-16}}{\square\meter} $ \\
+   \hline
+   Durée de vide d'un niveau excité \OrbitalP & $ \tSpont $ & $ \ns{26,2} $ \\
+   \hline
+   Taux d'émission spontanée depuis \OrbitalP & $ \pulsSpont $ & $ \SI{38,1E6}{\reciprocal\second} $ \\
+   \hline
+   sigma plus et isotrope ! ! ! & $ \Isat_\TransCycle $ & $  $ \\
+   \hline
+   \label{tab:ChiffresRb}
+\end{tabular}
+
+\begin{tabular}{|l|c|c|}
+   \hline
+   Seuil typique & Température \Rb & Dispersion de vitesse \\
+   \hline
+    & $  $ & $  $ \\
+   \hline
+   Température Doppler & \microK{146} & \mps{0,118} \\
+   \hline
+    & $  $ & $  $ \\
+   \hline
+   Température de recule & \microK{0,362} & \mmps{5,88} \\
+   \hline
+    & $  $ & $  $ \\
+   \hline
+   \label{tab:ChiffresRbFroid}
+\end{tabular}
+
+
+\subsection{L'atome de Rubidium 87}
+	\subsubsection{Carte d'identité}
+	\inlinefig{\includegraphics[height = 5cm]{P1/Rb87}}%http://www.dayah.com/periodic/
+Le \rb est un métal mou et argenté qui devient liquide vers \SI{40}{\degreecelsius}. Il est découvert en 1961 par Robert Wilhelm Bunsen et par Gustav Kirchhoff. On le trouve sous forme de trace dans certain minerais. Avec un noyau comptant $Z=37$ protons, cet élément se situé sur la 5ème ligne de la première colonne de la classification périodique des éléments. C'est un métal alcalin qui réagit de manière explosive au contact de l'eau. 
+
+Parmi les 24 isotopes du \rb, seuls deux sont présents à l'état naturel le \RbCinq (\val{72,2}\%) et le \Rb (\val{27,8}\%), ce dernier est très légèrement radioactif (avec une demi-vie de 50 millards d'années). Nous ne parlerons à partir de maintenant que du \Rb.
+
+	\subsubsection{Propriétées quantiques}
+Le cortège d'électrons du \rb sature complètement les 4 premières couches electroniques. Un seul électron périphérique occupe la cinquième couche, ce qui rend modélisation des niveaux énergetiques très simple.
+
+La structure atomique du \rb, avec 37 électrons, 37 protons, et 48 ou 50 neutrons (pour le \Rb ou le \RbCinq respectivement), en fait un boson. 
+
+\bfig
+\includegraphics{P1/RbNiveaux}
+\CaptionFig{Structure hyperfine des orbitales $\OrbitalS$, $\OrbitalPJun$ et $\OrbitalPJdeux$ du \Rb.}
+\label{fig:RbNiveaux}
+\efig
+
+
+	\subsubsection{Pourquoi le \Rb}
+Beaucoup d'\exatfs utilisent le \rb. Celui-ci présente plusieurs avantage technique pour l'expérimentateur qui souhaite mener à bien le refroidissement d'ensemble atomique. En voici une liste:
+\begin{itemize}
+	\item Les raies optiques d'excitation se trouve dans le proche infra-rouge, dans un domaine facilement accessible avec des laser à semi-conducteur (diode-laser).
+	\item Une pression de vapeur saturante élevée qui permet une manipulation facilité en utilisation sous \uv.
+	\item 
+\end{itemize}
+
+Le \Rb est très utilisé dans les expériences d'atomes froids.
+
+Rb85 diffusion négatif -> attractif, colapse
+
+Rb87 repulsif
+
+
+
+ Le tableau ci-dessous résume quelques une de ses caractéristiques:
+
+		\begin{tabular}{|r||c|c|}
+		\hline
+		Numéro atomique & Z & 37\\
+		\hline
+		Nombre de nucléons & Z+N & 87\\
+		\hline
+		Masse & m & \SI{1,44E{-25}}{\kilogram}\\
+		\hline
+		\end{tabular}
+		
+		
+		
+\subsection{Mesurer la température d'un nuages atomiques ultra-froids}
+
+\subsection{La table d'optique}
+
+\subsection{L'ultravide}
+
+\subsection{L'outil informatique}
+
+\Remarque{Un élargissement inhomogène, de manière plus général, est défini par le fait que chaque atome possède une fréquence de résonance différente. L'exemple typique d'élargissement inhomogène est l'élargissement par effet Doppler (la fréquence de résonance dépend de la vitesse de l'atome considéré). Ceci s'oppose à l'élargissement homogène, pour lequel tous les atomes se comportent de la même manière. Un exemple typique est l'élargissement dû aux collisions inter-atomiques dans les gaz sous haute pression.} 
+

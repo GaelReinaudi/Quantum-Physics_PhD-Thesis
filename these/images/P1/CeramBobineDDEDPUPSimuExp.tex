@@ -1,0 +1,24 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\def\sc{1.3}
+\begin{tikzpicture}
+
+\useasboundingbox (-\sc*.7,-\sc*.3) rectangle (\sc*5.05,\sc*3.999);
+\put(0,0){\includegraphics[scale=\sc]{OriginCeramDDEDPUPSimuExp}}
+
+\draw (\sc*2.6,\sc*0) node[below=-2mm]{$\Devi \left[ {\rm mm} \right]$};
+
+\draw (\sc*0-0.4,\sc*1.99) node[rotate=00]{$\frac{\rhojetaxe(\Devi)}{\rhojetaxe(0)}$};
+
+\end{tikzpicture}
+
+\end{document}

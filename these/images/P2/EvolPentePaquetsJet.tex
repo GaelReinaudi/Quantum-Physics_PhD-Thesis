@@ -1,0 +1,168 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=0.6]
+
+\def\eps{0.3}
+\def\zmax{20}
+\def\vmax{6.5}
+\def\deltav{0.6}
+\def\deltaz{0.3}
+\def\vzero{5.5}
+\def\vmiroir{3.75}
+\def\Zmiroir{0.5}
+\def\Zpatimage{{2.3}}
+\pgfmathparse{2.55}%2*\vmiroir-\vzero+0*\deltav}
+\let\vapres\pgfmathresult
+
+\def\ZdebutPente{1.5}
+\def\ZfinPente{2.5}
+
+\pgfmathparse{{1*(\vzero*\vzero-\vapres*\vapres)}}
+\let\Hpente\pgfmathresult
+
+\pgfmathparse{{1*\Hpente/(\ZfinPente-\ZdebutPente)}}
+\let\AlphaPente\pgfmathresult
+
+\pgfmathparse{{1*sqrt((\vzero-\deltav)^2 - \Hpente)}}
+\let\vminapres\pgfmathresult
+\pgfmathparse{{1*sqrt((\vzero+\deltav)^2 - \Hpente)}}
+\let\vmaxapres\pgfmathresult
+
+\def\vapres{{(2*\vmiroir-\vzero)}}
+\def\tint{0.9}
+\def\NpatAvant{0}
+\def\NpatApres{70}
+
+\pgfmathparse{{ 0.8}}
+\let\tStartApres\pgfmathresult
+
+\tkzInit[xmin=0,xmax=\zmax,ymin=0,ymax=\vmax]
+\useasboundingbox (-2.2,-1.2) rectangle (\zmax+1.4,\vmax+1.0);
+\tkzX[label=$z$, orig, noticks]%, poslabel = -2.5ex]
+\tkzY[label=$\vz$, orig, noticks]
+
+
+\foreach \VZERR in 
+{{\vzero+\deltav/2},{\vzero-\deltav},{\vzero-\deltav/2},\vzero,{\vzero+\deltav/2},{\vzero+\deltav}
+%,{\vzero+3*\deltav/2},{\vzero+4*\deltav/2}
+}
+{
+	\pgfmathparse{1*(\VZERR)}
+	\let\VZER\pgfmathresult
+	
+	\draw[color = blue!30](0,\VZER)--+(\ZdebutPente,0);
+	
+	\tkzFct[samples = 50, color = blue!30](\ZdebutPente..\ZfinPente)
+	{((\VZER)**2 - (\x-\ZdebutPente)*\AlphaPente)**0.5}
+	
+	\pgfmathparse{{sqrt(1*((\VZER)*(\VZER) - \Hpente))}}
+	\let\VZERfin\pgfmathresult
+	\draw[color = blue!30](\ZfinPente,\VZERfin)--+(\zmax-\ZfinPente,0);
+}
+
+\foreach \tt in {0,...,\NpatAvant}
+{
+\def\Tun{\tt*\tint}
+\path[fill=blue!60, very thin] 
+(0,\vzero)++(-\deltaz,-\deltav)
+  ++({\Tun*(\vzero-\deltav)}, 0) 
+--++(\Tun*2*\deltav,2*\deltav)
+--++(2*\deltaz,0)
+--++(-\Tun*2*\deltav,-2*\deltav)
+--cycle;
+}
+
+\draw[-latex'] (0,\vzero)++(\deltaz,-\deltav)++(\eps,0)--++({(\vzero-\deltav)/10},0);
+\draw[-latex'] (0,\vzero)++(\deltaz,-0)++(\eps,0)--++({(\vzero-0)/10},0);
+\draw[-latex'] (0,\vzero)++(\deltaz,+\deltav)++(\eps,0)--++({(\vzero+\deltav)/10},0);
+
+
+\foreach \tt in {0,...,\NpatApres}
+{
+\pgfmathparse{{ 1*(\tt*\tint+\tStartApres)}}
+\let\Tdeux\pgfmathresult
+
+\path[fill=blue!60, very thin]%
+%(\Zpatimage,\vapres)++(-\deltaz,-\deltav)
+(\Zpatimage, \vminapres)
+  ++({\Tdeux*(\vminapres)}, 0) 
+  ..controls+(1+\Tdeux,1)and+(-\Tdeux/3,-0.5)
+..++({\Tdeux*(\vmaxapres-\vminapres)},\vmaxapres-\vminapres)
+--++({2*\deltaz*2*\deltav/(\vmaxapres-\vminapres)},0)
+  ..controls+(-\Tdeux/3,-0.5)and+(1+\Tdeux,1)
+..++({-\Tdeux*(\vmaxapres-\vminapres)},-\vmaxapres+\vminapres)
+--cycle;
+}
+
+
+\draw[<->]%snake=brace, segment amplitude=0.10cm]
+(-\deltaz-\eps,\vzero-\deltav) -- (-\deltaz-\eps,\vzero+\deltav)
+node[left, pos=0.5]{ $\DeltaVPaquet$};
+
+%
+%\draw[snake=brace, segment amplitude=0.05cm]%] 
+%(+\deltaz,\vzero-\deltav-\eps) -- (-\deltaz,\vzero-\deltav-\eps)
+%node[below left, pos=0.5]{$\DeltaZPaquet$};
+
+%\path[color=white, fill] 
+%(\zmax,\vminapres-\eps)
+%++(-2.5,0) rectangle ++(9,9);%2*\deltav+2*\eps);
+%
+%\draw[black, dotted] (\zmax-2-\eps,\vmaxapres)--++(-0.5,0);	
+%\draw[black, dotted] (\zmax-2-\eps,\vminapres)--++(-0.5,0);	
+
+%\draw[snake=brace, segment amplitude=0.05cm]%] 
+%(\zmax-2-\eps,\vmaxapres) -- (\zmax-2-\eps,\vminapres)
+%node[right, pos=0.5]{$\DeltaVPaquet'>\DeltaVPaquet$};
+\path[fill=white] 
+(0.83*\zmax,\vapres)++(-0.75*\deltav,0)
+  ++(1.5,3) 
+  ++(-\vmiroir+\vapres,0) 
+--++(15*\deltav,0)
+--++(-3*4.6/6,-4.6)
+--++(-15*\deltav,0)
+--cycle;
+
+
+\shade[top color=blue!0, bottom color=blue!40]
+(0.76*\zmax,\vmaxapres)rectangle(\zmax-0.5-6.5*\eps,0.5*\vmaxapres+0.5*\vminapres-0.05);
+\shade[top color=blue!40, bottom color=blue!0]
+(0.73*\zmax,\vminapres)rectangle(\zmax-0.5-6.5*\eps,0.5*\vmaxapres+0.5*\vminapres);
+
+\draw[fill=white] 
+(0.83*\zmax,\vapres)++(-0.75*\deltav,0)
+  ++(1.5,3) 
+  ++(-\vmiroir+\vapres,0) 
+--++(1.5*\deltav,0)
+--++(-3*5.5/6,-5.5)
+--++(-1.5*\deltav,0)
+--cycle;
+\draw[white, very thick] 
+(0.83*\zmax,\vapres)++(-0.75*\deltav,0)
+  ++(1,3) 
+  ++(-\vmiroir+\vapres,0) 
+--++(3,0)
+++(-3*5.5/6,-5.5)
+--++(-3,0);
+\draw[<->]%] 
+(\zmax-7*\eps,\vmaxapres-\eps) -- (\zmax-7*\eps,\vminapres+\eps)
+node[right=-2pt, pos=0.5]{ $\DeltaVPaquet'\hspace{-2pt}>\hspace{-2pt}\DeltaVPaquet$};
+
+\path[fill = red, opacity=0.2](\ZdebutPente,0)rectangle(\ZfinPente,\vmax);
+\draw[<-](\ZfinPente-0.5,\vmax*0.7)--++(1,0.7)
+ node[right]{\secpent};
+
+\path(1,1.1*\vmax)node[right]{(b): utilisation d'une \secpent};
+
+\end{tikzpicture}
+
+\end{document}

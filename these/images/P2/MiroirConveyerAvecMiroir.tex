@@ -1,0 +1,71 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[scale=0.075]
+
+
+\tkzInit[xmin=0,xmax=180,ymin=0,ymax=5]
+%\useasboundingbox (-4,-3) rectangle (4,3);
+\tkzX[orig, noticks, label=$z$]
+\tkzY[noticks, label=$x$]
+\node[fill=white, inner sep=0.0cm] (O) at (0,0) {$\odot$};
+\node[below left] at (O) {$y$};
+
+\def\posmot{0,-20}
+\def\rconv{4}
+\def\posconv{40,-5}
+\def\posmir{10,0}
+\def\tailleaimant{3}
+\def\rchamber{13}
+
+\shade[ball color =red] (\posmot) ellipse (3cm and 0.7cm) node[below, red]{PMO};
+	
+	\draw[fill= orange!50, opacity=1] (\posmot)++(7,0.7) rectangle +(170,0.7);
+	\draw[fill= orange!50, opacity=1] (\posmot)++(7,-0.7) rectangle +(170,-0.7);
+	\draw[opacity=1] (\posmot)++(5,0.7)++(60,0.5)
+	-- +(1.5,3) node[above right]	{\gm};
+	
+	\draw[fill= black, opacity=0.4] (\posmot)++(\rchamber,3) rectangle ++(177-\rchamber,0.5);
+	\draw[fill= black, opacity=0.4] (\posmot)++(\rchamber,-3) rectangle ++(177-\rchamber,-0.5);
+%	\draw[opacity=1] (\posmot)++(5,3)++(110,0.5)
+%	-- +(2.5,5)	node[color = black, opacity=1, above right]	{tube de verre};
+	
+	\draw[fill= blue!30] (\posmot)++(\posconv) rectangle ++(110, -2*\rconv)
+	node[pos=0.55]{ \conv \qquad $\Vmir\,\,\,_{\longleftarrow}^{\longrightarrow}$};	
+	\draw[fill= blue!30] (\posmot)++(\posconv) ++(0,-\rconv) circle (\rconv) ++(110,0)
+	circle (\rconv);
+	
+	\draw[fill=green, opacity=0.7] (\posmot)++(\posconv)++(\posmir) rectangle ++(6,9);
+	\draw[fill=black, opacity=1] (\posmot)++(\posconv)++(\posmir)++(3,3.5)
+	++(-\tailleaimant/2,\tailleaimant/4) rectangle ++(\tailleaimant,\tailleaimant/2) 
+	++(-\tailleaimant/2,\tailleaimant/4) -- +(4,8) node[above right]{\mima};
+	
+%	\draw[dotted, opacity=0.7] (\posmot)++(7,0) -- (7+\posmot*0+2) 
+%	node[above]{\small\cm{5}};
+%	\draw[dotted, opacity=0.7] (\posmot)++(36,-10) -- (36+\posmot*0+2) 
+%	node[above]{\small\cm{35}};
+%	\draw[dotted, opacity=0.7] (\posmot)++(36,-10)++(118,0) -- (154+\posmot*0+2) 
+%	node[above]{\small\cm{155}};
+	\draw[dotted, opacity=0.7] (\posmot)++(170,0) -- (170+\posmot*0+2) 
+	node[above]{\small$\zsonde$};
+
+	\draw[-latex', very thick, red] (\posmot)++(170,-7) -- ++(0,20) 
+	node[pos=0, below]{laser sonde};
+	
+	\draw[very thick] (\posmot)++(\rchamber,3) arc (5:40:\rchamber);
+	\draw[very thick, dotted] (\posmot)++(\rchamber,3) arc (5:65:\rchamber);
+	\draw[very thick] (\posmot)++(\rchamber,-3) arc (-5:-40:\rchamber);
+	\draw[very thick, dotted] (\posmot)++(\rchamber,-3) arc (-5:-65:\rchamber);
+	\path  (\posmot)++(\rchamber-2.5,7) node[above right]{chambre};
+	
+\end{tikzpicture}
+
+\end{document}

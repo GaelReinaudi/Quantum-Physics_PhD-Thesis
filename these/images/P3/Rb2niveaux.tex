@@ -1,0 +1,33 @@
+\documentclass[11pt, a4paper, french]{thloria}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}[xscale=1,yscale=1]
+\def\HighTrois{4}
+\def\LargeLevel{0.9}
+
+\foreach \Fdeux in{-2,-1,0,1,2}{
+\draw[very thick] (\Fdeux, 0)--++(\LargeLevel,0) node[below, pos=0.5]{$\Fdeux$};
+}
+\foreach \Ftrois in{-3,-2,-1,0,1,2,3}{
+\draw[very thick] (\Ftrois, \HighTrois)--++(\LargeLevel,0) node[above, pos=0.5]{$\Ftrois$};
+}
+\draw[latex'-latex', red, very thick](-2+\LargeLevel/2,0) -- (-3+\LargeLevel/2,\HighTrois)
+node[right, pos=0.5]{$\sigma^{-}$};
+
+\path (0, 0)--++(\LargeLevel,0)          node[above=1mm, pos=0.5]{~$\EtatSFmF{2}{...}$};
+\path (0, \HighTrois)--++(\LargeLevel,0) node[below=1mm, pos=0.5]{~$\EtatPFmF{3}{...}$};
+
+\path (-3.1, \HighTrois)--++(\LargeLevel,0);
+\path ( 3.1, \HighTrois)--++(\LargeLevel,0);
+
+\end{tikzpicture}
+
+\end{document}

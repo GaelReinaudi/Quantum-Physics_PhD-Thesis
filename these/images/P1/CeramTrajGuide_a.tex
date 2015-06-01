@@ -1,0 +1,58 @@
+\documentclass[11pt, a4paper, french]{thloria}%{article}
+\input{../../Packages_Gael}
+
+%%% Pour n'avoir que l'image tikz ! ! !
+\usepackage[active,tightpage]{preview}\PreviewEnvironment{tikzpicture} 
+
+\usepackage[np,autolanguage]{numprint}
+\begin{document}
+\pagestyle{empty}
+\input{../../New_Commande_Gael}
+
+\begin{tikzpicture}%[scale=0.8]
+
+
+\def\scale{2.5}
+\def\Revap{\scale*0.7}
+\def\AxeCourt{(2*0.1*\scale)}
+\def\AxeLong{(2*0.5*\scale)}
+\def\tours{5}
+\def\anglepartour{(15*3.14/180)}
+\def\angleini{(70*3.14/180)}
+\def\angleenplus{2.9}
+
+\def\distSurf{2.7}  
+\def\epCer{0.5}
+\useasboundingbox (-\distSurf-\epCer,-\distSurf-\epCer) rectangle(\distSurf+\epCer,\distSurf+\epCer);
+
+\pgfmathparse{{1*
+\AxeCourt*sin(\angleenplus*57)*cos(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)+\AxeLong*cos(\angleenplus*57)*sin(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)
+}}
+\let\Xini\pgfmathresult
+
+\pgfmathparse{{1*
+\AxeLong*cos(\angleenplus*57)*cos(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)-\AxeCourt*sin(\angleenplus*57)*sin(\angleenplus*\anglepartour/2/3.14*57+\angleini*57)
+}}
+\let\Yini\pgfmathresult
+
+\tkzInit[xmin=-2.8,xmax=2.5,ymin=-2.8,ymax=2.5]
+\tkzX[noticks]
+\tkzY[noticks]
+\tkzInit[xmin=-\scale,xmax=\scale,ymin=-\scale,ymax=\scale]
+
+\put(0,0){
+\tkzFctPar[samples=600, color=blue, lw=0.6](\angleenplus..-2*3.14*\tours){
+\AxeCourt*sin(\t)*cos(\t*\anglepartour/2/3.14+\angleini)
++\AxeLong*cos(\t)*sin(\t*\anglepartour/2/3.14+\angleini)
+}{
+\AxeLong*cos(\t)*cos(\t*\anglepartour/2/3.14+\angleini)
+-\AxeCourt*sin(\t)*sin(\t*\anglepartour/2/3.14+\angleini)
+}
+
+
+\shade[ball color=blue] (\Xini,\Yini) circle (0.15cm);
+}
+
+\end{tikzpicture}
+
+\end{document}

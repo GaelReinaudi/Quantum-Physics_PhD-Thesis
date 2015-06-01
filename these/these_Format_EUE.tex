@@ -1,0 +1,123 @@
+\documentclass[12pt, a4paper, french]{thloria}
+%\ThesisDraft
+
+\input{Packages_Gael_Format_EUE}
+
+% Pour publication EUE
+\usepackage[top=20mm, bottom=20mm]%, left=20mm, right=20mm]
+{geometry}
+\SetRealMargins{20mm}{25mm}
+
+\newcommand{\NoAnimationsInFigures}{1}
+\newcommand{\FormatEUE}{1}
+
+\newcommand{\IncludePartOne}{1}
+\newcommand{\IncludePartTwo}{1}
+\newcommand{\IncludePartThree}{1}
+\newcommand{\IncludeAnnexe}{1}
+
+\newcommand{\TitrePartieUn}{Production et évaporation d'un \jatg}
+\newcommand{\TitrePartieDeux}{Manipulation de \pats dilués}
+\newcommand{\TitrePartieTrois}{Production, manipulation et caractérisation de \ns denses}
+
+\newcommand{\TitreChapitreUn}{Dispositif expérimental, évaporation d'un \jatg}
+\newcommand{\TitreChapitreDeux}{Évaporation d'un \jat au contact d'une surface matérielle}
+\newcommand{\TitreChapitreTrois}{Réflexion d'un \pat sur un \mimo}
+\newcommand{\TitreChapitreQuatre}{Transport de \pats dans un train de pièges magnétiques}
+\newcommand{\TitreChapitreCinq}{Production et transport non-adiabatique de \ns denses dans un \pd}
+\newcommand{\TitreChapitreSix}{Imagerie de \ns denses par absorption dans le régime de forte saturation}
+
+\input{Mise_En_Page_AVANT_BeginDocument_Gael}
+
+
+\begin{document}
+
+\input{New_Commande_Gael}
+%\renewcommand{\SansCaption}{\vspace{0.20cm}}
+\renewcommand{\AnimateOnline}{{}}
+
+\input{Mise_En_Page_APRES_BeginDocument_Gael_Format_EUE}
+
+% Attempt to prevent overfull vboxes on every page
+\addtolength{\headheight}{1.6pt}
+\addtolength{\footskip}{1.6pt}
+
+\begin{ThesisDedication}
+\`A Adeline,\\
+et à Lisa qui a eu un an le jour de ma soutenance.
+\end{ThesisDedication}
+
+\tableofcontents
+
+% liste des notations 
+% ****************************************************************
+\ifthenelse{\FaitNomenclature > 0}{
+	%1.5cm sert à mettre avoir plus d'espace pour les symboles
+	\printnomenclature[1.5cm]	}{}
+        
+\mainmatter
+
+%\include{Introduction_Generale}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifthenelse{\IncludePartOne > 0}{
+\include{P1Intro}
+\DontNumberThisInToc
+\part{\TitrePartieUn}
+%\include{P1Chronique}
+\include{P1JetAtomique}
+\include{P1Ceramique}
+}{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\PutNewPageInToc
+%
+\ifthenelse{\IncludePartTwo > 0}{
+\DontNumberThisInToc
+\part{\TitrePartieDeux}
+\include{P2Miroir}
+\include{P2Convoyeur}
+}{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifthenelse{\IncludePartThree > 0}{
+\DontNumberThisInToc
+\part{\TitrePartieTrois}
+\include{P3PiegeDipolaire}
+\include{P3Imagerie}
+\include{P3Conclusion}
+}{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DontFrameChaptersInToc
+\DontNumberThisInToc
+\Annexes
+\FrameChaptersInToc
+\ifthenelse{\IncludeAnnexe > 0}{
+\input{PA_Articles}
+\input{PA_Liouville}
+\input{PA_ForceDipolaire}
+\input{PA_SectionPentue}
+\input{PA_ModelisationAimants}
+%\input{PA_Rb2Manip}
+}{}
+
+\appendix
+
+
+\bibliographystyle{paolostyle_urlbst}
+\bibliography{biblio}
+
+\input{QueRemerciement}
+
+\end{document}
+
+
+%faire un appendice Programme\\
