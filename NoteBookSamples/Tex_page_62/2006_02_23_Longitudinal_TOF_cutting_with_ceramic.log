@@ -1,0 +1,202 @@
+This is e-TeX, Version 3.141592-2.1 (MiKTeX 2.4) (preloaded format=latex 2004.2.16)  24 FEB 2006 19:39
+entering extended mode
+**2006_02_23_Longitudinal_TOF_cutting_with_ceramic.tex
+(2006_02_23_Longitudinal_TOF_cutting_with_ceramic.tex
+LaTeX2e <2001/06/01>
+Babel <v3.7m> and hyphenation patterns for english, french, german, ngerman, du
+mylang, nohyphenation, loaded.
+(C:\program files\texmf\tex\latex\base\article.cls
+Document Class: article 2001/04/21 v1.4e Standard LaTeX document class
+(C:\program files\texmf\tex\latex\base\size11.clo
+File: size11.clo 2001/04/21 v1.4e Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(C:\program files\texmf\tex\latex\graphics\epsfig.sty
+Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
+
+(C:\program files\texmf\tex\latex\graphics\graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(C:\program files\texmf\tex\latex\graphics\keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(C:\program files\texmf\tex\latex\graphics\graphics.sty
+Package: graphics 2001/07/07 v1.0n Standard LaTeX Graphics (DPC,SPQR)
+
+(C:\program files\texmf\tex\latex\graphics\trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(C:\program files\texmf\tex\latex\00miktex\graphics.cfg
+File: graphics.cfg 2003/03/12 v1.1 MiKTeX 'graphics' configuration
+)
+Package graphics Info: Driver file: dvips.def on input line 80.
+
+(C:\program files\texmf\tex\latex\graphics\dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+\epsfxsize=\dimen105
+\epsfysize=\dimen106
+)
+(C:\program files\texmf\tex\latex\amsfonts\amssymb.sty
+Package: amssymb 2002/01/22 v2.2d
+
+(C:\program files\texmf\tex\latex\amsfonts\amsfonts.sty
+Package: amsfonts 2001/10/25 v2.2f
+\@emptytoks=\toks15
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 132.
+))
+(C:\program files\texmf\tex\latex\base\t1enc.sty
+Package: t1enc 1994/06/01 Standard LaTeX package
+)
+(C:\program files\texmf\tex\latex\base\inputenc.sty
+Package: inputenc 2001/07/10 v0.99a Input encoding file 
+
+(C:\program files\texmf\tex\latex\base\latin1.def
+File: latin1.def 2001/07/10 v0.99a Input encoding file 
+))
+(C:\program files\texmf\tex\generic\babel\babel.sty
+Package: babel 2003/11/16 v3.7m The Babel package
+
+(C:\program files\texmf\tex\generic\babel\english.ldf
+Language: english 2003/11/17 v3.3m English support from the babel system
+
+(C:\program files\texmf\tex\generic\babel\babel.def
+File: babel.def 2003/11/16 v3.7m Babel common definitions
+\babel@savecnt=\count87
+\U@D=\dimen107
+)
+\l@canadian = a dialect from \language\l@english 
+)
+(C:\program files\texmf\tex\generic\babel\frenchb.ldf
+Language: french 2003/11/09 v1.6e French support from the babel system
+Package babel Info: Making : an active character on input line 200.
+Package babel Info: Making ; an active character on input line 201.
+Package babel Info: Making ! an active character on input line 202.
+Package babel Info: Making ? an active character on input line 203.
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 280.
+\parindentFFN=\dimen108
+\std@mcc=\count88
+\dec@mcc=\count89
+
+*************************************
+* Local config file frenchb.cfg used
+*
+(C:\program files\texmf\tex\generic\babel\frenchb.cfg)))
+(C:\program files\texmf\tex\latex\fancyhdr\fancyhdr.sty
+\headwidth=\dimen109
+)
+(C:\program files\texmf\tex\latex\pstricks\pstricks.sty
+Package: pstricks 1997/03/25 package wrapper for PSTricks pstricks.tex
+
+(C:\program files\texmf\tex\generic\pstricks\pstricks.tex
+`PSTricks' v97 patch 14  <1999/12/23> (tvz)
+\pst@dima=\dimen110
+\pst@dimb=\dimen111
+\pst@dimc=\dimen112
+\pst@dimd=\dimen113
+\pst@dimg=\dimen114
+\pst@dimh=\dimen115
+\pst@hbox=\box26
+\pst@boxg=\box27
+\pst@cnta=\count90
+\pst@cntb=\count91
+\pst@cntc=\count92
+\pst@cntd=\count93
+\pst@cntg=\count94
+\pst@cnth=\count95
+\pst@toks=\toks16
+(C:\program files\texmf\tex\generic\pstricks\pstricks.con)
+\psunit=\dimen116
+\psxunit=\dimen117
+\psyunit=\dimen118
+\pslinewidth=\dimen119
+\pst@customdefs=\toks17
+\pslinearc=\dimen120
+\everypsbox=\toks18
+\psframesep=\dimen121
+\pslabelsep=\dimen122
+\theoverlaybox=\box28
+))
+(C:\program files\texmf\tex\latex\pstricks\pst-char.sty
+Package: pst-char 1997/03/25 package wrapper for PSTricks pst-char.tex
+
+(C:\program files\texmf\tex\generic\pstricks\pst-char.tex
+ v97 patch 3, 1999/03/11))
+(C:\program files\texmf\tex\latex\pstricks\pst-coil.sty
+Package: pst-coil 1997/03/25 package wrapper for PSTricks pst-coil.tex
+
+(C:\program files\texmf\tex\generic\pstricks\pst-coil.tex
+ v97 patch 2, 1998/03/19))
+(C:\program files\texmf\tex\latex\pstricks\pst-fill.sty
+Package: pst-fill 1997/04/08 package wrapper for PSTricks pst-fill package
+
+(C:\program files\texmf\tex\generic\pstricks\pst-fill.tex
+ v97 patch 2, 1997/12/12
+\pst@fillbox=\box29
+))
+(C:\program files\texmf\tex\latex\pstricks\pst-plot.sty
+Package: pst-plot 1997/03/25 package wrapper for PSTricks pst-plot.tex
+
+(C:\program files\texmf\tex\generic\pstricks\pst-plot.tex
+ v97 patch 2, 1999/12/12
+(C:\program files\texmf\tex\generic\pstricks\multido.tex  v1.4, 93/01/14 <tvz>
+\multido@count=\count96
+\multidocount=\count97
+\multido@stuff=\toks19
+)))
+
+LaTeX Warning: Unused global option(s):
+    [a4].
+
+(2006_02_23_Longitudinal_TOF_cutting_with_ceramic.aux)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for T1/lmr/m/n on input line 16.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 16.
+
+(C:\program files\texmf\tex\latex\lm\t1lmr.fd
+File: t1lmr.fd 2003/07/22 v1.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Info: Redefining \dots on input line 16.
+ [1
+
+]
+(2006_02_23_Longitudinal_TOF_cutting_with_ceramic.aux) ) 
+Here is how much of TeX's memory you used:
+ 2707 strings out of 95933
+ 30747 string characters out of 1195252
+ 91546 words of memory out of 1095610
+ 5603 multiletter control sequences out of 35000
+ 6259 words of font info for 18 fonts, out of 500000 for 1000
+ 14 hyphenation exceptions out of 607
+ 32i,4n,43p,261b,139s stack positions out of 1500i,500n,5000p,200000b,32768s
+
+Output written on 2006_02_23_Longitudinal_TOF_cutting_with_ceramic.dvi (1 page,
+ 1460 bytes).

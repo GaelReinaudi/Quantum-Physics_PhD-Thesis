@@ -1,0 +1,105 @@
+\documentclass[a4,english,11pt]{article}
+
+\usepackage{epsfig}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{t1enc}
+\usepackage[latin1]{inputenc}
+\usepackage[french]{babel}
+%\usepackage{fancyhdr}
+%\usepackage{pstricks,pst-char,pst-coil,pst-fill,pst-plot}
+
+\oddsidemargin-0.5cm \topmargin-1cm \textwidth17cm \textheight25cm
+\evensidemargin0mm
+
+\begin{document}
+
+\begin{center}
+\begin{huge}
+\textbf{Longitudinal Time-Of-Flight taking into account the slope.
+February 23 2006}
+\end{huge}
+\end{center}
+
+After implementing the evaporation method using the ceramic pieces
+(started on January 13 2006 lab-book page 147), it was natural to
+come back to the problem of the longitudinal TOF that was
+investigated previously (June 18 2004 lab-book p128). Indeed the
+ceramic is a good way to stop the atomic beam, playing the role of
+the pushing laser beam that was used in 2004. This method suffered
+the fact that the pushing laser beam was not very local (because of
+reflections on the copper and glass tubes), and it was not clear
+that at release-time, the spatial distribution was an heaviside
+function of space (all the atoms before the pushing beam, and none
+after).
+
+Here, we use a transverse magnetic field to deflect the trajectory
+of the atomic beam so that it hits a ceramic in $z=0$. At $t=0$, we
+stop the transverse magnetic field and leave the atoms propagate
+towards a probe located in $z=d$, downstream. We take into account a
+possible slope like the one implemented on the first $1,7m$ of the
+guide ($\alpha=0.012$).
+
+We suppose that at $t=0$, there is no atoms between $z=0$ (the
+ceramic) and $z=d$ (the probe). We suppose also that there are no
+collisions during the TOF, leading to a simple relation between
+the initial velocity distribution at $t=0$ in $z=0$, and the
+spatial distribution at a time $t>0$ and $0<z<d$.\\
+
+At the level of the ceramic ($z=0$), at all time, the flux is
+$\phi_0$, and the velocity distribution is:
+
+\begin{equation}\label{Velocity}
+    P(v) = \sqrt {{\frac {m}{2\, \pi\, k\, T }}}{e^{{\frac {m\, \left( {\it v_0}-v \right) ^{2}}{2\,k\,T}}}}
+\end{equation}
+
+But careful: $P(v)$ is the probability for a given atom at the level
+of the ceramic to have a longitudinal velocity $v$. If we look at
+this probability for a given atom going through the ceramic, this is
+different, as for identical densities, faster atoms go through the
+ceramic more often than slower atoms.
+
+For a given atom going through, the velocity distribution is
+proportional to $v P(v)$:
+
+\begin{equation}\label{F_Velocity}
+    F(v) = \frac{v}{v_0}\, \sqrt {{\frac {m}{2\, \pi\, k\, T }}}{e^{{\frac {m\, \left( {\it v_0}-v \right) ^{2}}{2\,k\,T}}}}
+\end{equation}
+
+An atom leaving $z=0$ with a velocity $v$ will reach the probe
+($z=d$), in a time:
+
+\begin{equation}\label{Td}
+    T_d = {\frac {v-\sqrt {{v}^{2}-2\,g\,{\it \alpha}\,d}}{g\,{\it \alpha}}}
+\end{equation}
+
+and with a final velocity:
+
+\begin{equation}
+    V_d = \sqrt {{v}^{2}-2\,g\,{\it \alpha}\,d}
+\end{equation}
+
+We have to notice that $T_d$ has a maximum value ${T_d}_{\rm max} =
+\sqrt{\frac{2\,d}{\alpha\,g}}$, meaning that after a time $t =
+{T_d}_{\rm max}$, the flux in $z = d$ will be stationary.
+
+The initial velocity distribution $F(v)$ can be expressed in term of
+a time-of-arrival distribution:
+
+\begin{eqnarray}\label{F_Td}
+  (\ref{Td})\, \Leftrightarrow\, v &=& \frac{d}{T_d} + \frac{g\,\alpha\,T_d}{2} \\
+  F(T_d) &=& \frac{\frac{d}{T_d} + \frac{g\,\alpha\,T_d}{2}}{v_0}\, \sqrt {{\frac {m}{2\, \pi\, k\, T }}}{e^{{\frac {m\, \left( {\it v_0}-\frac{d}{T_d} + \frac{g\,\alpha\,T_d}{2} \right) ^{2}}{2\,k\,T}}}}
+\end{eqnarray}
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

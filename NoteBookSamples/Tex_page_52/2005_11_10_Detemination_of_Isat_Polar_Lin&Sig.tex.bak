@@ -1,0 +1,113 @@
+\documentclass[a4,english,11pt]{article}
+
+
+\usepackage{epsfig}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{t1enc}
+\usepackage[latin1]{inputenc}
+\usepackage[french]{babel}
+\usepackage{fancyhdr}
+\usepackage{pstricks,pst-char,pst-coil,pst-fill,pst-plot}
+
+
+
+%\markright{} \topmargin0cm \oddsidemargin0cm \textwidth16cm
+%\textheight22cm
+
+
+\oddsidemargin-0.5cm \topmargin-1cm \textwidth17cm \textheight25cm
+\evensidemargin0mm
+
+
+\begin{document}
+
+
+\begin{center}
+\begin{huge}
+\textbf{Determination of the effective intensity of saturation
+$I_{sat}$}
+\end{huge}
+\end{center}
+\ \\
+
+To image the cloud of atoms by absorption, we shine a pulse of
+resonant light with an intensity $I_0$. After its propagation
+through the packet of atoms, the intensity of the imaging beam
+$I(x,y)$ obeys the following equation:
+\begin{equation}\label{eq : evo Intensite}
+     \frac{I_0}{I_{sat}} - \frac{I}{I_{sat}} + Ln(\frac{I_0}{I}) =
+     DO_{real}\equiv d(x,y)
+\end{equation}
+where $d(x,y)$ is the real optical density. In the following, $d$
+denotes the maximum optical density $d=Max \{d(x,y)\}$.
+Experimentally, we measure an effective maximal optical density
+$\delta$:
+\begin{equation}\label{eq : DO mesurée}
+     Ln(\frac{I_0}{I}) = DO_{measured}\equiv \delta
+\end{equation}
+We deduce from Eq. (\ref{eq : evo Intensite}) the equation
+fulfilled by the parameters $d$, $\delta$, $I_0$, and $I_{sat}$:
+\begin{equation}\label{eq : relation d delta Isat I0}
+    1 - e^{-\delta} = \frac{I_{sat}}{I_0} (d - \delta)
+\end{equation}
+
+We now take a serie of absorption images of the same cloud but
+with different durations $\Delta T$ for the pulse of light while
+keeping the product $\Delta T.I_0$ constant. $\Delta T$ is varied
+from $\Delta T_{min}=250\;\mbox{ns}$ to $\Delta T_{max} = 100\;\mu
+\mbox{s}$, and the intensity from ${I_0}_{max} \simeq 23\;
+\mbox{mW/cm}²$ to ${I_0}_{min} \simeq 0.06\;\mbox{mW/cm}²$. The
+incident intensity of the beam $I_0$ is measured from the total
+power of the beam and the size of the beam at the level of the
+cloud: $I_0=P/(2\pi\Delta x \Delta y)$ with $P = 13$ mW, $\Delta x
+= \ 0.24$ cm and $\Delta_y = 0.37$ cm. From each image, we can
+plot the value of the function $g(\delta)$ as a function of the
+duration of the pulse $\Delta T$:
+\begin{equation}\label{eq : plot}
+    g(\delta)=\frac{1 - e^{-\delta}} {d - \delta} =
+    \frac{I_{sat}}{I_0} = \frac{I_{sat}}{{I_0}_{max} \Delta T_{min}}
+    \Delta T
+\end{equation}
+Actually, $d$ is obtained in the low incident intensity limit
+(i.e. for the "long pulses": $\Delta T \geq 20\;µ\mbox{s}
+\Rightarrow I_0 \leq 0.3\;\mbox{mW/cm}²$) for which $\delta\simeq
+d$. We stress that for this kind of experiment, $d$ needs to be
+quite low ($d\leq 1$) in order to minimize the correction to
+optical density due to the finite linewidth of the imaging laser.
+In practice, we used $d \approx 0.7$ to perform those experiments.
+
+The plot obtained from Eq. (\ref{eq : plot}) gives a straight line
+with a slope $I_{sat}/({I_0}_{max} \Delta T_{min})$, from which we
+deduce the effective intensity of saturation $I_{sat}$. We use
+here only the points $\Delta T \leq 2\;µ\mbox{s} \Rightarrow I_0
+\geq 3\;\mbox{mW/cm}²$ for which $\delta<d$, the other points
+corresponding to longer pulses are used to determine $d$. These
+experiments have been done with various polarization for the
+imaging beam\footnote{"2005\_11\_10\_!\_
+DATA\_!\_Polar\_and\_Int\_at\_Nbr\_ph\_fix.OPJ" for the row data,
+and 2005\_11\_10\_!\_
+STAT\_!\_Polar\_and\_Int\_at\_Nbr\_ph\_fix.OPJ" for the result.}.
+The results are summarized in the following table:
+\begin{equation}\label{eq : Resultat}
+    \begin{tabular}{|l|r|r|r|}
+      \hline
+      % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+     $\mbox{Polar}$ & $I_{0}\ [\mbox{mW/cm}²]$ & $I_{sat}\ [\mbox{mW/cm}²]$ & $\mbox{Mean}$ \\
+      \hline     \hline
+      $\pi\ 150°$ & $23.3$ & $5.2\pm0.2$ & $5.4\pm0.2$ \\
+      \cline{1-3}
+      $\pi\ 60° $ & $23.3$ & $5.5\pm0.3$ & \\
+      \hline
+      $\sigma^+ $ & $22.7$ & $3.6\pm0.1$ & $3.55\pm0.1$ \\
+      \cline{1-3}
+      $\sigma^- $ & $23.3$ & $3.5\pm0.1$ &  \\
+      \hline
+    \end{tabular}
+\end{equation}
+
+For a given incident intensity, we can saturate more the atoms by
+using a circularly polarized light.
+
+\end{document}
