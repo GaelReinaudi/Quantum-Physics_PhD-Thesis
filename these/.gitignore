@@ -11,9 +11,13 @@
 *.flg
 */*.flg
 */*/*.flg
-*.synctex
 */*.synctex
 */*/*.synctex
 *.mtc*
 */*.mtc*
 */*/*.mtc*
+*.bst
+*.bak
+*.bmt
+*.brf
+*.glo
