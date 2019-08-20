@@ -1,17 +1,17 @@
 \chapter{Force dipolaire}\label{annexe:ForceDipolaire}
 \minitoc
 
-Dans cette annexe nous décrivons la \fd électrique. 
+Dans cette annexe nous dÃ©crivons la \fd Ã©lectrique. 
 %Nous commencerons par une approche qualitative de cet effet en utilisant un raisonnement classique. 
 %Ensuite, nous introduirons 
-Nous y décrirons les étapes d'un calcul quantitatif menant à une interprétation en terme de déplacement des niveaux d'énergie de l'atome. Nous appliquerons enfin le résultat au cas d'un atome alcalin tel que le \Rb.
+Nous y dÃ©crirons les Ã©tapes d'un calcul quantitatif menant Ã  une interprÃ©tation en terme de dÃ©placement des niveaux d'Ã©nergie de l'atome. Nous appliquerons enfin le rÃ©sultat au cas d'un atome alcalin tel que le \Rb.
 
 \EnFaitNon{
-\subsubsection{Approche qualitative par la mécanique classique}
-Pour décrire qualitativement la \fd, nous décrirons ici l'atome par un modèle de Lorentz d'un oscillateur classique%
-\footnote{Le modèle de Lorentz consiste à considéré que l'électron est élastiquement lié à l'atome par une force de rappel de type Hooke : $F(x)=-k\,x$.}%
+\subsubsection{Approche qualitative par la mÃ©canique classique}
+Pour dÃ©crire qualitativement la \fd, nous dÃ©crirons ici l'atome par un modÃ¨le de Lorentz d'un oscillateur classique%
+\footnote{Le modÃ¨le de Lorentz consiste Ã  considÃ©rÃ© que l'Ã©lectron est Ã©lastiquement liÃ© Ã  l'atome par une force de rappel de type Hooke : $F(x)=-k\,x$.}%
 . 
-Lorsqu'un atome est placé dans une lumière laser, le \che $\Evect$ y induit un moment dipolaire atomique $\Pvect$ oscillant à la pulsation $\pulsLaser$ de l'onde. En utilisant les notations complexes usuelles, 
+Lorsqu'un atome est placÃ© dans une lumiÃ¨re laser, le \che $\Evect$ y induit un moment dipolaire atomique $\Pvect$ oscillant Ã  la pulsation $\pulsLaser$ de l'onde. En utilisant les notations complexes usuelles, 
 \begin{equation}
 \begin{cases}
 \Evect(\vectr,t) = & \Eampl\,\Expo{-\im\,\pulsLaser} \,\,\vectu \, + \cc \nonumber \\
@@ -20,70 +20,70 @@ Lorsqu'un atome est placé dans une lumière laser, le \che $\Evect$ y induit un m
 %\virguleformule
 %	\label{eq:EvectPvect}
 \end{equation}
-où $\Eampl$ et $\Pampl$ sont respectivement les amplitudes complexes du \che et du \di, et $\cc$ désigne le \termetech{complexe conjugué}.
+oÃ¹ $\Eampl$ et $\Pampl$ sont respectivement les amplitudes complexes du \che et du \di, et $\cc$ dÃ©signe le \termetech{complexe conjuguÃ©}.
 L'amplitude du \di s'exprime alors par:
 \begin{equation}
 	\Pampl = \Polarisation \, \Eampl
 \virguleformule
 %	\label{eq:DipInduit}
 \end{equation} 
-où $\Polarisation$ est la polarisabilité complexe de l'atome, qui dépend de la pulsation $\pulsLaser$ de l'onde excitatrice.
+oÃ¹ $\Polarisation$ est la polarisabilitÃ© complexe de l'atome, qui dÃ©pend de la pulsation $\pulsLaser$ de l'onde excitatrice.
 
-Le piégeage optique par forces dipolaires repose sur l'interaction entre :
+Le piÃ©geage optique par forces dipolaires repose sur l'interaction entre :
 \begin{itemize}
 	\item le \che $\Evect$ de l'onde laser,
-	\item et le dipôle $\Pvect$ que ce dernier induit dans les atomes.
+	\item et le dipÃ´le $\Pvect$ que ce dernier induit dans les atomes.
 \end{itemize}
 
 }
 
 
-\section{Méthode de \termetech{l'atome habillé}}
-Pour calculer de manière quantitative l'effet de la force dipolaire sur un atome, il faut en fait tenir compte :
+\section{MÃ©thode de \termetech{l'atome habillÃ©}}
+Pour calculer de maniÃ¨re quantitative l'effet de la force dipolaire sur un atome, il faut en fait tenir compte :
 \begin{itemize}
 	\item de la structure interne de l'atome, 
-	\item de l'occupation des différents sous-niveaux énergétiques,
-	\item de la pulsation et polarisation de la lumière.
+	\item de l'occupation des diffÃ©rents sous-niveaux Ã©nergÃ©tiques,
+	\item de la pulsation et polarisation de la lumiÃ¨re.
 \end{itemize}
-Il faut utiliser pour cela un formalisme adapté à ce traitement. Nous allons employer ici la méthode de \emph{l'atome habillé}~\cite{CDG98}. Celle-ci, au lieu de traiter le système \{\termetech{atome}\} immergé dans un champ extérieur classique, consiste à considérer le système \{\termetech{atome}~+~\termetech{champ quantique associé à un mode particulier du champ}\}. Cette formulation présente l'avantage d'avoir un hamiltonien indépendant du temps et permet donc d'introduire de vrais niveaux d'énergie.
+Il faut utiliser pour cela un formalisme adaptÃ© Ã  ce traitement. Nous allons employer ici la mÃ©thode de \emph{l'atome habillÃ©}~\cite{CDG98}. Celle-ci, au lieu de traiter le systÃ¨me \{\termetech{atome}\} immergÃ© dans un champ extÃ©rieur classique, consiste Ã  considÃ©rer le systÃ¨me \{\termetech{atome}~+~\termetech{champ quantique associÃ© Ã  un mode particulier du champ}\}. Cette formulation prÃ©sente l'avantage d'avoir un hamiltonien indÃ©pendant du temps et permet donc d'introduire de vrais niveaux d'Ã©nergie.
 
-\subsection{Modélisation}
-Pour simplifier au maximum la description quantique du champ laser, nous considérons une cavité \emph{sans pertes}, dont \emph{un seul mode}, de fréquence $\pulsLaser$, contient des photons. Il sera par la suite possible de faire un lien entre le nombre $\Nph$ de photons dans la cavité et l'intensité moyenne $I$ de l'onde laser:
+\subsection{ModÃ©lisation}
+Pour simplifier au maximum la description quantique du champ laser, nous considÃ©rons une cavitÃ© \emph{sans pertes}, dont \emph{un seul mode}, de frÃ©quence $\pulsLaser$, contient des photons. Il sera par la suite possible de faire un lien entre le nombre $\Nph$ de photons dans la cavitÃ© et l'intensitÃ© moyenne $I$ de l'onde laser:
 \begin{equation}
 	I = \hbar \, \pulsLaser \, c \, \frac{\Nph}{\Vcav}
 	\virguleformule
 	\label{eq:IlaserNphotons}
 \end{equation}
-où $\Vcav$ est le volume de la cavité. 
-Dans la suite, les états propres de l'atome \termetech{habillé} par le champ en l'absence de couplage seront notés $\Ket{\AiN}$ et correspondent au produit tensoriel :
+oÃ¹ $\Vcav$ est le volume de la cavitÃ©. 
+Dans la suite, les Ã©tats propres de l'atome \termetech{habillÃ©} par le champ en l'absence de couplage seront notÃ©s $\Ket{\AiN}$ et correspondent au produit tensoriel :
 \begin{equation}
 \Ket{\AiN} \equiv \Ket{A_i} \otimes \Ket{\Nph}
 \virguleformule
 	\label{eq:KetAiN}
 \end{equation}
-où $\Ket{A_i}$ désigne l'état interne de l'atome, $\Ket{\Nph}$ désigne l'état du champ caractérisé par le nombre $\Nph$ de photons dans le mode laser%
-%\footnote{Le fait de repéré l'état du champ quantifié par le nombre $\Nph$ de photons qui y participe suppose que nous modélisions le mode de l'onde laser par un mode libre d'une cavité arbitrairement grande et sans pertes~\cite{CDG98}.}%
+oÃ¹ $\Ket{A_i}$ dÃ©signe l'Ã©tat interne de l'atome, $\Ket{\Nph}$ dÃ©signe l'Ã©tat du champ caractÃ©risÃ© par le nombre $\Nph$ de photons dans le mode laser%
+%\footnote{Le fait de repÃ©rÃ© l'Ã©tat du champ quantifiÃ© par le nombre $\Nph$ de photons qui y participe suppose que nous modÃ©lisions le mode de l'onde laser par un mode libre d'une cavitÃ© arbitrairement grande et sans pertes~\cite{CDG98}.}%
 .
-L'énergie d'un état $\Ket{\AiN}$ est la somme de l'énergie interne $\Ener_{Ai}$ de l'atome et de l'énergie $\Nph\,\hbar\,\pulsLaser$ du champ.
+L'Ã©nergie d'un Ã©tat $\Ket{\AiN}$ est la somme de l'Ã©nergie interne $\Ener_{Ai}$ de l'atome et de l'Ã©nergie $\Nph\,\hbar\,\pulsLaser$ du champ.
 
 
 
 \subsection{Couplage atome-laser}
-Dans le \termetech{point de vue dipolaire électrique}%
-\footnote{Le point de vue dipolaire électrique consiste à faire l'\termetech{approximation dipolaire}, \cad à considérer que l'extension spatiale de l'atome est très inférieure à la \lo du laser. }%
-, le couplage $\VAL$ entre l'atome et le mode laser s'écrit :
+Dans le \termetech{point de vue dipolaire Ã©lectrique}%
+\footnote{Le point de vue dipolaire Ã©lectrique consiste Ã  faire l'\termetech{approximation dipolaire}, \cad Ã  considÃ©rer que l'extension spatiale de l'atome est trÃ¨s infÃ©rieure Ã  la \lo du laser. }%
+, le couplage $\VAL$ entre l'atome et le mode laser s'Ã©crit :
 \begin{equation}
 \VAL = - \OperP \cdot \OperE = e\,\OperR\cdot\OperE
 \virguleformule
 	\label{eq:VAL}
 \end{equation}
-où $\OperP$ est l'opérateur dipôle atomique,
+oÃ¹ $\OperP$ est l'opÃ©rateur dipÃ´le atomique,
 \begin{equation}
-\OperP = - e \, \OperR ~~~~\mbox{($\OperR$ est l'opérateur position et $e$ la charge élémentaire)}
+\OperP = - e \, \OperR ~~~~\mbox{($\OperR$ est l'opÃ©rateur position et $e$ la charge Ã©lÃ©mentaire)}
 \virguleformule
 	\label{eq:OpPos}
 \end{equation}
-et $\OperE$ est l'opérateur champ laser évalué à la position de l'atome. La forme générale de l'opérateur champ dans la cavité est : 
+et $\OperE$ est l'opÃ©rateur champ laser Ã©valuÃ© Ã  la position de l'atome. La forme gÃ©nÃ©rale de l'opÃ©rateur champ dans la cavitÃ© est : 
 \begin{equation}
 	\OperE = \Polarisation 
 	\, \sqrt{\frac{\hbar\,\pulsLaser}{2\,\epsilon_0\,\Vcav}} 
@@ -91,10 +91,10 @@ et $\OperE$ est l'opérateur champ laser évalué à la position de l'atome. La form
 \virguleformule
 	\label{eq:OpChamp}
 \end{equation}
-où $a$ et $a^\dag$ sont les opérateurs \termetech{annihilation} et \termetech{création} de photons dans le mode considéré, et $\Polarisation$ un vecteur normé à coefficients complexes définissant la polarisation de l'onde laser.
+oÃ¹ $a$ et $a^\dag$ sont les opÃ©rateurs \termetech{annihilation} et \termetech{crÃ©ation} de photons dans le mode considÃ©rÃ©, et $\Polarisation$ un vecteur normÃ© Ã  coefficients complexes dÃ©finissant la polarisation de l'onde laser.
 
-\subsection{Interprétation des termes du hamiltonien}\label{sec:InterpretationCouplage}
-Dans cette sous-section, nous nous proposons d'interpréter brièvement les termes du couplage $\VAL$ en considérant leur effet sur les état propres $\Ket{\AiN}$. Pour cela, nous écrivons $\VAL$ sous la forme:
+\subsection{InterprÃ©tation des termes du hamiltonien}\label{sec:InterpretationCouplage}
+Dans cette sous-section, nous nous proposons d'interprÃ©ter briÃ¨vement les termes du couplage $\VAL$ en considÃ©rant leur effet sur les Ã©tat propres $\Ket{\AiN}$. Pour cela, nous Ã©crivons $\VAL$ sous la forme:
 \begin{equation}
 	\VAL = 
 	\sqrt{\frac{\hbar\,\pulsLaser\,e^2}{2\,\epsilon_0\,\Vcav}} 
@@ -103,52 +103,52 @@ Dans cette sous-section, nous nous proposons d'interpréter brièvement les termes
 	\pointformule
 	\label{eq:VALInterpretation}
 \end{equation}
-Cette expression permet de dégager les points suivants quant au couplage de deux états propres $\Ket{\AiN}$:
+Cette expression permet de dÃ©gager les points suivants quant au couplage de deux Ã©tats propres $\Ket{\AiN}$:
 \begin{ditemize}
-	\item le terme dans la première parenthèse%
-	\footnote{Rappelons comment $a$ et $a^\dag$ agissent sur un état du champ $\Ket{N}$ :\\ $a\,\Ket{N} = \sqrt{N}\,\Ket{N-1}$ et $a^\dag\,\Ket{N} = \sqrt{N+1}\,\Ket{N+1}$.}%
-	, $a + a^\dag$, n'agit que sur la partie champ $\Ket{N}$ et ne peut coupler $\Ket{\AiN}$ qu'avec des états ayant un nombre de photons $\Nph' = \Nph \pm 1$.
+	\item le terme dans la premiÃ¨re parenthÃ¨se%
+	\footnote{Rappelons comment $a$ et $a^\dag$ agissent sur un Ã©tat du champ $\Ket{N}$ :\\ $a\,\Ket{N} = \sqrt{N}\,\Ket{N-1}$ et $a^\dag\,\Ket{N} = \sqrt{N+1}\,\Ket{N+1}$.}%
+	, $a + a^\dag$, n'agit que sur la partie champ $\Ket{N}$ et ne peut coupler $\Ket{\AiN}$ qu'avec des Ã©tats ayant un nombre de photons $\Nph' = \Nph \pm 1$.
 %	:
 %	\[
 %	\Ket{\AiN} \xrightarrow[\VAL]{\phantom{aaaaaaaaa}} \left\{ \KetAjNpm \right.
 %	\pointformule
 %	\]
-	\item le terme dans la seconde parenthèse, $\Polarisation \cdot \OperR$, n'agit que sur la partie atomique. Il définit, en fonction de la polarisation, les règles de sélection et les probabilités des transitions atomiques.
+	\item le terme dans la seconde parenthÃ¨se, $\Polarisation \cdot \OperR$, n'agit que sur la partie atomique. Il dÃ©finit, en fonction de la polarisation, les rÃ¨gles de sÃ©lection et les probabilitÃ©s des transitions atomiques.
 \end{ditemize}
-L'opérateur $\VAL$ couplera a priori chaque état $\Ket{\AiN}$ aux états $\Ket{A_j, \Nph+1}$ et $\Ket{A_j, \Nph-1}$.
+L'opÃ©rateur $\VAL$ couplera a priori chaque Ã©tat $\Ket{\AiN}$ aux Ã©tats $\Ket{A_j, \Nph+1}$ et $\Ket{A_j, \Nph-1}$.
 
 \casse
 
 \section{Traitement perturbatif du couplage}
-Pour trouver les états propres du système \{\termetech{atome} + \termetech{champ} + \termetech{couplage}\}, il faudrait diagonaliser son hamiltonien. En pratique, nous allons éviter cette tâche fastidieuse et traiterons l'effet du couplage $\VAL$ de manière perturbative : nous allons considérer que les états propres $\Ket{\AiN}$ du système \{\termetech{atome} + \termetech{champ}\} restent des états propres en présence du couplage $\VAL$, mais avec une petite modification $\Delta \Ener_i$ de leur énergie:
+Pour trouver les Ã©tats propres du systÃ¨me \{\termetech{atome} + \termetech{champ} + \termetech{couplage}\}, il faudrait diagonaliser son hamiltonien. En pratique, nous allons Ã©viter cette tÃ¢che fastidieuse et traiterons l'effet du couplage $\VAL$ de maniÃ¨re perturbative : nous allons considÃ©rer que les Ã©tats propres $\Ket{\AiN}$ du systÃ¨me \{\termetech{atome} + \termetech{champ}\} restent des Ã©tats propres en prÃ©sence du couplage $\VAL$, mais avec une petite modification $\Delta \Ener_i$ de leur Ã©nergie:
 \[
 \Ener_i \xrightarrow[\VAL]{\phantom{aaaaaaaaa}} \Ener_i + \Delta\Ener_i
 \pointformule
 \]
 \Remarque%
 {
-Pour justifier ce traitement, nous devons d'abord nous assurer que l'énergie typique $\EAL$ mise en jeu par le couplage $\VAL$ est très faible devant toutes les autres échelles d'énergie présentes dans le hamiltonien sans interaction. 
+Pour justifier ce traitement, nous devons d'abord nous assurer que l'Ã©nergie typique $\EAL$ mise en jeu par le couplage $\VAL$ est trÃ¨s faible devant toutes les autres Ã©chelles d'Ã©nergie prÃ©sentes dans le hamiltonien sans interaction. 
 
-Notamment, $\EAL$ doit être très faible devant les termes de structure hyperfine : 
+Notamment, $\EAL$ doit Ãªtre trÃ¨s faible devant les termes de structure hyperfine : 
 $\Delta \Ener_i \ll \hbar\,\omegaHF$, 
-où $\omegaHF$ est la pulsation entre les niveaux hyperfins. 
+oÃ¹ $\omegaHF$ est la pulsation entre les niveaux hyperfins. 
 }
-Les équations~\nref{eq:VAL} à~\nref{eq:OpChamp} permettent de calculer un ordre de grandeur de l'énergie typique $\EAL$ mise en jeu par le couplage $\VAL$. En effet, l'opérateur position $\OperR$ correspond à une distance de l'ordre de, ou inférieure, au rayon de l'atome ($\approx a_0$, le rayon de Bohr%
+Les Ã©quations~\nref{eq:VAL} Ã ~\nref{eq:OpChamp} permettent de calculer un ordre de grandeur de l'Ã©nergie typique $\EAL$ mise en jeu par le couplage $\VAL$. En effet, l'opÃ©rateur position $\OperR$ correspond Ã  une distance de l'ordre de, ou infÃ©rieure, au rayon de l'atome ($\approx a_0$, le rayon de Bohr%
 \footnote{Rappelons que le rayon de Bohr vaut $a_0\approx \SI{0.5}{\angstrom}$.}%
-), et les opérateurs $a$ et $a^\dag$ ont pour valeur moyenne typique $\sqrt{\Nph}$. On a donc :
+), et les opÃ©rateurs $a$ et $a^\dag$ ont pour valeur moyenne typique $\sqrt{\Nph}$. On a donc :
 \[
 \EAL \approx e\,a_0\,\sqrt{\frac{\Nph\,\hbar\,\pulsLaser}{2\,\epsilon_0\,\Vcav}}
  = e\,a_0\,\sqrt{\frac{I}{2\,\epsilon_0\,c}}
 \virguleformule
 \]
-où la deuxième égalité fait intervenir l'expression~\nref{eq:IlaserNphotons}. Avant de continuer ce calcul d'ordre de grandeur, nous devons mentionner un point important, à savoir que, pour des raisons de symétrie des fonctions d'onde de l'électron, l'opérateur $\VAL$ a une moyenne rigoureusement nulle pour tout état propre $\Ket{A_i}$, et par conséquent : 
+oÃ¹ la deuxiÃ¨me Ã©galitÃ© fait intervenir l'expression~\nref{eq:IlaserNphotons}. Avant de continuer ce calcul d'ordre de grandeur, nous devons mentionner un point important, Ã  savoir que, pour des raisons de symÃ©trie des fonctions d'onde de l'Ã©lectron, l'opÃ©rateur $\VAL$ a une moyenne rigoureusement nulle pour tout Ã©tat propre $\Ket{A_i}$, et par consÃ©quent : 
 \[
 \BraOpKet{\AjN}{\VAL}{\AiN} = 0
 \pointformule
 \]
-Le premier terme du développement perturbatif à prendre en compte est donc, a priori, le terme d'ordre $2$. D'après l'équation \vref{eq:EiModiff}, l'ordre de grandeur de ce terme est $\ttfrac{\EAL^2}{\EcartMini}$, où $\EcartMini$ est l'écart énergétique typique%
-\footnote{En réalité, nous voulons estimer une valeur maximale de $\Delta\Ener_i$ par l'équation~\nref{eq:EiModiff}. L'écart d'énergie $\EcartMini$ à considérer est donc l'écart \emph{minimal} entre deux états couplés par $\VAL$.}
-entre les états de l'atome \termetech{habillé} couplés par $\VAL$.
+Le premier terme du dÃ©veloppement perturbatif Ã  prendre en compte est donc, a priori, le terme d'ordre $2$. D'aprÃ¨s l'Ã©quation \vref{eq:EiModiff}, l'ordre de grandeur de ce terme est $\ttfrac{\EAL^2}{\EcartMini}$, oÃ¹ $\EcartMini$ est l'Ã©cart Ã©nergÃ©tique typique%
+\footnote{En rÃ©alitÃ©, nous voulons estimer une valeur maximale de $\Delta\Ener_i$ par l'Ã©quation~\nref{eq:EiModiff}. L'Ã©cart d'Ã©nergie $\EcartMini$ Ã  considÃ©rer est donc l'Ã©cart \emph{minimal} entre deux Ã©tats couplÃ©s par $\VAL$.}
+entre les Ã©tats de l'atome \termetech{habillÃ©} couplÃ©s par $\VAL$.
 %
 \ApplicationNumerique{
 La condition $\Delta \Ener_i \ll \hbar\,\omegaHF$ qui justifie le traitement perturbatif de l'effet de $\VAL$ peut donc se traduire par:
@@ -157,25 +157,25 @@ La condition $\Delta \Ener_i \ll \hbar\,\omegaHF$ qui justifie le traitement per
 \pointformule
 	\label{eq:ConditionPerturbatif}
 \end{equation}
-Dans nos conditions expérimentales, la \lo du \lyb est \mbox{$\LO\approx\micron{1}$} et les transitions à considérer pour le \Rb sont les lignes $D_1$ ($\nm{795}$) et $D_2$ ($\nm{780}$). On a donc $\EcartMini\approx\hbar\times\SI{6E14}{\reciprocal\second}$.
-Dans l'état fondamental du \Rb, on a $\omegaHF \approx \SI{4E10}{\reciprocal\second}$.
-Finalement on aboutit à :
+Dans nos conditions expÃ©rimentales, la \lo du \lyb est \mbox{$\LO\approx\micron{1}$} et les transitions Ã  considÃ©rer pour le \Rb sont les lignes $D_1$ ($\nm{795}$) et $D_2$ ($\nm{780}$). On a donc $\EcartMini\approx\hbar\times\SI{6E14}{\reciprocal\second}$.
+Dans l'Ã©tat fondamental du \Rb, on a $\omegaHF \approx \SI{4E10}{\reciprocal\second}$.
+Finalement on aboutit Ã  :
 \begin{equation}
 	I \ll \SI{5E12}{\watt\per\square\meter}
 \virguleformule
 	\label{eq:ConditionIntPerturbatif}
 \end{equation}
-ce qui est une intensité extrêmement élevée puisqu'elle correspond, par exemple%
+ce qui est une intensitÃ© extrÃªmement Ã©levÃ©e puisqu'elle correspond, par exemple%
 \footnotemark%
-, à un \fl de rayon \micron{50} et d'une puissance de \W{20000}.
+, Ã  un \fl de rayon \micron{50} et d'une puissance de \W{20000}.
 Nous serons donc bien dans des conditions satisfaisantes pour utiliser un traitement perturbatif. 
 }
-\footnotetext{Un autre exemple serait celui d'un \fl de \W{300}, focalisé sur un disque de rayon \micron{5}.}
+\footnotetext{Un autre exemple serait celui d'un \fl de \W{300}, focalisÃ© sur un disque de rayon \micron{5}.}
 
 
 
-\subsection{Calcul du déplacement lumineux}
-Le déplacement lumineux sera calculé en appliquant la théorie des perturbations au second ordre d'états non-dégénérés~\cite{CDL86b}:
+\subsection{Calcul du dÃ©placement lumineux}
+Le dÃ©placement lumineux sera calculÃ© en appliquant la thÃ©orie des perturbations au second ordre d'Ã©tats non-dÃ©gÃ©nÃ©rÃ©s~\cite{CDL86b}:
 \begin{equation}
 	\Delta\Ener_i = 
 	\sum_{\substack{j \neq i \\ \Nph'}} 
@@ -185,15 +185,15 @@ Le déplacement lumineux sera calculé en appliquant la théorie des perturbations 
 	\pointformule
 	\label{eq:EiModiff}
 \end{equation}
-Rappelons que $\EneriN$ et $\EnerjN$ sont les énergies des états propres de l'atome \termetech{habillé} en l'absence de couplage, \cad : $\EneriN = \Ener_i +\Nph\,\hbar\pulsLaser$.
+Rappelons que $\EneriN$ et $\EnerjN$ sont les Ã©nergies des Ã©tats propres de l'atome \termetech{habillÃ©} en l'absence de couplage, \cad : $\EneriN = \Ener_i +\Nph\,\hbar\pulsLaser$.
 %
 \Remarque{\label{RQ:QuePolarLinEtCir}
-Comme nous venons de le dire, l'équation~\nref{eq:EiModiff} s'applique au cas de niveaux non-dégénérés. Or, chaque niveau de structure hyperfine de l'atome de \Rb est composé de $2\,F+1$ \snx dégénérés (en l'absence de champ magnétique), avec $F$ le moment angulaire du niveau considéré. on peut toutefois appliquer le développement~\nref{eq:EiModiff} à condition qu'il n'y ait aucun couplage entre ces \snx. En pratique, du fait des règles de sélection évoquées dans la \autoref{sec:InterpretationCouplage}, cette condition est vérifiée si la polarisation $\Polarisation$ du \fl est purement linéaire ou purement circulaire. Nous nous plaçons dans ce contexte. On pourra consulter la référence~\cite{DeJ98} pour un exemple de calcul faisant intervenir les couplages entre \snx magnétiques.
+Comme nous venons de le dire, l'Ã©quation~\nref{eq:EiModiff} s'applique au cas de niveaux non-dÃ©gÃ©nÃ©rÃ©s. Or, chaque niveau de structure hyperfine de l'atome de \Rb est composÃ© de $2\,F+1$ \snx dÃ©gÃ©nÃ©rÃ©s (en l'absence de champ magnÃ©tique), avec $F$ le moment angulaire du niveau considÃ©rÃ©. on peut toutefois appliquer le dÃ©veloppement~\nref{eq:EiModiff} Ã  condition qu'il n'y ait aucun couplage entre ces \snx. En pratique, du fait des rÃ¨gles de sÃ©lection Ã©voquÃ©es dans la \autoref{sec:InterpretationCouplage}, cette condition est vÃ©rifiÃ©e si la polarisation $\Polarisation$ du \fl est purement linÃ©aire ou purement circulaire. Nous nous plaÃ§ons dans ce contexte. On pourra consulter la rÃ©fÃ©rence~\cite{DeJ98} pour un exemple de calcul faisant intervenir les couplages entre \snx magnÃ©tiques.
 }
 %
-L'expression~\nref{eq:EiModiff} se simplifie car $\VAL$ ne couple que certains états entre eux (voir la \autoref{sec:InterpretationCouplage}). 
+L'expression~\nref{eq:EiModiff} se simplifie car $\VAL$ ne couple que certains Ã©tats entre eux (voir la \autoref{sec:InterpretationCouplage}). 
 \Resultat{
-Ainsi, en développant l'expression~\nref{eq:EiModiff} grâce aux équations~\nref{eq:IlaserNphotons} à~\nref{eq:OpChamp}, et en supposant que le nombre de photons $\Nph \gg 1$, on aboutit à :
+Ainsi, en dÃ©veloppant l'expression~\nref{eq:EiModiff} grÃ¢ce aux Ã©quations~\nref{eq:IlaserNphotons} Ã ~\nref{eq:OpChamp}, et en supposant que le nombre de photons $\Nph \gg 1$, on aboutit Ã  :
 %
 \begin{align}
 	\Delta \Ener_i &= 
@@ -215,7 +215,7 @@ Ainsi, en développant l'expression~\nref{eq:EiModiff} grâce aux équations~\nref{
 	\label{eq:DeltaEibis}
 \end{align}
 }
-Les éléments de matrices $\BraOpKet{A_j}{\Polarisation\cdot\OperR}{A_i}$ peuvent se décomposer, en appliquant le \termetech{Théorème de Wigner-Eckart}, et prendre la forme suivante~\cite{CDL86b} : \Cahier{MécaQ CCT Tome 2 page 1057}
+Les Ã©lÃ©ments de matrices $\BraOpKet{A_j}{\Polarisation\cdot\OperR}{A_i}$ peuvent se dÃ©composer, en appliquant le \termetech{ThÃ©orÃ¨me de Wigner-Eckart}, et prendre la forme suivante~\cite{CDL86b} : \Cahier{MÃ©caQ CCT Tome 2 page 1057}
 \newcommand{\LePhantom}{\vphantom{J'}}
 \begin{equation}
 	\BraOpKet{A_2}{\Polarisation\cdot\OperR}{A_1} 
@@ -225,20 +225,20 @@ Les éléments de matrices $\BraOpKet{A_j}{\Polarisation\cdot\OperR}{A_i}$ peuvent
 	\virguleformule
 	\label{eq:ElementMatriceReduite}
 \end{equation}
-où :
+oÃ¹ :
 \begin{ditemize}
-	\item le terme $\BraAbsKet{n_2,F_2}{\OperR}{n_1,F_1}$ est l'\termetech{élément de matrice réduit} de l'opérateur $\OperR$, qui ne dépend que de la partie radiale des fonctions d'onde de $\Ket{A_1}$ et $\Ket{A_2}$, définie par les \termetech{nombres quantiques principaux} ($n_1, n_2$) et les \termetech{nombres quantiques azimutaux} ($F_1, F_2$),
-\item le terme $\BraKet{F_2,1;m_2,\polarindice}{F_1,m_1}$ est un \termetech{coefficient de Clebsch-Gordan}, qui ne dépend que des nombres quantiques associés aux moments cinétiques ($F_1, F_2;m_1,m_2$) des états considérés et de la polarisation de la lumière laser, définie par $\polarindice$.
+	\item le terme $\BraAbsKet{n_2,F_2}{\OperR}{n_1,F_1}$ est l'\termetech{Ã©lÃ©ment de matrice rÃ©duit} de l'opÃ©rateur $\OperR$, qui ne dÃ©pend que de la partie radiale des fonctions d'onde de $\Ket{A_1}$ et $\Ket{A_2}$, dÃ©finie par les \termetech{nombres quantiques principaux} ($n_1, n_2$) et les \termetech{nombres quantiques azimutaux} ($F_1, F_2$),
+\item le terme $\BraKet{F_2,1;m_2,\polarindice}{F_1,m_1}$ est un \termetech{coefficient de Clebsch-Gordan}, qui ne dÃ©pend que des nombres quantiques associÃ©s aux moments cinÃ©tiques ($F_1, F_2;m_1,m_2$) des Ã©tats considÃ©rÃ©s et de la polarisation de la lumiÃ¨re laser, dÃ©finie par $\polarindice$.
 \end{ditemize}
-En outre, comme nous l'avons mentionné dans la remarque \vpageref[en haute de cette page]{RQ:QuePolarLinEtCir}, l'équation~\nref{eq:DeltaEibis} n'est valable que dans les trois cas suivants :
+En outre, comme nous l'avons mentionnÃ© dans la remarque \vpageref[en haute de cette page]{RQ:QuePolarLinEtCir}, l'Ã©quation~\nref{eq:DeltaEibis} n'est valable que dans les trois cas suivants :
 \begin{itemize}
-	\item lumière polarisée linéairement $\pi \rightarrow \polarindice = 0$,
-	\item lumière polarisée circulairement $\sigma^+ \rightarrow \polarindice = +1$,
-	\item lumière polarisée circulairement $\sigma^- \rightarrow \polarindice = -1$.
+	\item lumiÃ¨re polarisÃ©e linÃ©airement $\pi \rightarrow \polarindice = 0$,
+	\item lumiÃ¨re polarisÃ©e circulairement $\sigma^+ \rightarrow \polarindice = +1$,
+	\item lumiÃ¨re polarisÃ©e circulairement $\sigma^- \rightarrow \polarindice = -1$.
 \end{itemize}
 
-\subsubsection{Expression en fonction du taux d'émission spontanée $\pulsSpont$}
-Le calcul de $\BraAbsKet{n_2,F_2}{\OperR}{n_1,F_1}$ fait intervenir des intégrales de recouvrement entre les fonctions d'onde des états considérés, mais il est possible de relier ce facteur au taux d'émission spontané $\pulsSpont$ entre deux orbitales dont les moments angulaires sont respectivement $J_1$ et $J_2$~\cite{Lou00} :
+\subsubsection{Expression en fonction du taux d'Ã©mission spontanÃ©e $\pulsSpont$}
+Le calcul de $\BraAbsKet{n_2,F_2}{\OperR}{n_1,F_1}$ fait intervenir des intÃ©grales de recouvrement entre les fonctions d'onde des Ã©tats considÃ©rÃ©s, mais il est possible de relier ce facteur au taux d'Ã©mission spontanÃ© $\pulsSpont$ entre deux orbitales dont les moments angulaires sont respectivement $J_1$ et $J_2$~\cite{Lou00} :
 \begin{equation}
 	\Module{\BraAbsKet{n_2,F_2}{\OperR}{n_1,F_1}}^2 = \pulsSpont
 	\,\frac{3\,\epsilon_0\,\hbar\lambda^3}{8\,\pi^2\,e^2}
@@ -250,15 +250,15 @@ Le calcul de $\BraAbsKet{n_2,F_2}{\OperR}{n_1,F_1}$ fait intervenir des intégral
 \virguleformule
 	\label{eq:GammaMatriceReduit}
 \end{equation}
-où le dernier terme est un \termetech{coefficient 6-$j$ de Wigner}, et $\pulsSpont$ est le taux d'émission stimulée associé à la transition dont la \lo est $\lambda$.
+oÃ¹ le dernier terme est un \termetech{coefficient 6-$j$ de Wigner}, et $\pulsSpont$ est le taux d'Ã©mission stimulÃ©e associÃ© Ã  la transition dont la \lo est $\lambda$.
 
 \casse
 
 \subsection{Application au cas d'un atome alcalin}
-Dans cette sous-section nous considérons plus spécifiquement 
+Dans cette sous-section nous considÃ©rons plus spÃ©cifiquement 
 %l'application de l'expression~\nref{eq:DeltaEibis} au 
-le cas d'un atome alcalin dans son niveau fondamental ${\OrbitalSJ}$ (pour lequel $J_1=\tfrac{1}{2}$) et soumis à une onde laser.
-Les états à considérer pour le calcul se résument alors à ceux mis en jeu dans les transitions des \emph{lignes $D_1$ et $D_2$}:
+le cas d'un atome alcalin dans son niveau fondamental ${\OrbitalSJ}$ (pour lequel $J_1=\tfrac{1}{2}$) et soumis Ã  une onde laser.
+Les Ã©tats Ã  considÃ©rer pour le calcul se rÃ©sument alors Ã  ceux mis en jeu dans les transitions des \emph{lignes $D_1$ et $D_2$}:
 \[
 \begin{cases}
 \OrbitalSJ\xrightarrow[\text{ligne $D_1$}]{}\OrbitalPJun 
@@ -269,7 +269,7 @@ Les états à considérer pour le calcul se résument alors à ceux mis en jeu dans l
 \end{cases}
 \]
 Les \los respectives de ces deux lignes sont $\LO_1\approx\nm{795.0}$ et $\LO_2\approx\nm{780.2}$. 
-On peut alors écrire l'expression~\nref{eq:DeltaEibis} :
+On peut alors Ã©crire l'expression~\nref{eq:DeltaEibis} :
 \[
 \begin{split}
 	\Avec{\Delta \Ener_i}{i \in \OrbitalSJ} = \,\,\,\,\,
@@ -295,10 +295,10 @@ On peut alors écrire l'expression~\nref{eq:DeltaEibis} :
 \virguleformule
 \end{split}
 \]
-où les pulsations $\desacU$ et $\desacD$ correspondent aux désaccords de l'onde laser par rapport aux lignes $D_1$ et $D_2$ (nous avons implicitement supposé que ces désaccords sont grands devant les écarts énergétiques de la structure hyperfine des états excités, de manière à pouvoir sortir ces termes des sommations).
+oÃ¹ les pulsations $\desacU$ et $\desacD$ correspondent aux dÃ©saccords de l'onde laser par rapport aux lignes $D_1$ et $D_2$ (nous avons implicitement supposÃ© que ces dÃ©saccords sont grands devant les Ã©carts Ã©nergÃ©tiques de la structure hyperfine des Ã©tats excitÃ©s, de maniÃ¨re Ã  pouvoir sortir ces termes des sommations).
 
 \Resultat{
-En utilisant les propriétés des coefficients de Clebsch-Gordan et des coefficient 6-$j$ de Wigner, les expressions~\nref{eq:DeltaEibis},~\nref{eq:ElementMatriceReduite} et~\nref{eq:GammaMatriceReduit} permettent d'écrire l'expression ci-dessus sous une forme simplifiée faisant apparaître le moment angulaire total $F$ et le sous-état magnétique $\mF$ de l'état considéré:
+En utilisant les propriÃ©tÃ©s des coefficients de Clebsch-Gordan et des coefficient 6-$j$ de Wigner, les expressions~\nref{eq:DeltaEibis},~\nref{eq:ElementMatriceReduite} et~\nref{eq:GammaMatriceReduit} permettent d'Ã©crire l'expression ci-dessus sous une forme simplifiÃ©e faisant apparaÃ®tre le moment angulaire total $F$ et le sous-Ã©tat magnÃ©tique $\mF$ de l'Ã©tat considÃ©rÃ©:
 \begin{equation}
 \begin{split}
 	\Avec{\Delta \Ener_i}{i \in \OrbitalSJ} = \,\,\,\,\,
@@ -328,11 +328,11 @@ En utilisant les propriétés des coefficients de Clebsch-Gordan et des coefficien
 \end{split}
 	\label{eq:DeltaEiFinalAlcalin}
 \end{equation}
-où $\gF$ est le \termetech{facteur de Landé}, $\polarindice$ est l'indice qui caractérise la polarisation de l'onde laser ($\polarindice=0,\pm1$ respectivement pour les cas linéaire $\pi$ et circulaire $\sigma^\pm$). Rappelons que le taux d'émission $\pulsSpont$ stimulée est associé à la transition dont la \lo est $\lambda$.
+oÃ¹ $\gF$ est le \termetech{facteur de LandÃ©}, $\polarindice$ est l'indice qui caractÃ©rise la polarisation de l'onde laser ($\polarindice=0,\pm1$ respectivement pour les cas linÃ©aire $\pi$ et circulaire $\sigma^\pm$). Rappelons que le taux d'Ã©mission $\pulsSpont$ stimulÃ©e est associÃ© Ã  la transition dont la \lo est $\lambda$.
 }
 
 \ApplicationNumerique{
-Évaluons l'expression~\nref{eq:DeltaEiFinalAlcalin} dans le cas du \Rb dans son état fondamental et en considérant l'interaction avec une onde polarisée \emph{linéairement} issue de notre \lyb ($\LO=\nm{1072}$).
+Ã‰valuons l'expression~\nref{eq:DeltaEiFinalAlcalin} dans le cas du \Rb dans son Ã©tat fondamental et en considÃ©rant l'interaction avec une onde polarisÃ©e \emph{linÃ©airement} issue de notre \lyb ($\LO=\nm{1072}$).
 On obtient alors : 
 \[
 	\Delta \Ener_i = \PropUI \times I 
@@ -340,16 +340,16 @@ On obtient alors :
 	\text{avec ~~} \PropUI \approx \SI{-2.06E-36}{\joule\per({\watt\per\square\meter})}
 \pointformule
 \]
-Afin d'avoir, par exemple, un piège d'une profondeur correspondant à une température $T=\milliK{1}$, il faut une intensité d'environ $\Wpcmc{E6}$.
+Afin d'avoir, par exemple, un piÃ¨ge d'une profondeur correspondant Ã  une tempÃ©rature $T=\milliK{1}$, il faut une intensitÃ© d'environ $\Wpcmc{E6}$.
 }
 
-\subsection{Dépendance du potentiel en fonction de l'état interne}
-L'expression~\nref{eq:UpropI} fait explicitement apparaître la dépendance du potentiel dipolaire en fonction du sous-état magnétique de l'atome. 
-%Cet effet ne ce fait pas sentir que pour une polarisation linéaire ($q=0$).
-Cette dépendance peut être mise  à profit dans certaines expériences comme, par exemple, pour mettre en \oe uvre des mécanismes de refroidissement de type \termetech{Sisyphe} dans un \pd~\cite{MDW02}. 
+\subsection{DÃ©pendance du potentiel en fonction de l'Ã©tat interne}
+L'expression~\nref{eq:UpropI} fait explicitement apparaÃ®tre la dÃ©pendance du potentiel dipolaire en fonction du sous-Ã©tat magnÃ©tique de l'atome. 
+%Cet effet ne ce fait pas sentir que pour une polarisation linÃ©aire ($q=0$).
+Cette dÃ©pendance peut Ãªtre mise  Ã  profit dans certaines expÃ©riences comme, par exemple, pour mettre en \oe uvre des mÃ©canismes de refroidissement de type \termetech{Sisyphe} dans un \pd~\cite{MDW02}. 
 
 \ApplicationNumerique{
-Pour évaluer l'importance relative de cette dépendance,
+Pour Ã©valuer l'importance relative de cette dÃ©pendance,
 nous 
 %pouvons reformuler l'expression~\nref{eq:UpropI} sous la forme :
 %\[..................
@@ -363,11 +363,11 @@ nous
 %%	\label{eq:UpropIDependanceMF}
 %\]
 %Nous 
-considérons l'expression~\nref{eq:UpropI} dans 
-le cas du \Rb dans son état fondamental (pour lequel $\gF=\tfrac{1}{2}$), en interaction avec une onde polarisée \emph{circulairement} et issue de notre \lyb ($\LO=\nm{1072}$). 
+considÃ©rons l'expression~\nref{eq:UpropI} dans 
+le cas du \Rb dans son Ã©tat fondamental (pour lequel $\gF=\tfrac{1}{2}$), en interaction avec une onde polarisÃ©e \emph{circulairement} et issue de notre \lyb ($\LO=\nm{1072}$). 
 
-La contribution du terme dépendant de $\mF$ correspond à une différence relative de potentiel de~~$\mF\!\!\times\!\val{2.2}\%$. On peut donc avoir une différence d'environ $\val{9}\%$ du potentiel entre les états $\EtatFmF{2}{2}$ et $\EtatFmF{2}{-2}$ du niveau fondamental.
+La contribution du terme dÃ©pendant de $\mF$ correspond Ã  une diffÃ©rence relative de potentiel de~~$\mF\!\!\times\!\val{2.2}\%$. On peut donc avoir une diffÃ©rence d'environ $\val{9}\%$ du potentiel entre les Ã©tats $\EtatFmF{2}{2}$ et $\EtatFmF{2}{-2}$ du niveau fondamental.
 
-Si on considère un piège dont la profondeur correspond à \microK{200}, l'écart énergétique entre deux sous-niveaux magnétiques voisins permet d'effectuer des transitions avec une onde \rf de typiquement \SI{100}{\kilo\hertz}.
+Si on considÃ¨re un piÃ¨ge dont la profondeur correspond Ã  \microK{200}, l'Ã©cart Ã©nergÃ©tique entre deux sous-niveaux magnÃ©tiques voisins permet d'effectuer des transitions avec une onde \rf de typiquement \SI{100}{\kilo\hertz}.
 }
 
