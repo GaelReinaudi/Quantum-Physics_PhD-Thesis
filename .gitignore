@@ -8,3 +8,13 @@
 /publication EUE/
 /Lisa 2007-10-06@15 26 33.jpg
 *.picasa.ini
+**.aux
+**.idx
+**.fls
+**.glo
+**.ilg
+**.log
+**.nlo
+**.out
+**.toc
+**.fdb_latexmk
