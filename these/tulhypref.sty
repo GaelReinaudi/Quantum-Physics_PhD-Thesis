@@ -1,24 +1,16 @@
 %
-% This package complements the thloria class and is aimed to replace
+% This package complements the thesul class and is aimed to replace
 % the hyperref package in this context. The hyperref package does not
-% address the intricacies of thloria and this is what we are doing here.
+% address the intricacies of thesul and this is what we are doing here.
 % This package load hyperref and passes its options so that one can write
-% \usepackage[pdftex]{tlhypref} or whatever.
+% \usepackage[pdftex]{tulhypref} or whatever.
 %
 % Versions:
-%     0.92 (1999/04/08): added a fourth parameter to \@writetorep to make it 
-%                        again compatible with hyperref.sty. 
-%                        Needs hyperref 6.53 or later.
-%     0.93 (1999/07/13): again compatible with hyperref 6.63;
-%                        use of higher-level commands. 
-%                        \TLpdfbookmark removed (use \texorpdfstring)
-%     0.94 (1999/07/15): \@toc@hook added 
-%
-\def\fileversion{0.94}
-\def\filedate{1999/07/15}
+\def\fileversion{0.11}
+\def\filedate{2013/10/06}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tlhypref}[\filedate\space\fileversion\space
-thloria wrapper for hyperref package (D. Roegel)]
+\ProvidesPackage{tulhypref}[\filedate\space\fileversion\space
+thesul wrapper for hyperref package (D. Roegel)]
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{hyperref}}
 \ProcessOptions
 \RequirePackage{hyperref}
@@ -32,13 +24,13 @@ thloria wrapper for hyperref package (D. Roegel)]
 \let\refstepcounter\H@refstepcounter
 
 % Now, \@part, \@chapter, \@sect and \refstepcounter have the good values
-% of thloria.
+% of thesul.
 
-% Addition of \TLtopbookmark in front of \tableofcontents
+% Addition of \TULtopbookmark in front of \tableofcontents
 % in order to make sure that the bookmark entry for the table of contents
 % is at the top level. Works with the chapter hook.
 \let\@old@tableofcontents\tableofcontents
-\def\tableofcontents{\TLtopbookmark\@old@tableofcontents}
+\def\tableofcontents{\TULtopbookmark\@old@tableofcontents}
 
 % These definitions are for the purpose of comparisons in \refstepcounter:
 \def\@partcountername{part}
@@ -60,7 +52,7 @@ thloria wrapper for hyperref package (D. Roegel)]
       \else
         % \hyper@refstepcounter is only performed when it is neither a part,
         % nor a chapter/annex; the \hyper@refstepcounter is done
-        % in the hook of thloria with \hyper@refstepcounter{division}.
+        % in the hook of thesul with \hyper@refstepcounter{division}.
         \def\@countername{#1}%
         \ifx\@countername\@partcountername
         \else
@@ -97,7 +89,7 @@ thloria wrapper for hyperref package (D. Roegel)]
 
 \newif\if@top@bookm@rk
 \@top@bookm@rkfalse
-\newcommand{\TLtopbookmark}{\@top@bookm@rktrue}
+\newcommand{\TULtopbookmark}{\@top@bookm@rktrue}
 
 % We input the file \jobname.flg in order to get the value of
 % `@there@were@p@rts':
@@ -106,37 +98,37 @@ thloria wrapper for hyperref package (D. Roegel)]
 % Numerical equivalent of `@there@were@p@rts':
 
 \if@there@were@p@rts
-  \newcommand{\TL@topbookmarkpos}{-1}
+  \newcommand{\TUL@topbookmarkpos}{-1}
 \else
-  \newcommand{\TL@topbookmarkpos}{0}
+  \newcommand{\TUL@topbookmarkpos}{0}
 \fi
 
-\newcommand{\TL@bookmarkpos}{0}
+\newcommand{\TUL@bookmarkpos}{0}
 
 % needed by \addcontentsline :
-\newcommand{\toclevel@tlstarchapter}{0}
+\newcommand{\toclevel@tulstarchapter}{0}
 \newcommand{\toclevel@starpart}{-1}
-\newcommand{\toclevel@spsection}{\TL@topbookmarkpos}
+\newcommand{\toclevel@spsection}{\TUL@topbookmarkpos}
 
-% Changes of various hooks in thloria:
+% Changes of various hooks in thesul:
 
-\renewcommand{\@tlann@hook}[1]{%
+\renewcommand{\@tulann@hook}[1]{%
   \@division@inc@hook
   \if@top@bookm@rk
-    \renewcommand{\toclevel@tlstarchapter}{\TL@topbookmarkpos}
+    \renewcommand{\toclevel@tulstarchapter}{\TUL@topbookmarkpos}
   \fi
   }
 
-\renewcommand{\@tlann@lasthook}[1]{\renewcommand{\toclevel@tlstarchapter}{0}}
+\renewcommand{\@tulann@lasthook}[1]{\renewcommand{\toclevel@tulstarchapter}{0}}
 
 \renewcommand\@generic@schapter@hook[2]{%
   \if@top@bookm@rk
-    \renewcommand{\toclevel@tlstarchapter}{\TL@topbookmarkpos}%
+    \renewcommand{\toclevel@tulstarchapter}{\TUL@topbookmarkpos}%
   \fi
   }
 
 \renewcommand\@generic@schapter@lasthook[2]{%
-  \renewcommand{\toclevel@tlstarchapter}{0}%
+  \renewcommand{\toclevel@tulstarchapter}{0}%
   }
 
 \renewcommand\@generic@chapter@hook[3]{%
@@ -149,30 +141,30 @@ thloria wrapper for hyperref package (D. Roegel)]
 
 \renewcommand{\@acknowledgment@hook}{%
      \@division@inc@hook
-     \pdfbookmark[\TL@topbookmarkpos]{\AcknowledgmentName}%
+     \pdfbookmark[\TUL@topbookmarkpos]{\AcknowledgmentName}%
               {acknowledgment.\theHdivision}%
   }
 \newcommand{\DedicationName}{D\'edicace}
 \renewcommand{\@dedication@hook}{%
    \@division@inc@hook
-   \pdfbookmark[\TL@topbookmarkpos]{\DedicationName}{dedication.\theHdivision}%
+   \pdfbookmark[\TUL@topbookmarkpos]{\DedicationName}{dedication.\theHdivision}%
   }
 
 \renewcommand{\@abstract@hook}[1]{%
    \@division@inc@hook
-   \pdfbookmark[\TL@topbookmarkpos]{#1}{abstract.\theHdivision}%
+   \pdfbookmark[\TUL@topbookmarkpos]{#1}{abstract.\theHdivision}%
   }
 
 \newcommand{\CoverName}{Couverture}
 \renewcommand{\@cover@hook}{%
    \@division@inc@hook
-   \pdfbookmark[\TL@topbookmarkpos]{\CoverName}{cover.\theHdivision}%
+   \pdfbookmark[\TUL@topbookmarkpos]{\CoverName}{cover.\theHdivision}%
   }
 
 \renewcommand{\@toc@hook}{%
-   \pdfbookmark[\TL@topbookmarkpos]{\contentsname}{}%
+   \pdfbookmark[\TUL@topbookmarkpos]{\contentsname}{}%
   }
 
 \endinput
-% end of file tlhypref.sty
+% end of file tulhypref.sty
 

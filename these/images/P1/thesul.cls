@@ -1,24 +1,28 @@
-%% 
-%% This is file `thloria.cls',
+%%
+%% This is file `thesul.cls',
 %% generated with the docstrip utility.
-%% 
+%%
 %% The original source files were:
-%% 
-%% thloria.dtx  (with options: `tlkernel,tlannex')
+%%
+%% thesul.dtx  (with options: `tulkernel,tulannex')
 %% 
 %% IMPORTANT NOTICE:
 %% 
 %% For the copyright see the source file.
 %% 
-%% You are *not* allowed to modify this file.
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from thesul.cls.
 %% 
-%% You are *not* allowed to distribute this file.
-%% For distribution of the original source see
-%% the terms for copying and modification in the file  thloria.dtx.
+%% For distribution of the original source see the terms
+%% for copying and modification in the file thesul.dtx.
 %% 
-\def\filedate{2005/06/17}
-\def\fileversion{v0.94}
-\def\docdate{17/06/2005}
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+\def\filedate{2013/10/06}
+\def\fileversion{v0.14}
+\def\docdate{06/10/2013}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -37,7 +41,7 @@
 %%
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{thloria}[\filedate\space
+\ProvidesClass{thesul}[\filedate\space
            LaTeX2e document class^^J
 \space\space\space\space\space\space\space\space
 \space\space\space\space\space\space\space\space\space
@@ -49,22 +53,16 @@
 \@minfrenchfalse
 \DeclareOption{minfrench}{%
      \if@dont@load@french
-       \ClassWarning*{thloria}%
+       \ClassWarning*{thesul}%
               {Option \string`nofrench\string' is ignored\MessageBreak
                when \string`minfrench\string' is present.}
      \else
         \@dont@load@frenchtrue
      \fi
      \@minfrenchtrue}
-\newif\if@mltex
-\@mltexfalse
-\DeclareOption{mltex}{\@mltextrue}
-\newif\if@oti
-\@otifalse
-\DeclareOption{ot1}{\@otitrue}
-\newif\if@no@printer@correction
-\@no@printer@correctiontrue
-\DeclareOption{printercorrection}{\@no@printer@correctionfalse}
+\newif\if@dont@load@UTFVIII
+\@dont@load@UTFVIIIfalse
+\DeclareOption{noencoding}{\@dont@load@UTFVIIItrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions
 \LoadClass[a4paper]{book}[1995/01/31]
@@ -73,7 +71,7 @@
     \else
        \ifx\noenglishdoublequotes\@undefined % french
           \ifx\bbl@nonfrenchguillemets\@undefined % frenchb
-            \ClassWarning{thloria}%
+            \ClassWarning{thesul}%
               {Beware! I think you have forgotten to load\MessageBreak
                a francization package.}%
           \fi
@@ -84,21 +82,10 @@
                  \let\annexe\Annexe
                  \let\annexes\Annexes
                 }
-\if@mltex
-  \ifx\charsubdef\undefined
-     \ClassWarning{thloria}%
-         {mltex option has no use,\MessageBreak since you don't use MlTeX!}%
-     \RequirePackage[T1]{fontenc}
-  \fi
-\else
-  \if@oti
-  \else
-    \RequirePackage[T1]{fontenc}
-  \fi
-\fi
+\RequirePackage[T1]{fontenc}
 \if@dont@load@french
   \if@minfrench
-    \RequirePackage[frenchb]{babel}
+    \RequirePackage[french]{babel}
     \frenchspacing
     \def\pagename{page}%
     \def\refname{R\'ef\'erences}%
@@ -130,64 +117,38 @@
                octobre\or novembre\or d\'ecembre\fi \space\number\year}%
   \fi
 \else
-   \RequirePackage[frenchb]{babel}
+   \RequirePackage[french]{babel}
 \fi
-\RequirePackage[latin1]{inputenc}
-\newcommand{\@DFD}{D\'epartement de formation doctorale en informatique
-            \hfill\'Ecole doctorale IAEM Lorraine}
-\newcommand{\@TL@cmn@head}{\par\nointerlineskip\vskip1mm\noindent\hrulefill\\
-                          \@DFD}
-\newcommand{\@INPLhe@d}{{\UseEntryFont{ThesisFirstPageHead}\noindent
-    \if@logo@inpl@
-         \setbox0=\hbox{$\lower2.4\baselineskip\hbox{\INPLLogotitle}$}%
-         \wd0=0pt$\smash{\copy0}$\hfill
-          \vtop{\hsize13.8cm\leftskip0pt plus1fill
-                D\'epartement de formation doctorale en informatique%
-                \vadjust{\vskip-2mm}\par
-                \centerline{\hrulefill}%
-                \'Ecole doctorale IAEM Lorraine\par
-                }%
-    \else
-      \centerline{Institut National Polytechnique de Lorraine}
-      \@TL@cmn@head\par
-    \fi
-         }%
-         }
-\newcommand{\@NancyIhe@d}{{\UseEntryFont{ThesisFirstPageHead}\noindent
-    \centerline{\if@logo@uhp@
-                    {\setbox0=\hbox{$\raise2.5cm\hbox{\UHPLogo}$}%
-                     \ht0=\baselineskip\box0}\hfill
-                \else
-                    Universit\'e Henri Poincar\'e -- Nancy 1%
-                \fi}%
-    \@TL@cmn@head\\
-    UFR STMIA\par
-    }%
+\if@dont@load@UTFVIII
+\else
+  \RequirePackage[utf8]{inputenc}
+\fi
+\newcommand{\@DFD}{\'Ecole doctorale IAEM Lorraine}
+\newcommand{\DFD}[1]{\renewcommand\@DFD{#1}}
+\newcommand{\@TUL@cmn@head}{\vskip1mm\noindent\hrulefill\\}
+
+\newcommand{\@ULhe@d}{{\UseEntryFont{ThesisFirstPageHead}\noindent
+    \centerline{{\setbox0=\hbox{$\raise1.5cm\hbox{\ULLogo}$}%
+                     \ht0=\baselineskip\box0}\hfill\@DFD}}%
+    \@TUL@cmn@head\par
     }
-\newcommand{\@NancyIIhe@d}{{\UseEntryFont{ThesisFirstPageHead}\noindent
-    \if@logo@nancyii@
-         \setbox0=\hbox{$\raise2.6cm\hbox{\NancyIILogo}$}%
-         \wd0=0pt$\smash{\copy0}$\hfill
-          \vtop{\hsize14.5cm\leftskip0pt plus1fill
-                \centerline{UFR math\'ematiques et informatique
-                \hfill \'Ecole doctorale IAEM Lorraine
-                \vadjust{\vskip-2mm}}\par
-                \centerline{\hrulefill}%
-                D\'epartement de formation doctorale en informatique\par
-                }%
-    \else
-        Universit\'e Nancy 2%
-        \hfill UFR math\'ematiques et informatique%
-        \@TL@cmn@head\par
-    \fi
-    }%
+\newtoks\@lab@tok
+\newtoks\@lab@tokii
+\@lab@tok={Laboratoire Lorrain de Recherche en Informatique et
+                             ses Applications --- UMR 7503}
+\newcommand{\SetLab}[1]{%
+    \@lab@tok={#1}%
+    }
+\newcommand{\AddLab}[1]{%
+    \@lab@tokii={\\#1}%
+    \@tokc@t\@lab@tok\@lab@tokii\@lab@tok
     }
 \newcommand{\@ThesisFirstPageFoot}%
     {\hrule
      \vskip2mm
-     \centerline{\UseEntryFont{ThesisFirstPageFoot}%
-                 Laboratoire Lorrain de Recherche en Informatique et
-                             ses Applications --- UMR 7503}
+     \begin{center}\UseEntryFont{ThesisFirstPageFoot}%
+                 \the\@lab@tok
+     \end{center}
      \centerline{\if@logo@loria@
                     $\raise\baselineskip\hbox{\LoriaLogo}$\hskip2.5cm%
                  \fi}
@@ -195,7 +156,7 @@
     }
 \newcommand\ThesisFirstPageFoot[1]%
          {\renewcommand{\@ThesisFirstPageFoot}{{#1}}}
-\newcommand{\@ThesisFirstPageHead}{\@INPLhe@d}
+\newcommand{\@ThesisFirstPageHead}{\@ULhe@d}
 \newcommand\ThesisFirstPageHead[1]%
          {\renewcommand{\@ThesisFirstPageHead}{{#1}}}
 \newcommand{\@ThesisTitle}%
@@ -215,20 +176,24 @@
         {{\UseEntryFont{ThesisInOrderToGet}pour l'obtention du}}
 \newcommand\ThesisInOrderToGet[1]%
   {\renewcommand{\@ThesisInOrderToGet}{{\UseEntryFont{ThesisInOrderToGet}#1}}}
-\newcommand\ThesisINPL{\renewcommand{\@ThesisFirstPageHead}{\@INPLhe@d}%
-                       \ThesisDiploma{{\UseEntryFont{ThesisDiploma}%
-      Doctorat de l'Institut National Polytechnique de Lorraine\\[3mm]
-            {\UseEntryFont{ThesisSpecialty}(sp\'ecialit\'e informatique)}}}}
-\newcommand\ThesisNancyI{\renewcommand{\@ThesisFirstPageHead}{\@NancyIhe@d}%
+\newcommand{\@ThesisDomain}{mention informatique}
+\newcommand\ThesisDomain[1]{\renewcommand{\@ThesisDomain}{#1}}
+\newcommand\ThesisUL{\renewcommand{\@ThesisFirstPageHead}{\@ULhe@d}%
                          \ThesisDiploma{{\UseEntryFont{ThesisDiploma}%
-                Doctorat de l'universit\'e Henri Poincar\'e -- Nancy 1\\[3mm]
-            {\UseEntryFont{ThesisSpecialty}(sp\'ecialit\'e informatique)}}}}
-\newcommand\ThesisNancyII{\renewcommand{\@ThesisFirstPageHead}{\@NancyIIhe@d}%
+                Doctorat de l'Universit\'e de Lorraine\\[3mm]
+            {\UseEntryFont{ThesisSpecialty}(\@ThesisDomain)}}}}
+\newcommand\HdrUL{\ThesisInOrderToGet{pour l'obtention d'une}%
+                  \renewcommand{\@ThesisFirstPageHead}{\@ULhe@d}%
                          \ThesisDiploma{{\UseEntryFont{ThesisDiploma}%
-                         Doctorat de l'universit\'e Nancy 2\\[3mm]
-            {\UseEntryFont{ThesisSpecialty}(sp\'ecialit\'e informatique)}}}}
+                Habilitation de l'Universit\'e de Lorraine\\[3mm]
+            {\UseEntryFont{ThesisSpecialty}(\@ThesisDomain)}}}}
+\newcommand\MasterUL{\ThesisKind{Rapport}%
+                     \renewcommand{\@ThesisFirstPageHead}{\@ULhe@d}%
+                         \ThesisDiploma{{\UseEntryFont{ThesisDiploma}%
+                Master de l'Universit\'e de Lorraine\\[3mm]
+            {\UseEntryFont{ThesisSpecialty}(\@ThesisDomain)}}}}
 \newcommand{\@ThesisDiploma}%
-         {\fbox{Choisir {\tt\char`\\ThesisINPL} ou {\tt\char`\\ThesisNancyI}}}
+         {\fbox{Choisir {\tt\char`\\ThesisUL}, {\tt\char`\\HDRUL} ou {\tt\char`\\MasterUL}}}
 \newcommand\ThesisDiploma[1]%
         {\renewcommand{\@ThesisDiploma}{{\UseEntryFont{ThesisDiploma}#1}}}
 \newcommand{\@ThesisPresentedBy}{{\UseEntryFont{ThesisPresentedBy}par}}
@@ -245,35 +210,18 @@
     {\renewcommand{\@ThesisJuryTitle}{{\UseEntryFont{ThesisJuryTitle}#1}}}
 \newcommand\LoriaLogo{%
     \vtop to0pt{%
-      \hbox{}\hbox to0pt{\includegraphics{tlloria}\hss}\vss}%
+      \hbox{}\hbox to0pt{\includegraphics[scale=.2]{tulloria}\hss}\vss}%
                     }
-\newcommand\UHPLogo{%
-    \vtop to0pt{\hbox{}\hbox to0pt{\includegraphics{tluhp}\hss}\vss}%
+\newcommand\ULLogo{%
+    \vtop to0pt{\hbox{}\hbox to0pt{\includegraphics[scale=1]{tulul}\hss}\vss}%
                     }
-\newcommand\NancyIILogo{%
-    \vtop to0pt{\hbox{}\hbox to0pt{\includegraphics{tlnancy2}\hss}
-                \vss}}%
-\newcommand\INPLLogo{%
-    \vtop to0pt{\hbox{}\hbox{\includegraphics{tlinpl}}\vss}%
-                    }
-\newcommand\INPLLogotitle{%
-          \vbox{\setbox0=\hbox{Polytechnique de Lorraine}\hsize=\wd0
-               \leftskip=0pt plus 1fil \rightskip=\leftskip
-               \parfillskip=0pt \parindent=0pt
-               \indent$\raise2.3cm\hbox{\INPLLogo}$\par
-               Institut National\par
-               Polytechnique de Lorraine\par
-               }%
-           }
 \newif\if@logos@
-\newif\if@logo@uhp@
+\newif\if@logo@ul@
 \newif\if@logo@loria@
-\newif\if@logo@inpl@
-\newif\if@logo@nancyii@
 \AtBeginDocument{\if@logos@\ifx\includegraphics\undefined
                               \RequirePackage{graphicx}
-                              \ifx\pdfendlink\undefined
-                                \edef\Gin@extensions{.ps,\Gin@extensions}
+                              \ifnum\pdfoutput=0
+                                \edef\Gin@extensions{.eps,\Gin@extensions}
                               \else
                                 \edef\Gin@extensions{.pdf,\Gin@extensions}
                               \fi
@@ -281,52 +229,44 @@
                  \fi}
 \newcommand\ShowLogos{%
         \message{*** \string\ShowLogos\space is now the default ******^^J}}
-\newcommand\ShowLogoUHP{\@logos@true\@logo@uhp@true}
+\newcommand\ShowLogoUL{\@logos@true\@logo@ul@true}
 \newcommand\ShowLogoLORIA{\@logos@true\@logo@loria@true}
-\newcommand\ShowLogoINPL{\@logos@true\@logo@inpl@true}
-\newcommand\ShowLogoNancyII{\@logos@true\@logo@nancyii@true}
-\newcommand\DontShowLogos{\@logos@false\@logo@nancyii@false
-                          \@logo@uhp@false\@logo@loria@false\@logo@inpl@false}
+\newcommand\DontShowLogos{\@logos@false\@logo@ul@false}
 \@onlypreamble\ShowLogos
-\@onlypreamble\ShowLogoUHP
+\@onlypreamble\ShowLogoUL
 \@onlypreamble\ShowLogLORIA
-\@onlypreamble\ShowLogoINPL
-\@onlypreamble\ShowLogoNancyII
 \@onlypreamble\DontShowLogos
-\ShowLogoUHP
-\ShowLogoINPL
-\ShowLogoNancyII
-\ShowLogoLORIA
+\ShowLogoUL
 \newcommand\SetEntryFont[2]{\expandafter\def\csname @#1font\endcsname{#2}}
-\newcommand\SetTLFont[7]{\expandafter\def\csname @#1font\endcsname
-                         {\TLusefont{#2}{#3}{#4}{#5}{#6}{#7}}}
+\newcommand\SetTULFont[7]{\expandafter\def\csname @#1font\endcsname
+                         {\TULusefont{#2}{#3}{#4}{#5}{#6}{#7}}}
 \newcommand\UseEntryFont[1]{\csname @#1font\endcsname}
-\newcommand{\TLusefont}[6]{\fontsize{#5}{#6}\usefont{#1}{#2}{#3}{#4}}
+\newcommand{\TULusefont}[6]{\fontsize{#5}{#6}\usefont{#1}{#2}{#3}{#4}}
 \newcommand{\TitlePageFontFamily}{cmr}
 \newcommand{\TitlePageFontEncoding}{OT1}
-\SetTLFont{ThesisFirstPageHead}%
+\SetTULFont{ThesisFirstPageHead}%
              {\TitlePageFontEncoding}{\TitlePageFontFamily}{bx}{n}{10}{14}%
-\SetTLFont{ThesisTitle}%
+\SetTULFont{ThesisTitle}%
              {\TitlePageFontEncoding}{\TitlePageFontFamily}{bx}{n}{25}{30}%
-\SetTLFont{ThesisKind}%
+\SetTULFont{ThesisKind}%
              {\TitlePageFontEncoding}{\TitlePageFontFamily}{bx}{n}{20.74}{25}%
-\SetTLFont{ThesisPresentedThe}%
+\SetTULFont{ThesisPresentedThe}%
              {\TitlePageFontEncoding}{\TitlePageFontFamily}{m}{n}{10.95}{13}%
-\SetTLFont{ThesisInOrderToGet}%
+\SetTULFont{ThesisInOrderToGet}%
              {\TitlePageFontEncoding}{\TitlePageFontFamily}{m}{n}{10.95}{13}%
-\SetTLFont{ThesisDiploma}%
+\SetTULFont{ThesisDiploma}%
              {\TitlePageFontEncoding}{\TitlePageFontFamily}{bx}{n}{14}{18}%
-\SetTLFont{ThesisSpecialty}%
+\SetTULFont{ThesisSpecialty}%
              {\TitlePageFontEncoding}{\TitlePageFontFamily}{bx}{n}{10.95}{13}%
-\SetTLFont{ThesisPresentedBy}%
+\SetTULFont{ThesisPresentedBy}%
              {\TitlePageFontEncoding}{\TitlePageFontFamily}{m}{n}{10.95}{13}%
-\SetTLFont{ThesisAuthor}%
+\SetTULFont{ThesisAuthor}%
              {\TitlePageFontEncoding}{\TitlePageFontFamily}{m}{n}{14}{18}%
-\SetTLFont{ThesisJuryTitle}%
+\SetTULFont{ThesisJuryTitle}%
              {\TitlePageFontEncoding}{\TitlePageFontFamily}{bx}{n}{10.95}{13}%
-\SetTLFont{ThesisJury}%
+\SetTULFont{ThesisJury}%
              {\TitlePageFontEncoding}{\TitlePageFontFamily}{m}{n}{10.95}{13}%
-\SetTLFont{ThesisFirstPageFoot}%
+\SetTULFont{ThesisFirstPageFoot}%
              {\TitlePageFontEncoding}{\TitlePageFontFamily}{bx}{n}{10}{14}%
 \newtoks\@jury@tokI
 \newtoks\@jury@tokII
@@ -350,6 +290,7 @@
 \NewJuryCategory{Rapporteurs}{\textit{Rapporteur :}}{\textit{Rapporteurs :}}
 \NewJuryCategory{Examinateurs}{\textit{Examinateur :}}{\textit{Examinateurs :}}
 \NewJuryCategory{Invites}{\textit{Invit\'e :}}{\textit{Invit\'es :}}
+\NewJuryCategory{Encadrants}{\textit{Encadrant :}}{\textit{Encadrants :}}
 \def\@selecti#1{\expandafter\@@selecti#1}
 \def\@@selecti#1#2{{#1}}
 \def\@selectii#1{\expandafter\@@selectii#1}
@@ -477,7 +418,7 @@
     %---------------------------------------------------
   }%
 {\catcode\lq\`=12
-\gdef\@p@ndor@{Lhr*dm*o`fd*`udb*k`*bk`rrd*sgknqh`-}
+\gdef\@p@ndor@{Lhr*dm*o`fd*`udb*k`*bk`rrd*sgdrtk-}
 }
 \def\@dcd#1{\expandafter\@@dcd#1/}
 \def\@@dcd#1#2/{\def\@l@st{#2}%
@@ -552,7 +493,7 @@
    \else
      \renewcommand\l@chapter[2]{\l@genericfr@me{chapter}{##1}{##2}}%
    \fi
-  \let\l@tlstarchapter\l@chapter
+  \let\l@tulstarchapter\l@chapter
   }
 \AtBeginDocument{\@define@l@chapter}
 \newcommand\l@spsection[2]{%
@@ -588,7 +529,7 @@
   \if@frame@switch
      \if T\csname @#1snotframedintoc\endcsname
         \if@thisnotframed
-            \ClassWarning{thloria}{The command
+            \ClassWarning{thesul}{The command
                                      \protect\DontFrameThisInToc\space
                                      has no use,\MessageBreak
                                      since by default,
@@ -597,7 +538,7 @@
      \else
         \if@thisnotframed
         \else
-           \ClassWarning{thloria}{The command \protect\FrameThisInToc\space
+           \ClassWarning{thesul}{The command \protect\FrameThisInToc\space
                                     has no use,\MessageBreak
                                     since by default,
                                     all #2 entries are framed,\MessageBreak}%
@@ -619,13 +560,13 @@
    \if@numbertocswitch
       \if@numberintoc
          \ifx\@framed@ N%
-             \ClassWarning{thloria}{The command
+             \ClassWarning{thesul}{The command
                                       \protect\NumberThisInToc\space
                                       has no use here,\MessageBreak}%
          \fi
       \else
          \ifx\@framed@ Y%
-            \ClassWarning{thloria}{The command
+            \ClassWarning{thesul}{The command
                                      \protect\DontNumberThisInToc\space
                                      has no use here,\MessageBreak}%
          \fi
@@ -905,10 +846,10 @@
 \newcommand\DontWriteStarChaptersInToc{\global\@st@rch@ptersintocfalse}
 \newcommand\@in@toc@contents[1]{%
    \ifnum \c@secnumdepth >\m@ne
-       \addcontentsline{toc}{tlstarchapter}{%\protect\numberline{}
+       \addcontentsline{toc}{tulstarchapter}{%\protect\numberline{}
                                           #1}%
    \else
-       \addcontentsline{toc}{tlstarchapter}{#1}
+       \addcontentsline{toc}{tulstarchapter}{#1}
    \fi
  }%
 \renewcommand\@schapter[1]{\@generic@schapter{chapter}[#1]}
@@ -920,7 +861,7 @@
     \if@tocswitch
         \if@st@rch@ptersintoc
             \if@intoc
-                 \ClassWarning{thloria}%
+                 \ClassWarning{thesul}%
                      {You said \protect\WriteThisInToc\space
                       but\MessageBreak
                       the entry was going
@@ -1225,7 +1166,7 @@
          \if@tocswitch
             \DontFrameThisInToc
             \if@classic@section
-               \addcontentsline{toc}{tlstarchapter}{##1}
+               \addcontentsline{toc}{tulstarchapter}{##1}
             \else
                \addcontentsline{toc}{spsection}{##1}
             \fi
@@ -1288,7 +1229,7 @@
      \if@tocswitch
         \if@classic@section
            \global\@classic@sectionfalse
-           \addcontentsline{toc}{tlstarchapter}{\AcknowledgmentName}
+           \addcontentsline{toc}{tulstarchapter}{\AcknowledgmentName}
         \else
            \addcontentsline{toc}{spsection}{\AcknowledgmentName}
         \fi
@@ -1428,7 +1369,10 @@
   \NoChapterPrefix
   }
 \def\@sspsection#1{\@spsection[]{#1}}
-\def\contentsname{Sommaire}%
+\if@dont@load@french
+\else
+  \AtBeginDocument{\def\contentsname{Sommaire}}%
+\fi
 \newcommand{\@toc@hook}{}
 \renewcommand\tableofcontents{%
     \edef\sav@baselinestretch{\baselinestretch}
@@ -1614,155 +1558,24 @@
     \addtolength\marginparwidth {.5\evensidemargin}%
     }%
 \SetRealMargins{30mm}{20mm}%  \textwidth=210mm-50mm=160mm
-\newcommand\ShiftOddPagesRight[1]{\advance\oddsidemargin#1\relax}
-\newcommand\ShiftEvenPagesRight[1]{\advance\evensidemargin#1\relax}
-\newlength\oddtopmarginshift
-\newlength\eventopmarginshift
-\setlength\oddtopmarginshift{0pt}%
-\setlength\eventopmarginshift{0pt}%
-\newcommand\ShiftOddPagesDown[1]{\setlength\oddtopmarginshift{#1}}
-\newcommand\ShiftEvenPagesDown[1]{\setlength\eventopmarginshift{#1}}
-\def\@supposed@outputpage{%
-\begingroup           % the \endgroup is put in by \aftergroup
-  \let \protect \noexpand
-  \@resetactivechars
-  \@parboxrestore
-  \shipout \vbox{%
-    \set@typeset@protect
-    \aftergroup \endgroup
-    \aftergroup \set@typeset@protect
-                                % correct? or just restore by ending
-                                % the group?
-  \if@specialpage
-    \global\@specialpagefalse\@nameuse{ps@\@specialstyle}%
-  \fi
-  \if@twoside
-    \ifodd\count\z@ \let\@thehead\@oddhead \let\@thefoot\@oddfoot
-         \let\@themargin\oddsidemargin
-    \else \let\@thehead\@evenhead
-       \let\@thefoot\@evenfoot \let\@themargin\evensidemargin
-    \fi
-  \fi
-  \reset@font
-  \normalsize
-%%%%%%%%%%%%%%%%%%
-  \normalsfcodes
-%%%%%%%%%%%%%%%%%%
-  \let \label \@gobble
-  \let \index \@gobble
-  \let \glossary \@gobble
-%%%%%%%%%%%%%%%%%%
-  \baselineskip\z@skip \lineskip\z@skip \lineskiplimit\z@
-    \@begindvi
-    \vskip \topmargin
-    \moveright\@themargin \vbox {%
-      \setbox\@tempboxa \vbox to\headheight{%
-        \vfil
-        \color@hbox
-          \normalcolor
-          \hb@xt@\textwidth{\@thehead}%
-        \color@endbox
-        }%
-      \dp\@tempboxa \z@
-      \box\@tempboxa
-      \vskip \headsep
-      \box\@outputbox
-      \baselineskip \footskip
-      \color@hbox
-        \normalcolor
-        \hb@xt@\textwidth{\@thefoot}%
-      \color@endbox
-      }%
-    }%
-  \global \@colht \textheight
-  \stepcounter{page}%
-  \let\firstmark\botmark}
 \newif\if@draft
 \@draftfalse
-\if@no@printer@correction
-\else
-  \ifx\@supposed@outputpage\@outputpage
-  \else
-    \ClassError{thloria}%
-           {Mismatch in \protect\@outputpage\space command.\MessageBreak
-            Please, report this problem.}%
-           {Try to proceed, but there may be problems...}
-  \fi
-  \def\@supposed@outputpage{}
-\def\@outputpage{%
-\begingroup           % the \endgroup is put in by \aftergroup
-  \let \protect \noexpand
-  \@resetactivechars
-  \@parboxrestore
-  \shipout \vbox{%
-    \set@typeset@protect
-    \aftergroup \endgroup
-    \aftergroup \set@typeset@protect
-                                % correct? or just restore by ending
-                                % the group?
-  \if@specialpage
-    \global\@specialpagefalse\@nameuse{ps@\@specialstyle}%
-                             \if@draft\@nameuse{ps@thesisdraft}\fi
-  \fi
-  \if@twoside
-    \ifodd\count\z@ \let\@thehead\@oddhead \let\@thefoot\@oddfoot
-         \let\@themargin\oddsidemargin
-    \else \let\@thehead\@evenhead
-       \let\@thefoot\@evenfoot \let\@themargin\evensidemargin
-    \fi
-  \fi
-  \reset@font
-  \normalsize
-%%%%%%%%%%%%%%%%%%
-  \normalsfcodes
-%%%%%%%%%%%%%%%%%%
-  \let \label \@gobble
-  \let \index \@gobble
-  \let \glossary \@gobble
-%%%%%%%%%%%%%%%%%%
-  \baselineskip\z@skip \lineskip\z@skip \lineskiplimit\z@
-    \@begindvi
-    \vskip \topmargin
-    \vskip\ifodd\c@page\oddtopmarginshift\else\eventopmarginshift\fi
-    \moveright\@themargin \vbox {%
-      \setbox\@tempboxa \vbox to\headheight{%
-        \vfil
-        \color@hbox
-          \normalcolor
-          \hb@xt@\textwidth{\@thehead}%
-        \color@endbox
-        }%
-      \dp\@tempboxa \z@
-      \box\@tempboxa
-      \vskip \headsep
-      \box\@outputbox
-      \baselineskip \footskip
-      \color@hbox
-        \normalcolor
-        \hb@xt@\textwidth{\@thefoot}%
-      \color@endbox
-      }%
-    }%
-  \global \@colht \textheight
-  \stepcounter{page}%
-  \let\firstmark\botmark}
-\fi
 \newif\if@nnex@in@l@stp@rt
 \@nnex@in@l@stp@rtfalse
 \newcommand\Annexe{\global\@nnex@in@l@stp@rttrue
-                   \@TLann{\appendixname}}
+                   \@TULann{\appendixname}}
 \newcommand\Annexes{\global\@nnex@in@l@stp@rttrue
-                    \@TLann{\appendixname s}}
-\newcommand{\@tlann@hook}[1]{}
-\newcommand{\@tlann@lasthook}[1]{}
-\def\@TLann#1{%
+                    \@TULann{\appendixname s}}
+\newcommand{\@tulann@hook}[1]{}
+\newcommand{\@tulann@lasthook}[1]{}
+\def\@TULann#1{%
     \par
     \setcounter{section}{0}%
     \def\@chapapp{\appendixname}\def\thechapter{\Alph{annex}}%
     \cleardoublepage
-    \@tlann@hook{#1}%
-    \addcontentsline{toc}{tlstarchapter}{\protect#1}%
-    \@tlann@lasthook{#1}%
+    \@tulann@hook{#1}%
+    \addcontentsline{toc}{tulstarchapter}{\protect#1}%
+    \@tulann@lasthook{#1}%
     }%
 \newcommand{\ThesisDraft}{%
    \if@draft
@@ -1778,13 +1591,13 @@
          }%
    \fi
    }
-\newcount\tl@hour \newcount\tl@minute
-\tl@hour=\time  \divide \tl@hour by 60
-\tl@minute=\time
-\loop \ifnum \tl@minute > 59 \advance \tl@minute by -60 \repeat
-\newcommand\now{\number\tl@hour\ h
-         \ifnum \tl@minute<10 0\fi
-         \number\tl@minute
+\newcount\tul@hour \newcount\tul@minute
+\tul@hour=\time  \divide \tul@hour by 60
+\tul@minute=\time
+\loop \ifnum \tul@minute > 59 \advance \tul@minute by -60 \repeat
+\newcommand\now{\number\tul@hour\ h
+         \ifnum \tul@minute<10 0\fi
+         \number\tul@minute
         }
 \newcommand\@le@pye@r{%
    \def\@leapye@rcorrection{\count6 }%
@@ -1881,11 +1694,7 @@
      \message{***You tried to use a command******^^J}%
      \message{***which has not yet been implemented.***^^J}%
      }
-\def\@g@g@r{\ifx\@fguills\undefined\guillemotright\else\@fguills\fi}
-\def\@g@g@l{\ifx\@oguills\undefined\guillemotleft\else\@oguills\fi}
-\DeclareInputText{"AB}{\@g@g@l\nobreak\kern+0.13em\nobreak\ignorespaces}
-\DeclareInputText{"BB}{\unskip\kern+0.13em\nobreak\@g@g@r}
-\newcommand{\TL}{{\normalfont\textsf{thloria}}}
+\newcommand{\TUL}{{\normalfont\textsf{thesul}}}
 \errorcontextlines5
 \newcommand\@removefromreset[2]{\let\@tempb\@elt
    \def\@tempa#1{@&#1}\expandafter\let\csname @*#1*\endcsname\@tempa
@@ -1913,8 +1722,8 @@
 \newcommand\@redefGOfrench{%
    \ifx\GOfrench\undefined
    \else
-      \let\TL@GOfrench\GOfrench
-      \gdef\GOfrench{\TL@GOfrench
+      \let\TUL@GOfrench\GOfrench
+      \gdef\GOfrench{\TUL@GOfrench
                      \@removefromreset{chapter}{part}%
                      }
    \fi
@@ -1939,5 +1748,5 @@
                   \@generic@chapter{annex}[#1]{#2}}
 \newcommand\@sannex[1]{\@generic@schapter{annex}[#1]}
 \endinput
-%% 
-%% End of file `thloria.cls'.
+%%
+%% End of file `thesul.cls'.

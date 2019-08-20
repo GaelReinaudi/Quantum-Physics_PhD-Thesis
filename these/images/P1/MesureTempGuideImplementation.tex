@@ -1,4 +1,4 @@
-\documentclass[11pt, a4paper, french]{thloria}%{article}
+\documentclass[11pt, a4paper, french]{thesul}%{article}
 \input{../../Packages_Gael}
 
 %%% Pour n'avoir que l'image tikz ! ! !
@@ -16,7 +16,7 @@
 \let\Hfig\pgfmathresult
 
 \newcommand{\guidetexte}{{%\begin{minipage}{7cm}
-{guide magnétique}
+{guide magnï¿½tique}
 %\end{minipage}
 }}
 \newcommand{\antennetexte}{{%\begin{minipage}{7cm}
@@ -29,7 +29,7 @@
 \path(\FigWidthSansCm,3);
 \begin{overpic}[width=\FigWidth, unit=1cm]{MesureTempGuideImplementation_}
 
-\node[rectangle, draw, thick,inner sep=0.2cm, text width=2.7cm](synth) at (2.5,7){\centering synthétiseur \rf 0 - 60 MHz};
+\node[rectangle, draw, thick,inner sep=0.2cm, text width=2.7cm](synth) at (2.5,7){\centering synthï¿½tiseur \rf 0 - 60 MHz};
 \node[rectangle, draw, thick,inner sep=0.2cm, text width=2.3cm](ampl) at (7,7){\centering amplificateur 1 Watt};
 \draw[-latex'](synth.east)--(ampl.west);
 
