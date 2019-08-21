@@ -1,5 +1,5 @@
 \newcommand{\TitreThese}{
-Manipulation et refroidissement par évaporation forcée d'ensembles atomiques ultra-froids pour la production d'un jet intense dans le régime de dégénérescence quantique : vers l'obtention d'un \textit{laser à atomes continu}}
+Manipulation et refroidissement par ï¿½vaporation forcï¿½e d'ensembles atomiques ultra-froids pour la production d'un jet intense dans le rï¿½gime de dï¿½gï¿½nï¿½rescence quantique : vers l'obtention d'un \textit{laser ï¿½ atomes continu}}
 
 \usepackage{ifthen}
 \usepackage{ifpdf}
@@ -13,7 +13,7 @@ Manipulation et refroidissement par évaporation forcée d'ensembles atomiques ult
 
 \usepackage[intlimits]{amsmath}
 \usepackage{amssymb}
-% pour des représentation de vecteur sympa pour les physiciens
+% pour des reprï¿½sentation de vecteur sympa pour les physiciens
 \usepackage{vector}
 \usepackage{array}
 \usepackage{slashbox}% pour couper une case de tableau en deux
@@ -21,7 +21,7 @@ Manipulation et refroidissement par évaporation forcée d'ensembles atomiques ult
 % figures avec sous-figures et sous-captions:
 \usepackage[subrefformat=subparens]{subfig}
 
-% pour des références en language naturel
+% pour des rï¿½fï¿½rences en language naturel
 \usepackage[english]{varioref} 
 
 % pour des supers graphiques trop cool, mieux que PSTricks
@@ -45,10 +45,10 @@ Manipulation et refroidissement par évaporation forcée d'ensembles atomiques ult
 % By default all math in TikZ nodes are set in inline mode. Change this to displaystyle so that we don't get small fractions.
 \everymath{\displaystyle}
 
-% espace intéligent pour la fin d'une nexcommand en text
+% espace intï¿½ligent pour la fin d'une nexcommand en text
 \usepackage{xspace}
 
-%gestion des unité !
+%gestion des unitï¿½ !
 \usepackage[amssymb]{SIunits}
 \usepackage{sistyle}
 \SIstyle{German} 
@@ -57,16 +57,16 @@ Manipulation et refroidissement par évaporation forcée d'ensembles atomiques ult
 \usepackage{fancybox}
 
 \usepackage{movie15}
-% hachurer du texte avec \sout{Texte à barrer}\xout{Texte à hachurer}\uwave{Texte à souligner par une vaguelette}
+% hachurer du texte avec \sout{Texte ï¿½ barrer}\xout{Texte ï¿½ hachurer}\uwave{Texte ï¿½ souligner par une vaguelette}
 \usepackage[normalem]{ulem}
 
 
-% pour ajouter localement une ligne à une page
+% pour ajouter localement une ligne ï¿½ une page
 % contient une commande pour checker si on est sur un page odd or even
 \usepackage{addlines}
 \usepackage{mparhack}
 
-% Si on veut des mini-tables des matieres (utiliser minitoc-hyper en conjonction avec tlhypref) :
+% Si on veut des mini-tables des matieres (utiliser minitoc-hyper en conjonction avec tulhypref) :
 \ifpdf % le monde PDF
 \usepackage[french]{minitoc-hyper}
 \else % le monde DVI/PS
@@ -82,15 +82,15 @@ Manipulation et refroidissement par évaporation forcée d'ensembles atomiques ult
 %\usepackage{hypernat}                      % Makes natbibs s&c play w/ hyperref
 
 \ifpdf % le monde PDF
-%\usepackage{hyperref} % pour des références cliquables
+%\usepackage{hyperref} % pour des rï¿½fï¿½rences cliquables
 \usepackage[pdftex, colorlinks = true
 %						, pdfstartview = FitH
 %						, colorlinks=false,
-						, linkcolor = black, citecolor = black, urlcolor = black, pdfpagelabels, pagebackref]{tlhypref}
+						, linkcolor = black, citecolor = black, urlcolor = black, pdfpagelabels, pagebackref]{tulhypref}
 \hypersetup{pdfauthor={Gael Reinaudi},
 pdftitle={\TitreThese},
-pdfsubject={Thèse de doctorat},
-pdfkeywords={physique,quantique,laser,atome,dégénérescence,froid,manipulation,atomique,refroidissement,évaporation,jet}}
+pdfsubject={Thï¿½se de doctorat},
+pdfkeywords={physique,quantique,laser,atome,dï¿½gï¿½nï¿½rescence,froid,manipulation,atomique,refroidissement,ï¿½vaporation,jet}}
 \else % le monde DVI/PS
 \fi
 % ********************************************************************
@@ -99,8 +99,8 @@ pdfkeywords={physique,quantique,laser,atome,dégénérescence,froid,manipulation,at
 % ********************************************************************
 % setup the style of the backrefs from the bibliography
 \newcommand{\backrefnotcitedstring}{\relax}%(Not cited.)
-\newcommand{\backrefcitedsinglestring}[1]{Cité à la page~#1.}
-\newcommand{\backrefcitedmultistring}[1]{Cité aux pages~#1.}
+\newcommand{\backrefcitedsinglestring}[1]{Citï¿½ ï¿½ la page~#1.}
+\newcommand{\backrefcitedmultistring}[1]{Citï¿½ aux pages~#1.}
 \RequirePackage[hyperpageref]{backref} % to be loaded after hyperref package
    \renewcommand{\backreftwosep}{ et~} % seperate 2 pages
    \renewcommand{\backreflastsep}{, et~} % seperate last of longer list
@@ -123,7 +123,7 @@ pdfkeywords={physique,quantique,laser,atome,dégénérescence,froid,manipulation,at
 % (cette ligne n'est pas necessaire au traitement du fichier)
 %\usepackage[infoshow]{tracefnt}
 
-% évite les under-over full box...
+% ï¿½vite les under-over full box...
 %\usepackage[auto=false]{microtype} % 2010-05-27
 %\usepackage{microtype}
 
